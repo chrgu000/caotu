@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>草图科技官网</title>
+    <style>
+        *{margin:0;padding:0;}
+        ul,ol,p,h1,h2,h3,h4,h5,h6,dl,dt,dd{
+            margin:0;
+            padding:0;
+            list-style:none;
+        }
+        .conbox{width:100%;margin:0 auto;}
+        .conbox img{width:100%;height: auto;}
+        #rightKzBox{width:15px;padding:10px;position: fixed;right:10px;top:30%;}
+        #rightKzBox li{width:12px;height:12px;background:#e4e0e0;margin: 10px;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;}
+        #rightKzBox li a{display: inline-block;width:100%;height:100%;}
+        #rightKzBox li:hover,
+        #rightKzBox li.active{background:#ff698f;}
+        .imgbox{position: relative;}
+        #footdiv{text-align: center;height:55px;line-height: 55px;position: absolute;bottom:0;left:0;width:100%;font-size:12px;}
+        #footdiv p span{display: inline-block;margin:0 6px;color:#666;}
+    </style>
+</head>
+<body>
+    <div class="conbox">
+        <div id="img1" class="imgbox"><img src="img/1.png" alt=""/></div>
+        <div id="img2" class="imgbox" style="margin-top:-6px;"><img src="img/2.png" alt=""/></div>
+        <div id="img3" class="imgbox"  style="margin-top:-6px;"><img src="img/3.png" alt=""/>
+            <div id="footdiv">
+                <p><span>鲁ICP备15027719号-1</span><span>杭州草图科技网络有限公司</span></p>
+            </div>
+        </div>
+    </div>
+
+    <ul id="rightKzBox">
+        <li data-id="img1" class="active"><a href="javascript:void(0)" class="jumpbtn active"></a></li>
+        <li data-id="img2"><a href="javascript:void(0)" class="jumpbtn"></a></li>
+        <li data-id="img3"><a href="javascript:void(0)" class="jumpbtn"></a></li>
+    </ul>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.mousewheel.min.js"></script>
+    <script>
+
+        $("#rightKzBox li").click(function () {
+            $(this).addClass("active").siblings(".active").removeClass("active");
+            var n = $(this).attr("data-id");
+            var h=$("#"+n).height();
+            var x=0;
+            switch (n){
+                case "img1": x = 0; break;
+                case "img2": x = h; break;
+                case "img3": x = h*2; break;
+            }
+                $('html, body').animate({
+                    scrollTop: x
+                }, 250);
+
+
+        }); // 左侧快速导航滚动
+        $(window).scroll(function() {
+            //var yheight1=window.pageYOffset; //滚动条距顶端的距离
+            var yheight=$(document).scrollTop(); //滚动条距顶端的距离
+            var height=$(document).height();
+            if(yheight>(height/2)){
+                $("#rightKzBox li:nth-child(3)").addClass("active").siblings(".active").removeClass("active");
+            }else if(yheight>=(height/3)){
+                $("#rightKzBox li:nth-child(2)").addClass("active").siblings(".active").removeClass("active");
+            }else {
+                $("#rightKzBox li:nth-child(1)").addClass("active").siblings(".active").removeClass("active");
+            }
+        })
+
+    </script>
+</body>
+</html>
