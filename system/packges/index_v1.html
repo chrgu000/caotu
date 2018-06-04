@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--360浏览器优先以webkit内核解析-->
+
+
+    <title> - 主页示例</title>
+
+    <link href="../css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../css/animate.css" rel="stylesheet">
+    <link href="../css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="../plugin/font/iconfont.css" rel="stylesheet">
+    <!-- 全局js -->
+    <script src="../js/jquery.min.js?v=2.1.4"></script>
+    <script src="../js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="../js/plugins/layer/layer.min.js"></script>
+    <script src="../plugin/font/iconfont.js"></script>
+    <style>
+        .btitle{padding-left:20px;height:45px;border-bottom:1px solid #bbb; line-height: 37px;}
+        .userLogoInfoBox{padding:25px;}
+        .userLogoInfoBox p{line-height: 35px;font-size:17px;}
+        .dataTitle{line-height: 45px;padding-left:16px;background:#bbb;}
+        .dataConBox{border:1px solid #bbb;height:170px;padding-top:22px;}
+        .newUserNum{font-size:30px;text-align: center;font-weight:700;}
+        #userInfoDat .lower{color:#006621;font-size:18px;}
+        #userInfoDat .height{color:#FF2B00;font-size:18px;}
+    </style>
+</head>
+
+<body class="gray-bg">
+    <h3 class="btitle" id="replashTime">数据跟新时间：<span id="reshtime">{{info}}</span></h3>
+    <div class="wrapper wrapper-content">
+        <div class="userLogoInfoBox" id="userInfoCon">
+            <p>尊敬的 <span id="userName">{{info.username}}</span>：您好！</p>
+            <p>欢迎您使用运营管理后台</p>
+            <p>您此次登陆是第 <span id="logNum">{{info.logNum}}</span>次</p>
+            <p>您上次登陆的IP是： <span id="logIp">{{info.logip}}</span></p>
+        </div>
+        <h3 class="dataTitle">每日数据</h3>
+        <div class="row" id="userInfoDat">
+            <div class="col-md-3 col-sm-6 dataConBox">
+                <p>新增用户数</p>
+                <p class="newUserNum ">{{info.newuser}}</p>
+                <div style="text-align: center">
+                    <i v-if="info.newuserbl >100" class="icon iconfont height">&#xe8fa;</i>
+                    <i v-else class="icon iconfont lower">&#xe8f9;</i>
+                    <span class="changeNum">{{info.newuserbl}}%</span></div>
+            </div>
+            <div class="col-md-3 col-sm-6 dataConBox">
+                <p>日活用户数</p>
+                <p class="newUserNum ">{{info.dayuser}}</p>
+                <div style="text-align: center">
+                    <i v-if="info.dayuserbl >100" class="icon iconfont height">&#xe8fa;</i>
+                    <i v-else class="icon iconfont lower">&#xe8f9;</i>
+                    <span class="changeNum">{{info.dayuserbl}}%</span></div>
+            </div>
+            <div class="col-md-3 col-sm-6 dataConBox">
+                <p>内容库新增内容数</p>
+                <p class="newUserNum">{{info.newcon}}</p>
+                <div style="text-align: center">
+                    <i v-if="Number(info.newconbl) >100" class="icon iconfont height">&#xe8fa;</i>
+                    <i v-else class="icon iconfont lower">&#xe8f9;</i>
+                    <span class="changeNum">{{info.newconbl}}%</span></div>
+            </div>
+            <div class="col-md-3 col-sm-6 dataConBox">
+                <p>当前用户总数</p>
+                <p class="newUserNum">{{info.nowuser}}</p>
+                <div style="text-align: center">
+                    <i v-if="Number(info.nowuserbl) >100" class="icon iconfont height">&#xe8fa;</i>
+                    <i v-else class="icon iconfont lower">&#xe8f9;</i>
+                    <span class="changeNum">{{info.nowuserbl}}%</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Flot -->
+    <script src="../js/plugins/flot/jquery.flot.js"></script>
+    <script src="../js/plugins/flot/jquery.flot.tooltip.min.js"></script>
+    <script src="../js/plugins/flot/jquery.flot.resize.js"></script>
+    <script src="../js/plugins/flot/jquery.flot.pie.js"></script>
+
+    <!-- 自定义js -->
+    <script src="../js/content.js"></script>
+    <script src="../js/vue.js"></script>
+    <script src="../js/index.js"></script>
+    <!--flotdemo-->
+    <script type="text/javascript">
+
+        var app = new Vue({
+            el: '#userInfoCon',
+            data: {
+                info: {username:"",logNum:"",logip:""}
+            }
+        });
+
+
+        var replashtime = new Vue({
+            el: '#replashTime',
+            data: {
+                info: ""
+            }
+        });
+        var userinfotdatas = new Vue({
+            el: '#userInfoDat',
+            data: {
+                info: ""
+            }
+        })
+
+        $(function(){
+            if(userdatas && userdatas.code && userdatas.code=="1000"){
+                let infox={username:userdatas.data.username,logNum:"",logip:""};
+                app.info=infox;
+                let everday={newuser:"",newuserbl:"",dayuser:"",dayuserbl:"",newcon:"",newconbl:"",nowuser:"",nowuserbl:"",replash:""};
+                replashtime.info=everday.replash;
+                userinfotdatas.info=everday;
+            }
+
+        })
+
+    </script>
+</body>
+
+</html>

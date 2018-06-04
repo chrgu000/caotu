@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>分享界面</title>
+    <link rel="stylesheet" href="css/common.css"/>
+    <link rel="stylesheet" href="plugin/font/iconfont.css"/>
+</head>
+<body>
+    <div class="conntentsBox">
+        <header id="shareHeader">
+            <div class="logobox">
+                <img class="logo" src="img/logo.png" alt="logo"/>
+                <span>
+                    头图 <br/>
+                    比头条更有料
+                </span>
+            </div>
+            <a  download="" id="downappbtn">下 载</a>
+        </header>
+
+        <div class="conntentsBox" id="mainContentBox">
+            <div id="userheadbox">
+                <div class="titleBox">
+                    <span class="imgbox">
+                         <img class="logo" v-bind:src="userheadphoto" alt="logo"/>
+                    </span>
+                    <span class="title">{{userhead}}</span>
+                </div>
+                <a  download="" id="attentBtn" class="btn">关 注</a>
+            </div>
+            <p id="contentTittle">{{commendTitle}}</p>
+            <div id="mainContntShowbox">
+
+
+            </div>
+            <div style="text-align: center;">
+                <a download="" id="seeDetails" class="btn">点击查看详情</a>
+            </div>
+        </div>
+        <!--更多推荐-->
+        <div id="moreRecommendBox">
+            <h3 class="title">更多推荐</h3>
+            <div class="allrecommendBox">
+                <div class="rcommendBox" v-for="(item,index) in items" v-bind:data-id="item.tagid">
+                    <div class="recommendLeftBox">
+                          <span class="rcommendTitleBox">
+                        <img v-bind:src="item.tagimg" alt=""/>
+                    </span>
+                    </div>
+                    <div class="recommendMiddleBox">
+                         <a v-bind:href="'sharetheme.html?tagid='+item.tagid" class="rcommendCon">
+                        {{item.tagalias}}
+                        </a>
+                    </div>
+
+                    <a download="" class="concernBtn"> <i class="iconfont">&#xe613;</i>关注</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--分享按钮组-->
+<!--    <div class="bdsharebuttonbox" data-tag="share_1">
+        <a class="bds_mshare" data-cmd="mshare"></a>
+        <a class="bds_qzone" data-cmd="qzone" href="#"></a>
+        <a class="bds_tsina" data-cmd="tsina"></a>
+        <a class="bds_baidu" data-cmd="baidu"></a>
+        <a class="bds_renren" data-cmd="renren"></a>
+        <a class="bds_tqq" data-cmd="tqq"></a>
+        <a class="bds_more" data-cmd="more">更多</a>
+        <a class="bds_count" data-cmd="count"></a>
+    </div>-->
+
+<script type="application/javascript" src="js/jquery.min.js"></script>
+<script type="application/javascript" src="js/vue.js"></script>
+<script type="application/javascript" src="plugin/layer/layer.js"></script>
+<script type="application/javascript" src="js/index.js"></script>
+<script>
+
+    var commendinfo = new Vue({
+        el: '#mainContentBox',
+        data: {
+            "items": [],
+            "userhead":"",
+            "commendTitle":"",
+            "userheadphoto":"img/logo.png"
+
+        },
+        // 在 `methods` 对象中定义方法
+        methods: {
+            goods: function (event,i) {
+
+            }
+        }
+    });
+
+
+    /*更多推荐*/
+    var commendmore = new Vue({
+        el: '#moreRecommendBox',
+        data: {
+            items: ""
+        },
+        // 在 `methods` 对象中定义方法
+        methods: {
+            goods: function (event,i) {
+
+            }
+        }
+    });
+
+
+
+
+    $(function(){
+        iscontendtype()
+    });
+
+    /*获取url判断类型*/
+    function iscontendtype(){
+        var loctionsrc="?contendid=73f64c8a600b11e8afee309c23a27303";//假设得到的location.search; //获取url中"?"符后的字串
+        //var loctionsrc= window.location.search;
+        var urldatas=GetRequest(loctionsrc);
+//        console.log(urldatas);
+        getcommonddatas(urldatas.contendid);
+
+
+    }
+
+    function getcommonddatas(postdata){
+        var tjdatas={"contentid":postdata};
+//        console.log("tjdatas:");
+//        console.log(tjdatas);
+//        tjdatas=JSON.stringify(tjdatas);
+
+        $.ajax({
+            url : path2+'/CTKJSEVER/content/sharecontent.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+//            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: tjdatas,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+                console.log("获取失败：");
+                console.log(data);
+            },
+            success:function(diskJson){
+                //layer.msg("获取成功");
+//                console.log("gettijiao 2:");
+//                console.log(diskJson);
+                if(diskJson.code =="1000"){
+                    condataqf(diskJson.data);
+                }else{
+                    layer.msg("网络异常，请重试！！")
+                }
+
+            }
+        });
+    }
+
+    function condataqf(condatas){
+        if(condatas.userheadphoto && condatas.userheadphoto !=""){
+            commendinfo.userhead=condatas.userheadphoto;
+        }
+        if(condatas.username && condatas.username !=""){
+            commendinfo.userhead=condatas.username;
+        }else{
+            commendinfo.userhead=condatas.contentuid;
+        }
+        if(condatas.contenttitle && condatas.contenttitle !=""){
+            commendinfo.commendTitle=condatas.contenttitle;
+        }
+
+        if(condatas.contenttype == "1"){
+            $("#mainContntShowbox").css({"height":"auto"});
+            $("#mainContntShowbox").load("moviedetial.html",function(){
+                var movieurl=JSON.parse(condatas.contenturllist);
+//               console.log(movieurl);
+                $("#video").attr("src",movieurl[1]);
+
+            })
+        }else if(condatas.contenttype == "2"){
+            $("#mainContntShowbox").css({"height":"auto"});
+            var picturelist=JSON.parse(condatas.contenturllist);
+            $("#mainContntShowbox").load("picturedetial.html",function(){
+                if(picturelist.length==1){
+                    $("#pictureList").addClass("along");
+                }
+                picdata(picturelist);
+            })
+        }
+
+        /*获取更多推荐*/
+        let conttendtag=condatas.contenttag.split(";")[0];
+        getmoretj(conttendtag)
+    }
+
+
+    /*获取更多推荐*/
+    function getmoretj(conttendtag){
+       var tjdatas={"tagid":"2341"};
+        tjdatas=JSON.stringify(tjdatas);
+       // console.log(tjdatas);
+        $.ajax({
+            url :path2+'/CTKJSEVER/bannertag/sharesmalltag.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType:"application/json",
+            dataType:"JSON",
+            async:true,
+            data: tjdatas,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+                console.log("获取失败：");
+                console.log(data);
+            },
+            success:function(diskJson){
+//                console.log("更多推荐:");
+//                console.log(diskJson);
+                if(diskJson.code =="1000"){
+                    commendmore.items=diskJson.data.rows;
+                }else{
+                    layer.msg("网络异常，请重试！！")
+                }
+
+            }
+        });
+    }
+
+</script>
+</body>
+</html>

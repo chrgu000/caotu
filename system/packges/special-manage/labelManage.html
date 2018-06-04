@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> 标签管理</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link href="../../css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+    <!-- jqgrid-->
+    <link href="../../css/plugins/jqgrid/ui.jqgrid.css?0820" rel="stylesheet">
+
+    <link href="../../css/animate.css" rel="stylesheet">
+    <link href="../../css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="../../css/common.css" rel="stylesheet">
+    <!-- 全局js -->
+    <script src="../../js/jquery.min.js?v=2.1.4"></script>
+    <script src="../../plugin/layer/layer.js"></script>
+    <script src="../../js/vue.js"></script>
+    <style>
+        /* Additional style to fix warning dialog position */
+
+        #alertmod_table_list_2 {
+            top: 900px !important;
+        }
+    </style>
+
+</head>
+
+<body class="gray-bg">
+    <div style="padding-left:28px;padding-top:10px;">
+        <select name="" id="newLabelLevel">
+            <option value="1">一级标签</option>
+            <option value="2">二级标签</option>
+            <option value="3">三级标签</option>
+        </select>
+        <button type="button" class="btn btn-sm btn-primary" id="createLabel">新 建</button>
+    </div>
+    <div class="wrapper wrapper-content  animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox-content">
+                    <div class="jqGrid_wrapper" id="tablelist">
+                        <!--   <table id="table_list_2"></table>-->
+                        <table  class="table table-striped" id="tablelistbox">
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>标签名</th>
+                                <th>标签级别  <select name="" id="chooseLabelLevel">
+                                    <option value="0">全</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                </select></th>
+                                <th>添加时间</th>
+                                <th>专栏数</th>
+                                <th>内容数</th>
+                                <th>添加人</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tablelistTbody">
+                            <tr v-for="(item,index) in items">
+                                <td>{{index+1}}</td>
+                                <td>{{item.tagname}}</td>
+                                <td>{{item.taglevel }}</td>
+                                <td>{{item.createtime}}</td>
+                                <td>{{item.tipcount}}</td>
+                                <td >{{item.contentcount}}</td>
+                                <td >{{item.createuser}}</td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                        <div id="pagerlist">
+                            <div id="pagerbtnlist">
+                                <span class="glyphicon glyphicon-backward gbtn" id="prepagebtn" onclick="prepage2()"></span>
+                                <span class="addpagebox">
+                                    <span id="jumppage" onclick="jumppage2()">跳转到</span>
+                                    <input type="number" id="addpageinput" value="1" max="" min="1"/>
+                                    共 <span id="allpage">1</span>页
+                                </span>
+                                <span class="glyphicon glyphicon-forward gbtn" id="nextpagebtn" onclick="nextpage2()"></span>
+                            </div>
+                            <div id="allcontbox">
+                                <p id="allconts"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="../../js/index.js"></script>
+    <!-- Page-Level Scripts -->
+    <script>
+        //新建标签
+        $("#createLabel").click(function(){
+            var lve=$("#newLabelLevel").val();
+            var url="labelsetpage"+lve+".html";
+            $("#contentPageBox").load(url);
+
+        });
+
+
+
+        var labeldata = new Vue({
+            el: '#tablelistTbody',
+            data: {
+                items:""
+            },
+            // 在 `methods` 对象中定义方法
+            methods: {
+                greet: function (event) {
+
+                }
+            }
+        });
+
+        getlabel("",1);
+
+        function getlabel(taglevel,pageno){
+            var postdata={"taglevel":taglevel,"pageno":pageno};
+            postdata=JSON.stringify(postdata);
+            $.ajax({
+                url : path2+'/CTKJBUSINESS/tag/taglist.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: postdata,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    //console.log("获取失败：");
+                    //console.log(data);
+                },
+                success:function(diskJson){
+                    //console.log("标签表：");
+                    //console.log(diskJson);
+                    /*翻页信息*/
+                    pageinfo2(diskJson.data,pageno);//翻页控件信息
+                    labeldata.items=diskJson.data.rows;
+
+
+                }
+            });
+        }
+
+
+        $("#chooseLabelLevel").change(function(){
+            var lev=$(this).val();
+            if(lev == "0"){
+                lev="";
+                getlabel(lev,1);
+            }else{
+                getlabel(lev,1);
+            }
+        })
+
+        /*翻页*/
+        /*下一页*/
+        function nextpage2(){
+            var page=parseInt($("#addpageinput").val());
+            var allpage=parseInt($("#allpage").html());
+            var lev=$("#chooseLabelLevel").val();
+            if(lev == "0"){
+                lev="";
+            }
+            if(page < allpage){
+                //console.log(page)
+                getlabel(lev,page+1);
+            }
+        }
+        /*上一页*/
+        function prepage2(){
+            var page=parseInt($("#addpageinput").val());
+            var allpage=parseInt($("#allpage").html());
+            var lev=$("#chooseLabelLevel").val();
+            if(lev == "0"){
+                lev="";
+            }
+            if(page >1){
+                // console.log(page)
+                getlabel(lev,page-1);
+            }
+        }
+        /*跳转到页面*/
+        function jumppage2(){
+            var page=parseInt($("#addpageinput").val());
+            var lev=$("#chooseLabelLevel").val();
+            if(lev == "0"){
+                lev="";
+            }
+            getlabel(lev,page);
+        }
+    </script>
+
+    
+    
+
+</body>
+
+</html>

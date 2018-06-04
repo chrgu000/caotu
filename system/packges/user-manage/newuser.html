@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>新增马甲</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link href="../../css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../css/animate.css" rel="stylesheet">
+    <link href="../../plugin/layer/skin/layer.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../../js/plugins/layer/laydate/need/laydate.css">
+<!--    <link href="../../plugin/datepicker/jquery.datetimepicker.css" rel="stylesheet">-->
+    <link href="../../css/style.css?v=4.1.0" rel="stylesheet">
+
+
+    <style>
+        /* Additional style to fix warning dialog position */
+        .labelBox{width:80%;min-width:370px;margin:0 auto;padding:40px 20px;border:1px solid #bbb;margin-top:50px;min-height: 450px;}
+        .lineBox{width:100%;margin:20px 0;}
+        .lineBox .lineTitle{display:inline-block;width:120px;margin-right:6px;text-align: right;}
+        .lineBox input,
+        .lineBox select{width:200px;height:30px;padding-left:7px;}
+        .page-container{width:180px;height:120px;border:1px dashed #bbb;margin-left:130px;margin-top:-20px;position: relative;}
+        .labelLevelBox select,
+        .labelLevelBox input{width:110px;border:1px solid #bbb;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;}
+        #labelInfo{vertical-align: text-top;}
+        .distpicker{margin-left:130px;margin-top:-20px;overflow: hidden;}
+        .distpicker .form-group{float: left;}
+        .distpicker .form-group select{height:35px;}
+        .page-container{width:180px;height:120px;border:1px dashed #bbb;margin-left:130px;margin-top:-20px;position: relative;}
+        #uploader .filelist li{width:100%;height:100%;margin:0;}
+        #uploader .filelist li p.imgWrap{width:100%;height:100%;}
+        #uploader .filelist li img{height:100%;width:auto;}
+        #uploader .filelist li p.title{display: none;}
+        #uploader{width:100%;height:100%;cursor: pointer;}
+        #file-selector{position: absolute;top:0;left:0;width:100%;height:100%;z-index:90;opacity: 0;cursor: pointer;}
+        #upfileshowbox{width:100%;height:100%;position: relative;}
+        #upfileshowbox .fontshow{width:80%;height:40px;position: absolute;left:10%;top:36px;z-index:50;display: inline-block;background:#0088cc;color:#fff;text-align: center;line-height: 40px;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;}
+        #upfileshowbox .fontshow.hide{display: none;}
+        #uploader:hover #upfileshowbox .fontshow.hide{display: inline-block;opacity: 0.5;}
+        .must{color:red;font-size:14px;}
+        #birthDateYear,#birthDateMonth{width:100px;}
+    </style>
+
+</head>
+
+<body class="gray-bg">
+   <div class="labelBox">
+        <div class="lineBox">
+            <span class="lineTitle">用户名：</span>
+            <input type="text" id="userName" maxlength="16" value="" placeholder="请输入用户名"/>
+            <i class="must">*最多16个字</i>
+        </div>
+       <div class="lineBox">
+           <span class="lineTitle">用户头像：</span>
+           <div class="page-container">
+               <div id="uploader" class="wu-example">
+                   <input type="file" value="" id="file-selector" accept=".png,.jpg,.gif,.jpeg"/>
+
+                   <div id="upfileshowbox">
+                       <span class="fontshow">添加头像</span>
+                       <img src="" alt="" id="fileimg" style="width:auto;height:100%;max-width: 100%;"/>
+                   </div>
+               </div>
+           </div>
+       </div>
+
+       <div class="lineBox">
+           <span class="lineTitle">用户性别：</span>
+           <select name="" id="userSex">
+               <option value="0">男</option>
+               <option value="1">女</option>
+           </select>
+       </div>
+       <div class="lineBox">
+           <span class="lineTitle">地区：</span>
+           <div data-toggle="distpicker" class="distpicker">
+               <div class="form-group">
+                   <label class="sr-only" for="province7">Province</label>
+                   <select class="form-control" id="province7"></select>
+               </div>
+               <div class="form-group" style="margin-left:3px;">
+                   <label class="sr-only" for="city7">City</label>
+                   <select class="form-control" id="city7"></select>
+               </div>
+           </div>
+       </div>
+       <div class="lineBox">
+           <span class="lineTitle">生日：</span>
+           <select name="" id="birthDateYear">
+
+           </select>
+           <select name="" id="birthDateMonth">
+
+           </select>
+       </div>
+       <!--<div class="lineBox">
+           <span class="lineTitle">管理员：</span>
+           <input type="text" id="labelCreater" value="" placeholder=""/>
+       </div>-->
+       <div class="lineBox" style="padding-left:130px;margin-top:35px;">
+           <button type="button" class="btn btn-sm btn-primary" id="submit" onclick="creatlabel()">提 交</button>
+           <button type="button" class="btn btn-sm btn-primary" id="replay">重 置</button>
+       </div>
+   </div>
+
+    <!-- 全局js -->
+    <script src="../../js/jquery.min.js?v=2.1.4"></script>
+   <!-- Web Uploader -->
+
+   <script src="../../plugin/address/js/distpicker.data.js"></script>
+   <script src="../../plugin/address/js/distpicker.js"></script>
+   <script src="../../plugin/address/js/main.js"></script>
+   <script src="../../plugin/cos-js-sdl-v5/cos-js-sdk-v5.min.js"></script>
+   <script src="../../plugin/cos-js-sdl-v5/cos.js"></script>
+   <script src="../../plugin/layer/layer.js"></script>
+   <script type="text/javascript" src="../../js/index.js"></script>
+    <!-- Page-Level Scripts -->
+    <script>
+        $(function(){
+            getyear();
+            //$('#birthDateYear').datetimepicker({value:date,format:'Y-m'});
+
+        })
+function getyear(){
+    var date = new Date();
+    var year=date.getFullYear();
+    var fy=1940;
+    for(var i=0;(fy+i)<=year;i++){
+        $('#birthDateYear').append(' <option value="'+(fy+i)+'">'+(fy+i)+'年</option>');
+    }
+    for(var t=1;t<=12;t++){
+        $('#birthDateMonth').append(' <option value="'+t+'">'+t+'月</option>');
+    }
+}
+
+        var majiafilse="";
+        /*创建标签*/
+        function creatlabel(){
+            var userid=userdatas.data.userid;
+            var username=$("#userName").val();
+            var usersex=$("#userSex").val();
+              var province=$("#province7").val();
+              var city=$("#city7").val();
+             var location= province+ city;
+                var year=$("#birthDateYear").val();
+                var month=$("#birthDateMonth").val();
+            var userbirthday=year+month;
+            if(username ==""){
+                layer.msg("有必填项为空，请检查后再创建！！");
+            }else{
+                putObject(majiafilse);
+                layer.msg('创建中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:2000}) ;
+                setTimeout(function(){
+                    var userheadphoto=costdk;
+                    var postdata={
+                        "createuser":userid,"username":username,"usersex":usersex,"location":location,
+                        "userbirthday":userbirthday,"userheadphoto":userheadphoto
+                    };
+//                    console.log("postdata:");
+//                    console.log(postdata);
+                    postdata=JSON.stringify(postdata);
+
+                    $.ajax({
+                        url : path2+'/CTKJBUSINESS/vest/addvest.do',
+                        cache:false,//false就不会从浏览器缓存中加载请求信息了
+                        type:"POST",
+                        contentType: "application/json",
+                        dataType:"JSON",
+                        async:true,
+                        data: postdata,
+                        error: function(data){
+                            layer.msg("服务器未响应,请稍后再试!");
+                            //console.log("创建马甲失败：");
+                            //console.log(data);
+                        },
+                        success:function(diskJson){
+                            layer.msg("创建成功!");
+                            $("#userName").val("");
+                            //console.log("创建马甲：");
+                            //console.log(diskJson);
+
+
+                        }
+                    });
+                },2000)
+
+            }
+
+        }
+
+
+        /*重置*/
+        $("#replay").click(function(){
+            $("#userName").val("");
+            $("#upfileshowbox .fontshow").removeClass("hide");
+        })
+
+
+        /*图片显示*/
+        $("#file-selector").change(function(){
+             majiafilse = this.files[0];
+            if (window.FileReader) {
+                $("#upfileshowbox .fontshow").addClass("hide");
+                var reader = new FileReader();
+                reader.readAsDataURL(majiafilse);
+                //监听文件读取结束后事件
+                reader.onloadend = function (e) {
+                    $("#fileimg").attr("src",e.target.result);    //e.target.result就是最后的路径地址
+                };
+
+            }else{
+                $("#upfileshowbox .fontshow").removeClass("hide");
+            }
+        })
+    </script>
+
+    
+    
+
+</body>
+
+</html>

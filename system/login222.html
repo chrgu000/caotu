@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title></title>
+
+    <style>
+        body{background:#bbb;}
+        *{padding:0;margin:0;box-sizing: border-box;}
+        html{overflow:hidden}
+        #userLogBox{width:700px;height:530px;position: fixed;margin:0 auto;left:0;right:0;top:10%;bottom:0;padding-top:7%;}
+        #userLogBox .tittle img{width:430px;height:auto;margin-bottom:1px;}
+        #userLogBox .logFormBox{width:700px;height:436px;padding:20px;padding-top:70px;position: relative;  }
+        #userLogBox .logformbg{position: absolute;left:0;top:0;width:100%;height:auto;z-index: -2;}
+        #userLogBox .logFormBox .tittle{color:#fff;font-size:21px;letter-spacing:2px;}
+        #userLogBox .logFormBox .tittle span{font-size:16px;}
+        #userLogBox .logFormBox .loginputBox{width:70%;margin:0 auto;margin-top:76px;}
+        #userLogBox .logFormBox .inputBox{width:70%;margin:20px auto;position: relative;color:#26d4e2;}
+        #userLogBox .logFormBox .inputBox  input{width:76%;height:35px;border:1px solid #0b4655;padding-left:5px;color:#fff;font-size:16px;background:#01182a;}
+        #userLogBox .logFormBox .inputBox .ico{display:inline-block;width:38px;height:35px;position: absolute;left:8px;top:8px;}
+        #userLogBox .userInputBox .ico{background: url("plugin/log/img/user.png") no-repeat;}
+        #userLogBox .psdInputBox .ico,
+        #userLogBox .yzmInputBox .ico{background: url("plugin/log/img/sr.png") no-repeat;}
+        #userLogBox .logFormBox #yzm{width:68%;}
+        #userLogBox .logFormBox .yzimg{display: inline-block;width:142px;height:50px;border:1px solid #fff;vertical-align: middle;cursor: pointer;line-height: 50px;text-align: center;color:#fff;}
+        #yzmBtn b{padding:3px;}
+        #userLogBox .logFormBox .remberBox{color:#26d4e2;margin-top:-5px;position: relative;}
+        #userLogBox .logFormBox .remberBox label{cursor: pointer;font-size:13px;position: absolute;right:76px;top:0;}
+        #userLogBox .logFormBox .remberBox input{vertical-align: middle;margin-right:5px;background:none;}
+        #userLogBox .logFormBox .btnBox{width:100%;text-align: center;}
+        #logBtn{width:182px;height:65px;display:inline-block;color:#47d5f1;line-height: 65px;text-align: center;font-size:21px;margin-right:10px;position: relative;cursor: pointer;margin-top:50px;background:url("plugin/log/img/logbtn.png") no-repeat;}
+        #logBtn .ico{display: inline-block;width:20px;height:26px;background: url("plugin/log/img/logico.png") no-repeat;vertical-align: middle;margin-right:5px;}
+        #logBtn:hover{color:#009f95;}
+        #userLogBox .logFormBox .error{color:#e61b0c;visibility: hidden;position: absolute;top:35px;right: 10px;font-size:13px;}
+        #userLogBox .logFormBox .error.show{visibility: visible;}
+    </style>
+</head>
+<body>
+<div id="userLogBox">
+    <!--<h3 class="tittle"><img src="img/logo.png" alt=""/></h3>-->
+    <div class="logFormBox">
+        <!--<p class="tittle">用户登录 <span>UserLogin</span></p>-->
+        <div class="loginputBox">
+            <div class="inputBox userInputBox">
+                <input type="text" id="userid" value="" placeholder="请输入用户名"/>
+                <p class="userError error">*格式错误请重新输入!</p>
+            </div>
+            <div class="inputBox psdInputBox">
+                密&nbsp;&nbsp;&nbsp;&nbsp;码：<input type="password" id="psd" value=""/>
+                <p class="psdError error" >*6-18位不含特殊符号的密码!</p>
+            </div>
+            <div class="remberBox"><label for="reb"><input type="checkbox" name="" id="reb"/>记住账号？</label></div>
+            <div class="btnBox">
+                <span id="logBtn">登录</span>
+            </div>
+        </div>
+    </div>
+</div>
+<!--动画效果-->
+	<div class="container">
+		<div id="particles-js"></div>
+
+
+	</div>
+	
+	<script src="plugin/log/js/particles.js"></script>
+	<script src="plugin/log/js/app.js"></script>
+	<script src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="plugin/layer/layer.js"></script>
+<script>
+
+    $("#userid").blur(function() {
+        var phone = $("#userid").val();
+        if(phone ==""){
+            $("#userLogBox .logFormBox .userError").addClass("show").text("用户名不能为空！");
+            return false;
+        }else if (!(/[a-zA-Z0-9_]{3,16}/.test(phone))) {
+            $("#userLogBox .logFormBox .userError").addClass("show").text("用户名格式错误！");
+            return false;
+        } else {
+            $("#userLogBox .logFormBox .userError").removeClass("show");
+        }
+    });
+
+    $("#psd").blur(function() {
+        var phone = $("#psd").val();
+        if(phone ==""){
+            $("#userLogBox .logFormBox .psdError").addClass("show").text("密码不能为空！");
+            return false;
+        }else if (!(/[a-zA-Z0-9_]{6,18}/.test(phone))) {
+            $("#userLogBox .logFormBox .psdError").addClass("show").text("密码格式错误！");
+            return false;
+        } else {
+            $("#userLogBox .logFormBox .psdError").removeClass("show");
+        }
+    });
+    /*  $(function(){
+     yzmrandom();
+     });*/
+    /*$("#yzm").blur(function() {
+                var yzm = $("#yzmBtn .yzm1").text().toLowerCase()
+                        + $("#yzmBtn .yzm2").text().toLowerCase()
+                        + $("#yzmBtn .yzm3").text().toLowerCase()
+                        + $("#yzmBtn .yzm4").text().toLowerCase();
+                var useyzm = $("#yzm").val().toLowerCase();
+                if (useyzm == yzm) {
+                    $(".yzmError").removeClass("show");
+                } else {
+                    $(".yzmError").addClass("show");
+                }
+            });*/
+
+    $("#logBtn").click(function(){
+        login();
+    });
+    // 回车键事件
+    // 绑定键盘按下事件
+    $(document).keypress(function(e) {
+        if(e.which == 13) {
+            login();
+        }
+    });
+    function login(){
+        var username = $("#userid").val();
+        var password = $("#psd").val();
+        var yzm = $("#yzm").val();
+        var userError=$("#userLogBox .logFormBox .userError").hasClass("show");
+        var psdError= $("#userLogBox .logFormBox .psdError").hasClass("show");
+        var yzmError= $(".yzmError").hasClass("show");
+        console.log(username);
+        console.log(password);
+        if(!userError && !psdError  && username!="" && password!="" ){
+            //alert("验证通过");
+             $.ajax({
+             url : ' http://192.168.0.146:8080/logincontrol/logincheck.do?"userid"=username&"userpsd"=password',
+             cache:false,//false就不会从浏览器缓存中加载请求信息了
+             type:"POST",
+             dataType:"jsonp",
+             data :{"userid":username,"userpsd":password},
+             error: function(){layer.msg("服务器未响应,请稍后再试!"); console.log("登陆失败：");
+                 console.log(data);},
+             success:function(diskJson){
+             if(diskJson[0] == "yes"){
+             $("#loginBox .loginCon .logError").removeClass("show");
+             layer.msg("登录成功!");
+             setTimeout(function(){
+             window.location.href="index.shtml";
+             },1000)
+             }else{
+             //$("#loginBox .loginCon .logError").addClass("show");
+             layer.msg("账号或密码错误，请重新输入！")
+             }
+
+             }
+             });
+        }else{
+            layer.msg("输入有误，请重新输入！")
+        }
+       /* if(yzmError || yzm ==""){
+            layer.msg("验证码有误，请重新输入！")
+        }else{
+
+        }*/
+
+    }
+
+
+    $("#yzmBtn").click(function() {
+        //yzmrandom();
+    });
+    //随机验证码
+    function yzmrandom() {
+        var yzmList = [ "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k",
+            "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w",
+            "x", "y", "z", "A", "B", "C", "D", "E", "F", "G", "H",
+            "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U",
+            "V", "W", "X", "Y", "Z", 1, 2, 3, 4, 5, 6, 7, 8, 9 ];
+        var yz1 = yzmList[Math.floor(Math.random() * 60)];
+        var yz2 = yzmList[Math.floor(Math.random() * 60)];
+        var yz3 = yzmList[Math.floor(Math.random() * 60)];
+        var yz4 = yzmList[Math.floor(Math.random() * 60)];
+        var yzbj = Math.floor(Math.random() * 9 + 1);
+        var font1 = Math.floor(Math.random() * 15 + 13);
+        var font2 = Math.floor(Math.random() * 15 + 13);
+        var font3 = Math.floor(Math.random() * 15 + 13);
+        var font4 = Math.floor(Math.random() * 15 + 13);
+        $("#yzmBtn .yzm1").text(yz1).css("font-size", font1 + "px");
+        $("#yzmBtn .yzm2").text(yz2).css("font-size", font2 + "px");
+        $("#yzmBtn .yzm3").text(yz3).css("font-size", font3 + "px");
+        $("#yzmBtn .yzm4").text(yz4).css("font-size", font4 + "px");
+        $("#yzmBtn").css("background", "url(img/yzm-bj" + yzbj + ".jpg)no-repeat");
+        $("#yzmBtn").css("background-size", "cover");
+
+    }
+
+
+    function gettoken(){
+        $.ajax({
+            //url:"${base}/admin/article/article/Com_getwind_tracks.do?count=231&seastringc="+ss+"&firstResult="+firstResult+"&isLoop="+isLoop,
+            url:"http://192.168.0.146:8080/logincontrol/logincheck.do",
+            type:"POST",
+            dataType:"JSON",
+            traditional:true,
+            data:{userid:"ctkj",userpsd:"888888"},
+            async:true,//fasle同步
+            error: function(data){
+                console.log("登陆失败：");
+                console.log(data);
+                layer.msg("服务器未响应!");
+            },
+            success:function(data){
+                console.log("登陆：");
+                console.log(data);
+
+            }
+        });
+    }
+</script>
+</body>
+</html>

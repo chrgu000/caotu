@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>三级标签（专栏标签）</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link href="../../css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../css/animate.css" rel="stylesheet">
+    <link href="../../plugin/layer/skin/layer.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../../js/plugins/layer/laydate/need/laydate.css">
+    <link href="../../css/style.css?v=4.1.0" rel="stylesheet">
+
+    <style>
+        /* Additional style to fix warning dialog position */
+        .labelBox{width:80%;min-width:370px;margin:0 auto;padding:40px 20px;border:1px solid #bbb;margin-top:50px;min-height: 450px;}
+        .lineBox{width:100%;margin:20px 0;}
+        .lineBox .lineTitle{display:inline-block;width:120px;margin-right:6px;text-align: right;}
+        .lineBox input,
+        .lineBox select{width:200px;height:30px;padding-left:7px;}
+        .page-container{width:180px;height:120px;border:1px dashed #bbb;margin-left:130px;margin-top:-20px;position: relative;}
+        #uploader .filelist li{width:100%;height:100%;margin:0;}
+        #uploader .filelist li p.imgWrap{width:100%;height:100%;}
+        #uploader .filelist li img{height:100%;width:auto;}
+        #uploader .filelist li p.title{display: none;}
+        .labelLevelBox select,
+        .labelLevelBox input{width:110px;border:1px solid #bbb;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;}
+        #labelInfo{vertical-align: text-top;}
+        #uploader{width:100%;height:100%;cursor: pointer;}
+        #file-selector{position: absolute;top:0;left:0;width:100%;height:100%;z-index:90;opacity: 0;cursor: pointer;}
+        #upfileshowbox{width:100%;height:100%;position: relative;}
+        #upfileshowbox .fontshow{width:80%;height:40px;position: absolute;left:10%;top:36px;z-index:50;display: inline-block;background:#0088cc;color:#fff;text-align: center;line-height: 40px;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;}
+  #upfileshowbox .fontshow.hide{display: none;}
+        #uploader:hover #upfileshowbox .fontshow.hide{display: inline-block;opacity: 0.5;}
+        .must{color:red;font-size:14px;}
+    </style>
+
+</head>
+
+<body class="gray-bg">
+   <div class="labelBox">
+        <div class="lineBox">
+            <span class="lineTitle">标签名称：</span>
+            <input type="text" id="labelName" value="" placeholder="标签名"/>
+            <b class="must">*</b>
+        </div>
+       <div class="lineBox">
+           <span class="lineTitle">专栏名称：</span>
+           <input type="text" id="labelNameNick" value="" maxlength="15" placeholder="专栏名称"/>
+           <i class="must">*最多15个字</i>
+       </div>
+       <div class="lineBox labelLevelBox">
+           <span class="lineTitle">专栏标签：</span>
+           <select name="" id="labelLevel">
+               <option value="0">一级标签选择</option>
+               <option value="1">一级标签1</option>
+               <option value="2">一级标签2</option>
+           </select>
+           <select name="" id="labelLeve2">
+               <option value="0">二级标签选择</option>
+               <option value="1">二级标签1</option>
+               <option value="2">二级标签2</option>
+           </select>
+       </div>
+       <div class="lineBox">
+           <span class="lineTitle">专栏头像：</span>
+           <div class="page-container">
+               <div id="uploader" class="wu-example">
+                   <input type="file" value="" id="file-selector" accept=".png,.jpg,.gif,.jpeg"/>
+
+                   <div id="upfileshowbox">
+                       <span class="fontshow">添加头像</span>
+                       <img src="" alt="" id="fileimg" style="width:auto;height:100%;max-width: 100%;"/>
+                   </div>
+               </div>
+           </div>
+       </div>
+
+       <div class="lineBox">
+           <span class="lineTitle">专栏简介：</span>
+           <textarea rows="5" cols="35" maxlength="64" id="labelInfo">
+
+            </textarea>
+       </div>
+      <!-- <div class="lineBox">
+           <span class="lineTitle">创建人：</span>
+           <input type="text" id="labelCreater" value="" placeholder=""/>
+       </div>-->
+       <div class="lineBox" style="padding-left:130px;margin-top:35px;">
+           <button type="button" class="btn btn-sm btn-primary" id="submit" onclick="creatlabel()">提 交</button>
+           <button type="button" class="btn btn-sm btn-primary" id="replay" onclick="replay()">重 置</button>
+       </div>
+   </div>
+
+
+    <!-- 全局js -->
+    <script src="../../js/jquery.min.js?v=2.1.4"></script>
+    <script src="../../plugin/cos-js-sdl-v5/cos-js-sdk-v5.min.js"></script>
+    <script src="../../plugin/cos-js-sdl-v5/cos.js"></script>
+   <script src="../../plugin/layer/layer.js"></script>
+   <script type="text/javascript" src="../../js/index.js"></script>
+   <!-- Page-Level Scripts -->
+   <script>
+        $(function(){
+            getlabel();
+            getlabel2();
+        });
+
+       /*获取一级标签*/
+       function getlabel(){
+//            var userid=userdatas.data.userid;
+           layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000}) ;
+           var postdata={"taglevel":"1"};
+           postdata=JSON.stringify(postdata);
+           $.ajax({
+               url : path2+'/CTKJBUSINESS/tag/taglist.do',
+               cache:false,//false就不会从浏览器缓存中加载请求信息了
+               type:"POST",
+               contentType: "application/json",
+               dataType:"JSON",
+               async:true,
+               data: postdata,
+               error: function(data){
+                   layer.msg("服务器未响应,请稍后再试!");
+                   //console.log("获取失败：");
+                   //console.log(data);
+               },
+               success:function(diskJson){
+                   layer.closeAll();
+                   //console.log("标签表：");
+                   //console.log(diskJson);
+                   $("#labelLevel").empty();
+                   $.each(diskJson.data.rows,function(i,n){
+                       $("#labelLevel").append('<option value="'+ n.tagid+'">'+ n.tagname+'</option>')
+                   })
+
+               }
+           });
+       }
+
+       /*获取二级标签*/
+       function getlabel2(){
+//            var userid=userdatas.data.userid;
+           layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000}) ;
+           var postdata={"taglevel":"2"};
+           postdata=JSON.stringify(postdata);
+           $.ajax({
+               url : path2+'/CTKJBUSINESS/tag/taglist.do',
+               cache:false,//false就不会从浏览器缓存中加载请求信息了
+               type:"POST",
+               contentType: "application/json",
+               dataType:"JSON",
+               async:true,
+               data: postdata,
+               error: function(data){
+                   layer.msg("服务器未响应,请稍后再试!");
+                   //console.log("获取失败：");
+                   //console.log(data);
+               },
+               success:function(diskJson){
+                   layer.closeAll();
+                   //console.log("标签表2：");
+                   //console.log(diskJson);
+                   $("#labelLeve2").empty();
+                   $.each(diskJson.data.rows,function(i,n){
+                       $("#labelLeve2").append('<option value="'+ n.tagid+'">'+ n.tagname+'</option>')
+                   })
+
+               }
+           });
+       }
+        var files="";
+       /*创建标签*/
+       function creatlabel(){
+           var userid=userdatas.data.userid;
+           var taglevel=3;
+           var tagname=$("#labelName").val();
+           var tagalies=$("#labelNameNick").val();
+           var onelevel=$("#labelLevel").val();
+           var twolevel=$("#labelLeve2").val();
+           var taglead= $.trim($("#labelInfo").val());
+
+           if(tagname =="" ||onelevel =="" ||twolevel==""){
+               layer.msg("有必填项为空，请检查后再创建！！");
+
+           }else{
+
+               putObject(files);
+               layer.msg('创建中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:2000}) ;
+               setTimeout(function(){
+                   var tagphotourl=costdk;
+                /*   console.log("tagphotourl:");
+                   console.log(tagphotourl);*/
+                   var postdata={
+                       "createuser":userid,"taglevel":taglevel,"tagname":tagname,"tagalias":tagalies,
+                       "onelevel":onelevel,"twolevel":twolevel,"taglead":taglead,"tagphoto":tagphotourl
+                   };
+//                   console.log("postdata:");
+//                   console.log(postdata);
+                   postdata=JSON.stringify(postdata);
+                   $.ajax({
+                       url : path2+'/CTKJBUSINESS/tag/updatetag.do',
+                       cache:false,//false就不会从浏览器缓存中加载请求信息了
+                       type:"POST",
+                       contentType: "application/json",
+                       dataType:"JSON",
+                       async:true,
+                       data: postdata,
+                       error: function(data){
+                           layer.msg("服务器未响应,请稍后再试!");
+                           //console.log("创建标签失败：");
+                           //console.log(data);
+                       },
+                       success:function(diskJson){
+                           replay();
+                           layer.msg("创建成功！");
+//                           console.log("创建标签3：");
+//                           console.log(diskJson);
+
+
+                       }
+                   });
+               },2000)
+
+
+           }
+
+       }
+
+
+       /*重置*/
+        function replay(){
+            $("#labelName").val("");
+            $("#labelNameNick").val("");
+            $("#labelInfo").val("");
+            $("#file-selector").val("");
+            $("#fileimg").attr("src","");
+            $(" #upfileshowbox .fontshow").removeClass("hide");
+        }
+
+
+       $("#file-selector").change(function(){
+           files = this.files[0];
+           if (window.FileReader) {
+               $(" #upfileshowbox .fontshow").addClass("hide");
+               var reader = new FileReader();
+               reader.readAsDataURL(files);
+               //监听文件读取结束后事件
+               reader.onloadend = function (e) {
+                   $("#fileimg").attr("src",e.target.result);    //e.target.result就是最后的路径地址
+               };
+
+
+
+           }else{
+               $(" #upfileshowbox .fontshow").removeClass("hide");
+           }
+       })
+
+
+
+   </script>
+    
+    
+
+</body>
+
+</html>

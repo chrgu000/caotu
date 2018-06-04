@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--360浏览器优先以webkit内核解析-->
+    <title></title>
+    <link href="../../css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../css/animate.css" rel="stylesheet">
+    <link href="../../css/style.css?v=4.1.0" rel="stylesheet">
+    <script src="../../js/jquery.min.js?v=2.1.4"></script>
+    <link href="../../plugin/datepicker/jquery.datetimepicker.css" rel="stylesheet">
+    <script src="../../plugin/datepicker/jquery.datetimepicker.full.min.js"></script>
+    <script src="../../plugin/layer/layer.js"></script>
+    <script src="../../js/vue.js"></script>
+    <style>
+        #topKzCon{padding:10px 20px;;}
+        #topKzCon .btn{color:#0055aa;}
+        #topKzCon .btn:hover{    background-image: none;  outline: 0;  -webkit-box-shadow: inset 0 3px 5px rgba(0,0,0,.125); }
+        .btnRight{float:right;}
+        .conBox{width:100%;height:535px;border:1px solid #bbb;}
+        #mainCont{width:60%;height:100%;float:left;border-right:1px solid #bbb;}
+        #detailCon{width:40%;height:100%;float:left;}
+        #mainCont .mainContitleBox{width:100%;height:45px;line-height: 45px;padding:0 20px;border-bottom:1px solid rgba(187,187,187,1);}
+        #mainConTitle{width:60%;height:30px;margin:0 10px;padding-left:9px;}
+        #mainContain{width:100%;height:calc(100% - 45px);background:#fff;overflow-y: auto;}
+        #detailCon .detailContitleBox{width:100%;}
+        #detailCon .detailContitleBox td{height:44px;border:1px solid #ccc;text-align: left;padding-left:10px;}
+        #detailCon .detailContitleBox td input,
+        #detailCon .detailContitleBox td select{height:30px;width:76px;padding-left:3px;border:1px solid #bbb;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;}
+        #talkAboutBox .tittleBox{width:100%;height:40px;line-height: 40px;border:1px solid #bbb;}
+        #talkAboutBox .tittleBox span{display:inline-block;height:100%;text-align: center;}
+        #talkAboutBox  .commentSectionBox{width:100%;padding:12px;height:176px;overflow-y: auto;}
+        #talkAboutBox  .commentSectionBox .commentSection{width:100%;overflow: hidden;height:auto;}
+        #talkAboutBox .commentSection .userTitle .imgBox{width:25px;height:25px;border:1px solid #aaa;overflow: hidden;display: inline-block;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;vertical-align: middle;}
+        #talkAboutBox{background:#f0f3f4;}
+        #talkAboutBox .userTitle .imgBox img{width:100%;height:100%;}
+        #talkAboutBox .commentSection{border-bottom:1px dashed #bbb;}
+        #talkAboutBox .commentSection .userTitle{width:150px;float:left;}
+        #talkAboutBox .commentSection .conmentsConts{width:calc(100% - 300px);padding:0 15px;float:left;}
+        #talkAboutBox .commentSection .doBox{float:left;}
+        #talkAboutBox .commentSection .doBox .reply{color:#0064b6;padding-right:12px;}
+        #talkAboutBox .commentSection .praiseBox i{font-size:18px;margin-right:3px;}
+        #talkAboutBox .commontsSrBox{width:100%;height:120px;padding:12px;border:1px solid #bbb;position: relative;}
+        #myNameSelect{width:145px;height:30px;vertical-align: text-top;}
+        #myComments{width:calc(100% - 400px);vertical-align: text-top;margin-right:9px;height:75px;}
+        #mySetNum{width:75px;height:20px;padding-left:6px;}
+        #myConmentsEnter{position: absolute;left:20px;top:30px;}
+        #myConmentsSub{position: absolute;left:95px;top:30px;}
+        .selefCon:hover{background:#179d82;color:#fff;}
+        .recalltalkcon{padding-left:12px;position: relative}
+        .recalltalkcon:hover{background:#179d82;color:#fff;}
+        .recalltalkcon .callDoBox{position: absolute;right:-70px;bottom:3px;font-size:11px;}
+        .recalltalkcon .callDoBox .reply{padding-right:6px;}
+        .recalltalkcon:hover .callDoBox span{color:#bbb;!important;}
+        #talkAboutBox .reply:hover,
+        #talkAboutBox .praiseBox:hover{color:#f91515;cursor: pointer;}
+        #talkAboutBox .commentSection .doBox .reply:hover{color:#f91515;}
+        #commentlistBox{width:100%;height:200px;overflow-y: auto;}
+    </style>
+</head>
+
+<body class="gray-bg">
+    <div id="topKzCon">
+
+        <a class="backBtn btn "  href="javascript:void(0);" onclick="backuncheck()">返回</a>
+        <a href="#" class="preBtn btn" >上一页</a>
+        <a href="#" class="nextBtn btn" >下一页</a>
+        <span class="submit btn" onclick="subd()">提交</span>
+        <a href="#" class="requck btn btnRight">重置</a>
+    </div>
+    <div class="conBox">
+        <div id="mainCont">
+            <div class="mainContitleBox">
+                标题 <input type="text" id="mainConTitle" maxlength="140" placeholder="我是标题">
+                <i class="contitleTip">4个字</i>
+            </div>
+            <!--视频和图片页面的容器-->
+            <div id="mainContain">
+
+            </div>
+        </div>
+        <div id="detailCon">
+            <table class="detailContitleBox">
+                <tbody>
+                    <tr>
+                        <td>
+                            类型：<span id="checkType"></span>
+
+                        </td>
+                        <td>
+                            内容等级
+                            <select name="" id="checkConLevel">
+                                <option value="3">A</option>
+                                <option value="2">B</option>
+                                <option value="1">C</option>
+                                <option value="D">D</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="conlabeltd">
+                            标签分类
+                            <select name="" id="checkTag">
+                               <!-- <option value="1">标签1</option>
+                                <option value="2">标签2</option>
+                                <option value="3">标签3</option>-->
+                            </select>
+                            <select name="" id="checkTag2">
+                              <!--  <option value="1">标签1</option>
+                                <option value="2">标签2</option>
+                                <option value="3">标签3</option>-->
+                            </select>
+                            <select name="" id="checkTag3">
+                                <!--<option value="1">标签1</option>
+                                <option value="2">标签2</option>
+                                <option value="3">标签3</option>-->
+                            </select>
+                        </td>
+                        <td id="movietypetd">
+                            横竖视频
+                            <select name="" id="movieStyle">
+                                <option value="0">—请选择—</option>
+                                <option value="1">横屏</option>
+                                <option value="2">竖屏</option>
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            点赞数 <input type="number" id="goodNum" value="1" min="0"/>
+                        </td>
+                        <td>
+                            发布人
+                            <select name="" id="checkpublisher">
+                                <!--<option value="A">A</option>
+                                <option value="B">B</option>
+                                <option value="C">C</option>-->
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            抓取来源：<span id="checkGetfrom">新浪微博</span> <!--<a href="#">源地址：www.5555.com</a>-->
+                        </td>
+                    </tr>
+                   <!-- <tr>
+                        <td colspan="2" style="height:133px;">
+                            专栏选择：<select name="" id="checkColumChoose" style="width:200px;">
+                            <option value="1">我是专栏一</option>
+                        </select>
+                        </td>
+                    </tr>-->
+                    <tr>
+                        <td colspan="2">
+                            预发布时间：
+                            <input type="text" value="" id="prereleaseTime" style="width:200px;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            最后审核人：
+                            <span id="finalAuditor"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div id="commentlistBox">
+                <ul>
+                    <li></li>
+                </ul>
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <!--底部评论管理-->
+    <div id="talkAboutBox">
+        <div class="tittleBox">
+            <span style="width:43%;">评论管理</span>
+            <span style="width:25%;border-right:1px solid #bbb;border-left:1px solid #bbb;">评论数 ：<b class="talkNum"></b></span>
+            <span style="width:25%;">热评数 :<b class="hotTalkNum"></b></span>
+        </div>
+        <div class="commentSectionBox" id="commentSectionBox">
+            <div class="commentSection" v-for="(item,i) in items" v-bind:data-commentid="item.commentid" v-bind:data-commentreply="item.commentreply" v-bind:data-replycomment="item.replycomment" v-bind:data-replyuser="item.replyuser" v-bind:data-replyfirst="item.replyfirst">
+                <p class="userTitle">
+                    <span class="imgBox"><img v-bind:src="item.userimg" alt=""/></span>
+                    <span class="userName" v-bind:data-id="item.userid">{{item.userName}}</span>
+                </p>
+                <div class="conmentsConts" v-bind:data-replyuser="item.replyuser">
+                    <p class="selefCon" v-bind:data-contentid="item.contentid">{{item.commenttext}}</p>
+
+                    <div class="recalltalkcon" v-for="(itemcon,d) in item.recall"  v-bind:data-contentid="item.contentid"  v-bind:data-commentid="itemcon.commentid" v-bind:data-commentreply="itemcon.commentreply" v-bind:data-replycomment="itemcon.replycomment" v-bind:data-replyuser="itemcon.replyuser" v-bind:data-replyfirst="itemcon.replyfirst">
+                        <span class="recalluser" :data-id="itemcon.userid"  v-bind:data-replyuser="item.replyuser">{{itemcon.userName}}</span>
+                        {{itemcon.commenttext}}
+                        <div class="callDoBox">
+                            <span class="reply" v-on:click="backcalltalk(itemcon,i,d)">回复</span>
+                            <span class="praiseBox"  v-on:click="callgoods(itemcon,i,d)"><i class="glyphicon glyphicon-thumbs-up"></i><b class="praiseNum">{{itemcon.commentgood}}</b></span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="doBox">
+                    <span class="reply" v-on:click="backtalk(item,i)">回复</span>
+                    <span class="praiseBox" v-on:click="goods(item,i)"><i class="glyphicon glyphicon-thumbs-up"></i><b class="praiseNum">{{item.commentgood}}</b></span>
+                </div>
+            </div>
+
+        </div>
+
+
+
+        <div class="commontsSrBox" id="commontsSrBox" data-type="0" data-list="" data-list2="" style="background:#f0f3f4;border-top:1px solid #bbb;padding:3px;padding-bottom:20px;">
+            <select name="" id="myNameSelect">
+               <!-- <option value="12313"><span class="myname">我是马甲用户</span></option>
+                <option value="123134"><span class="myname">我是马甲用户2</span></option>
+                <option value="123135"><span class="myname">我是马甲用户3</span></option>-->
+            </select>
+            <textarea rows="1" cols="20" id="myComments" maxlength="200">
+
+            </textarea>
+            <span class="" style="position: relative;">
+                点赞数 <input type="number" id="mySetNum" value="1"/>
+                <button type="button" class="btn btn-sm btn-primary" id="myConmentsEnter" onclick="enterd()">发送</button>
+                <button type="button" class="btn btn-sm btn-primary" id="myConmentsSub" onclick="subd()">提交</button>
+            </span>
+
+        </div>
+    </div>
+
+
+
+<script type="text/javascript" src="../../js/index.js"></script>
+<script type="text/javascript">
+
+/*    var talkdatas=[
+        {
+            majiauser:"001",majiauserimg:"../../img/p1.jpg",majiauserName:"majia1",talkcon:"我是主机用户之地大苏打。。。", goods:255,
+            recall:[
+                {recallid:"c11",recallname:"cname1",berecallid:"c11",berecallname:"cname1",recallcon:"哈哈哈哈啊",goods:122},
+                {recallid:"c12",recallname:"cname2",berecallid:"c11",berecallname:"cname1",recallcon:"哈哈哈哈啊2",goods:12}
+            ]
+        }
+    ];*/
+
+/*
+"commenttext":[ {
+    "commentid":"","userid":"","replyuser":"","commentreply":1,"userimg":"../../img/p1.jpg","userName":"","contentid":"","commenttext":"。。。", "commentgood":255,"replycomment":"","replyfirst":"",
+    "recall":[
+        { "commentid":"","userid":"","replyuser":"","commentreply":1,"userimg":"../../img/p1.jpg","userName":"","contemtid":"","commenttext":"。。。", "commentgood":255,"replycomment":"","replyfirst":""},
+        { "commentid":"","userid":"","replyuser":"","commentreply":1,"userimg":"../../img/p1.jpg","userName":"","contemtid":"","commenttext":"。。。", "commentgood":255,"replycomment":"","replyfirst":""}
+    ]
+}]
+*/
+
+
+    $(function(){
+        getchecktype();
+        getlabellist();
+        getpush();
+        var date=new Date();
+        $('#prereleaseTime').datetimepicker({value:date,format:'Y-m-d'});
+    })
+
+
+    /*品论区*/
+    var usertalk = new Vue({
+        el: '#commentSectionBox',
+        data: {
+            items: []
+        },
+        // 在 `methods` 对象中定义方法
+        methods: {
+            goods: function (event,i) {
+                this.items[i].commentgood++;
+            },
+            callgoods:function (event,i,d) {
+                this.items[i].recall[d].commentgood++;
+            },
+            backtalk:function(event,i){
+                var callid=this.items[i].userid;
+                var callname=this.items[i].userName;
+                $("#commontsSrBox").attr("data-type",1);
+                $("#commontsSrBox").attr("data-list",i);
+                $("#commontsSrBox").attr("data-list2","");
+                $("#myComments").val("回复"+callname+"：")
+            },
+            backcalltalk:function(event,i,d){
+                var callid=this.items[i].recall[d].userid;
+                var callname=this.items[i].recall[d].userName;
+                $("#commontsSrBox").attr("data-type",2);
+                $("#commontsSrBox").attr("data-list",i);
+                $("#commontsSrBox").attr("data-list2",d);
+                $("#myComments").val("回复"+callname+"：")
+            }
+        }
+    });
+
+    /*获取审核类型加载视频/图片页面*/
+    function getchecktype(){
+       //根据iframe的id获取对象
+       let ifinfo = window.location.search;
+        ifinfo=ifinfo.substring(4);
+       ifinfo=ifinfo.split(",");
+        var rehref = window.location.href;
+        $("#topKzCon .requck ").attr("href",rehref);//重置
+        var localindodata22=JSON.parse(localStorage.uncheckdata);
+        //console.log("localindodata22:");
+        //console.log(localindodata22);
+        if(ifinfo[0] =="0"){
+            $("#topKzCon .preBtn").attr("href","javascript:void(0);");//上一页
+        }else{
+            var prenum=Number(ifinfo[0])-1;
+            var contype=localindodata22.ContentList[prenum].daqtype;
+            $("#topKzCon .preBtn").attr("href","checksconts.html?in="+prenum+","+contype);//上一页
+        }
+        if(ifinfo[0] =="9"){
+            $("#topKzCon .nextBtn ").attr("href","javascript:void(0);");//下一页
+        }else{
+            var nextnum=Number(ifinfo[0])+1;
+            var contype2=localindodata22.ContentList[nextnum].daqtype;
+            $("#topKzCon .nextBtn ").attr("href","checksconts.html?in="+nextnum+","+contype2);//下一页
+        }
+       //ifinfo=JSON.parse(ifinfo);
+        ////console.log(ifinfo);
+        var murl="moveicheck.html";
+        if(ifinfo[1] == "3"){
+            murl="picturecheck.html?in="+ifinfo[0];
+            $("#checkType").html("图片");
+            $("#movietypetd").css({"display":"none"});
+        }else{
+            murl="moveicheck.html?in="+ifinfo[0];
+            $("#movietypetd").css({"display":"inline-block"});
+            if(ifinfo[1] == "1"){
+                $("#checkType").html("横视频");
+               //$("#movieStyle").val("1");
+            }else{
+                $("#checkType").html("竖视频");
+                //$("#movieStyle").val("2");
+            }
+        }
+        ////console.log(ifinfo[1]);
+       // //console.log(murl);
+        $("#mainContain").load(murl);
+
+        if(localStorage.uncheckdata){
+            var localindodata=JSON.parse(localStorage.uncheckdata);
+            var index=ifinfo[0];
+            var rightindodata=localindodata.ContentList[index];
+            ////console.log("rightindodata:");
+           // //console.log(rightindodata);
+            rightinfo(rightindodata);
+        }
+
+    }
+
+    /*视频/图片右侧信息*/
+    function rightinfo(datainfolist){
+        var contitle=filteremoji(datainfolist.daqtitle);
+        $("#mainConTitle").val(contitle);
+        $("#mainCont .contitleTip").html(datainfolist.daqtitle.length+"个字");
+        $("#checkGetfrom").html(datainfolist.daqsource);
+        $("#finalAuditor").html(userdatas.data.username);
+        $("#commentlistBox ul").empty();
+        $.each(datainfolist.commentlist,function(i,n){
+            $("#commentlistBox ul").append("<li>"+n.commenttext+"</li>")
+        })
+    }
+
+    /*标签列表获取*/
+    function getlabellist(){
+        $.ajax({
+            url : path2+'/CTKJBUSINESS/tag/taglist.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: "{\"taglevel\":\"3\",\"pageno\":\"1\",\" pagesize\":\"999\"}",
+            //data: {taglevel:3,pageno:1,pagesize:999},
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+                //console.log("标签列表获取失败：");
+                //console.log(data);
+            },
+            success:function(diskJson){
+//                //console.log("标签列表获取：");
+//                //console.log(diskJson);
+                $("#checkTag").empty();
+                $("#checkTag2").empty();
+                $("#checkTag3").empty();
+                $("#checkTag").append(' <option value="0">—选择标签—</option>');
+                $("#checkTag2").append(' <option value="0">—选择标签—</option>');
+                $("#checkTag3").append(' <option value="0">—选择标签—</option>');
+                $.each(diskJson.data.rows,function(i,n){
+                    $("#checkTag").append(' <option value="'+ n.tagid+'">'+ n.tagname+'</option>');
+                    $("#checkTag2").append(' <option value="'+ n.tagid+'">'+ n.tagname+'</option>');
+                    $("#checkTag3").append(' <option value="'+ n.tagid+'">'+ n.tagname+'</option>');
+                });
+
+            }
+        });
+    }
+
+    /*马甲用户列表获取*/
+    function getpush(){
+        var createuser=userdatas.data.userid;
+        $.ajax({
+            url : path2+'/CTKJBUSINESS/vest/vestlist.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: "{\"createuser\":\""+createuser+"\",\"pageno\":\"1\",\" pagesize\":\"999\"}",
+            //data: {taglevel:3,pageno:1,pagesize:999},
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+                //console.log("马甲用户列表失败：");
+                //console.log(data);
+            },
+            success:function(diskJson){
+                ////console.log("马甲用户列表获取：");
+                ////console.log(diskJson);
+                $("#checkpublisher").empty();
+                $("#myNameSelect").empty();
+                $.each(diskJson.data.rows,function(i,n){
+                    $("#checkpublisher").append(' <option value="'+ n.userid+'">'+ n.username+'</option>');
+                    $("#myNameSelect").append(' <option value="'+ n.userid+'">'+ n.username+'</option>');
+                })
+
+
+            }
+        });
+    }
+
+    /*发送*/
+    var talknum=0;
+    function enterd(){
+        var text= $("#myComments").val();
+        text= $.trim(text);
+        if(text == ""){
+            layer.msg("发送内容不能为空！");
+        }else{
+            var userid=$("#myNameSelect").val();
+            var userName=$("#myNameSelect option:checked").text();
+            var lvty= $("#commontsSrBox").attr("data-type");
+            var index= $("#commontsSrBox").attr("data-list");
+            var index2= $("#commontsSrBox").attr("data-list2");
+            var goods=Number($("#mySetNum").val());
+            var commentid=genID(22);//评论ID
+            var contentid=genID(22);//内容ID
+            var createtime=getmytime();
+
+            if(lvty ==0){
+                usertalk.items.push( { "commentid":commentid,"userid":userid,"replyuser":"","commentreply":1,"userimg":"../../img/logo.png","userName":userName,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":"","replyfirst":commentid,"createtime":createtime,recall:[]});
+            }else if(lvty ==1){
+                var replyuser=usertalk.items[index].userid;
+                var replyusername=usertalk.items[index].userName;
+               var replycomment =usertalk.items[index].commentid;
+                usertalk.items[index].recall.push({ "commentid":commentid,"userid":userid,"replyuser":replyuser,"commentreply":0,"userimg":"../../img/logo.png","userName":userName,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":replycomment,"replyfirst":replycomment,"createtime":createtime});
+            }else if(lvty ==2){
+                var replyuser=usertalk.items[index].recall[index2].userid;
+                var replyusername=usertalk.items[index].recall[index2].userName;
+                var replycomment =usertalk.items[index].recall[index2].commentid;
+                var replyfirst =usertalk.items[index].commentid;
+                usertalk.items[index].recall.push({ "commentid":commentid,"userid":userid,"replyuser":replyuser,"commentreply":0,"userimg":"../../img/logo.png","userName":userName,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":replycomment,"replyfirst":replyfirst,"createtime":createtime});
+            }
+            $("#commontsSrBox").attr("data-type",0);
+            $("#myComments").val("");
+            $("#mySetNum").val(1);
+            talknum=talknum+goods;
+            $("#talkAboutBox .talkNum").html(talknum);
+
+        }
+
+    }
+
+
+
+    /*提交图片/视频流*/
+    function subd(){
+        if(localStorage.uncheckdata){
+            let ifinfo = window.location.search;
+            ifinfo=ifinfo.substring(4);
+            ifinfo=ifinfo.split(",");
+            var localindodata=JSON.parse(localStorage.uncheckdata);
+            var index=ifinfo[0];
+            var locationListString=localindodata.ContentList[index].daqurllist;
+            locationListString=encodeURI(locationListString);
+            ////console.log(locationListString);
+            $.ajax({
+                url : path2+'/CTKJBUSINESS/file/uploadFiles.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: "{\"locationListString\":\""+locationListString+"\"}",
+                //data: {taglevel:3,pageno:1,pagesize:999},
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    //console.log("提交图片/视频流失败：");
+                    //console.log(data);
+                },
+                success:function(diskJson){
+                    //console.log("提交图片/视频流获取：");
+                    //console.log(diskJson);
+                    if(diskJson.code =="1000"){
+                        var tjlocdata=localindodata.ContentList[index];
+                        subd2(tjlocdata,diskJson.data);
+                    }else{
+                        layer.msg("设置有误，请检查后重试！！")
+                    }
+                }
+            });
+        }
+    }
+
+/*最中提交*/
+
+function subd2(tjlocdata,contenturllist){
+    var contenttitle=$("#mainConTitle").val();
+    var contentid=tjlocdata.daqid;
+    var contenttype=$("#movieStyle").val();
+    var contentleve=$("#checkConLevel").val();
+    var tag1=$("#checkTag").val();
+    var tag2=$("#checkTag2").val();
+    var tag3=$("#checkTag3").val();
+    var contenttag=[];
+    var contentgoods=Number($("#goodNum").val());
+    var contentuid=$("#checkpublisher").val();
+    var contentsource=tjlocdata.daqsource;
+    var createtime=$("#prereleaseTime").val();
+        createtime=createtime.replace(/-/g, "");//
+    var lastchenker=userdatas.data.userid;
+    var commenttext=usertalk.items;
+    if(tag1 =="0" && tag2=="0" && tag3 =="0"){
+        layer.msg("请至少选择一项标签！！");
+        return false;
+    }else{
+        if(tag1 !="0"){contenttag.push(tag1)}
+        if(tag2 !="0"){contenttag.push(tag2)}
+        if(tag3 !="0"){contenttag.push(tag3)}
+    }
+    if(contenttype =="0"){
+        layer.msg("请选择视频类型！！");
+        return false;
+    }
+//    console.log("contenttag:");
+//    console.log(contenttag);
+    var tjdatas={
+        "contenttitle":contenttitle,
+        "contentid":contentid,
+        "contenttype":contenttype,
+        "contenturllist":contenturllist,
+        "contentlevel":contentleve,
+        "contenttag":contenttag,
+        "contentgoods":contentgoods,
+        "contentuid":contentuid,
+        "contentsource":contentsource,
+        "createtime":createtime,
+        "checkuid":lastchenker,
+        "commenttext": commenttext};
+//    console.log("tijiao 2postdata:");
+//    console.log(tjdatas);
+
+    tjdatas=JSON.stringify(tjdatas);
+        $.ajax({
+            url : path+'/CTKJBUSINESS/content/pushcontent.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: tjdatas,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+                //console.log("提交图片/视频流失败：");
+                //console.log(data);
+            },
+            success:function(diskJson){
+                if(diskJson.code =="1000"){
+                    layer.msg("提交审核成功");
+                    backuncheck();
+                }else{
+                    layer.msg("服务器未响应,请稍后再试!");
+                }
+
+//                console.log("tijiao 2:");
+//                console.log(diskJson);
+            }
+        });
+
+}
+
+/*标签选择筛选*/
+$("#checkTag").change(function(){
+    var index=$("#checkTag option:selected").index();
+    var length=$("#checkTag option").length;
+    $("#checkTag2 option").attr("disabled",false).css("color","#333");
+    $("#checkTag3 option").attr("disabled",false).css("color","#333");
+    $("#checkTag2").val("0");
+    $("#checkTag3").val("0");
+    if(index !=0){
+            $("#checkTag2 option:nth-child("+(index+1)+")").attr("disabled",true).css("color","#bbb");
+            $("#checkTag3 option:nth-child("+(index+1)+")").attr("disabled",true).css("color","#bbb");
+            $("#checkTag3 option:nth-child("+(index+2)+")").attr("disabled",true).css("color","#bbb");
+    }
+
+
+   // $("#checkTag2 option[value="+va+"]").attr("disabled",true).css("color","bbb");
+    //$("#checkTag3 option[value="+va+"]").attr("disabled",true).css("color","bbb");
+});
+$("#checkTag2").change(function(){
+    var index=$("#checkTag option:selected").index();
+    var index2=$("#checkTag2 option:selected").index();
+    $("#checkTag3 option").attr("disabled",false).css("color","#333");
+    $("#checkTag3").val("0");
+    if(index !=0){
+        $("#checkTag3 option:nth-child("+(index+1)+")").attr("disabled",true).css("color","#bbb");
+        $("#checkTag3 option:nth-child("+(index2+1)+")").attr("disabled",true).css("color","#bbb");
+    }
+
+
+});
+/*类型转变*/
+$("#movieStyle").change(function(){
+    var htm=$(this).val();
+    if(htm =="1"){
+        $("#checkType").html("横视频");
+    }else if(htm =="2"){
+        $("#checkType").html("竖视频");
+    }
+
+})
+/*判断字数*/
+$("#mainConTitle").keyup(function(){
+   var len=$(this).val().length;
+    $("#mainCont .contitleTip").html(len+"个字");
+});
+
+function backuncheck(){
+    let ifinfo = window.location.search;
+    ifinfo=ifinfo.substring(4);
+    ifinfo=ifinfo.split(",");
+    setTimeout(function(){
+        window.location.href="content-check.html?pageon="+ifinfo[2];
+    },250)
+}
+
+</script>
+</body>
+</html>
