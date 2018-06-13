@@ -14,11 +14,30 @@ $(function(){
     });
 });
 
-/*const path="http://192.168.1.111:8080";*/
-/*const path="http://192.168.1.112:8080";
-const path2="http://192.168.1.112:8080";*/
+
+/*const path="http://192.168.1.111:8080";
+const path2="http://192.168.1.111:8080";*/
 const path="http://192.168.1.114:8818";
 const path2="http://192.168.1.114:8818";
+/*线上*/
+/*const path="http://192.168.1.114:8828";
+const path2="http://192.168.1.114:8828";*/
+
+/*ajax请求成功后判断*/
+$(document).ajaxSuccess(function(event,xhr,options){
+    //console.log("xhr:");
+    //console.log(xhr);
+    if(xhr.responseJSON){
+        if(xhr.responseJSON.code == "1024"){
+            layer.msg("登陆失效请重新登陆！！！");
+            setTimeout(function(){
+                window.location.href="../../login.html";
+            },1000)
+
+        }
+    }
+})
+
 
 function check(diskJson) {
     // 保存缓存
@@ -37,8 +56,8 @@ function getload() {
     }
 }
 const userdatas=getload();
-console.log("用户信息userdatas：");
-console.log(userdatas);
+/*console.log("用户信息userdatas：");
+console.log(userdatas);*/
 
 
 /*翻页*/
@@ -84,7 +103,7 @@ function pageinfo2(data,pageno){
     $("#pagerlist #allpage").html( Math.ceil(num/pi));
 }
 
-
+/*获取随机ID*/
 function genID(length){
     var x= Math.random(length).toString(36).substr(3,length);
     var date= Date.now().toString(36);
@@ -132,3 +151,132 @@ function filteremoji(emojireg){
     return emojireg;
 }
 
+
+
+
+//通用的ajax调用
+$(function(){
+    /**
+     * ajax封装
+     * url 发送请求的地址
+     * data 发送到服务器的数据，数组存储，如：{"date": new Date().getTime(), "state": 1}
+     * async 默认值: true。默认设置下，所有请求均为异步请求。如果需要发送同步请求，请将此选项设置为 false。
+     *       注意，同步请求将锁住浏览器，用户其它操作必须等待请求完成才可以执行。
+     * type 请求方式("POST" 或 "GET")， 默认为 "GET"
+     * dataType 预期服务器返回的数据类型，常用的如：xml、html、json、text
+     * successfn 成功回调函数
+     * errorfn 失败回调函数
+     */
+    jQuery.ax=function(url, data, async, type, dataType,contentType, successfn, errorfn) {
+        async = (async==null || async=="" || typeof(async)=="undefined")? "true" : async;
+        type = (type==null || type=="" || typeof(type)=="undefined")? "post" : type;
+        dataType = (dataType==null || dataType=="" || typeof(dataType)=="undefined")? "json" : dataType;
+        data = (data==null || data=="" || typeof(data)=="undefined")? {"date": new Date().getTime()} : data;
+        $.ajax({
+            type: type,
+            async: async,
+            contentType:contentType,
+            data: data,
+            url: url,
+            dataType: dataType,
+            success: function(d){
+                successfn(d);
+            },
+            error: function(e){
+                errorfn(e);
+            }
+        });
+    };
+
+    /**
+     * ajax封装
+     * url 发送请求的地址
+     * data 发送到服务器的数据，数组存储，如：{"date": new Date().getTime(), "state": 1}
+     * successfn 成功回调函数
+     */
+    jQuery.axpost=function(url, data, successfn) {
+        data = (data==null || data=="" || typeof(data)=="undefined")? {"date": new Date().getTime()} : data;
+        $.ajax({
+            type: "post",
+            data: data,
+            url: url,
+            dataType: "json",
+            success: function(d){
+                successfn(d);
+            }
+        });
+    };
+
+    /**
+     * ajax封装
+     * url 发送请求的地址
+     * data 发送到服务器的数据，数组存储，如：{"date": new Date().getTime(), "state": 1}
+     * dataType 预期服务器返回的数据类型，常用的如：xml、html、json、text
+     * successfn 成功回调函数
+     * errorfn 失败回调函数
+     */
+    jQuery.axspost=function(url, data, successfn, errorfn) {
+        data = (data==null || data=="" || typeof(data)=="undefined")? {"date": new Date().getTime()} : data;
+        $.ajax({
+            type: "post",
+            data: data,
+            url: url,
+            dataType: "json",
+            success: function(d){
+                successfn(d);
+            },
+            error: function(e){
+                errorfn(e);
+            }
+        });
+    };
+
+});
+
+//时间格式转换
+<!-- value 格式为13位unix时间戳 --> <!-- 10位unix时间戳可通过value*1000转换为13位格式 -->
+/*$().ready(function() {
+    <!-- 自定义filter名称为'time' -->
+    Vue.filter('time', function(value)
+    { var date = new Date(value);
+        Y = date.getFullYear(),
+            m = date.getMonth() + 1,
+            d = date.getDate(),
+            H = date.getHours(),
+            i = date.getMinutes(),
+            s = date.getSeconds();
+        if (m < 10) {
+            m = '0' + m;
+        }
+        if (d < 10) {
+            d = '0' + d;
+        }
+        if (H < 10) {
+            H = '0' + H;
+        }
+        if (i < 10) {
+            i = '0' + i;
+        }
+        if (s < 10) {
+            s = '0' + s;
+        }
+        var t = Y + '-' + m + '-' + d;
+        return t;
+    })});*/
+
+
+
+
+/*深度克隆*/
+function cloneObject(obj) {
+    var newObj = {};
+    if (obj instanceof Array) {
+        newObj = [];
+    }
+    for (var key in obj) {
+        var val = obj[key];
+        //newObj[key] = typeof val === 'object' ? arguments.callee(val) : val; //arguments.callee 在哪一个函数中运行，它就代表哪个函数, 一般用在匿名函数中。
+        newObj[key] = typeof val === 'object' ? cloneObj(val): val;
+    }
+    return newObj;
+}

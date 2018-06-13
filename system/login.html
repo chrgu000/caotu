@@ -6,7 +6,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
     <title> - 登录</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
@@ -89,6 +88,8 @@
         });
         function login(){
             var username = $("#userid").val();
+            alert(username);
+            console.log(username);
             var password = $("#psd").val();
             if(username!="" && password!="" ){
                 //console.log(username);
@@ -108,11 +109,14 @@
                     },
                     success:function(diskJson){
                         layer.closeAll();
-                        //console.log(diskJson);
+//                        console.log("diskJson:");
+//                        console.log(diskJson);
                         if(diskJson.code == "1000"){
                             layer.msg("登录成功!");
                             var str_jsonData = JSON.stringify(diskJson);
                             check(str_jsonData);//保存信息
+                            document.cookie="sign="+diskJson.data.userid;
+                            document.cookie="token="+diskJson.data.token;
                             setTimeout(function(){
                                 window.location.href="index.html";
                             },1000)

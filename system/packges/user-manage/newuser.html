@@ -14,7 +14,7 @@
     <link href="../../css/animate.css" rel="stylesheet">
     <link href="../../plugin/layer/skin/layer.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../../js/plugins/layer/laydate/need/laydate.css">
-<!--    <link href="../../plugin/datepicker/jquery.datetimepicker.css" rel="stylesheet">-->
+    <link href="../../plugin/datepicker/jquery.datetimepicker.css" rel="stylesheet">
     <link href="../../css/style.css?v=4.1.0" rel="stylesheet">
 
 
@@ -98,12 +98,13 @@
        </div>
        <div class="lineBox">
            <span class="lineTitle">生日：</span>
-           <select name="" id="birthDateYear">
+           <input type="text" id="birthdayDate" value=""/>
+          <!-- <select name="" id="birthDateYear">
 
            </select>
            <select name="" id="birthDateMonth">
 
-           </select>
+           </select>-->
        </div>
        <!--<div class="lineBox">
            <span class="lineTitle">管理员：</span>
@@ -121,6 +122,7 @@
 
    <script src="../../plugin/address/js/distpicker.data.js"></script>
    <script src="../../plugin/address/js/distpicker.js"></script>
+   <script src="../../plugin/datepicker/jquery.datetimepicker.full.min.js"></script>
    <script src="../../plugin/address/js/main.js"></script>
    <script src="../../plugin/cos-js-sdl-v5/cos-js-sdk-v5.min.js"></script>
    <script src="../../plugin/cos-js-sdl-v5/cos.js"></script>
@@ -129,21 +131,14 @@
     <!-- Page-Level Scripts -->
     <script>
         $(function(){
-            getyear();
-            //$('#birthDateYear').datetimepicker({value:date,format:'Y-m'});
-
+            var date = new Date();
+            $('#birthdayDate').datetimepicker({
+                value:date,
+                format:'Y-m-d',
+                timepicker:false//关闭时间选项
+                });
         })
-function getyear(){
-    var date = new Date();
-    var year=date.getFullYear();
-    var fy=1940;
-    for(var i=0;(fy+i)<=year;i++){
-        $('#birthDateYear').append(' <option value="'+(fy+i)+'">'+(fy+i)+'年</option>');
-    }
-    for(var t=1;t<=12;t++){
-        $('#birthDateMonth').append(' <option value="'+t+'">'+t+'月</option>');
-    }
-}
+
 
         var majiafilse="";
         /*创建标签*/
@@ -154,9 +149,8 @@ function getyear(){
               var province=$("#province7").val();
               var city=$("#city7").val();
              var location= province+ city;
-                var year=$("#birthDateYear").val();
-                var month=$("#birthDateMonth").val();
-            var userbirthday=year+month;
+            var userbirthday=$('#birthdayDate').val();
+            userbirthday=userbirthday.replace(/-/g, "");//
             if(username ==""){
                 layer.msg("有必填项为空，请检查后再创建！！");
             }else{

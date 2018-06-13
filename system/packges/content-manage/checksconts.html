@@ -23,9 +23,9 @@
         .conBox{width:100%;height:535px;border:1px solid #bbb;}
         #mainCont{width:60%;height:100%;float:left;border-right:1px solid #bbb;}
         #detailCon{width:40%;height:100%;float:left;}
-        #mainCont .mainContitleBox{width:100%;height:45px;line-height: 45px;padding:0 20px;border-bottom:1px solid rgba(187,187,187,1);}
-        #mainConTitle{width:60%;height:30px;margin:0 10px;padding-left:9px;}
-        #mainContain{width:100%;height:calc(100% - 45px);background:#fff;overflow-y: auto;}
+        #mainCont .mainContitleBox{width:100%;height:74px;line-height: 45px;padding:0 6px;border-bottom:1px solid rgba(187,187,187,1);}
+        #mainConTitle{width:84%;height:70px;margin:0 2px;margin-top:2px;padding-left:6px;line-height: 16px;vertical-align: middle;}
+        #mainContain{width:100%;height:calc(100% - 75px);background:#fff;overflow-y: auto;padding:0;}
         #detailCon .detailContitleBox{width:100%;}
         #detailCon .detailContitleBox td{height:44px;border:1px solid #ccc;text-align: left;padding-left:10px;}
         #detailCon .detailContitleBox td input,
@@ -80,7 +80,7 @@
     <div class="conBox">
         <div id="mainCont">
             <div class="mainContitleBox">
-                标题 <input type="text" id="mainConTitle" maxlength="140" placeholder="我是标题">
+                标题 <textarea id="mainConTitle" maxlength="140" placeholder="我是标题"></textarea>
                 <i class="contitleTip">4个字</i>
             </div>
             <!--视频和图片页面的容器-->
@@ -244,33 +244,20 @@
 <script type="text/javascript" src="../../js/index.js"></script>
 <script type="text/javascript">
 
-/*    var talkdatas=[
-        {
-            majiauser:"001",majiauserimg:"../../img/p1.jpg",majiauserName:"majia1",talkcon:"我是主机用户之地大苏打。。。", goods:255,
-            recall:[
-                {recallid:"c11",recallname:"cname1",berecallid:"c11",berecallname:"cname1",recallcon:"哈哈哈哈啊",goods:122},
-                {recallid:"c12",recallname:"cname2",berecallid:"c11",berecallname:"cname1",recallcon:"哈哈哈哈啊2",goods:12}
-            ]
-        }
-    ];*/
-
-/*
-"commenttext":[ {
-    "commentid":"","userid":"","replyuser":"","commentreply":1,"userimg":"../../img/p1.jpg","userName":"","contentid":"","commenttext":"。。。", "commentgood":255,"replycomment":"","replyfirst":"",
-    "recall":[
-        { "commentid":"","userid":"","replyuser":"","commentreply":1,"userimg":"../../img/p1.jpg","userName":"","contemtid":"","commenttext":"。。。", "commentgood":255,"replycomment":"","replyfirst":""},
-        { "commentid":"","userid":"","replyuser":"","commentreply":1,"userimg":"../../img/p1.jpg","userName":"","contemtid":"","commenttext":"。。。", "commentgood":255,"replycomment":"","replyfirst":""}
-    ]
-}]
-*/
-
 
     $(function(){
+
         getchecktype();
         getlabellist();
         getpush();
         var date=new Date();
-        $('#prereleaseTime').datetimepicker({value:date,format:'Y-m-d'});
+        $('#prereleaseTime').datetimepicker({
+            value:date,
+            format:'Y-m-d',
+            timepicker:false//关闭时间选项
+             });
+
+
     })
 
 
@@ -310,6 +297,7 @@
     /*获取审核类型加载视频/图片页面*/
     function getchecktype(){
        //根据iframe的id获取对象
+        layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:1000}) ;
        let ifinfo = window.location.search;
         ifinfo=ifinfo.substring(4);
        ifinfo=ifinfo.split(",");
@@ -352,7 +340,9 @@
         }
         ////console.log(ifinfo[1]);
        // //console.log(murl);
-        $("#mainContain").load(murl);
+        $("#mainContain").load(murl,function(){
+
+        });
 
         if(localStorage.uncheckdata){
             var localindodata=JSON.parse(localStorage.uncheckdata);
@@ -362,14 +352,13 @@
            // //console.log(rightindodata);
             rightinfo(rightindodata);
         }
-
     }
 
     /*视频/图片右侧信息*/
     function rightinfo(datainfolist){
         var contitle=filteremoji(datainfolist.daqtitle);
         $("#mainConTitle").val(contitle);
-        $("#mainCont .contitleTip").html(datainfolist.daqtitle.length+"个字");
+        $("#mainCont .contitleTip").html(datainfolist.daqtitle.length+"/字");
         $("#checkGetfrom").html(datainfolist.daqsource);
         $("#finalAuditor").html(userdatas.data.username);
         $("#commentlistBox ul").empty();
@@ -387,7 +376,7 @@
             contentType: "application/json",
             dataType:"JSON",
             async:true,
-            data: "{\"taglevel\":\"3\",\"pageno\":\"1\",\" pagesize\":\"999\"}",
+            data: "{\"taglevel\":\"3\",\"pageno\":\"1\",\"pagesize\":\"999\"}",
             //data: {taglevel:3,pageno:1,pagesize:999},
             error: function(data){
                 layer.msg("服务器未响应,请稍后再试!");
@@ -423,7 +412,7 @@
             contentType: "application/json",
             dataType:"JSON",
             async:true,
-            data: "{\"createuser\":\""+createuser+"\",\"pageno\":\"1\",\" pagesize\":\"999\"}",
+            data: "{\"createuser\":\""+createuser+"\",\"pageno\":\"1\",\"pagesize\":\"999\"}",
             //data: {taglevel:3,pageno:1,pagesize:999},
             error: function(data){
                 layer.msg("服务器未响应,请稍后再试!");
@@ -480,13 +469,12 @@
             $("#commontsSrBox").attr("data-type",0);
             $("#myComments").val("");
             $("#mySetNum").val(1);
-            talknum=talknum+goods;
+            talknum++;
             $("#talkAboutBox .talkNum").html(talknum);
 
         }
 
     }
-
 
 
     /*提交图片/视频流*/
@@ -500,6 +488,7 @@
             var locationListString=localindodata.ContentList[index].daqurllist;
             locationListString=encodeURI(locationListString);
             ////console.log(locationListString);
+            $("#myConmentsSub").attr("disabled",true);
             $.ajax({
                 url : path2+'/CTKJBUSINESS/file/uploadFiles.do',
                 cache:false,//false就不会从浏览器缓存中加载请求信息了
@@ -513,6 +502,7 @@
                     layer.msg("服务器未响应,请稍后再试!");
                     //console.log("提交图片/视频流失败：");
                     //console.log(data);
+                    $("#myConmentsSub").attr("disabled",false);
                 },
                 success:function(diskJson){
                     //console.log("提交图片/视频流获取：");
@@ -521,6 +511,7 @@
                         var tjlocdata=localindodata.ContentList[index];
                         subd2(tjlocdata,diskJson.data);
                     }else{
+                        $("#myConmentsSub").attr("disabled",false);
                         layer.msg("设置有误，请检查后重试！！")
                     }
                 }
@@ -532,8 +523,10 @@
 
 function subd2(tjlocdata,contenturllist){
     var contenttitle=$("#mainConTitle").val();
+/*    alert(contenttitle);
+    console.log(contenttitle);*/
     var contentid=tjlocdata.daqid;
-    var contenttype=$("#movieStyle").val();
+    var contenttype="";
     var contentleve=$("#checkConLevel").val();
     var tag1=$("#checkTag").val();
     var tag2=$("#checkTag2").val();
@@ -546,18 +539,47 @@ function subd2(tjlocdata,contenturllist){
         createtime=createtime.replace(/-/g, "");//
     var lastchenker=userdatas.data.userid;
     var commenttext=usertalk.items;
-    if(tag1 =="0" && tag2=="0" && tag3 =="0"){
-        layer.msg("请至少选择一项标签！！");
+    var contenttext="";
+    //判断标题字数
+    if(contenttitle.length >140){
+        layer.msg("标题超过限定字数！！");
+        //console.log(contenttitle.length);
+        $("#myConmentsSub").attr("disabled",false);
         return false;
+    }
+
+    //判断是否为D删除的
+    if(contentleve != "D"){
+        if(tag1 =="0" && tag2=="0" && tag3 =="0"){
+            layer.msg("请至少选择一项标签！！");
+            $("#myConmentsSub").attr("disabled",false);
+            return false;
+        }else{
+            if(tag1 !="0"){contenttag.push(tag1)}
+            if(tag2 !="0"){contenttag.push(tag2)}
+            if(tag3 !="0"){contenttag.push(tag3)}
+        }
+    }
+//    判断contenttype类型
+    if(tjlocdata.daqtype != "3"){
+        contenttype=$("#movieStyle").val();
+        if(contenttype =="0"){
+            //console.log("视频");
+            layer.msg("请选择视频类型！！");
+            $("#myConmentsSub").attr("disabled",false);
+            return false;
+        }
+        let w=$("#imgyulookBox img").attr("data-width");
+        let h=$("#imgyulookBox img").attr("data-height");
+        contenttext=w+","+h;
+
     }else{
-        if(tag1 !="0"){contenttag.push(tag1)}
-        if(tag2 !="0"){contenttag.push(tag2)}
-        if(tag3 !="0"){contenttag.push(tag3)}
+        contenttype=3;
+        let w=$("#imgconbox a:first-child").attr("data-width");
+        let h=$("#imgconbox a:first-child").attr("data-height");
+        contenttext=w+","+h;
     }
-    if(contenttype =="0"){
-        layer.msg("请选择视频类型！！");
-        return false;
-    }
+
 //    console.log("contenttag:");
 //    console.log(contenttag);
     var tjdatas={
@@ -572,6 +594,7 @@ function subd2(tjlocdata,contenturllist){
         "contentsource":contentsource,
         "createtime":createtime,
         "checkuid":lastchenker,
+        "contenttext":contenttext,
         "commenttext": commenttext};
 //    console.log("tijiao 2postdata:");
 //    console.log(tjdatas);
@@ -587,15 +610,17 @@ function subd2(tjlocdata,contenturllist){
             data: tjdatas,
             error: function(data){
                 layer.msg("服务器未响应,请稍后再试!");
+                $("#myConmentsSub").attr("disabled",false);
                 //console.log("提交图片/视频流失败：");
                 //console.log(data);
             },
             success:function(diskJson){
                 if(diskJson.code =="1000"){
-                    layer.msg("提交审核成功");
+                    layer.msg('提交审核成功...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:250}) ;
                     backuncheck();
                 }else{
                     layer.msg("服务器未响应,请稍后再试!");
+                    $("#myConmentsSub").attr("disabled",false);
                 }
 
 //                console.log("tijiao 2:");
@@ -655,6 +680,7 @@ function backuncheck(){
     let ifinfo = window.location.search;
     ifinfo=ifinfo.substring(4);
     ifinfo=ifinfo.split(",");
+
     setTimeout(function(){
         window.location.href="content-check.html?pageon="+ifinfo[2];
     },250)

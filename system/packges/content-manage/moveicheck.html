@@ -21,7 +21,8 @@
         }
 #quklod{position: absolute;bottom:34px;left:1px;display: none;}
         #videobox:hover #quklod{display: block;}
-
+        #imgyulookBox{position: absolute;right:0;bottom:33px;border:1px solid #fff;overflow: hidden;width:80px;height:80px;z-index:95;line-height: 80px;text-align: center;}
+        #imgyulookBox img{width:auto;height:auto;max-width: 80px;max-height: 80px;}
     </style>
 
 </head>
@@ -38,6 +39,9 @@
                 <input type="button" id="btnSpeedUpDown" onclick="speedDown()" value="慢放" />
              </div>
 
+            <div id="imgyulookBox">
+                <img src="" alt="" data-width="" data-height=""/>
+            </div>
 
         </div>
 
@@ -67,6 +71,16 @@
                     nedurl=JSON.parse(nedurl);
                     //console.log(nedurl);
                     var path3="/CTKJBUSINESS/file/downFileByName.do?filelocation=";
+                    //console.log("视频预览地址");
+                    var img = new Image();
+                    img.onload = function(){
+                        $("#imgyulookBox img").attr("src",this.src);
+                        $("#imgyulookBox img").attr("data-width",this.width);
+                        $("#imgyulookBox img").attr("data-height",this.height);
+                        this.onload = null;
+                    };
+                    img.src =path2+path3+nedurl[0];
+
                     $("#video").attr("src",path2+path3+nedurl[1]);
 
                 }
