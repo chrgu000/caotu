@@ -27,6 +27,8 @@
         }
         #createLabel{margin-top:10px;margin-left:30px;}
         .btitle{padding-left:20px;height:45px;border-bottom:1px solid #bbb; line-height: 37px;}
+        #tablelistbox .btn{color:#5a656d;}
+        #tablelistbox .btn:hover{color:#fff;background:#0088cc;}
     </style>
 
 </head>
@@ -53,20 +55,22 @@
                                     <th>最新发布信息时间</th>
                                     <th>创建时间</th>
                                     <th>创建人</th>
+                                    <th>操作</th>
                                 </tr>
                                 </thead>
                                 <tbody id="tablelistTbody">
-                                <tr v-for="(item,index) in items">
-                                    <td>{{index+1}}</td>
-                                    <td>{{item.username}}</td>
-                                    <td>{{item.taglevel }}</td>
-                                    <td>{{item.userbirthday}}</td>
-                                    <td>{{item.tagcount}}</td>
-                                    <td >{{item.contentcount}}</td>
-                                    <td >{{item.lastcontenttime}}</td>
-                                    <td >{{item.createtime}}</td>
-                                    <td >{{item.createuser}}</td>
-                                </tr>
+                                    <tr v-for="(item,index) in items">
+                                        <td class="center">{{index+1}}</td>
+                                        <td class="center">{{item.username}}</td>
+                                        <td class="center">{{item.taglevel }}</td>
+                                        <td class="center">{{item.userbirthday}}</td>
+                                        <td class="center">{{item.tagcount}}</td>
+                                        <td class="center">{{item.contentcount}}</td>
+                                        <td class="center">{{item.lastcontenttime}}</td>
+                                        <td class="center">{{item.createtime}}</td>
+                                        <td class="center">{{item.createuser}}</td>
+                                        <td class="center"><button type="button" class="btn">关注</button></td>
+                                    </tr>
 
                                 </tbody>
                             </table>
@@ -114,23 +118,8 @@
         function getcheck(pageno){
 //            var userid=userdatas.data.userid;
             layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000}) ;
-            var postdata={"pageno":pageno};
+            var postdata={"pageno":pageno,"pagesize":10};
             postdata=JSON.stringify(postdata);
-
-      /*      jQuery.ax( url,postdata, true, "POST", "JSON","application/json",
-                    function(diskJson){
-                        layer.closeAll();
-                        //console.log("马甲用户：");
-                        //console.log(diskJson);
-
-                        /!*翻页信息*!/
-                        pageinfo2(diskJson.data,pageno);//翻页控件信息
-                        majiadata.items=diskJson.data.rows;
-                        /!* var str_jsonData = JSON.stringify(diskJson.data);
-                         localStorage.uncheckdata = str_jsonData;*!/
-                    }, function(){
-                        layer.msg("服务器未响应,请稍后再试!");
-                    });*/
             $.ajax({
                 url : path2+'/CTKJBUSINESS/vest/vestlist.do',
                 cache:false,//false就不会从浏览器缓存中加载请求信息了
@@ -152,16 +141,13 @@
                     /*翻页信息*/
                     pageinfo2(diskJson.data,pageno);//翻页控件信息
                     majiadata.items=diskJson.data.rows;
-                    /* var str_jsonData = JSON.stringify(diskJson.data);
-                     localStorage.uncheckdata = str_jsonData;*/
-
                 }
             });
         }
 
 
 
-        //新增专栏
+        //新增马甲
         $("#createLabel").click(function(){
             $("#contentPageBox").load("newuser.html");
 

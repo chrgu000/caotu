@@ -1,0 +1,103 @@
+
+    <style>
+        /* Additional style to fix warning dialog position */
+        .labelBox{width:80%;min-width:370px;margin:0 auto;padding:40px 20px;border:1px solid #bbb;margin-top:15px;min-height: 450px;}
+        .lineBox{width:100%;margin:20px 0;}
+        .lineBox .lineTitle{display:inline-block;width:120px;margin-right:6px;text-align: right;}
+        .lineBox input,
+        .lineBox select{width:200px;height:30px;padding-left:7px;}
+        #backbtn{float:right;margin-top:-9px;}
+    </style>
+
+    <div style="width:80%;margin:0 auto;margin-top:25px;">
+        <h4>新增敏感词 <button type="button" class="btn btn-sm btn-primary" id="backbtn">返回》</button></h4>
+    </div>
+   <div class="labelBox">
+
+        <div class="lineBox">
+            <span class="lineTitle">敏感词：</span>
+            <input type="text" class="repead" id="sentName" value="" placeholder="请输入铭感词"/>
+            <b class="must">*</b>
+        </div>
+       <div class="lineBox">
+           <span class="lineTitle">敏感词类型：</span>
+           <select name="" id="sensType">
+               <option value="政治敏感">政治敏感</option>
+               <option value="色情">色情</option>
+               <option value="广告或垃圾信息">广告或垃圾信息</option>
+               <option value="其他">其他</option>
+           </select>
+           <b class="must">*</b>
+       </div>
+
+       <div class="lineBox" style="padding-left:130px;margin-top:35px;">
+           <button type="button" class="btn btn-sm btn-primary" id="submit" onclick="creatlabel()">提 交</button>
+           <button type="button" class="btn btn-sm btn-primary" id="replay" onclick="replay()">重 置</button>
+       </div>
+   </div>
+
+
+   <script>
+
+       /*返回*/
+       $("#backbtn").click(function(){
+           $("#pageLoadBox").load("sensitiveform.html");
+       });
+
+       $("#sentName").blur(function(){
+           var dva=$(this).val();
+           if(dva==""){
+               layer.msg("敏感词不能为空！！")
+           }
+       });
+
+       /*新增敏感词*/
+       function creatlabel(){
+           var senvalue=$("#sentName").val();
+           var sentype=$("#sensType").val();
+           if(senvalue==""){
+               layer.msg("敏感词不能为空！！");
+               return false;
+           }
+           var createuser=userdatas.data.userid;
+           var datapost={"senvalue":senvalue,"sentype":sentype,"userid":createuser};
+           datapost=JSON.stringify(datapost);
+           $.ajax({
+               url : path+'/CTKJBUSINESS/sencontrol/addsensitive.do',
+               cache:false,//false就不会从浏览器缓存中加载请求信息了
+               type:"POST",
+               contentType: "application/json",
+               dataType:"JSON",
+               async:true,
+               data: datapost,
+               error: function(data){
+                   layer.msg("服务器未响应,请稍后再试!");
+//                   console.log("新增敏感词失败：");
+//                   console.log(data);
+               },
+               success:function(diskJson){
+                   layer.closeAll();
+//                    console.log("新增敏感词：");
+//                    console.log(diskJson);
+                   if(diskJson.code =="1000"){
+                       layer.msg("创建成功！！");
+                       replay();
+                   }else{
+                       layer.msg("创建失败，请重试！！")
+                   }
+
+
+               }
+           });
+       }
+
+
+
+        /*重置*/
+        function replay(){
+            $("input.repead").val("")
+        }
+   </script>
+
+    
+    

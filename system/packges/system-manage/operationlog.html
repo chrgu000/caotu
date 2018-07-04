@@ -13,10 +13,8 @@
 
     <link href="../../css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
     <link href="../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
-
-    <!-- jqgrid-->
-    <link href="../../css/plugins/jqgrid/ui.jqgrid.css?0820" rel="stylesheet">
-
+    <link href="../../css/common.css" rel="stylesheet">
+    <link href="../../plugin/layer/skin/layer.css" rel="stylesheet">
     <link href="../../css/animate.css" rel="stylesheet">
     <link href="../../css/style.css?v=4.1.0" rel="stylesheet">
 
@@ -28,121 +26,118 @@
         }
         .btitle{padding-left:20px;height:45px;border-bottom:1px solid #bbb; line-height: 37px;}
         #searchBox{border:1px solid #bbb;padding:25px;}
-        #addNewBtn{float:right;margin-right:20px;margin-bottom:6px;}
+        .titlebtn{float:right;margin-right:6px;margin-bottom:6px;}
+        #refreshNow{background:#f05151;}
     </style>
 
 </head>
 
 <body class="gray-bg">
 <h3 class="btitle">后台操作日志</h3>
-    <div style="padding-left:28px;padding-top:10px;">
-        <button type="button" class="btn btn-sm btn-primary" id="bigestNumber">日志编号最小</button>
-        <button type="button" class="btn btn-sm btn-primary" id="lastAdd">操作时间最新</button>
-    </div>
 
-    <div class="wrapper wrapper-content  animated fadeInRight">
-        <h3 style="padding-left:9px;margin:0;height:30px;line-height: 30px;">数据列表  <button type="button" class="btn btn-sm btn-primary" id="addNewBtn">新  增</button></h3>
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="ibox-content">
-                    <div class="jqGrid_wrapper">
-                        <table id="table_list_2"></table>
-                        <div id="pager_list_2"></div>
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <h3 style="padding-left:9px;margin:0;height:30px;line-height: 30px;">数据列表</h3>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox-content">
+                <div class="jqGrid_wrapper" id="tablelist">
+                    <!--   <table id="table_list_2"></table>-->
+                    <table  class="table table-striped" id="tablelistbox">
+                        <thead>
+                        <tr>
+                            <th>用户名</th>
+                            <th>最近登陆IP</th>
+                            <th>最近操作时间</th>
+                            <th>日志编号</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tablelistTbody">
+                        <tr v-for="(item,index) in items">
+                            <td class="center">{{item.operateuser}}</td>
+                            <td class="center">{{item.operateip }}</td>
+                            <td class="center">{{item.createtime}}</td>
+                            <td class="center">{{item.remark}}</td>
+                        </tbody>
+                    </table>
+                    <div id="pagerlist">
+                        <div id="pagerbtnlist">
+                            <span class="glyphicon glyphicon-backward gbtn" id="prepagebtn" onclick="prepage()"></span>
+                                <span class="addpagebox">
+                                    <span id="jumppage" onclick="jumppage()">跳转到</span>
+                                    <input type="number" id="addpageinput" value="1" max="" min="1"/>
+                                    共 <span id="allpage">1</span>页
+                                </span>
+                            <span class="glyphicon glyphicon-forward gbtn" id="nextpagebtn" onclick="nextpage()"></span>
+                        </div>
+                        <div id="allcontbox">
+                            <p id="allconts"></p>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
-    <!-- 全局js -->
-    <script src="../../js/jquery.min.js?v=2.1.4"></script>
+<!-- 全局js -->
+<script src="../../js/jquery.min.js?v=2.1.4"></script>
+<script src="../../plugin/layer/layer.js"></script>
+<script src="../../js/vue.js"></script>
+<script type="text/javascript" src="../../js/index.js"></script>
 
-    <!-- jqGrid -->
-    <script src="../../js/plugins/jqgrid/i18n/grid.locale-cn.js?0820"></script>
-    <script src="../../js/plugins/jqgrid/jquery.jqGrid.min.js?0820"></script>
+<!-- Page-Level Scripts -->
+<script>
+    var tabledata = new Vue({
+        el: '#tablelistTbody',
+        data: {
+            items:[]
+        },
+        // 在 `methods` 对象中定义方法
+        methods: {
+            greet: function (event) {
 
-    <!-- Page-Level Scripts -->
-    <script>
-        //新建标签
-        $("#createLabel").click(function(){
-            var lve=$("#newLabelLevel").val();
-            var url="labelsetpage"+lve+".html";
-            $("#contentPageBox").load(url);
+            }
+        }
+    });
 
-        })
+    getcheck(1);
+    function getcheck(pageno){
+        var datapost={};
+        datapost=JSON.stringify(datapost);
+        layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000}) ;
+        $.ajax({
+            url : path+'/CTKJBUSINESS/sysuser/getoperatehistory.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+                console.log("后台操作日志：");
+                console.log(data);
+            },
+            success:function(diskJson){
+                layer.closeAll();
+//                        console.log("后台操作日志：");
+//                        console.log(diskJson);
+                /*翻页信息*/
+                pageinfo(diskJson.data,pageno);//翻页控件信息
+                tabledata.items=diskJson.data.reportList;
+                tabledata.pageno=pageno;
 
-
-        $(document).ready(function () {
-
-            $.jgrid.defaults.styleUI = 'Bootstrap';
-            // Examle data for jqGrid
-            var mydata = [
-                {
-                    username: "1",
-                    ip: "标题标题标题标题",
-                    dotime: "2018 05-06",
-                    xm: "敏感词添加",
-                    logid: "admin"
-
-                }
-            ];
-
-
-            // Configuration for jqGrid Example 2
-            $("#table_list_2").jqGrid({
-                data: mydata,
-                datatype: "local",
-                height: 450,
-                autowidth: true,
-                shrinkToFit: true,
-                rowNum: 20,
-                rowList: [10, 20, 30],
-                colNames: ['用户名', '最近登陆IP', '最近操作时间', '操作项目', '日志编号'],
-                colModel: [
-                    {name: 'username', index: 'username', editable: true, width: 50, sorttype: "int", search: true},
-                    {name: 'ip', index: 'ip', editable: true, width: 150},
-                    {name: 'dotime', index: 'dotime', editable: true, width: 50,formatter: "date"},
-                    {name: 'xm', index: 'xm', editable: true, width: 60},
-                    {name: 'logid', index: 'logid', editable: true, width: 60},
-                ],
-                pager: "#pager_list_2",
-                viewrecords: true,
-               // caption: "jqGrid 示例2",
-               // add: true,
-                edit: true,
-               // addtext: 'Add',
-                edittext: 'Edit',
-                hidegrid: false
-            });
-
-
-            // Add selection
-            $("#table_list_2").setSelection(4, true);
-
-
-            // Setup buttons
-            $("#table_list_2").jqGrid('navGrid', '#pager_list_2', {
-                edit: true,
-                add: false,
-                del: true,
-                search: true
-            }, {
-                height: 200,
-                reloadAfterSubmit: true
-            });
-
-            // Add responsive to jqGrid
-            $(window).bind('resize', function () {
-                var width = $('.jqGrid_wrapper').width();
-                $('#table_list_2').setGridWidth(width);
-            });
+            }
         });
+    }
 
 
-    </script>
 
-    
-    
+
+</script>
+
+
+
 
 </body>
 

@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--360浏览器优先以webkit内核解析-->
+    <title></title>
+    <link href="../../css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../css/animate.css" rel="stylesheet">
+    <link href="../../css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="../../plugin/datepicker/jquery.datetimepicker.css" rel="stylesheet">
+    <link href="../../plugin/font/iconfont.css" rel="stylesheet">
+
+    <style>
+        #topKzCon{padding:10px 20px;;}
+        #topKzCon .btn{color:#0055aa;}
+        #topKzCon .btn:hover{    background-image: none;  outline: 0;  -webkit-box-shadow: inset 0 3px 5px rgba(0,0,0,.125); }
+        .btnRight{float:right;}
+        .conBox{width:100%;height:535px;border:1px solid #bbb;}
+        #mainCont{width:60%;height:100%;float:left;border-right:1px solid #bbb;}
+        #detailCon{width:40%;height:100%;float:left;position: relative;}
+        #mainCont .mainContitleBox{width:100%;height:74px;line-height: 45px;padding:0 6px;border-bottom:1px solid rgba(187,187,187,1);}
+        #mainConTitle{display:inline-block;width:84%;height:70px;margin:0 2px;margin-top:2px;padding-left:6px;line-height: 16px;vertical-align: middle;border:1px solid #ccc;background:#eee;word-wrap:break-word; }
+        #mainContain{width:100%;height:calc(100% - 75px);background:#fff;overflow-y: auto;padding:0;}
+        #detailCon .detailContitleBox{width:100%;}
+        #detailCon .detailContitleBox td{height:44px;border:1px solid #ccc;text-align: left;padding-left:10px;position: relative;}
+        #detailCon .detailContitleBox td input,
+        #detailCon .detailContitleBox td select{height:30px;width:76px;padding-left:3px;border:1px solid #bbb;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;}
+        #detailCon .detailContitleBox td .left{float:left;margin:0 2px;position: relative;}
+        #talkAboutBox .tittleBox{width:100%;height:40px;line-height: 40px;border:1px solid #bbb;}
+        #talkAboutBox .tittleBox span{display:inline-block;height:100%;text-align: center;}
+        #talkAboutBox  .commentSectionBox{width:100%;padding:12px;height:176px;overflow-y: auto;}
+        #talkAboutBox  .commentSectionBox .commentSection{width:100%;overflow: hidden;height:auto;}
+        #talkAboutBox .commentSection .userTitle .imgBox{width:25px;height:25px;border:1px solid #aaa;overflow: hidden;display: inline-block;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;vertical-align: middle;}
+        #talkAboutBox{background:#f0f3f4;}
+        #talkAboutBox .userTitle .imgBox img{width:100%;height:100%;}
+        #talkAboutBox .commentSection{border-bottom:1px dashed #bbb;}
+        #talkAboutBox .commentSection .userTitle{width:150px;float:left;}
+        #talkAboutBox .commentSection .conmentsConts{width:calc(100% - 300px);padding:0 15px;float:left;}
+        #talkAboutBox .commentSection .doBox{float:left;}
+        #talkAboutBox .commentSection .doBox .reply{color:#0064b6;padding-right:12px;}
+        #talkAboutBox .commentSection .praiseBox i{font-size:18px;margin-right:3px;}
+        #talkAboutBox .commontsSrBox{width:100%;height:120px;padding:12px;border:1px solid #bbb;position: relative;}
+        #myNameSelect{width:145px;height:30px;vertical-align: text-top;}
+        #myComments{width:calc(100% - 400px);vertical-align: text-top;margin-right:9px;height:75px;}
+        #mySetNum{width:75px;height:20px;padding-left:6px;}
+        #myConmentsEnter{position: absolute;left:20px;top:30px;}
+        #myConmentsSub{position: absolute;left:95px;top:30px;}
+        .selefCon:hover{background:#179d82;color:#fff;}
+        .recalltalkcon{padding-left:12px;position: relative}
+        .recalltalkcon:hover{background:#179d82;color:#fff;}
+        .recalltalkcon .callDoBox{position: absolute;right:-70px;bottom:3px;font-size:11px;}
+        .recalltalkcon .callDoBox .reply{padding-right:6px;}
+        .recalltalkcon:hover .callDoBox span{color:#bbb;!important;}
+        #talkAboutBox .reply:hover,
+        #talkAboutBox .praiseBox:hover{color:#f91515;cursor: pointer;}
+        #talkAboutBox .commentSection .doBox .reply:hover{color:#f91515;}
+        #commentlistBox{width:100%;height:160px;overflow-y: auto;}
+        #detailCon .searchMenu .searchTag{width:76px;height:30px;}
+        #detailCon .searchMenu .searchSecondMenu{position: absolute;width:100%;left:0;top:28px;background:#eee;color:#bbb;list-style: none;padding:0;z-index: 98;border:1px solid #bbb;border-top:none;display: none;max-height: 420px;overflow-y: auto;}
+        #detailCon .searchMenu .searchSecondMenu.show{display: block;}
+        #detailCon .searchSecondMenu li{width:100%;text-align: left;padding-left:3px;cursor: pointer;line-height: 23px;}
+        #detailCon .searchSecondMenu li:hover{background:#fff;color:#333;border-top:1px solid #bbb;}
+        #editoBtn{margin:10px; display: none;}
+        #editoBtn.show{display: block;}
+        #movieImgBox{display: none;position: absolute;left:1px;bottom:1px;}
+        #movieImgBox.show{display: block;}
+        #movieImgBox .movieinputBox{position: absolute;left:82px;bottom:1px;width:75px;height:32px;overflow: hidden;}
+        #movieImgBox .moviebtn{display: inline-block;width:100%;height:27px;line-height: 27px;text-align: center;background:#568fb9;cursor: pointer;color: #fff;
+            -webkit-border-radius: 3px;z-index:50;
+            -moz-border-radius: 3px;
+            border-radius: 3px;}
+        #movieImgBox .movieshowimg{border: 1px solid #9d9e9e;overflow: hidden;width: 105px;height: 105px;line-height: 105px;text-align: center;  background: rgba(255,255,255,.4);  cursor: pointer;}
+        #movieImgBox .movieshowimg img{width: auto;height: auto;max-width: 105px;max-height: 105px;}
+        #movieimgfile{ position: absolute;top:0;left:0;z-index:60;cursor: pointer;width:100%;height:100%;opacity: 0;}
+        #movieImgBox .movieinputBox:hover .moviebtn{background:#204663;}
+        #movieImgBox .tips{color:#ce0000;font-size:8px;position: absolute;bottom:25px;left:82px;display: none;}
+        #movieImgBox .tips.show{display: block;}
+        .layui-layer-btn{padding:25px 5px !important;}
+        .layui-layer-dialog .layui-layer-content{color:#fff;}
+    </style>
+</head>
+
+<body class="gray-bg">
+    <div id="topKzCon">
+        <span class="nextBtn btn" onclick="nextcheck()">下一个</span>
+        <span class="submit btn" onclick="subd()">提交</span>
+        <a href="../index_v1.html" class="backhome btn">暂停审核</a>
+        <span class="requck btnRight">待审核数：<b id="unchecknum"></b></span>
+    </div>
+    <div class="conBox">
+        <div id="mainCont">
+            <div class="mainContitleBox">
+                标题 <span id="mainConTitle"></span>
+                <i class="contitleTip">4个字</i>
+            </div>
+            <!--视频和图片页面的容器-->
+            <div id="mainContain">
+
+            </div>
+        </div>
+        <div id="detailCon" data-id="">
+            <table class="detailContitleBox">
+                <tbody>
+                    <tr>
+                        <td id="movietypetd">
+                            类型：
+                            <span id="movieStyle" data-val="1"></span>
+
+                        </td>
+                        <td>
+                            内容等级：
+                            <select name="" id="checkConLevel">
+                                <option value="0">U</option>
+                                <option value="3">A</option>
+                                <option value="2">B</option>
+                                <option value="1">C</option>
+                                <option value="D">D</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td id="conlabeltd" colspan="2">
+                            <div class="left title">
+                                标签分类:
+                            </div>
+                            <div class="left searchMenu">
+                                <input type="search" value="" data-val="" placeholder="请选择标签" id="checkTagSearch1" class="searchTag" readonly/>
+                             <!--   <ul class="searchSecondMenu" id="checkTagul1">
+
+                                </ul>-->
+                            </div>
+                            <div class="left searchMenu">
+                                <input type="search" value="" data-val="" placeholder="请选择标签" id="checkTagSearch2" class="searchTag"/>
+                                <ul class="searchSecondMenu" id="checkTagul2">
+
+                                </ul>
+                            </div>
+                            <div class="left searchMenu">
+                                <input type="search" value="" data-val="" placeholder="请选择标签" id="checkTagSearch3" class="searchTag"/>
+                                <ul class="searchSecondMenu" id="checkTagul3">
+
+                                </ul>
+                            </div>
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                      <!--  <td>
+                            点赞数 <input type="number" id="goodNum" value="1" min="0"/>
+                        </td>-->
+                        <td colspan="2">
+                            发布人：
+                            <span id="checkpublisher" data-val="">
+
+                            </span>
+                        </td>
+                    </tr>
+                  <!--  <tr>
+                        <td colspan="2">
+                            抓取来源：<span id="checkGetfrom">新浪微博</span> &lt;!&ndash;<a href="#">源地址：www.5555.com</a>&ndash;&gt;
+                        </td>
+                    </tr>-->
+                   <!-- <tr>
+                        <td colspan="2" style="height:133px;">
+                            专栏选择：<select name="" id="checkColumChoose" style="width:200px;">
+                            <option value="1">我是专栏一</option>
+                        </select>
+                        </td>
+                    </tr>-->
+                 <!--   <tr>
+                        <td colspan="2">
+                            预发布时间：
+                            <input type="text" value="" id="prereleaseTime" style="width:200px;"/>
+                        </td>
+                    </tr>-->
+                    <tr>
+                        <td colspan="2">
+                            最后审核人：
+                            <span id="finalAuditor"></span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div id="movieImgBox" class="">
+                <div class="movieshowimg">
+                    <img src="" alt=""/>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+    <script src="../../js/jquery.min.js?v=2.1.4"></script>
+    <script src="../../plugin/datepicker/jquery.datetimepicker.full.min.js"></script>
+    <script src="../../plugin/layer/layer.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script type="text/javascript" src="../../js/index.js"></script>
+    <script src="../../plugin/cos-js-sdl-v5/cos-js-sdk-v5.min.js"></script>
+    <script src="../../plugin/cos-js-sdl-v5/cos.js"></script>
+<script type="text/javascript">
+
+
+    $(function(){
+        getcheckdata();
+        let dataval="",searchid=0;
+        getlabellist(dataval,searchid);//标签
+
+    });
+
+    /*获取审核数据*/
+    function getcheckdata(){
+        layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:1000}) ;
+        var datapost={"yes":"one"};
+        datapost=JSON.stringify(datapost);
+        $.ajax({
+            url : path+'/CTKJBUSINESS/content/getauncheck.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+                console.log("标签列表获取失败：");
+                console.log(data);
+            },
+            success:function(diskJson){
+//                console.log("ugc审核数据：");
+//                console.log(diskJson);
+                if(diskJson.code=="1000"){
+                    $("#mainConTitle").html(diskJson.data.contenttitle);
+                    $("#mainCont .contitleTip").html(diskJson.data.contenttitle.length+"/字");
+                    $("#finalAuditor").html(userdatas.data.username);
+                    $("#checkpublisher").html(diskJson.data.contentuid);
+                    $("#detailCon").attr("data-id",diskJson.data.contentid);
+                    $("#checkTagSearch1").attr("data-val",diskJson.data.contenttag).val(diskJson.data.tagshow);
+                    var contenttype="", murl="ugc-moveicheck.html";
+                    switch(diskJson.data.contenttype){
+                        case "1":contenttype="横视频";murl="ugc-moveicheck.html";break;
+                        case "2":contenttype="竖视频";murl="ugc-moveicheck.html";break;
+                        case "3":contenttype="图片";murl="ugc-picturecheck.html";break;
+                    }
+
+                    if(diskJson.data.contenttype != "3"){
+                        var movielist=diskJson.data.contenturllist;
+                        movielist=JSON.parse(movielist);
+                        $("#movieImgBox").css("display","block");
+                        $("#movieImgBox .movieshowimg img").attr("src",movielist[0])
+                    }
+                    /*加载视频，图片页面*/
+                    $("#mainContain").load(murl,function(){
+                        geturl(diskJson);
+                    });
+                    $("#movieStyle").attr("data-val",diskJson.data.contenttype).html(contenttype);
+                    $("#unchecknum").html(diskJson.data.pushcount);
+
+                }else if(diskJson.code=="2000"){
+                    layer.msg(diskJson.message);
+                    setTimeout(function(){
+                        window.location.href="../index_v1.html"
+                    },2000)
+                }else{
+                    layer.msg("数据有误请重试！！")
+                }
+
+
+            }
+        })
+    }
+
+
+    /*标签列表获取*/
+    function getlabellist(dataval,searchid){
+        var datapost={"taglevel":3,"pageno":1,"pagesize":999,"tagname":dataval};
+        datapost=JSON.stringify(datapost);
+        $.ajax({
+            url : path+'/CTKJBUSINESS/tag/taglist.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+                //console.log("标签列表获取失败：");
+                //console.log(data);
+            },
+            success:function(diskJson){
+//                console.log("标签列表获取：");
+//                console.log(diskJson);
+                if(searchid ==0){
+                    $(".searchSecondMenu").empty();
+                    $.each(diskJson.data.rows,function(i,n){
+                        if(n.tagid&&n.tagid !=null && n.tagname && n.tagname!=null){
+                            $(".searchSecondMenu").append(' <li data-val="'+ n.tagid+'">'+ n.tagname+'</li>');
+                        }
+                    });
+                }else{
+                    var searid="#"+searchid;
+                    $(searid).siblings(".searchSecondMenu").empty();
+                    $.each(diskJson.data.rows,function(i,n){
+                        if(n.tagid&&n.tagid !=null && n.tagname && n.tagname!=null){
+                            $(searid).siblings(".searchSecondMenu").append(' <li data-val="'+ n.tagid+'">'+ n.tagname+'</li>');
+                        }
+                    });
+
+                }
+            }
+        });
+    }
+/*标签搜索框焦点事件*/
+    $("#detailCon .searchMenu .searchTag").focus(function(){
+        $(this).siblings(".searchSecondMenu").addClass("show");
+    });
+    $("#detailCon .searchMenu .searchTag").blur(function(){
+        var searchid=$(this).attr("id");
+        setTimeout(function(){
+            $("#"+searchid).siblings(".searchSecondMenu").removeClass("show");
+        },500);
+    });
+    /*标签选择*/
+    $("#detailCon .searchMenu .searchSecondMenu").delegate("li","click",function(){
+        let txt=$(this).html();
+        let dataval=$(this).attr("data-val");
+        $(this).parent(".searchSecondMenu").siblings(".searchTag").val(txt).attr("data-val",dataval);
+    });
+    /*搜索框键盘输入*/
+    $("#detailCon .searchMenu .searchTag").keyup(function(){
+        $(this).attr("data-val","");
+        var dataval=$(this).val();
+        var searchid=$(this).attr("id");
+        getlabellist(dataval,searchid);
+    });
+    $("#detailCon .searchMenu .searchTag").keydown(function(event) {
+        if (event.keyCode == 13) {
+            $(this).attr("data-val","");
+            var dataval=$(this).val();
+            var searchid=$(this).attr("id");
+            getlabellist(dataval,searchid);
+        }
+    });
+
+    /*下一个*/
+    function nextcheck(){
+        layer.confirm('当前内容尚未提交审核，确定跳到下一个吗？', {
+            btn: ['确定',"取消"] //按钮
+        }, function(index){
+            /*初始化*/
+            $("#detailCon .searchMenu .searchTag").val("");
+            $("#checkConLevel").val("0");
+            getcheckdata();
+            let dataval="",searchid=0;
+            getlabellist(dataval,searchid);//标签
+            layer.close(index);
+        },function(index){
+            layer.close(index);
+        });
+
+    }
+
+    /*提交*/
+    function subd(){
+        layer.confirm('确定提交吗？', {
+            btn: ['提交',"取消",'提交并结束审核'] //按钮
+            ,btn3:function(index){
+                subd2(0);
+                layer.close(index);
+            }
+        }, function(index){
+            subd2(1);
+            layer.close(index);
+        },function(index){
+            layer.close(index);
+        });
+    }
+
+    function subd2(isend){
+        layer.msg('提交中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:1000}) ;
+        let checkuid=userdatas.data.userid;
+        let contentid= $("#detailCon").attr("data-id");
+        let contentlevel= $("#checkConLevel").val();
+        var tag1=$("#checkTagSearch1").attr("data-val");
+        var tag2=$("#checkTagSearch2").attr("data-val");
+        var tag3=$("#checkTagSearch3").attr("data-val");
+        var contenttag=[];
+        if(tag1 !="" && tag1 !=null){contenttag.push(tag1)}
+        if(tag2 !="" && tag2 !=null){contenttag.push(tag2)}
+        if(tag3 !="" && tag3 !=null){contenttag.push(tag3)}
+        contenttag=unique10(contenttag);
+        var ispass="YES";
+        if(contentlevel == "0"){
+            layer.msg("请选择U以外的内容等级");
+            return false;
+        }
+        if(contentlevel == "D"){
+            ispass="NO";
+        }else{
+            ispass="YES";
+        }
+        var datapost={"checkuid":checkuid,"contentid":contentid,"contentlevel":contentlevel,"contenttag":contenttag,"ispass":ispass};
+        //console.log(datapost);
+        datapost=JSON.stringify(datapost);
+        $.ajax({
+            url : path+'/CTKJBUSINESS/content/pushchecked.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+                //console.log("标签列表获取失败：");
+                //console.log(data);
+            },
+            success:function(diskJson){
+                //console.log("ugc审核提交：");
+                //console.log(diskJson);
+                if(diskJson.code=="1000"){
+                    layer.msg("提交成功！！");
+                    setTimeout(function(){
+                        if(isend ==1){
+                            /*初始化*/
+                            $("#detailCon .searchMenu .searchTag").val("");
+                            $("#checkConLevel").val("0");
+                            getcheckdata();
+                            let dataval="",searchid=0;
+                            getlabellist(dataval,searchid);//标签
+                        }else{
+                            window.location.href="../index_v1.html"
+                        }
+                    },1000)
+
+                }else{
+                    layer.msg("数据有误请检查后重试！！")
+                }
+
+
+            }
+        })
+    }
+
+
+
+    /*改变内容等级赋予默认点赞数*/
+    /*$("#checkConLevel").change(function(){
+        var level=$(this).val();
+        var minnum="",maxnum="";
+        switch(level){
+            case "3":minnum=50;maxnum=100;break;
+            case "2":minnum=20;maxnum=50;break;
+            case "1":minnum=0;maxnum=20;break;
+        }
+        var num=randomnum(minnum,maxnum);
+        $("#goodNum").val(num);
+    })*/
+</script>
+</body>
+</html>

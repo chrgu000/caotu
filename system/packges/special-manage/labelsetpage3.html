@@ -23,7 +23,7 @@
         .lineBox .lineTitle{display:inline-block;width:120px;margin-right:6px;text-align: right;}
         .lineBox input,
         .lineBox select{width:200px;height:30px;padding-left:7px;}
-        .page-container{width:180px;height:120px;border:1px dashed #bbb;margin-left:130px;margin-top:-20px;position: relative;}
+        .page-container{width:150px;height:150px;border:1px dashed #bbb;margin-left:130px;margin-top:-20px;position: relative;}
         #uploader .filelist li{width:100%;height:100%;margin:0;}
         #uploader .filelist li p.imgWrap{width:100%;height:100%;}
         #uploader .filelist li img{height:100%;width:auto;}
@@ -36,14 +36,15 @@
         #labelInfo{vertical-align: text-top;}
         #uploader{width:100%;height:100%;cursor: pointer;}
         #file-selector{position: absolute;top:0;left:0;width:100%;height:100%;z-index:90;opacity: 0;cursor: pointer;}
-        #upfileshowbox{width:100%;height:100%;position: relative;}
-        #upfileshowbox .fontshow{width:80%;height:40px;position: absolute;left:10%;top:36px;z-index:50;display: inline-block;background:#0088cc;color:#fff;text-align: center;line-height: 40px;
+        #upfileshowbox{width:100%;height:100%;position: relative;line-height: 140px;overflow: hidden;}
+        #upfileshowbox .fontshow{width:80%;height:40px;position: absolute;left:10%;top:50px;z-index:50;display: inline-block;background:#0088cc;color:#fff;text-align: center;line-height: 40px;
             -webkit-border-radius: 3px;
             -moz-border-radius: 3px;
             border-radius: 3px;}
   #upfileshowbox .fontshow.hide{display: none;}
         #uploader:hover #upfileshowbox .fontshow.hide{display: inline-block;opacity: 0.5;}
         .must{color:red;font-size:14px;}
+        #fileimg{width:100%;height:auto;}
     </style>
 
 </head>
@@ -63,14 +64,10 @@
        <div class="lineBox labelLevelBox">
            <span class="lineTitle">专栏标签：</span>
            <select name="" id="labelLevel">
-               <option value="0">一级标签选择</option>
-               <option value="1">一级标签1</option>
-               <option value="2">一级标签2</option>
+
            </select>
            <select name="" id="labelLeve2">
-               <option value="0">二级标签选择</option>
-               <option value="1">二级标签1</option>
-               <option value="2">二级标签2</option>
+
            </select>
        </div>
        <div class="lineBox">
@@ -81,7 +78,7 @@
 
                    <div id="upfileshowbox">
                        <span class="fontshow">添加头像</span>
-                       <img src="" alt="" id="fileimg" style="width:auto;height:100%;max-width: 100%;"/>
+                       <img src="" alt="" id="fileimg" />
                    </div>
                </div>
            </div>
@@ -114,13 +111,10 @@
    <script>
         $(function(){
             getlabel();
-            getlabel2();
         });
 
        /*获取一级标签*/
        function getlabel(){
-//            var userid=userdatas.data.userid;
-           layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000}) ;
            var postdata={"taglevel":"1"};
            postdata=JSON.stringify(postdata);
            $.ajax({
@@ -143,17 +137,22 @@
                    $("#labelLevel").empty();
                    $.each(diskJson.data.rows,function(i,n){
                        $("#labelLevel").append('<option value="'+ n.tagid+'">'+ n.tagname+'</option>')
-                   })
+                   });
+                   var tagpid= $("#labelLevel").val();
+                   getlabel2(tagpid);
 
                }
            });
        }
 
+        $("#labelLevel").change(function(){
+            var tagpid= $("#labelLevel").val();
+            getlabel2(tagpid);
+        });
        /*获取二级标签*/
-       function getlabel2(){
-//            var userid=userdatas.data.userid;
-           layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000}) ;
-           var postdata={"taglevel":"2"};
+       function getlabel2(tagpid){
+           var postdata={"taglevel":"2","tagpid":tagpid};
+           //console.log(postdata);
            postdata=JSON.stringify(postdata);
            $.ajax({
                url : path2+'/CTKJBUSINESS/tag/taglist.do',
@@ -170,8 +169,8 @@
                },
                success:function(diskJson){
                    layer.closeAll();
-                   //console.log("标签表2：");
-                   //console.log(diskJson);
+//                   console.log("标签表2：");
+//                   console.log(diskJson);
                    $("#labelLeve2").empty();
                    $.each(diskJson.data.rows,function(i,n){
                        $("#labelLeve2").append('<option value="'+ n.tagid+'">'+ n.tagname+'</option>')
@@ -252,6 +251,22 @@
 
        $("#file-selector").change(function(){
            files = this.files[0];
+           var fileSize = 0;
+           var fileMaxSize = 1024*7;//1M
+           var filePath = $("#file-selector").val();
+           if(filePath){
+               fileSize =files.size;
+               var size = fileSize / 1024;
+               if (size > fileMaxSize) {
+                   layer.msg("图片太大啦！");
+                   file.value = "";
+                   return false;
+               }else if (size <= 0) {
+                   alert("图片呢？？");
+                   file.value = "";
+                   return false;
+               }
+           }
            if (window.FileReader) {
                $(" #upfileshowbox .fontshow").addClass("hide");
                var reader = new FileReader();

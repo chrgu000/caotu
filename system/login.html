@@ -88,8 +88,10 @@
         });
         function login(){
             var username = $("#userid").val();
-            alert(username);
-            console.log(username);
+/*         var un=tounicode(username);
+            console.log("un:::");
+            console.log(un);
+            tohanzi(un);*/
             var password = $("#psd").val();
             if(username!="" && password!="" ){
                 //console.log(username);
@@ -131,6 +133,37 @@
                 layer.msg("输入有误，请重新输入！")
             }
 
+        }
+
+
+
+        function tounicode(data)
+        {
+            if(data == '') return '请输入汉字';
+            var str ='';
+            for(var i=0;i<data.length;i++)
+            {
+                str+="\\u"+parseInt(data[i].charCodeAt(0),10).toString(16);
+            }
+            return str;
+        }
+
+
+        function tohanzi(data)
+        {
+            if(data == '') return '请输入十六进制unicode';
+            data = data.split('\\u');
+            console.log(data);
+            console.log('\\u');
+
+            var str ='';
+            for(var i=0;i<data.length;i++)
+            {
+                str+=data[i];
+            }
+            console.log("str:");
+            console.log(str);
+            return str;
         }
     </script>
     

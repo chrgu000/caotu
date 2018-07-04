@@ -14,12 +14,12 @@
 
     <style>
         /* Additional style to fix warning dialog position */
-        html,body{width:100%;height:100%;background:#333;}
+        html,body{width:100%;height:100%;background:#fff;}
         video {
             width:100% !important;
             height: 100% !important;
         }
-#quklod{position: absolute;bottom:34px;left:1px;display: none;}
+        #quklod{position: absolute;bottom:34px;left:1px;display: none;}
         #videobox:hover #quklod{display: block;}
         #imgyulookBox{position: absolute;right:0;bottom:33px;border:1px solid #fff;overflow: hidden;width:80px;height:80px;z-index:95;line-height: 80px;text-align: center;background:rgba(255,255,255,.4);cursor: pointer;}
         #imgyulookBox img{width:auto;height:auto;max-width: 80px;max-height: 80px;}
@@ -29,15 +29,20 @@
         #imgEditBox .close:hover{opacity:.9;}
         #imgEditBox .imgshowBox{width:75%;height:75%;margin:0 auto;margin-top:10%;text-align: center;position: relative;}
         #imgEditBox .imgshowBox img{position: absolute;left:0;right:0;top:0;bottom:0;margin:0 auto;width:auto;height:auto;max-width:100%;max-height:100%;}
+        .contentdescribeBox{width:100%;border-bottom:1px solid #ddd;height:75px;padding:20px 15px;font-size:14px;margin-bottom:9px;}
+        #contentdescribe{display: inline-block;width:60%;height:60px;border:1px solid #ddd;padding:12px;text-align: left;}
+
     </style>
 
 </head>
 
 <body class="gray-bg">
+        <div class="contentdescribeBox">
+            文字描述：<span id="contentdescribe">近乎疯狂未婚夫无法激活软件服务了你们领导乐山大佛士大夫那么顺利分娩</span>
+        </div>
+        <div id="videobox" style="width:100%;height:400px;background:#333; position: relative">
 
-        <div id="videobox" style="width:100%;height:100%;background:#333; position: relative">
-
-             <video id="video" src=""  controls="controls" autoplay height="100%" width="100%">您的浏览器不支持。</video>
+             <video id="video" src="http://192.168.1.114:8818/CTKJBUSINESS/file/downFileByName.do?filelocation=/home/video/video_weibo/368fff7866da11e8a30a309c23a27303902060.mp4"  controls="controls" autoplay height="100%" width="100%">您的浏览器不支持。</video>
             <!--<button type="button" style="text-align: center;" onclick="launchFullScreen(document.getElementById('video'))">全屏</button>-->
 
             <div id="quklod">
@@ -45,19 +50,13 @@
                 <input type="button" id="btnSpeedUpDown" onclick="speedDown()" value="慢放" />
              </div>
 
-            <!--缩略图查看编辑-->
-            <div id="imgEditBox">
-                <b class="close ">x</b>
-                <div class="imgshowBox">
-                    <img src="" alt=""/>
-                </div>
-            </div>
+
         </div>
 
     <!-- Page-Level Scripts -->
     <script>
         $(document).ready(function () {
-            geturl();
+           // geturl();
 
             /*获取下载地址*/
             function geturl(){
@@ -93,11 +92,7 @@
                     $("#video").attr("src",path2+path3+nedurl[1]);
                     var video;
                     video = document.getElementById("video");
-                    layer.load(1, {
-                        shade: [0.1,'#fff'] //0.1透明度的白色背景
-                    });
                     video.addEventListener('canplaythrough',function(){
-                        layer.closeAll();
                         var videoval= 1,videoname="横视频";
                         if(video.videoWidth>=video.videoHeight){
                             videoval= 1;videoname="横视频";
@@ -140,10 +135,7 @@
 
 
 
-        /*图片编辑关闭*/
-        $("#imgEditBox .close").click(function(){
-            $("#imgEditBox").removeClass("show");
-        })
+
 
 
     </script>

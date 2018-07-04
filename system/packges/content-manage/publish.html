@@ -57,14 +57,14 @@
                         <tbody id="tablelistTbody">
                         <tr v-for="(item,index) in items">
                             <td>{{item.contenttitle}}</td>
-                            <td>{{item.contenttype}}</td>
-                            <td>{{item.contentlevel}}</td>
-                            <td>{{item.checktime}}</td>
-                            <td>{{item.contenttag}}</td>
-                            <td>{{item.contentuid}}</td>
-                            <td>{{item.checkuid}}</td>
-                            <td>{{item.contentgood}}</td>
-                            <td>{{item.readcount}}</td>
+                            <td class="center">{{item.contenttype}}</td>
+                            <td class="center">{{item.contentlevel}}</td>
+                            <td class="center">{{item.checktime}}</td>
+                            <td class="center tabbig">{{item.tagshow}}</td>
+                            <td class="center tabbig">{{item.checkbak}}</td>
+                            <td class="center">{{item.checkuid}}</td>
+                            <td class="center">{{item.contentgood}}</td>
+                            <td class="center">{{item.readcount}}</td>
                         </tr>
 
                         </tbody>
@@ -106,12 +106,11 @@
             }
         }
     });
-    getpublish(1);
 
-
-
-    function getpublish(pageno){
+    function getcheck(pageno){
         layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000}) ;
+        var tjdatas={"pageno":pageno,"pagesize":10,"querytype":"ISPUSH"};
+        tjdatas=JSON.stringify(tjdatas);
         $.ajax({
             url : path+'/CTKJBUSINESS/content/checkyet.do',
             cache:false,//false就不会从浏览器缓存中加载请求信息了
@@ -119,7 +118,7 @@
             contentType: "application/json",
             dataType:"JSON",
             async:true,
-            data: "{\"querytype\":\"UNPUSH\",\"pageno\":\""+pageno+"\"}",
+            data: tjdatas,
             error: function(data){
                 layer.msg("服务器未响应,请稍后再试!");
                 //console.log("获取失败：");
@@ -127,14 +126,11 @@
             },
             success:function(diskJson){
                 layer.closeAll();
-                //console.log("未发布列表：");
-                //console.log(diskJson);
-
-
+//                console.log("发布列表：");
+//                console.log(diskJson);
                 /*翻页信息*/
                 pageinfo(diskJson.data,pageno);//翻页控件信息
                 pusblishtabledata.items=diskJson.data.ContentList;
-
             }
         });
     }

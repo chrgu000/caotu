@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-    <title> 敏感词管理</title>
+    <title> 权限管理</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
 
@@ -21,20 +21,14 @@
     <style>
         /* Additional style to fix warning dialog position */
 
-        #alertmod_table_list_2 {
-            top: 900px !important;
-        }
         .btitle{padding-left:20px;height:45px;border-bottom:1px solid #bbb; line-height: 37px;}
-        #searchBox{border:1px solid #bbb;padding:25px;}
-        .titlebtn{float:right;margin-right:6px;margin-bottom:6px;}
-        #refreshNow{background:#f05151;}
-        #pageLoadBox{width:100%;}
+
     </style>
 
 </head>
 
 <body class="gray-bg">
-<h3 class="btitle">敏感词管理</h3>
+    <h3 class="btitle">系统管理—权限设置</h3>
     <div id="pageLoadBox">
 
     </div>
@@ -46,13 +40,14 @@
 <script src="../../js/vue.js"></script>
 <script type="text/javascript" src="../../js/index.js"></script>
 
-<!-- Page-Level Scripts -->
-<script>
-    $(function(){
-        $("#pageLoadBox").load("sensitiveform.html");
-    })
+    <!-- Page-Level Scripts -->
+    <script>
+        $(function(){
+            $("#pageLoadBox").load("permissionform.html");
+        });
 
-</script>
+
+    </script>
 
     
     

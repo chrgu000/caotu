@@ -1,27 +1,17 @@
-$(function(){
-    //菜单点击
-    $(".navupstage").delegate('li a','click',function(){
-        var url = $(this).attr('href');
-        //console.log(url);
-        $("#J_iframe").attr('src','packges/'+url);
-        return false;
-    });
-    $("#homehre").click(function(){
-        var url = $(this).attr('href');
-       //console.log(url);
-        $("#J_iframe").attr('src','packges/'+url);
-        return false;
-    });
-});
 
 
-/*const path="http://192.168.1.111:8080";
-const path2="http://192.168.1.111:8080";*/
-const path="http://192.168.1.114:8818";
-const path2="http://192.168.1.114:8818";
+
+//const path3="http://192.168.1.111:8080";//老冯
+const path="http://192.168.1.114:8818";//测试服务器
+const path2="http://192.168.1.114:8818";//测试服务器
+
 /*线上*/
 /*const path="http://192.168.1.114:8828";
 const path2="http://192.168.1.114:8828";*/
+
+var userdatas=getload();
+/*console.log("用户信息userdatas：");
+ console.log(userdatas);*/
 
 /*ajax请求成功后判断*/
 $(document).ajaxSuccess(function(event,xhr,options){
@@ -36,7 +26,8 @@ $(document).ajaxSuccess(function(event,xhr,options){
 
         }
     }
-})
+});
+
 
 
 function check(diskJson) {
@@ -55,9 +46,7 @@ function getload() {
         return userdata;
     }
 }
-const userdatas=getload();
-/*console.log("用户信息userdatas：");
-console.log(userdatas);*/
+
 
 
 /*翻页*/
@@ -65,9 +54,9 @@ console.log(userdatas);*/
 function nextpage(){
     var page=parseInt($("#addpageinput").val());
     var allpage=parseInt($("#allpage").html());
-
+  /*  console.log(page);
+    console.log(allpage);*/
     if(page < allpage){
-        //console.log(page)
         getcheck(page+1);
     }
 }
@@ -75,9 +64,9 @@ function nextpage(){
 function prepage(){
     var page=parseInt($("#addpageinput").val());
     var allpage=parseInt($("#allpage").html());
-
+  /*  console.log(page);
+    console.log(allpage);*/
     if(page >1){
-       // console.log(page)
         getcheck(page-1);
     }
 }
@@ -279,4 +268,16 @@ function cloneObject(obj) {
         newObj[key] = typeof val === 'object' ? cloneObj(val): val;
     }
     return newObj;
+}
+
+/*数组去重*/
+function unique10(arr){
+    //Set数据结构，它类似于数组，其成员的值都是唯一的
+    return Array.from(new Set(arr)); // 利用Array.from将Set结构转换成数组
+}
+
+/*随机数*/
+function randomnum(minNum,maxNum){
+    var num=parseInt(Math.random()*(maxNum-minNum+1)+minNum,10);
+    return num;
 }

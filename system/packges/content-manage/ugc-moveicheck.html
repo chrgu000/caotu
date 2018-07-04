@@ -45,74 +45,15 @@
                 <input type="button" id="btnSpeedUpDown" onclick="speedDown()" value="慢放" />
              </div>
 
-            <!--缩略图查看编辑-->
-            <div id="imgEditBox">
-                <b class="close ">x</b>
-                <div class="imgshowBox">
-                    <img src="" alt=""/>
-                </div>
-            </div>
         </div>
 
     <!-- Page-Level Scripts -->
     <script>
-        $(document).ready(function () {
-            geturl();
-
-            /*获取下载地址*/
-            function geturl(){
-                let ifinfo = window.location.search;
-                ifinfo=ifinfo.substring(4);
-                ifinfo=ifinfo.split(",");
-               /* //console.log("movie:");
-                //console.log(ifinfo);*/
-                if(localStorage.uncheckdata){
-                    var localindodata=JSON.parse(localStorage.uncheckdata);
-                    var index=ifinfo[0];
-                    var nedurl=localindodata.ContentList[index].daqurllist;
-                    //console.log("nedurl:");
-                    nedurl=JSON.parse(nedurl);
-                    //console.log(nedurl);
-                    var path3="/CTKJBUSINESS/file/downFileByName.do?filelocation=";
-                    //console.log("视频预览地址");
-                    var img = new Image();
-                    var videoval2= 1;
-                    img.onload = function(){
-                        $("#imgEditBox .imgshowBox img").attr("src",this.src);
-                        $("#movieImgBox .movieshowimg img").attr("src",this.src);
-                        $("#movieImgBox .movieshowimg img").attr("data-width",this.width);
-                        $("#movieImgBox .movieshowimg img").attr("data-height",this.height);
-                        this.onload = null;
-                        if(this.width>=this.height){
-                            videoval2= 1;
-                        }else{
-                            videoval2= 2;
-                        }
-                    };
-                    img.src =path2+path3+nedurl[0];
-                    $("#video").attr("src",path2+path3+nedurl[1]);
-                    var video;
-                    video = document.getElementById("video");
-                    layer.load(1, {
-                        shade: [0.1,'#fff'] //0.1透明度的白色背景
-                    });
-                    video.addEventListener('canplaythrough',function(){
-                        layer.closeAll();
-                        var videoval= 1,videoname="横视频";
-                        if(video.videoWidth>=video.videoHeight){
-                            videoval= 1;videoname="横视频";
-                        }else{
-                            videoval= 2;videoname="竖视频";
-                        }
-                        if(videoval2!=videoval){
-                            $("#movieImgBox .tips").addClass("show");
-                        }
-                        $("#movieStyle").attr("data-val",videoval).html(videoname);
-                    });
-                }
-            }
-
-        });
+        function geturl(checkdatas){
+            var nedurllist=checkdatas.data.contenturllist;
+            nedurllist=JSON.parse(nedurllist);
+            $("#video").attr("src",nedurllist[1]);
+        }
 
 
         var speed=1; //播放速度

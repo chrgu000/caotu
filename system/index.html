@@ -204,14 +204,37 @@
 
     <script>
        // $("#J_iframe").load("packges/index_v1.html");
-
        var userinfotop = new Vue({
            el: '#userInfoTop',
            data: {
                info: {username:"",userheadimg:"/*img/a1.jpg*/",newsNum:"",iscode:""}
            }
        });
+
        $(function(){
+           sestop();
+           if(userdatas && userdatas.code && userdatas.code=="1000"){
+             /*  var headimg="img/logo.png";
+               if(userdatas.data.userheadimg){
+                   headimg=userdatas.data.userheadimg;
+               }else{
+                   headimg="img/logo.png";
+               }
+               var infos={username:userdatas.data.username,userheadimg:headimg,newsNum:"",iscode:userdatas.code};
+               userinfotop.info=infos;*/
+               var datas=userdatas.data.userrolelist;
+               $.each(datas,function(i,n){
+                   $("#"+ n.rolepid).append(' <li><a data-id="'+ n.roleid+'" class="J_menuItem" href="'+ n.rolepath+'.html">'+ n.rolename+'</a> </li>')
+               });
+              /* //权限设置
+               $("#upstage5").append(' <li><a data-id="006" class="J_menuItem" href="system-manage/permissionsittng.html">权限设置</a> </li>');
+              */
+           }
+
+       });
+
+       function sestop(){
+           userdatas=getload();
            if(userdatas && userdatas.code && userdatas.code=="1000"){
                var headimg="img/logo.png";
                if(userdatas.data.userheadimg){
@@ -221,31 +244,28 @@
                }
                var infos={username:userdatas.data.username,userheadimg:headimg,newsNum:"",iscode:userdatas.code};
                userinfotop.info=infos;
-               var datas=userdatas.data.userrolelist;
-               $.each(datas,function(i,n){
-                   $("#"+ n.rolepid).append(' <li><a data-id="'+ n.roleid+'" class="J_menuItem" href="'+ n.rolepath+'.html">'+ n.rolename+'</a> </li>')
-               })
+//               console.log(infos);
+//               console.log(userinfotop.info);
+               //$("#userInfoTop .userName").html(userdatas.data.username);
+               //$("#userHead .userHeadBox img").attr("src",headimg);
            }
+       }
 
-       })
-
-
-      /* function ajax(){
-           $.ajax({
-               //url:"${base}/admin/article/article/Com_getwind_tracks.do?count=231&seastringc="+ss+"&firstResult="+firstResult+"&isLoop="+isLoop,
-               url:"http://192.168.0.198:9200/",
-               type:"GET",
-               dataType:"JSON",
-               traditional:true,
-               data:"",
-               async:true,
-               error: function(){layer.msg("服务器未响应!");},
-               success:function(data){
-                    //console.log(data)
-
-               }
-           });
-       }*/
+       //菜单点击
+       $(".navupstage").delegate('li a','click',function(){
+           var url = $(this).attr('href');
+           //console.log(url);
+           $("#J_iframe").attr('src','packges/'+url);
+           sestop();
+           return false;
+       });
+       $("#homehre").click(function(){
+           var url = $(this).attr('href');
+           //console.log(url);
+           $("#J_iframe").attr('src','packges/'+url);
+           sestop();
+           return false;
+       });
 
     </script>
 </body>

@@ -68,13 +68,13 @@
                             </thead>
                             <tbody id="tablelistTbody">
                             <tr v-for="(item,index) in items">
-                                <td>{{index+1}}</td>
-                                <td>{{item.tagname}}</td>
-                                <td>{{item.taglevel }}</td>
-                                <td>{{item.createtime}}</td>
-                                <td>{{item.tipcount}}</td>
-                                <td >{{item.contentcount}}</td>
-                                <td >{{item.createuser}}</td>
+                                <td class="center">{{index+1}}</td>
+                                <td class="center">{{item.tagname}}</td>
+                                <td class="center">{{item.taglevel }}</td>
+                                <td class="center">{{item.createtime}}</td>
+                                <td class="center">{{item.tipcount}}</td>
+                                <td class="center">{{item.contentcount}}</td>
+                                <td class="center">{{item.createuser}}</td>
                             </tr>
 
                             </tbody>
@@ -107,10 +107,7 @@
             var lve=$("#newLabelLevel").val();
             var url="labelsetpage"+lve+".html";
             $("#contentPageBox").load(url);
-
         });
-
-
 
         var labeldata = new Vue({
             el: '#tablelistTbody',
@@ -126,7 +123,6 @@
         });
 
         getlabel("",1);
-
         function getlabel(taglevel,pageno){
             var postdata={"taglevel":taglevel,"pageno":pageno};
             postdata=JSON.stringify(postdata);

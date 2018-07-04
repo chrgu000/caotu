@@ -54,13 +54,13 @@
                             </thead>
                             <tbody id="tablelistTbody">
                                 <tr v-for="(item,index) in items">
-                                    <td>{{index+1}}</td>
+                                    <td class="center">{{index+1}}</td>
                                     <td>{{item.daqtitle}}</td>
-                                    <td>{{item.daqtype == "3" ? "图片":(item.daqtype == "1" ? "横视频":"竖视频")  }}</td>
-                                    <td>{{item.createtime}}</td>
-                                    <td>{{item.daqsource}}</td>
-                                    <td v-if="userlv == 'E'"><a v-bind:href="'checksconts.html?in='+index+','+item.daqtype+','+pageno">审核</a></td>
-                                    <td v-else><span>审核</span></td>
+                                    <td class="center">{{item.daqtype == "3" ? "图片":(item.daqtype == "1" ? "横视频":"竖视频")  }}</td>
+                                    <td class="center">{{item.createtime}}</td>
+                                    <td class="center">{{item.daqsource}}</td>
+                                    <td class="center" v-if="userlv == 'E'"><a v-bind:href="'checksconts.html?in='+index+','+item.daqtype+','+pageno">审核</a></td>
+                                    <td class="center" v-else><span>审核</span></td>
                                 </tr>
 
                             </tbody>
@@ -129,8 +129,8 @@
                     },
                     success:function(diskJson){
                         layer.closeAll();
-//                        console.log("未审核列表：");
-//                        console.log(diskJson);
+ /*                       console.log("未审核列表：");
+                        console.log(diskJson);*/
                         /*翻页信息*/
                         pageinfo(diskJson.data,pageno);//翻页控件信息
                         tabledata.items=diskJson.data.ContentList;

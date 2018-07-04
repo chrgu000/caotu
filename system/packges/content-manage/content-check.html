@@ -77,9 +77,12 @@
                    }
                 },
                 jump:function(obj,url){
+
                     $("."+obj).addClass("active").siblings(".active").removeClass("active");
-                    $("#contentPageBox").load(url);
-                    getcheck(1);
+                    $("#contentPageBox").load(url,function(){
+                       getcheck(1);
+                    });
+
                 }
             }
         });

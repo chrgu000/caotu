@@ -49,7 +49,7 @@
             border-radius: 3px;}
         #upfileshowbox .fontshow.hide{display: none;}
         #uploader:hover #upfileshowbox .fontshow.hide{display: inline-block;opacity: 0.5;}
-        .must{color:red;font-size:14px;}
+        .must{color:red;font-size:11px;}
         #birthDateYear,#birthDateMonth{width:100px;}
     </style>
 
@@ -58,12 +58,12 @@
 <body class="gray-bg">
    <div class="labelBox">
         <div class="lineBox">
-            <span class="lineTitle">用户名：</span>
+            <span class="lineTitle"><b class="must">*</b>用户名：</span>
             <input type="text" id="userName" maxlength="16" value="" placeholder="请输入用户名"/>
-            <i class="must">*最多16个字</i>
+            <i class="must">*16个字以内！</i>
         </div>
        <div class="lineBox">
-           <span class="lineTitle">用户头像：</span>
+           <span class="lineTitle"><b class="must">*</b>用户头像：</span>
            <div class="page-container">
                <div id="uploader" class="wu-example">
                    <input type="file" value="" id="file-selector" accept=".png,.jpg,.gif,.jpeg"/>
@@ -137,6 +137,7 @@
                 format:'Y-m-d',
                 timepicker:false//关闭时间选项
                 });
+            costdk="";
         })
 
 
@@ -151,7 +152,7 @@
              var location= province+ city;
             var userbirthday=$('#birthdayDate').val();
             userbirthday=userbirthday.replace(/-/g, "");//
-            if(username ==""){
+            if(username =="" || majiafilse==""){
                 layer.msg("有必填项为空，请检查后再创建！！");
             }else{
                 putObject(majiafilse);
