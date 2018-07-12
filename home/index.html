@@ -3,14 +3,10 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title>草图科技官网</title>
+    <link rel="stylesheet" href="css/commons.css"/>
     <style>
-        *{margin:0;padding:0;}
-        ul,ol,p,h1,h2,h3,h4,h5,h6,dl,dt,dd{
-            margin:0;
-            padding:0;
-            list-style:none;
-        }
-        .conbox{width:100%;margin:0 auto;}
+
+        .conbox{width:100%;margin:0 auto;position: relative;}
         .conbox img{width:100%;height: auto;}
         #rightKzBox{width:15px;padding:10px;position: fixed;right:10px;top:30%;}
         #rightKzBox li{width:12px;height:12px;background:#e4e0e0;margin: 10px;
@@ -21,6 +17,11 @@
         #rightKzBox li:hover,
         #rightKzBox li.active{background:#ff698f;}
         .imgbox{position: relative;}
+        #downerweimaBox{position: absolute;bottom:15px;right:15px;}
+        #downerweimaBox .downbox{display: inline-block;width:80rem;height:80rem;position: relative;}
+        #downerweimaBox .downbox img{width:100%;height:100%;}
+        #downerweimaBox .downbox .title{position: absolute;top:-18px;left:0;width:100%;text-align: center;font-weight:500;font-size:13rem;}
+
         #footdiv{text-align: center;height:55px;line-height: 55px;position: absolute;bottom:0;left:0;width:100%;font-size:12px;}
         #footdiv p span{display: inline-block;margin:0 6px;color:#666;}
     </style>
@@ -31,9 +32,19 @@
         <div id="img2" class="imgbox" style="margin-top:-6px;"><img src="img/2.png" alt=""/></div>
         <div id="img3" class="imgbox"  style="margin-top:-6px;"><img src="img/3.png" alt=""/>
             <div id="footdiv">
-                <p><span>鲁ICP备15027719号-1</span><span>杭州草图科技网络有限公司</span></p>
+                <p>
+                    <span>鲁ICP备15027719号-1</span><span>杭州草图科技网络有限公司</span>
+                    <a href="packages/privacypolicy.html" target="_blank">用户隐私协议</a>
+                </p>
             </div>
         </div>
+
+        <!--<div id="downerweimaBox">-->
+            <!--<span id="iosdown" class="downbox">-->
+                <!--<b class="title">IOS扫描下载</b>-->
+                <!--<img src="img/ioserweima.png" alt="ios"/>-->
+            <!--</span>-->
+        <!--</div>-->
     </div>
 
     <ul id="rightKzBox">

@@ -22,7 +22,7 @@
                             <tbody id="tablelistTbody">
                             <tr v-for="(item,index) in items" :data-id="item.userid">
                                 <td class="center">{{item.userid}}</td>
-                                <td>{{item.username}}</td>
+                                <td class="center">{{item.username}}</td>
                                 <td class="center">{{item.lastlogin }}</td>
                                 <td class="center">{{item.usernum}}</td>
                                 <td class="center dotd">
@@ -85,9 +85,8 @@
             }
         });
         getcheck(1);
-
         function getcheck(pageno){
-            var datapost={};
+            var datapost={"pageno":pageno,"pagesize":10};
             datapost=JSON.stringify(datapost);
             layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000}) ;
             $.ajax({

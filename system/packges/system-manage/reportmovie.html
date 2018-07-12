@@ -38,11 +38,11 @@
 
 <body class="gray-bg">
         <div class="contentdescribeBox">
-            文字描述：<span id="contentdescribe">近乎疯狂未婚夫无法激活软件服务了你们领导乐山大佛士大夫那么顺利分娩</span>
+            文字描述：<span id="contentdescribe"></span>
         </div>
         <div id="videobox" style="width:100%;height:400px;background:#333; position: relative">
 
-             <video id="video" src="http://192.168.1.114:8818/CTKJBUSINESS/file/downFileByName.do?filelocation=/home/video/video_weibo/368fff7866da11e8a30a309c23a27303902060.mp4"  controls="controls" autoplay height="100%" width="100%">您的浏览器不支持。</video>
+             <video id="video" src=""  controls="controls" autoplay height="100%" width="100%">您的浏览器不支持。</video>
             <!--<button type="button" style="text-align: center;" onclick="launchFullScreen(document.getElementById('video'))">全屏</button>-->
 
             <div id="quklod">
@@ -54,60 +54,21 @@
         </div>
 
     <!-- Page-Level Scripts -->
+        <script src="../../js/jquery.min.js?v=2.1.4"></script>
+        <script src="../../plugin/layer/layer.js"></script>
+        <script type="text/javascript" src="../../js/index.js"></script>
     <script>
-        $(document).ready(function () {
+
            // geturl();
 
             /*获取下载地址*/
-            function geturl(){
-                let ifinfo = window.location.search;
-                ifinfo=ifinfo.substring(4);
-                ifinfo=ifinfo.split(",");
-               /* //console.log("movie:");
-                //console.log(ifinfo);*/
-                if(localStorage.uncheckdata){
-                    var localindodata=JSON.parse(localStorage.uncheckdata);
-                    var index=ifinfo[0];
-                    var nedurl=localindodata.ContentList[index].daqurllist;
-                    //console.log("nedurl:");
-                    nedurl=JSON.parse(nedurl);
-                    //console.log(nedurl);
-                    var path3="/CTKJBUSINESS/file/downFileByName.do?filelocation=";
-                    //console.log("视频预览地址");
-                    var img = new Image();
-                    var videoval2= 1;
-                    img.onload = function(){
-                        $("#imgEditBox .imgshowBox img").attr("src",this.src);
-                        $("#movieImgBox .movieshowimg img").attr("src",this.src);
-                        $("#movieImgBox .movieshowimg img").attr("data-width",this.width);
-                        $("#movieImgBox .movieshowimg img").attr("data-height",this.height);
-                        this.onload = null;
-                        if(this.width>=this.height){
-                            videoval2= 1;
-                        }else{
-                            videoval2= 2;
-                        }
-                    };
-                    img.src =path2+path3+nedurl[0];
-                    $("#video").attr("src",path2+path3+nedurl[1]);
-                    var video;
-                    video = document.getElementById("video");
-                    video.addEventListener('canplaythrough',function(){
-                        var videoval= 1,videoname="横视频";
-                        if(video.videoWidth>=video.videoHeight){
-                            videoval= 1;videoname="横视频";
-                        }else{
-                            videoval= 2;videoname="竖视频";
-                        }
-                        if(videoval2!=videoval){
-                            $("#movieImgBox .tips").addClass("show");
-                        }
-                        $("#movieStyle").attr("data-val",videoval).html(videoname);
-                    });
-                }
+            function geturl(urldatas){
+                $("#contentdescribe").html(urldatas.contenttitle);
+                var url=JSON.parse(urldatas.contenturllist);
+                $("#video").attr("src",url[1]);
             }
 
-        });
+
 
 
         var speed=1; //播放速度

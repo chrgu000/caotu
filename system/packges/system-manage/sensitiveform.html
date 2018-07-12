@@ -120,8 +120,8 @@
             },
             success:function(diskJson){
                 layer.closeAll();
-                console.log("敏感词：");
-                 console.log(diskJson);
+//                console.log("敏感词：");
+//                 console.log(diskJson);
                 /*翻页信息*/
                 if(diskJson.code =="1000"){
                     pageinfo(diskJson.data,pageno);//翻页控件信息
@@ -156,13 +156,13 @@
             data: datapost,
             error: function(data){
                 layer.msg("服务器未响应,请稍后再试!");
-                console.log("删除敏感词失败：");
-                console.log(data);
+//                console.log("删除敏感词失败：");
+//                console.log(data);
             },
             success:function(diskJson){
                 layer.closeAll();
-                console.log("删除敏感词：");
-                console.log(diskJson);
+//                console.log("删除敏感词：");
+//                console.log(diskJson);
                 /*翻页信息*/
                 if(diskJson.code =="1000"){
                     layer.msg("删除成功!");
@@ -182,7 +182,7 @@
     }
 /*刷新提示*/
     function refreshall(){
-        layer.confirm('确定要刷新提交新增的敏感词吗？', {
+        layer.confirm('刷新将同步所有数据，请谨慎操作，确定要刷新提交新增的敏感词吗？', {
             btn: ['确定','取消'] //按钮
         }, function(index){
             refreshAjax();

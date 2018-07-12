@@ -113,7 +113,6 @@
             function getcheck(pageno){
                 var userid=userdatas.data.userid;
                 layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000}) ;
-                var cook=document.cookie;
                 $.ajax({
                     url : path+'/CTKJBUSINESS/content/uncheck.do',
                     cache:false,//false就不会从浏览器缓存中加载请求信息了
@@ -129,8 +128,8 @@
                     },
                     success:function(diskJson){
                         layer.closeAll();
- /*                       console.log("未审核列表：");
-                        console.log(diskJson);*/
+//                        console.log("未审核列表：");
+//                        console.log(diskJson);
                         /*翻页信息*/
                         pageinfo(diskJson.data,pageno);//翻页控件信息
                         tabledata.items=diskJson.data.ContentList;

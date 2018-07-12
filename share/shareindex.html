@@ -2,9 +2,15 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>分享界面</title>
+    <meta content=”initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width” name=”viewport” />
+    <meta content=”telephone=no” name=”format-detection” />
+    <title>头图</title>
     <link rel="stylesheet" href="css/common.css"/>
     <link rel="stylesheet" href="plugin/font/iconfont.css"/>
+
+    <script type="application/javascript" src="js/jquery.min.js"></script>
+    <script type="application/javascript" src="js/vue.js"></script>
+    <script type="application/javascript" src="plugin/layer/layer.js"></script>
 </head>
 <body>
     <div class="conntentsBox">
@@ -12,11 +18,10 @@
             <div class="logobox">
                 <img class="logo" src="img/logo.png" alt="logo"/>
                 <span>
-                    头图 <br/>
-                    比头条更有料
+                    头图
                 </span>
             </div>
-            <a  download="" id="downappbtn">下 载</a>
+            <a  href="https://itunes.apple.com/cn/app/id1398165300?mt=8" download="头图.app"  id="downappbtn">下 载</a>
         </header>
 
         <div class="conntentsBox" id="mainContentBox">
@@ -27,15 +32,15 @@
                     </span>
                     <span class="title">{{userhead}}</span>
                 </div>
-                <a  download="" id="attentBtn" class="btn">关 注</a>
+                <a href="https://itunes.apple.com/cn/app/id1398165300?mt=8" download="头图.app"  id="attentBtn" class="btn"> <img src="img/focus_on@2x.png" alt=""/></a>
             </div>
             <p id="contentTittle">{{commendTitle}}</p>
             <div id="mainContntShowbox">
 
 
             </div>
-            <div style="text-align: center;">
-                <a download="" id="seeDetails" class="btn">点击查看详情</a>
+            <div style="text-align: center;margin-top:40px;">
+                <a href="https://itunes.apple.com/cn/app/id1398165300?mt=8" download="头图.app" id="seeDetails" class="btn">点击查看详情</a>
             </div>
         </div>
         <!--更多推荐-->
@@ -54,7 +59,8 @@
                         </a>
                     </div>
 
-                    <a download="" class="concernBtn"> <i class="iconfont">&#xe613;</i>关注</a>
+                    <a href="https://itunes.apple.com/cn/app/id1398165300?mt=8" download="头图.app"  class="concernBtn">
+                        <img src="img/focus_on@2x.png" alt=""/></a>
                 </div>
             </div>
         </div>
@@ -72,9 +78,7 @@
         <a class="bds_count" data-cmd="count"></a>
     </div>-->
 
-<script type="application/javascript" src="js/jquery.min.js"></script>
-<script type="application/javascript" src="js/vue.js"></script>
-<script type="application/javascript" src="plugin/layer/layer.js"></script>
+
 <script type="application/javascript" src="js/index.js"></script>
 <script>
 
@@ -119,13 +123,11 @@
 
     /*获取url判断类型*/
     function iscontendtype(){
-        var loctionsrc="?contendid=73f64c8a600b11e8afee309c23a27303";//假设得到的location.search; //获取url中"?"符后的字串
-        //var loctionsrc= window.location.search;
+     //   var loctionsrc="?contendid=2732f19664ca11e88f0e309c23a27303";//假设得到的location.search; //获取url中"?"符后的字串
+    var loctionsrc= window.location.search;
         var urldatas=GetRequest(loctionsrc);
 //        console.log(urldatas);
         getcommonddatas(urldatas.contendid);
-
-
     }
 
     function getcommonddatas(postdata){
@@ -163,7 +165,7 @@
 
     function condataqf(condatas){
         if(condatas.userheadphoto && condatas.userheadphoto !=""){
-            commendinfo.userhead=condatas.userheadphoto;
+            commendinfo.userheadphoto=condatas.userheadphoto;
         }
         if(condatas.username && condatas.username !=""){
             commendinfo.userhead=condatas.username;
@@ -174,15 +176,18 @@
             commendinfo.commendTitle=condatas.contenttitle;
         }
 
-        if(condatas.contenttype == "1"){
+        if(condatas.contenttype == "1" || condatas.contenttype == "2"){
+
             $("#mainContntShowbox").css({"height":"auto"});
             $("#mainContntShowbox").load("moviedetial.html",function(){
                 var movieurl=JSON.parse(condatas.contenturllist);
 //               console.log(movieurl);
                 $("#video").attr("src",movieurl[1]);
+                $("#video").attr("poster",movieurl[0]);
 
             })
-        }else if(condatas.contenttype == "2"){
+        }else if(condatas.contenttype == "3"){
+
             $("#mainContntShowbox").css({"height":"auto"});
             var picturelist=JSON.parse(condatas.contenturllist);
             $("#mainContntShowbox").load("picturedetial.html",function(){
@@ -201,7 +206,7 @@
 
     /*获取更多推荐*/
     function getmoretj(conttendtag){
-       var tjdatas={"tagid":"2341"};
+       var tjdatas={"tagid":conttendtag};
         tjdatas=JSON.stringify(tjdatas);
        // console.log(tjdatas);
         $.ajax({

@@ -119,6 +119,7 @@
                         <td>
                             内容等级
                             <select name="" id="checkConLevel">
+                                <option value="">请选择</option>
                                 <option value="3">A</option>
                                 <option value="2">B</option>
                                 <option value="1">C</option>
@@ -595,8 +596,11 @@
             //判断是否为D删除的
             var contleve=$("#checkConLevel").val();
             var tja=localindodata.ContentList[index];//本地缓存数据
-            if(contleve == "D"){
-                subd2(tja,"");
+            if(contleve == ""){
+                layer.msg("请选择内容等级!!");
+                return false;
+            }else if(contleve == "D"){
+                (tja,"");
                 return false;
             }else{
                 //判断标题字数
@@ -664,14 +668,14 @@
             error: function(data){
                 layer.closeAll();
                 layer.msg("服务器未响应,请稍后再试!");
-                console.log("提交图片/视频流失败：");
-                console.log(data);
+//                console.log("提交图片/视频流失败：");
+//                console.log(data);
                 $("#myConmentsSub").attr("disabled",false);
 
             },
             success:function(diskJson){
-           /*     console.log("提交图片/视频流获取：");
-                console.log(diskJson);*/
+//                console.log("提交图片/视频流获取：");
+//                console.log(diskJson);
                 if(diskJson.code =="1000"){
                     var geturl=diskJson.data;
                     if(iffilechange==2){

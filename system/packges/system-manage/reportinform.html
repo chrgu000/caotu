@@ -54,7 +54,6 @@
     </div>
     <div class="wrapper wrapper-content  animated fadeInRight">
         <h3 class="formtitle">数据列表
-            <button type="button" id="detailbtn" class="btn btn-sm btn-primary">详情</button>
             <button type="button" class="btn btn-sm btn-primary" id="passBtn">通过</button>
             <button type="button" class="btn btn-sm btn-primary" id="unpassBtn">未通过</button>
         </h3>
@@ -84,13 +83,13 @@
                                 <td class="center">{{index+1}}</td>
                                 <td class="center">{{item.reportdes }}</td>
                                 <td>{{item.reporttext}}</td>
-                                <td class="center">{{item.reporttype=="3"?"图片":(item.reporttype=="1"?"横视频":"竖视频")}}</td>
+                                <td class="center">{{item.reporttype=="1"?"内容":"评论"}}</td>
                                 <td class="center">{{item.reportObject}}</td>
                                 <td class="center">{{item.createtime}}</td>
                                 <td class="center">{{item.reportusername}}</td>
                                 <td class="center">{{item.dealres=="0"?"待处理":(item.dealres=="1"?"通过":"未通过")}}</td>
                                 <td class="center">
-                                    <button type="button" class="btn" v-on:click="lookconten(item)">详情</button>
+                                    <button type="button" class="btn" v-if="item.reporttype==1" v-on:click="lookconten(item)">详情</button>
                                     <button type="button" class="pass btn" v-on:click="pass(item)">通过</button>
                                     <button type="button" class="unpass btn" v-on:click="unpass(item)">不通过</button>
                                 </td>
@@ -152,8 +151,8 @@
         var reportObject=$("#reportObject").val();
         var reportusername=$("#reportusername").val();
         var datapost={"pageno":pageno,"pagesize":10,dealres:dealres,"reportObject":reportObject,"reportusername":reportusername};
-         console.log("datapost::");
-         console.log(datapost);
+//         console.log("datapost::");
+//         console.log(datapost);
         datapost=JSON.stringify(datapost);
         $.ajax({
             url : path+'/CTKJBUSINESS/report/reportlist.do',
@@ -170,8 +169,8 @@
             },
             success:function(diskJson){
                 layer.closeAll();
-                console.log("举报列表：");
-                console.log(diskJson);
+//                console.log("举报列表：");
+//                console.log(diskJson);
                 /*翻页信息*/
                 pageinfo2(diskJson.data,pageno);//翻页控件信息
                 tabledata.items=diskJson.data.rows;
@@ -207,39 +206,47 @@
                 //console.log(data);
             },
             success:function(diskJson){
-                console.log("举报详情：");
-                console.log(diskJson);
+//                console.log("举报详情：");
+//                console.log(diskJson);
+                if(diskJson.code == "1000"){
+                    var type=diskJson.data.contenttype;
+                    var url="reportmovie.html";
+                    if(type=="3" || type=="4"){
+                        url="reportpicture.html";
+                    }else{
+                        url="reportmovie.html";
+                    }
+                    layer.open({
+                        type: 2,
+                        title: '举报详情',
+                        shadeClose: true,
+                        maxmin: true, //开启最大化最小化按钮
+                        shade: 0.8,
+                        area: ['80%', '90%'],
+                        content: url, //iframe的url
+                        success: function (layero, index) {
+                            var body = layer.getChildFrame('body', index);
+                            var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                            iframeWin.geturl(diskJson.data);
+                        }
+                    });
+                }
 
             }
         });
     }
-    $("#detailbtn").click(function(){
-        var type=3;
-        var url="reportmovie.html";
-        if(type==3){
-            url="reportpicture.html";
-        }else{
-            url="reportmovie.html";
-        }
-        layer.open({
-            type: 2,
-            title: '举报详情',
-            shadeClose: true,
-            maxmin: true, //开启最大化最小化按钮
-            shade: 0.8,
-            area: ['80%', '90%'],
-            content: url //iframe的url
-        });
 
-    })
+
+
 
     /*是否通过*/
     function ispass(redata,ispa){
-        var reportid=redata.contentid;
+       // console.log(redata);
+        var reportid=redata.reportid;
         var dealuser=userdatas.data.userid;
         var datapost={"reportid":reportid,"dealuser":dealuser,dealres:ispa};
-        console.log("datapost::");
-        console.log(datapost);
+//        console.log("datapost::");
+//        console.log(datapost);
         datapost=JSON.stringify(datapost);
         $.ajax({
             url : path+'/CTKJBUSINESS/report/dealreport.do',
@@ -256,8 +263,14 @@
             },
             success:function(diskJson){
                 layer.closeAll();
-                console.log("处理举报信息：");
-                console.log(diskJson);
+//                console.log("处理举报信息：");
+//                console.log(diskJson);
+                if(diskJson.code=="1000"){
+                    layer.msg("处理成功！");
+                    var pageno=$("#addpageinput").val();
+                    getcheck(pageno);
+                }
+
 
             }
         });

@@ -87,13 +87,13 @@
         .layui-layer-btn{padding:25px 5px !important;}
         .layui-layer-dialog .layui-layer-content{color:#fff;}
     </style>
+
 </head>
 
-<body class="gray-bg">
+<body class="gray-bg" >
     <div id="topKzCon">
         <span class="nextBtn btn" onclick="nextcheck()">下一个</span>
         <span class="submit btn" onclick="subd()">提交</span>
-        <a href="../index_v1.html" class="backhome btn">暂停审核</a>
         <span class="requck btnRight">待审核数：<b id="unchecknum"></b></span>
     </div>
     <div class="conBox">
@@ -119,7 +119,7 @@
                         <td>
                             内容等级：
                             <select name="" id="checkConLevel">
-                                <option value="0">U</option>
+                                <option value="0">V</option>
                                 <option value="3">A</option>
                                 <option value="2">B</option>
                                 <option value="1">C</option>
@@ -213,7 +213,7 @@
     <script src="../../plugin/cos-js-sdl-v5/cos.js"></script>
 <script type="text/javascript">
 
-
+    var isreload=1;
     $(function(){
         getcheckdata();
         let dataval="",searchid=0;
@@ -236,8 +236,8 @@
             data: datapost,
             error: function(data){
                 layer.msg("服务器未响应,请稍后再试!");
-                console.log("标签列表获取失败：");
-                console.log(data);
+//                console.log("标签列表获取失败：");
+//                console.log(data);
             },
             success:function(diskJson){
 //                console.log("ugc审核数据：");
@@ -254,13 +254,16 @@
                         case "1":contenttype="横视频";murl="ugc-moveicheck.html";break;
                         case "2":contenttype="竖视频";murl="ugc-moveicheck.html";break;
                         case "3":contenttype="图片";murl="ugc-picturecheck.html";break;
+                        case "4":contenttype="图文";murl="ugc-picturecheck.html";break;
                     }
 
-                    if(diskJson.data.contenttype != "3"){
+                    if(diskJson.data.contenttype == "1" || diskJson.data.contenttype == "2"){
                         var movielist=diskJson.data.contenturllist;
                         movielist=JSON.parse(movielist);
                         $("#movieImgBox").css("display","block");
-                        $("#movieImgBox .movieshowimg img").attr("src",movielist[0])
+                        $("#movieImgBox .movieshowimg img").attr("src",movielist[0]);
+                    }else{
+                        $("#movieImgBox").css("display","none");
                     }
                     /*加载视频，图片页面*/
                     $("#mainContain").load(murl,function(){
@@ -356,6 +359,7 @@
         }
     });
 
+
     /*下一个*/
     function nextcheck(){
         layer.confirm('当前内容尚未提交审核，确定跳到下一个吗？', {
@@ -405,7 +409,7 @@
         contenttag=unique10(contenttag);
         var ispass="YES";
         if(contentlevel == "0"){
-            layer.msg("请选择U以外的内容等级");
+            layer.msg("请选择V以外的内容等级");
             return false;
         }
         if(contentlevel == "D"){
@@ -433,19 +437,43 @@
                 //console.log("ugc审核提交：");
                 //console.log(diskJson);
                 if(diskJson.code=="1000"){
-                    layer.msg("提交成功！！");
-                    setTimeout(function(){
-                        if(isend ==1){
-                            /*初始化*/
-                            $("#detailCon .searchMenu .searchTag").val("");
-                            $("#checkConLevel").val("0");
-                            getcheckdata();
-                            let dataval="",searchid=0;
-                            getlabellist(dataval,searchid);//标签
-                        }else{
-                            window.location.href="../index_v1.html"
-                        }
-                    },1000)
+                    layer.msg("提交成功！！",{
+                        icon: 16,
+                        offset:['50%'],
+                        shade : [0.5 , '#000' , true],
+                        time: 1500 //2秒关闭（如果不配置，默认是3秒）
+                    });
+                        setTimeout(function(){
+                            if(isend ==1){
+                                layer.msg("下一个！！",{
+                                    icon: 16,
+                                    offset:['50%'],
+                                    shade : [0.5 , '#000' , true],
+                                    time: 1500 //2秒关闭（如果不配置，默认是3秒）
+                                },function(){
+                                    /*初始化*/
+                                    $("#detailCon .searchMenu .searchTag").val("");
+                                    $("#checkConLevel").val("0");
+                                    getcheckdata();
+                                    let dataval="",searchid=0;
+                                    getlabellist(dataval,searchid);//标签
+                                });
+                            }else{
+                                layer.msg("返回首页！！",{
+                                    icon: 16,
+                                    offset:['50%'],
+                                    shade : [0.5 , '#000' , true],
+                                    time: 1500 //2秒关闭（如果不配置，默认是3秒）
+                                },function(){
+                                    isreload=2;
+                                    $('#leftNavsRebox', window.parent.document).removeClass("show");
+                                    window.location.href="../index_v1.html";
+                                });
+
+                            }
+                        },1500);
+
+
 
                 }else{
                     layer.msg("数据有误请检查后重试！！")
@@ -456,7 +484,14 @@
         })
     }
 
+/*离开页面时的判断*/
+    window.onbeforeunload=function (e){
+        if(isreload !=2){
+            var e = window.event||e;
+            e.returnValue=("确定离开当前页面吗？");
+        }
 
+    };
 
     /*改变内容等级赋予默认点赞数*/
     /*$("#checkConLevel").change(function(){

@@ -66,7 +66,7 @@
         function getlabel(){
 //            var userid=userdatas.data.userid;
             layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000}) ;
-            var postdata={"taglevel":"1"};
+            var postdata={"taglevel":"1","pageno":1,"pagesize":999};
             postdata=JSON.stringify(postdata);
             $.ajax({
                 url : path2+'/CTKJBUSINESS/tag/taglist.do',

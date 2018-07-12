@@ -12,10 +12,9 @@
     <meta name="description" content="">
 
 
-    <link href="../../css/plugins/blueimp/css/blueimp-gallery.min.css" rel="stylesheet">
-
 
     <style>
+        html,body{width:100%;height:100%;background:#fff;}
         .lightBoxGallery img {
             margin: 5px;
             width: 30%;
@@ -27,18 +26,11 @@
         #imgEditBox.show{display: block;}
         #imgEditBox .close{display: inline-block;position: absolute;top:5px;right:9px;font-size:30px;cursor: pointer;line-height: 30px;  color: #fff;  text-shadow: 0 0 2px #000;opacity: .6;}
         #imgEditBox .close:hover{opacity:.9;}
-        #blueimp-gallery .rotate{position: absolute;top:19px;right:43px;color:#d1d1d1;cursor: pointer;font-size:18px;}
-        #blueimp-gallery .rotate:hover{color:#fff;}
-        #blueimp-gallery .rightRotate{right:75px;}
-        #blueimp-gallery .leftRotate{right:96px;}
-        #blueimp-gallery .rotateBtn{background:#d1d1d1;font-size:8px;width:29px;height:20px;line-height: 22px;text-align: center;color:#a7a6a6;
-            position: absolute;top:20px;right:43px;cursor:context-menu;
-            -webkit-border-radius: 50%;
-            -moz-border-radius: 50%;
-            border-radius: 50%;}
-        #blueimp-gallery .rotateBtn.can{color:#333;cursor: pointer;}
-        #blueimp-gallery .rotateBtn.can:hover{color:#fff;}
+
         #blueimp-gallery .slide canvas{position: absolute;left: 0;  right: 0;  top: 0;  bottom: 0;margin:auto;}
+
+        .contentdescribeBox{width:100%;border-bottom:1px solid #ddd;height:75px;padding:20px 15px;font-size:14px;margin-bottom:9px;}
+        #contentdescribe{display: inline-block;width:60%;height:60px;border:1px solid #ddd;padding:12px;text-align: left;}
     </style>
 
 </head>
@@ -50,26 +42,14 @@
                 <div class="ibox float-e-margins">
 
                     <div class="ibox-content">
-                       <!-- <p>
-                            真理惟一可靠的标准就是永远自相符合。 —— 欧文
-                        </p>-->
-
+                        <div class="contentdescribeBox">
+                            文字描述：<span id="contentdescribe"></span>
+                        </div>
                         <div class="lightBoxGallery" >
                             <div id="imgconbox">
                                 <!--<a id="img1box" href="../../img/p_big1.jpg" title="图片" data-gallery=""><img src="../../img/p1.jpg"></a>-->
                             </div>
-                            <div id="blueimp-gallery" class="blueimp-gallery">
-                                <div class="slides"></div>
-                                <h3 class="title"></h3>
-                                <a class="prev">‹</a>
-                                <a class="next">›</a>
-                                <a class="iconfont rotate leftRotate" data-id="-1">&#xe62a;</a>
-                                <a class="iconfont rotate rightRotate" data-id="1">&#xe622;</a>
-                                <a class=" rotateBtn">确定</a>
-                                <a class="close">×</a>
-                                <a class="play-pause"></a>
-                                <ol class="indicator"></ol>
-                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -83,44 +63,20 @@
 
 
 
-    <!-- 自定义js -->
-    <script src="../../js/content.js?v=1.0.0"></script>
 
-    <!-- blueimp gallery -->
-    <script src="../../js/plugins/blueimp/jquery.blueimp-gallery.min.js"></script>
-
+    <script src="../../js/jquery.min.js?v=2.1.4"></script>
+    <script src="../../plugin/layer/layer.js"></script>
+    <script type="text/javascript" src="../../js/index.js"></script>
 
     <script>
-        geturl();
         /*获取下载地址*/
-        function geturl(){
-            let ifinfo = window.location.search;
-            ifinfo=ifinfo.substring(4);
-            ifinfo=ifinfo.split(",");
-            //console.log("picture:");
-            //console.log(ifinfo);
-            if(localStorage.uncheckdata){
-             var localindodata=JSON.parse(localStorage.uncheckdata);
-             var index=ifinfo[0];
-             var nedurl=localindodata.ContentList[index].daqurllist;
-                ////console.log("nedurl:");
-                nedurl=JSON.parse(nedurl);
-                var path3="/CTKJBUSINESS/file/downFileByName.do?filelocation=";
-                $("#imgconbox").empty();
-                $.each(nedurl,function(i,n){
-                    $("#imgconbox").append('<a data-width="" data-height="" href="'+(path2+path3+n)+'" title="图片" data-gallery=""><img src="'+(path2+path3+n)+'"></a>');
-                })
-                //console.log("视频预览地址");
-                var img = new Image();
-                img.onload = function(){
-                    $("#imgconbox a:first-child").attr("data-width",this.width);
-                    $("#imgconbox a:first-child").attr("data-height",this.height);
-                    this.onload = null;
-                };
-                //console.log(path2+path3+nedurl[0]);
-                img.src = path2+path3+nedurl[0];
-
-             }
+        function geturl(urldatas){
+            $("#imgconbox").empty();
+            $("#contentdescribe").html(urldatas.contenttitle);
+            var nedurl=JSON.parse(urldatas.contenturllist);
+            $.each(nedurl,function(i,n){
+                $("#imgconbox").append('<img src="'+n+'">');
+            })
 
 
         }
@@ -130,145 +86,10 @@
             $("#imgEditBox").removeClass("show");
         })
 
-        var rotate= 0,imgact="";
-        $("#blueimp-gallery .rotate").click(function(){
-            $("#blueimp-gallery .rotateBtn").addClass("can");
-            var rotetjd=Number($(this).attr("data-id"));
-             imgact=Number($(".blueimp-gallery>.indicator li.active").attr("data-index"));
-            rotate=rotate+rotetjd*90;
-            $(".blueimp-gallery .slides .slide:nth-child("+(imgact+1)+") canvas").remove();
-            var canvasw=$(".blueimp-gallery .slides .slide").width();
-            var canvash=$(".blueimp-gallery .slides .slide").height();
-            var w=$(".blueimp-gallery .slides .slide:nth-child("+(imgact+1)+") img").width();
-            var h=$(".blueimp-gallery .slides .slide:nth-child("+(imgact+1)+") img").height();
-            var imgsrc=$(".blueimp-gallery .slides .slide:nth-child("+(imgact+1)+") img").attr("src");
-  /*          var ct= (rotate/90)%2;
-            if(ct==0){
-                w=$(".blueimp-gallery .slides .slide:nth-child("+(imgact+1)+") img").width();
-                h=$(".blueimp-gallery .slides .slide:nth-child("+(imgact+1)+") img").height();
-            }else{
-                h=$(".blueimp-gallery .slides .slide:nth-child("+(imgact+1)+") img").width();
-                w=$(".blueimp-gallery .slides .slide:nth-child("+(imgact+1)+") img").height();
-            }*/
-            var cw=0;
-            if(w>h){
-                cw=w;
-            }else{
-                cw=h;
-            }
-            var canvashtml='<canvas  id="cavasimg'+imgact+'" width="'+cw+'" height="'+cw+'"  ></canvas> ';
-            $(".blueimp-gallery .slides .slide:nth-child("+(imgact+1)+") img").css({"display":"none"});
-            $(".blueimp-gallery .slides .slide:nth-child("+(imgact+1)+")").append(canvashtml);
-            var c=document.getElementById("cavasimg"+imgact);
-            var ctx=c.getContext("2d");
-            var img=new Image();
-            img.crossOrigin="anonymous"; //关键
-            img.src=imgsrc;
-            img.onload = function (){
-                ctx.save();//保存状态
-                ctx.translate(cw/2,cw/2);//设置画布上的(0,0)位置，也就是旋转的中心点
-                ctx.rotate(rotate*Math.PI/180);
-                ctx.drawImage(img,-w/2,-h/2,w,h);//把图片绘制在旋转的中心点，
-                ctx.restore();//恢复状态
-            }
-
-
-        })
-
-
-        var movielist=[];//文件流
-        var changeindex=[];//改变的图片的下标
-        $("#blueimp-gallery ").delegate(".rotateBtn.can","click",function(){
-            layer.confirm('确定保存旋转后的图片吗？', {
-                btn: ['确定','取消'] //按钮
-            }, function(index){
-                iffilechange=3;//图片旋转
-                cosjurl=[];changeindex=[];
-                $("#blueimp-gallery .rotateBtn.can").removeClass("can");
-                var canvaslist=$("#blueimp-gallery .slides .slide canvas");
-                movielist=[];
-                $.each(canvaslist,function(i,n){
-                    var cid=$(n).attr("id");
-                    var slideindex=$(n).parent(".slide").index();
-                    changeindex.push(slideindex);
-                    getcanvae(cid);
-                });
-
-                putlistObject(movielist,getcc());
-                layer.close(index);
-            }, function(index){
-                layer.close(index);
-            });
-
-        })
-
-        /*获取canvas图片流*/
-        function getcanvae(cid){
-            var ctx = document.getElementById(cid);
-          /*  var canvasw=$(".blueimp-gallery .slides .slide").width();
-            var canvash=$(".blueimp-gallery .slides .slide").height();
-            var w=Number($("#"+cid).attr("width"));
-            var h=Number($("#"+cid).attr("height"));*/
-
-            var dataURL = ctx.toDataURL("image/gif",1.0);
-            var file1=convertBase64UrlToBlob(dataURL,"png");
-            var x= Math.random(32).toString(36).substr(3,32);
-            var date= Date.now().toString(36);
-            file1.name=String(x)+String(date)+".gif";
-            movielist.push(file1);
-
-        }
-
-function getcc(){
-    setTimeout(function(){
-        $.each(changeindex,function(i,n){
-            fielchangelist[n].ischange=true;
-            fielchangelist[n].imgurl=cosjurl[i];
-            $("#imgconbox a:nth-child("+(n+1)+")").attr("href",cosjurl[i]);
-            $("#imgconbox a:nth-child("+(n+1)+") img").attr("src",cosjurl[i]);
-        })
-
-    },1000)
-
-
-}
 
 
 
-        /*canvas保存图片上传*/
-            function convertBase64UrlToBlob(urlData,type){
-                var bytes=window.atob(urlData.split(',')[1]);        //去掉url的头，并转换为byte
-                //处理异常,将ascii码小于0的转换为大于0
-                var ab = new ArrayBuffer(bytes.length);
-                var ia = new Uint8Array(ab);
-                for (var i = 0; i < bytes.length; i++) {
-                    ia[i] = bytes.charCodeAt(i);
-                }
-                return new Blob( [ab] , {type : 'image/'+type});
-            }
 
-        /*翻页时的判断*/
-        function iscanchange(){
-            rotate=0;
-           // $("#blueimp-gallery .rotateBtn.can").removeClass("can");
-        }
-            $("#blueimp-gallery .prev").click(function(){
-                iscanchange();
-
-            });
-            $("#blueimp-gallery .next").click(function(){
-                iscanchange()
-            });
-            $(".blueimp-gallery .indicator").delegate("li","click",function(){
-                iscanchange()
-            })
-        $("#blueimp-gallery .play-pause").click(function(){
-            iscanchange()
-        });
-        $("#blueimp-gallery .close").click(function(){
-            iscanchange();
-            $("#blueimp-gallery .rotateBtn.can").removeClass("can");
-        });
 
     </script>
 

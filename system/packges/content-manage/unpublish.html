@@ -57,14 +57,14 @@
                             <tbody id="tablelistTbody">
                             <tr v-for="(item,index) in items">
                                 <td>{{item.contenttitle}}</td>
-                                <td class="center">{{item.contenttype }}</td>
-                                <td class="center">{{item.contentlevel}}</td>
-                                <td class="center">{{item.checktime}}</td>
+                                <td class="center">{{item.contenttype == "3" ? "图片":(item.contenttype == "1" ? "横视频":"竖视频")}}</td>
+                                <td class="center">{{item.contentlevel == "3" ? "A":(item.contentlevel == "2" ? "B":"C")}}</td>
+                                <td class="center">{{item.createtime}}</td>
                                 <td class="center tabbig">{{item.tagshow}}</td>
                                 <td class="center tabbig">{{item.checkbak}}</td>
                                 <td class="center">{{item.checkuid}}</td>
                                 <td class="center">{{item.contentgood}}</td>
-                                <td class="center">{{item.readcount}}</td>
+                                <td class="center">{{item.contentcomment}}</td>
                             </tr>
 
                             </tbody>
@@ -128,8 +128,8 @@
                 },
                 success:function(diskJson){
                     layer.closeAll();
-//                    console.log("未发布列表：");
-//                    console.log(diskJson);
+                    console.log("未发布列表：");
+                    console.log(diskJson);
                     /*翻页信息*/
                     pageinfo(diskJson.data,pageno);//翻页控件信息
                     unpusblishtabledata.items=diskJson.data.ContentList;

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="renderer" content="webkit">
 
-    <title> 主页</title>
+    <title> 头图后台管理系统</title>
 
     <meta name="keywords" content="">
     <meta name="description" content="">
@@ -88,6 +88,8 @@
         <nav class="navbar-default navbar-static-side" role="navigation">
             <div class="nav-close"><i class="fa fa-times-circle"></i>
             </div>
+            <div id="leftNavsRebox">
+            </div>
             <div class="sidebar-collapse">
                 <ul class="nav" id="side-menu">
 
@@ -102,18 +104,7 @@
                         <ul class="nav nav-second-level navupstage" id="upstage1">
                          <!--   <li><a class="J_menuItem" href="">用户分析</a>
                             </li>
-                            <li><a class="J_menuItem" href="">短视频分析</a>
-                            </li>
-                            <li><a class="J_menuItem" href="">图文分析</a>
-                            </li>
-                            <li><a class="J_menuItem" href="">专栏分析</a>
-                            </li>
-                            <li><a class="J_menuItem" href="">话题分析</a>
-                            </li>
-                            <li><a class="J_menuItem" href="">WAP数据</a>
-                            </li>
-                            <li><a class="J_menuItem" href="">接口分析</a>
-                            </li>-->
+                          -->
                         </ul>
                     </li>
 
@@ -124,14 +115,7 @@
                             </li>
                             <li><a class="J_menuItem" href="">内容管理</a>
                             </li>
-                            <li><a class="J_menuItem" href="">首页管理</a>
-                            </li>
-                            <li><a class="J_menuItem" href="">发现页管理</a>
-                            </li>
-                            <li><a class="J_menuItem" href="special-manage/content-special.html">专栏管理</a>
-                            </li>
-                            <li><a class="J_menuItem" href="">话题管理</a>
-                            </li>-->
+                           -->
                         </ul>
                     </li>
 
@@ -163,14 +147,7 @@
                             </li>
                             <li><a class="J_menuItem" href="">修改密码</a>
                             </li>
-                            <li><a class="J_menuItem" href="">反馈信息</a>
-                            </li>
-                            <li><a class="J_menuItem" href="">举报信息</a>
-                            </li>
-                            <li><a class="J_menuItem" href="system-manage/sensitive.html">敏感词管理</a>
-                            </li>
-                            <li><a class="J_menuItem" href="system-manage/operationlog.html">后台操作日志</a>
-                            </li>-->
+                           -->
                         </ul>
                     </li>
                 </ul>
@@ -214,21 +191,16 @@
        $(function(){
            sestop();
            if(userdatas && userdatas.code && userdatas.code=="1000"){
-             /*  var headimg="img/logo.png";
-               if(userdatas.data.userheadimg){
-                   headimg=userdatas.data.userheadimg;
-               }else{
-                   headimg="img/logo.png";
-               }
-               var infos={username:userdatas.data.username,userheadimg:headimg,newsNum:"",iscode:userdatas.code};
-               userinfotop.info=infos;*/
                var datas=userdatas.data.userrolelist;
                $.each(datas,function(i,n){
                    $("#"+ n.rolepid).append(' <li><a data-id="'+ n.roleid+'" class="J_menuItem" href="'+ n.rolepath+'.html">'+ n.rolename+'</a> </li>')
                });
-              /* //权限设置
-               $("#upstage5").append(' <li><a data-id="006" class="J_menuItem" href="system-manage/permissionsittng.html">权限设置</a> </li>');
-              */
+               //举报信息
+               $("#upstage5").append(' <li><a data-id="006" class="J_menuItem" href="system-manage/reportinform.html">举报信息</a> </li>');
+               //删除管理
+               $("#upstage2").append(' <li><a data-id="009" class="J_menuItem" href="content-manage/deletemanage.html">删除管理</a> </li>');
+               //用户分析
+               $("#upstage1").append(' <li><a data-id="010" class="J_menuItem" href="data-analysis/user-analiysis.html">用户分析</a> </li>');
            }
 
        });
@@ -256,12 +228,14 @@
            var url = $(this).attr('href');
            //console.log(url);
            $("#J_iframe").attr('src','packges/'+url);
+           if(url=="content-manage/ugc-checksconts.html"){
+               $("#leftNavsRebox").addClass("show");
+           }
            sestop();
            return false;
        });
        $("#homehre").click(function(){
            var url = $(this).attr('href');
-           //console.log(url);
            $("#J_iframe").attr('src','packges/'+url);
            sestop();
            return false;

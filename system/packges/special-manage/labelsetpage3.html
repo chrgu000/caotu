@@ -115,7 +115,7 @@
 
        /*获取一级标签*/
        function getlabel(){
-           var postdata={"taglevel":"1"};
+           var postdata={"taglevel":"1","pageno":1,"pagesize":999};
            postdata=JSON.stringify(postdata);
            $.ajax({
                url : path2+'/CTKJBUSINESS/tag/taglist.do',
@@ -151,7 +151,7 @@
         });
        /*获取二级标签*/
        function getlabel2(tagpid){
-           var postdata={"taglevel":"2","tagpid":tagpid};
+           var postdata={"taglevel":"2","tagpid":tagpid,"pageno":1,"pagesize":999};
            //console.log(postdata);
            postdata=JSON.stringify(postdata);
            $.ajax({

@@ -2,9 +2,16 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
-    <title>分享界面——主题</title>
+    <meta content=”initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width” name=”viewport” />
+    <meta content=”telephone=no” name=”format-detection” />
+    <title>头图</title>
     <link rel="stylesheet" href="css/common.css"/>
     <link rel="stylesheet" href="plugin/font/iconfont.css"/>
+
+    <script type="application/javascript" src="js/jquery.min.js"></script>
+    <script type="application/javascript" src="js/vue.js"></script>
+    <script type="application/javascript" src="plugin/layer/layer.js"></script>
+    <script type="application/javascript" src="js/index.js"></script>
 </head>
 <body>
     <div class="conntentsBox">
@@ -12,26 +19,34 @@
             <div class="logobox">
                 <img class="logo" src="img/logo.png" alt="logo"/>
                 <span>
-                    头图 <br/>
-                    比头条更有料
+                    头图
                 </span>
             </div>
-            <a  download="" id="downappbtn">打 开</a>
+            <a  href="https://itunes.apple.com/cn/app/id1398165300?mt=8" download="头图.app" id="downappbtn">打 开</a>
         </header>
 
         <div class="conntentsBox" id="themeContentBox" style="text-align: center;">
             <div>
                 <img class="themeContentHead" v-bind:src="userheadphoto" alt="头像"/>
             </div>
-            <div style="width:60%;margin:10px auto;text-align: center;">
+            <div style="width:60%;margin:10px auto;text-align: center;margin-bottom:26px;">
                 <h3 class="themecontitle">{{userhead}}</h3>
                 <p class="themContaine">{{commendTitle}}</p>
             </div>
-            <a  download="" id="themeAttentBtn" class="btn attentBtn"><i class="iconfont">&#xe613;</i>关 注</a>
+            <a  href="https://itunes.apple.com/cn/app/id1398165300?mt=8" download="头图.app"  id="themeAttentBtn" class="btn attentBtn"><img src="img/focus_on@2x.png" alt=""/></a>
 
         </div>
         <!--主题内容-->
-        <div style="width:100%;height:1px;background:#867a7a;"></div>
+        <!--/*------自定义的图片左右切换-----------*/-->
+        <!--图片放大展示-->
+        <div id="faxAllBox"  onclick="closeimg()">
+            <div class="toptip"><span><b class="pre">1</b>/ <b class="all">1</b></span><b class="iconfont close" onclick="closeimg()">&#xe616;</b></div>
+            <ul>
+
+            </ul>
+        </div>
+
+        <div style="width:100%;height:20px;background:#f7f7f7;"></div>
         <div id="morecommendBox">
             <!--<h3 class="title">主题内容</h3>-->
             <div class="allrecommendBox" id="allThemeConBox">
@@ -39,19 +54,19 @@
                     <h4 class="conTitle">
                         <span class="imgBox"><img v-bind:src="item.userheadphoto" alt=""/></span>
                         <span class="conUserName">{{item.username}}</span>
-                        <a  download="" class="btn attentBtn"><i class="iconfont">&#xe613;</i>关 注</a>
+                        <a  href="https://itunes.apple.com/cn/app/id1398165300?mt=8" download="头图.app" class="btn attentBtn"><img src="img/focus_on@2x.png" alt=""/></a>
                     </h4>
                     <p class="contentcomment">{{item.contenttitle}}</p>
                     <div class="themeMainBox">
                         <div  v-if="item.contenttype ==3"  class="thempictureBox">
-                            <div class="conntentsBox pictureList">
-                                <span v-for="(pitem,index2) in item.contenturllist" class="imgbox wimg">
-                                    <img v-bind:src="pitem" alt=""/>
+                            <div class="conntentsBox pictureList" v-bind:class="{ along: (item.contenturllist.length ==1)?true:false }">
+                                <span v-for="(pitem,index2) in item.contenturllist" :style="{backgroundImage: 'url('+pitem+')'}" class="imgbox wimg" v-on:click="showimg(item.contenturllist,index2)">
+                                  <!--  <img v-bind:src="pitem" alt=""/>-->
                                 </span>
                             </div>
                         </div>
                         <div v-else class="videoBox">
-                            <video id="video"  controls="controls" height="100%" width="100%">
+                            <video id="video"  controls="controls" height="100%" width="100%" v-bind:poster="item.contenturllist[0]">
                                 <source v-bind:src="item.contenturllist[1]">
                                 Your browser does not support the video tag.
                             </video>
@@ -59,9 +74,9 @@
 
                     </div>
                     <div class="btngroupBox">
-                        <a download="" class="attentBox"><i class="iconfont">&#xe7fa;</i><i class="attentNum">{{item.contentgood}}</i></a>
-                        <a download="" class="newsBox"><i class="iconfont">&#xe631;</i><i class="newsNum">{{item.contentcomment}}</i></a>
-                        <a download="" class="more"><b>...</b></a>
+                        <a href="https://itunes.apple.com/cn/app/id1398165300?mt=8" download="头图.app" class="attentBox"><img src="img/praise@2x.png" alt=""/><i class="attentNum">{{item.contentgood}}</i></a>
+                        <a href="https://itunes.apple.com/cn/app/id1398165300?mt=8" download="头图.app" class="newsBox"><img src="img/comments@2x.png" alt=""/><i class="newsNum">{{item.contentcomment}}</i></a>
+                        <a href="https://itunes.apple.com/cn/app/id1398165300?mt=8" download="头图.app" class="more"><img src="img/report@2x.png" alt=""/></a>
 
                     </div>
                 </div>
@@ -69,7 +84,7 @@
             </div>
         </div>
         <div style="text-align: center;margin:40px 0;">
-            <a download="" id="seeDetails" class="btn">打开头图APP，阅读更多内容</a>
+            <a href="https://itunes.apple.com/cn/app/id1398165300?mt=8" download="头图.app" id="seeDetails" class="btn">打开头图APP，阅读更多内容</a>
         </div>
         <!--更多推荐-->
         <div id="moreRecommendBox">
@@ -83,9 +98,9 @@
                     </span>
                     </div>
                     <div class="recommendMiddleBox">
-                         <span class="rcommendCon">
+                        <a v-bind:href="'sharetheme.html?tagid='+item.tagid" class="rcommendCon">
                         {{item.tagalias}}
-                        </span>
+                        </a>
                     </div>
 
                     <a download="" class="concernBtn"> <i class="iconfont">&#xe613;</i>关注</a>
@@ -106,10 +121,7 @@
         <a class="bds_count" data-cmd="count"></a>
     </div>-->
 
-<script type="application/javascript" src="js/jquery.min.js"></script>
-<script type="application/javascript" src="js/vue.js"></script>
-<script type="application/javascript" src="plugin/layer/layer.js"></script>
-<script type="application/javascript" src="js/index.js"></script>
+
 <script>
 
     var themcommendinfo = new Vue({
@@ -138,7 +150,26 @@
         },
         // 在 `methods` 对象中定义方法
         methods: {
-            goods: function (event,i) {
+            showimg: function (event,i) {
+              /*  console.log(event);
+                console.log(i);*/
+                /*------自定义的图片左右切换-----------*/
+                $("#faxAllBox").addClass("show");
+                $("#faxAllBox ul").empty();
+                $("#faxAllBox .toptip b.all").html(event.length);
+                $("#faxAllBox .toptip b.pre").html(i+1);
+                var w=$(window).width();
+                var w2=w*event.length+"px";
+                $("#faxAllBox ul").css("width",w2);
+                var stw='width:'+w+"px";
+                $.each(event,function(c,t){
+                    if(c==i){
+                        $("#faxAllBox ul").append('<li style="'+stw+'" class="show" data-type="'+(c+1)+'"><img src="'+ t+'" alt=""/> </li>')
+                    }else{
+                        $("#faxAllBox ul").append('<li style="'+stw+'" data-type="'+(c+1)+'"><img src="'+ t+'" alt=""/> </li>')
+                    }
+                })
+
 
             }
         }
@@ -163,8 +194,8 @@
 
     /*获取url判断类型*/
     function iscontendtype(){
-        var loctionsrc="?tagid=2341";//假设得到的location.search; //获取url中"?"符后的字串
-//        var loctionsrc= window.location.search;
+//        var loctionsrc="?tagid=2341";//假设得到的location.search; //获取url中"?"符后的字串
+        var loctionsrc= window.location.search;
         var urldatas=GetRequest(loctionsrc);
 //        console.log("urldatas:");
 //        console.log(urldatas);
@@ -209,8 +240,8 @@
         if(condatas.tagimg && condatas.tagimg !=""){
             themcommendinfo.userheadphoto=condatas.tagimg;
         }
-        if(condatas.tagname && condatas.tagname !=""){
-            themcommendinfo.userhead=condatas.tagname;
+        if(condatas.tagalias && condatas.tagalias !=""){
+            themcommendinfo.userhead=condatas.tagalias;
         }
         if(condatas.taglead && condatas.taglead !=""){
             themcommendinfo.commendTitle=condatas.taglead;
@@ -260,7 +291,7 @@
     function getmoretj(conttendtag){
         var tjdatas={"tagid":conttendtag};
         tjdatas=JSON.stringify(tjdatas);
-        // console.log(tjdatas);
+         //console.log(tjdatas);
         $.ajax({
             url : path2+'/CTKJSEVER/bannertag/sharesmalltag.do',
             cache:false,//false就不会从浏览器缓存中加载请求信息了
@@ -276,8 +307,8 @@
                 console.log(data);
             },
             success:function(diskJson){
-//                console.log("更多推荐:");
-//                console.log(diskJson);
+  /*              console.log("更多推荐:");
+                console.log(diskJson);*/
                 if(diskJson.code =="1000"){
                     commendmore.items=diskJson.data.rows;
                 }else{
@@ -287,6 +318,75 @@
             }
         });
     }
+
+  /*  /!*关闭展示图片*!/
+    $("#faxAllBox").click(function(){
+        $("#faxAllBox").removeClass("show");
+        $("#faxAllBox ul").empty();
+    });
+    $("#faxAllBox .toptip .close").click(function(){
+        $("#faxAllBox").removeClass("show");
+        $("#faxAllBox ul").empty();
+    })
+
+    /!*展示图片的左右滑动*!/
+    var startPoint = null;
+    document.addEventListener("touchstart",function(e){
+        var e = e||window.event;
+        startPoint = e.touches[0];
+    })
+    document.addEventListener("touchend",function(e){
+        var e=e||window.event;
+        //e.changedTouches能找到离开手机的手指，返回的是一个数组
+        var endPoint = e.changedTouches[0];
+        //计算终点与起点的差值
+        var x = endPoint.clientX - startPoint.clientX;
+        var y = endPoint.clientY - startPoint.clientY;
+        //设置滑动距离的参考值
+        var d = 10;
+        var sn=Number($("#faxAllBox .toptip b.pre").html());//当前图片页
+        var an=Number($("#faxAllBox .toptip b.all").html());//所有图片的数量
+        if(Math.abs(x)>d){
+            if(x>0){
+                //console.log("向右滑动");
+                if(sn>1){
+                    $("#faxAllBox .toptip b.pre").html(sn-1);
+                    $("#faxAllBox ul li").slideUp();
+                    $("#faxAllBox ul li:nth-child("+(sn-1)+")").slideDown(500);
+
+                }
+            }else{
+                if(sn<an){
+                    $("#faxAllBox .toptip b.pre").html(sn+1);
+                    $("#faxAllBox ul li").slideUp();
+                    $("#faxAllBox ul li:nth-child("+(sn+1)+")").slideDown(500);
+                   // console.log("向左滑动");
+                }
+
+            }
+        }
+      /!*  if(Math.abs(y)>d){
+            if(y>0){
+                console.log("向下滑动");
+                if(sn>1){
+                    $("#faxAllBox .toptip b.pre").html(sn-1);
+                    $("#faxAllBox ul li").slideUp();
+                    $("#faxAllBox ul li:nth-child("+(sn-1)+")").slideDown();
+
+                }
+            }else{
+                console.log("向上滑动");
+                if(sn<an){
+                    $("#faxAllBox .toptip b.pre").html(sn+1);
+                    $("#faxAllBox ul li").slideUp();
+                    $("#faxAllBox ul li:nth-child("+(sn+1)+")").slideDown();
+                    // console.log("向左滑动");
+                }
+            }
+        }*!/
+
+    })*/
+
 </script>
 </body>
 </html>

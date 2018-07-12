@@ -1,13 +1,13 @@
 
 
-
 //const path3="http://192.168.1.111:8080";//老冯
 const path="http://192.168.1.114:8818";//测试服务器
 const path2="http://192.168.1.114:8818";//测试服务器
 
+
 /*线上*/
-/*const path="http://192.168.1.114:8828";
-const path2="http://192.168.1.114:8828";*/
+//const path="http://192.168.1.114:8828";
+//const path2="http://192.168.1.114:8828";
 
 var userdatas=getload();
 /*console.log("用户信息userdatas：");
@@ -280,4 +280,21 @@ function unique10(arr){
 function randomnum(minNum,maxNum){
     var num=parseInt(Math.random()*(maxNum-minNum+1)+minNum,10);
     return num;
+}
+
+/*获取不同时间段的时间*/
+function gettime(time){
+    var date = new Date();
+    date.setDate(date.getDate() +time);
+    var year=date.getFullYear();    //获取完整的年份(4位,1970-????)
+    var month=date.getMonth();       //获取当前月份(0-11,0代表1月)
+    var day=date.getDate();        //获取当前日(1-31)
+    if(month<10){
+        month="0"+(month+1)
+    }else{month=month+1;}
+    if(day<10){
+        day="0"+day
+    }
+    var timedata=year+month+day;
+    return timedata;
 }
