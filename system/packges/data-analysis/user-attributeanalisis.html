@@ -1,0 +1,155 @@
+    <style>
+        #attributeBox{width:100%;padding:15px;}
+        .ratioBox{width:100%;height:130px;border:1px solid #c3c4c5;padding:15px;}
+        .radiocon{width:100%;height:20px;}
+        .radiocon .radiotype{display: inline-block;position: relative;height:100%;float: left;margin:0;padding:0;}
+        .radiocon .man,
+        .radiocon .android{background:#f1a24e;}
+        .radiocon .woman,
+        .radiocon .ios{background:#25bf4f;}
+        .radiocon .unknow{background:#ddd;}
+        .radiocon .radiotype .infobox{position: absolute;left:45%;top:25px;}
+        .radiocon .infobox .ico{display: inline-block;width:25px;height:25px;vertical-align: middle;}
+        .radiocon .android .ico,
+        .radiocon .man .ico{background:#f1a24e;}
+        .radiocon .woman .ico,
+        .radiocon .ios .ico{background:#25bf4f;}
+        .radiocon .unknow .ico{background:#ddd;}
+        #ageDistribution{width:100%;height:100%;padding:5px;}
+        #ageRadio{width:100%;font-size:15px;}
+        #ageRadio th,
+        #ageRadio td{width:50%;text-align: center;}
+        #ageRadio th{background:#cecccc;height:30px;}
+        #ageRadio tbody tr{border-bottom:1px solid #ddd;height:35px;}
+
+    </style>
+
+    <div id="attributeBox">
+        <div class="consbox">
+            <h3 class="dataTitle">性别比例</h3>
+            <div class="ratioBox">
+                <div id="sexRatio" class="radiocon">
+                    <div class="man radiotype" style="width:75%;">
+                        <span class="infobox">
+                            <b class="ico"></b>
+                            <b>男</b>
+                            <b class="ratio">75%</b>
+                        </span>
+
+                    </div>
+                    <div class="woman radiotype" style="width:20%;">
+                        <span class="infobox">
+                            <b class="ico"></b>
+                            <b>女</b>
+                            <b class="ratio">20%</b>
+                        </span>
+
+                    </div>
+                    <div class="unknow radiotype" style="width:5%;">
+                        <span class="infobox">
+                            <b class="ico"></b>
+                            <b>未知</b>
+                            <b class="ratio">5%</b>
+                        </span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="consbox">
+            <div class="leftconsbox">
+                <div id="ageDistribution">
+
+                </div>
+            </div>
+            <div class="rightconsbox">
+                <table id="ageRadio">
+                    <thead>
+                        <tr>
+                            <th>年龄</th>
+                            <th>用户占比</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>18-23</td>
+                            <td>5%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="consbox">
+            <h3 class="dataTitle">终端分布</h3>
+            <div class="ratioBox">
+                <div id="terminal" class="radiocon">
+                    <div class="android radiotype" style="width:75%;">
+                        <span class="infobox">
+                            <b class="ico"></b>
+                            <b>Android</b>
+                            <b class="ratio">75%</b>
+                        </span>
+
+                    </div>
+                    <div class="ios radiotype" style="width:20%;">
+                        <span class="infobox">
+                            <b class="ico"></b>
+                            <b>Ios</b>
+                            <b class="ratio">20%</b>
+                        </span>
+
+                    </div>
+                    <div class="unknow radiotype" style="width:5%;">
+                        <span class="infobox">
+                            <b class="ico"></b>
+                            <b>未知</b>
+                            <b class="ratio">5%</b>
+                        </span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        $(function(){
+
+            echart5();
+        });
+        /*表5年龄分布*/
+        function echart5(){
+            var eChart5 = echarts.init(document.getElementById("ageDistribution"));
+            var echartoption1 = {
+                title : {
+                    text: '年龄分布'
+                },
+                tooltip : {
+                    trigger: 'axis'
+                },
+                grid:{
+                    x:40,
+                    x2:40,
+                    y2:24
+                },
+                calculable : true,
+                xAxis: {
+                    type: 'category',
+                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: [120, 200, 150, 80, 70, 110, 130],
+                    type: 'bar'
+                }]
+            };
+            eChart5.setOption(echartoption1);
+        }
+
+        11111
+    </script>

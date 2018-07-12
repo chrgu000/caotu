@@ -1,0 +1,497 @@
+
+    <style>
+        .btitle{padding-left:20px;height:45px;border-bottom:1px solid #bbb; line-height: 37px;}
+        .userLogoInfoBox{padding:25px;}
+        .userLogoInfoBox p{line-height: 35px;font-size:17px;}
+        .dataTitle{line-height: 45px;margin:0;}
+        .dataConBox{border:1px solid #bbb;height:170px;padding-top:22px;}
+        .usershownum{font-size:30px;text-align: center;font-weight:700;}
+        #userInfoDat .lower{color:#006621;font-size:18px;}
+        #userInfoDat .height{color:#FF2B00;font-size:18px;}
+        .dataConBox .title{display: inline-block;width:25%;text-align: right;}
+        .dataConBox .changeNum{display: inline-block;width:30%;text-align: center;}
+        .labelpagesbox{width:100%;border:1px solid #ddd;margin-top:-1px;padding:9px;}
+        .labelpagetitle .labelpagebtn{cursor: pointer;display: inline-block;height:35px;line-height: 35px;text-align: center;padding:0 13px;background:#7266ba;
+           color: #fff;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;}
+        .labelpagetitle .labelpagebtn:hover,
+        .labelpagetitle .labelpagebtn.active{background:#9b14bb;}
+        .labelpageechart{width:100%;height:420px;display: none;}
+        .labelpageechart.show{display: block;}
+        .datechooseBox{text-align: right;padding:5px;}
+        .datechooseBox .echartDateBtn{display: inline-block;padding:5px 14px;border:1px solid #ddd;margin:0 3px;cursor: pointer;background: #ccc;;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;}
+        .datechooseBox .echartDateBtn:hover,
+        .datechooseBox .echartDateBtn.active{background:#6ca2d8;color:#fff;}
+        .echarttime input{width:125px;padding-left:6px;margin:5px;}
+        .echartspagebox{width:100%;overflow-x: auto;}
+        .timebtnlist button.active{ background-color: #204d74;border-color: #122b40;}
+        #tablelistbox td,
+        #tablelistbox th{text-align: center;}
+        #tablelist .tabletitle{margin:0;padding:5px 10px;background:#ddd;font-weight: 600;}
+    </style>
+
+
+    <div class="wrapper wrapper-content">
+        <h3 class="dataTitle">增长关键数据</h3>
+        <div class="row" id="userInfoDat">
+            <div class="col-md-3 col-xs-6 col-sm-3 dataConBox">
+                <p>新增注册人数(日)</p>
+                <p class="usershownum ">{{newuswer.dayadd}}</p>
+                <div>
+                    <span class="title">周</span>
+                    <span class="changeNum">{{newuswer.weekchange}}</span>
+                    <i class="icon iconfont">{{newuswer.weekbl ==0 ? "--" :(newuswer.weekbl >0)?"&#xe8fa;" : "&#xe8f9;"}}</i>
+                    <span class="changeNum">{{newuswer.weekbl}}%</span>
+                </div>
+                <div>
+                    <span class="title">月</span>
+                    <span class="changeNum">{{newuswer.monthchange}}</span>
+                    <i class="icon iconfont">{{newuswer.monthbl ==0 ? "--" :(newuswer.monthbl >0)?"&#xe8fa;" : "&#xe8f9;"}}</i>
+                    <span class="changeNum">{{newuswer.monthbl}}%</span>
+                </div>
+            </div>
+            <div class="col-md-3 col-xs-6 col-sm-3 dataConBox">
+                <p>活跃用户数(日)</p>
+                <p class="usershownum">{{activeuser.dayadd}}</p>
+                <div>
+                    <span class="title">周</span>
+                    <span class="changeNum">{{activeuser.weekchange}}</span>
+                    <i class="icon iconfont">{{activeuser.weekbl ==0 ? "--" :(activeuser.weekbl >0)?"&#xe8fa;" : "&#xe8f9;"}}</i>
+                    <span class="changeNum">{{activeuser.weekbl}}%</span>
+                </div>
+                <div>
+                    <span class="title">月</span>
+                    <span class="changeNum">{{activeuser.monthchange}}</span>
+                    <i class="icon iconfont">{{activeuser.monthbl ==0 ? "--" :(activeuser.monthbl >0)?"&#xe8fa;" : "&#xe8f9;"}}</i>
+                    <span class="changeNum">{{activeuser.monthbl}}%</span>
+                </div>
+            </div>
+            <div class="col-md-3 col-xs-6 col-sm-3 dataConBox">
+                <p>累计用户数</p>
+                <p class="usershownum">{{alluser.dayadd}}</p>
+                    <div>
+                    <span class="title">周</span>
+                    <span class="changeNum">{{alluser.weekchange}}</span>
+                    <i class="icon iconfont">{{alluser.weekbl ==0 ? "--" :(alluser.weekbl >0)?"&#xe8fa;" : "&#xe8f9;"}}</i>
+                    <span class="changeNum">{{alluser.weekbl}}%</span>
+                </div>
+                <div>
+                    <span class="title">月</span>
+                    <span class="changeNum">{{activeuser.monthchange}}</span>
+                    <i class="icon iconfont">{{activeuser.monthbl ==0 ? "--" :(activeuser.monthbl >0)?"&#xe8fa;" : "&#xe8f9;"}}</i>
+                    <span class="changeNum">{{activeuser.monthbl}}%</span>
+                </div>
+
+            </div>
+            <div class="col-md-3 col-xs-6 col-sm-3 dataConBox">
+                <p>活跃时段最大用户数(日)</p>
+                <p class="usershownum">{{maxuser.dayadd}}</p>
+                <div>
+                    <span class="title">周</span>
+                    <span class="changeNum">{{maxuser.weekchange}}</span>
+                    <i class="icon iconfont">{{maxuser.weekbl ==0 ? "--" :(maxuser.weekbl >0)?"&#xe8fa;" : "&#xe8f9;"}}</i>
+                    <span class="changeNum">{{maxuser.weekbl}}%</span>
+                </div>
+                <div>
+                    <span class="title">月</span>
+                    <span class="changeNum">{{maxuser.monthchange}}</span>
+                    <i class="icon iconfont">{{maxuser.monthbl ==0 ? "--" :(maxuser.monthbl >0)?"&#xe8fa;" : "&#xe8f9;"}}</i>
+                    <span class="changeNum">{{maxuser.monthbl}}%</span>
+                </div>
+
+            </div>
+        </div>
+
+        <!--折线图-->
+        <div class="consbox">
+            <div class="labelpagetitle">
+                <span class="labelpagebtn active" data-page="labelpage1">新增注册人数</span>
+                <span class="labelpagebtn" data-page="labelpage2">活跃用户数</span>
+                <span class="labelpagebtn" data-page="labelpage3">累计用户数</span>
+                <span class="labelpagebtn" data-page="labelpage4">用户活跃时间段分布</span>
+            </div>
+            <div class="labelpagesbox">
+                <div class="datechooseBox" data-val="">
+                    <span class="echartDateBtn active" id="yesterdayBtn" data-val="" onclick="changetime(this)">昨天</span>
+                    <span class="echartDateBtn" id="sevendayBtn" data-val="" onclick="changetime(this)">7天</span>
+                    <span class="echartDateBtn" id="fourteendayBtn" data-val="" onclick="changetime(this)">14天</span>
+                    <span class="echartDateBtn" id="monthdayBtn" data-val="" onclick="changetime(this)">30天</span>
+                    <span class="echarttime">开始时间：<input type="text" id="begintime" value=""/></span>
+                    <span class="echarttime">结束时间：<input type="text" id="endtime" value=""/></span>
+                </div>
+                <div class="echartspagebox">
+                    <div id="labelpage1" class="labelpageechart show">
+
+                    </div>
+                    <div id="labelpage2" class="labelpageechart">
+
+                    </div>
+                    <div id="labelpage3" class="labelpageechart">
+
+                    </div>
+                    <div id="labelpage4" class="labelpageechart">
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!--表格-->
+        <div class="consbox">
+            <div class="jqGrid_wrapper" id="tablelist">
+                <!--   <table id="table_list_2"></table>-->
+                <p class="tabletitle"><span class="tablebegintime">2017-12-01</span> 至 <span class="tableendtime">2017-12-01</span></p>
+                <table  class="table table-striped" id="tablelistbox">
+                    <thead>
+                    <tr>
+                        <th>时间</th>
+                        <th>新增注册人数</th>
+                        <th>活跃用户数</th>
+                        <th>累计用户数</th>
+                        <th>活跃时段最大用户数</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tablelistTbody">
+                    <tr v-for="(item,index) in items">
+                        <td class="center">{{item.time}}</td>
+                        <td class="center">{{item.newpopnum }}</td>
+                        <td class="center">{{item.activenum}}</td>
+                        <td class="center">{{item.allnum}}</td>
+                        <td class="center">{{item.maxactive}}</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+                <div id="pagerlist">
+                    <div id="pagerbtnlist">
+                        <span class="glyphicon glyphicon-backward gbtn" id="prepagebtn" onclick="prepage()"></span>
+                                <span class="addpagebox">
+                                    <span id="jumppage" onclick="jumppage()">跳转到</span>
+                                    <input type="number" id="addpageinput" value="1" max="" min="1"/>
+                                    共 <span id="allpage">1</span>页
+                                </span>
+                        <span class="glyphicon glyphicon-forward gbtn" id="nextpagebtn" onclick="nextpage()"></span>
+                    </div>
+                    <div id="allcontbox">
+                        <p id="allconts"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--flotdemo-->
+    <script type="text/javascript">
+        /*头部信息*/
+        var userinfotdatas = new Vue({
+            el: '#userInfoDat',
+            data: {
+                newuswer: {"dayadd":20,"weekchange":35,"weekbl":50,"monthchange":89,"monthbl":37.2},
+                activeuser: {"dayadd":20,"weekchange":0,"weekbl":0,"monthchange":0,"monthbl":0},
+                alluser: {"dayadd":20,"weekchange":0,"weekbl":0,"monthchange":0,"monthbl":0},
+                maxuser: {"dayadd":20,"weekchange":0,"weekbl":0,"monthchange":0,"monthbl":0}
+            }
+        });
+
+        /*表格信息*/
+        var tabledata = new Vue({
+            el: '#tablelistTbody',
+            data: {
+                items:[{"time":"2017-18-16","newpopnum":25,"activenum":555,"allnum":555,"maxactive":777}]
+            },
+            // 在 `methods` 对象中定义方法
+            methods: {
+                greet: function (event) {
+
+                }
+            }
+        });
+
+        $(function(){
+            var date = new Date();
+            var today=gettime(0);
+            var yesterday=gettime(-1);
+            var sevenday=gettime(-7);
+            var fourteenday=gettime(-14);
+            var monthday=gettime(-31);
+
+            $(".datechooseBox").attr("data-val",today);
+            $("#yesterdayBtn").attr("data-val",yesterday);
+            $("#sevendayBtn").attr("data-val",sevenday);
+            $("#fourteendayBtn").attr("data-val",fourteenday);
+            $("#monthdayBtn").attr("data-val",monthday);
+            $('#begintime').datetimepicker({
+                value:date,
+                format:'Y-m-d',
+                timepicker:false//关闭时间选项
+            });
+            $('#endtime').datetimepicker({
+                value:date,
+                format:'Y-m-d',
+                timepicker:false//关闭时间选项
+            });
+        });
+
+        /*标签切换*/
+        $(".labelpagetitle .labelpagebtn").click(function(){
+            $(this).addClass("active").siblings(".active").removeClass("active");
+            var showdiv=$(this).attr("data-page");
+            $(".labelpageechart.show").removeClass("show");
+            $("#"+showdiv).addClass("show");
+            switch(showdiv){
+                case "labelpage1":echart1();break;
+                case "labelpage2":echart2();break;
+                case "labelpage3":echart3();break;
+                case "labelpage4":echart4();break;
+            }
+        });
+
+        /*按钮选择时间*/
+        function changetime(e){
+            var starttime=$(e).attr("data-val");
+            var endtime=$(".datechooseBox").attr("data-val");
+            $(e).addClass("active").siblings(".active").removeClass("active");
+            getechatdata(starttime,endtime);
+        }
+        /*自定义input框选择时间*/
+        $(".echarttime input").change(function(){
+            var starttime=$("#begintime").val();
+            starttime=starttime.replace(/-/g, "");//
+            var endtime=$("#endtime").val();
+            endtime=endtime.replace(/-/g, "");//
+            var minView=gettime(-93);//最小时间
+            var today=gettime(0);//最大时间
+            var date = new Date();
+            if(Number(starttime)<Number(minView)){
+                layer.msg("开始时间不能在3个月前，请重新选择！！");
+                $('#begintime').datetimepicker({
+                    value:date,
+                    format:'Y-m-d',
+                    timepicker:false//关闭时间选项
+                });
+                return false;
+            }else if(Number(endtime)>Number(today)){
+                layer.msg("结束时间不能超过当日，请重新选择！！");
+                $('#endtime').datetimepicker({
+                    value:date,
+                    format:'Y-m-d',
+                    timepicker:false//关闭时间选项
+                });
+                return false;
+            }else{
+                getechatdata(starttime,endtime);
+                $(".datechooseBox .echartDateBtn.active").removeClass("active");
+            }
+
+        });
+
+//        获取数据
+        function getechatdata(starttime,endtime){
+            var datapost={"starttime":starttime,"endtime":endtime};
+            //console.log(datapost);
+            datapost=JSON.stringify(datapost);
+            layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000}) ;
+            $.ajax({
+                url : path+'/',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: datapost,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    console.log("用户分析：");
+                    console.log(data);
+                },
+                success:function(diskJson){
+                    layer.closeAll();
+                        console.log("用户分析：");
+                        console.log(diskJson);
+                    if(diskJson.code=="1000"){
+
+                    }
+                }
+            });
+        }
+
+
+        /*表1新增注册人数*/
+        function echart1(){
+            var eChart1 = echarts.init(document.getElementById("labelpage1"));
+            var echartoption1 = {
+                title : {
+                    text: '新增注册人数'
+                },
+                tooltip : {
+                    trigger: 'axis'
+                },
+                calculable : true,
+                xAxis : [
+                    {
+                        type : 'category',
+                        boundaryGap : false,
+                        data : ['周一','周二','周三','周四','周五','周六','周日']
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value',
+                        axisLabel : {
+                            formatter: '{value} °C'
+                        }
+                    }
+                ],
+                series : [
+                    {
+                        name:'最高气温',
+                        type:'line',
+                        data:[11, 11, 15, 13, 12, 13, 10],
+                        markPoint : {
+                            data : [
+                                {type : 'max', name: '最大值'},
+                                {type : 'min', name: '最小值'}
+                            ]
+                        },
+                        markLine : {
+                            data : [
+                                {type : 'average', name: '平均值'}
+                            ]
+                        }
+                    }
+                ]
+            };
+            eChart1.setOption(echartoption1);
+        }
+
+        /*表2活跃用户数*/
+        function echart2(){
+            var eChart2 = echarts.init(document.getElementById("labelpage2"));
+            var echartoption1 = {
+                title : {
+                    text: '活跃用户数'
+                },
+                tooltip : {
+                    trigger: 'axis'
+                },
+                calculable : true,
+                xAxis : [
+                    {
+                        type : 'category',
+                        boundaryGap : false,
+                        data : ['周一','周二','周三','周四','周五','周六','周日']
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value',
+                        axisLabel : {
+                            formatter: '{value} °C'
+                        }
+                    }
+                ],
+                series : [
+                    {
+                        name:'最高气温',
+                        type:'line',
+                        data:[11, 11, 15, 13, 12, 13, 10],
+                        markPoint : {
+                            data : [
+                                {type : 'max', name: '最大值'},
+                                {type : 'min', name: '最小值'}
+                            ]
+                        },
+                        markLine : {
+                            data : [
+                                {type : 'average', name: '平均值'}
+                            ]
+                        }
+                    }
+                ]
+            };
+            eChart2.setOption(echartoption1);
+        }
+
+        /*表3累计用户数*/
+        function echart3(){
+            var eChart3 = echarts.init(document.getElementById("labelpage3"));
+            var echartoption1 = {
+                title : {
+                    text: '累计用户数'
+                },
+                tooltip : {
+                    trigger: 'axis'
+                },
+                calculable : true,
+                xAxis : [
+                    {
+                        type : 'category',
+                        boundaryGap : false,
+                        data : ['周一','周二','周三','周四','周五','周六','周日']
+                    }
+                ],
+                yAxis : [
+                    {
+                        type : 'value',
+                        axisLabel : {
+                            formatter: '{value} °C'
+                        }
+                    }
+                ],
+                series : [
+                    {
+                        name:'最高气温',
+                        type:'line',
+                        data:[11, 11, 15, 13, 12, 13, 10],
+                        markPoint : {
+                            data : [
+                                {type : 'max', name: '最大值'},
+                                {type : 'min', name: '最小值'}
+                            ]
+                        },
+                        markLine : {
+                            data : [
+                                {type : 'average', name: '平均值'}
+                            ]
+                        }
+                    }
+                ]
+            };
+            eChart3.setOption(echartoption1);
+        }
+
+        /*表4用户活跃时间段分布*/
+        function echart4(){
+            var eChart4 = echarts.init(document.getElementById("labelpage4"));
+            var echartoption1 = {
+                title : {
+                    text: '用户活跃时间段分布'
+                },
+                tooltip : {
+                    trigger: 'axis'
+                },
+                calculable : true,
+                xAxis: {
+                    type: 'category',
+                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                },
+                yAxis: {
+                    type: 'value'
+                },
+                series: [{
+                    data: [120, 200, 150, 80, 70, 110, 130],
+                    type: 'bar'
+                }]
+            };
+            eChart4.setOption(echartoption1);
+        }
+
+//        $(window).resize(eChart.resize);
+    </script>
+
