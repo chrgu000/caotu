@@ -436,7 +436,7 @@
         datapost=JSON.stringify(datapost);
         $.ajax({
             url : path2+'/CTKJBUSINESS/tag/taglist.do',
-            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            cache:true,//false就不会从浏览器缓存中加载请求信息了
             type:"POST",
             contentType: "application/json",
             dataType:"JSON",
@@ -512,7 +512,7 @@
          tjdatas=JSON.stringify(tjdatas);
         $.ajax({
             url : path2+'/CTKJBUSINESS/vest/vestlist.do',
-            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            cache:true,//false就不会从浏览器缓存中加载请求信息了
             type:"POST",
             contentType: "application/json",
             dataType:"JSON",
@@ -658,7 +658,7 @@
         var locationListString=encodeURI(stringfiles);
         $.ajax({
             url : path2+'/CTKJBUSINESS/file/uploadFiles.do',
-            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            cache:true,//false就不会从浏览器缓存中加载请求信息了
             type:"POST",
             contentType: "application/json",
             dataType:"JSON",
@@ -774,7 +774,7 @@ function subd2(contenturllist){
     tjdatas=JSON.stringify(tjdatas);
         $.ajax({
             url : path+'/CTKJBUSINESS/content/pushcontent.do',
-            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            cache:true,//false就不会从浏览器缓存中加载请求信息了
             type:"POST",
             contentType: "application/json",
             dataType:"JSON",
@@ -800,8 +800,6 @@ function subd2(contenturllist){
                     $("#myConmentsSub").attr("disabled",false);
                 }
 
-//                console.log("tijiao 2:");
-//                console.log(diskJson);
             }
         });
 
@@ -828,7 +826,7 @@ function backuncheck(){
 
     $("#editoBtn").click(function(){
         $("#imgEditBox").addClass("show");
-    })
+    });
 
 
     /*缩略图编辑打开*/
@@ -836,7 +834,7 @@ function backuncheck(){
         let imgsrc=$("#movieImgBox .movieshowimg img").attr("src");
         $("#imgEditBox .imgshowBox img").attr("src",imgsrc);
         $("#imgEditBox").addClass("show");
-    })
+    });
     /*视频封面替换*/
     $("#movieimgfile").change(function(){
         var files = this.files[0];
@@ -863,6 +861,13 @@ function backuncheck(){
             reader.readAsDataURL(files);
             //监听文件读取结束后事件
             reader.onloadend = function (e) {
+                let img = new Image();              //手动创建一个Image对象
+                img.src = e.target.result;//创建Image的对象的url
+                img.onload = function () {
+                    //console.log('height:'+this.height+'----width:'+this.width);
+                    $("#movieImgBox .movieshowimg img").attr("data-width",this.width);
+                    $("#movieImgBox .movieshowimg img").attr("data-height",this.height);
+                };
                 $("#movieImgBox .movieshowimg img").attr("src",e.target.result);    //e.target.result就是最后的路径地址
 
 

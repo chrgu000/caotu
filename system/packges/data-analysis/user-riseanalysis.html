@@ -117,7 +117,7 @@
             </div>
             <div class="labelpagesbox">
                 <div class="datechooseBox" data-val="">
-                    <span class="echartDateBtn active" id="yesterdayBtn" data-val="" onclick="changetime(this)">昨天</span>
+                    <span class="echartDateBtn active" id="yesterdayBtn" data-val="" onclick="yesterday(this)">昨天</span>
                     <span class="echartDateBtn" id="sevendayBtn" data-val="" onclick="changetime(this)">7天</span>
                     <span class="echartDateBtn" id="fourteendayBtn" data-val="" onclick="changetime(this)">14天</span>
                     <span class="echartDateBtn" id="monthdayBtn" data-val="" onclick="changetime(this)">30天</span>
@@ -159,11 +159,11 @@
                     </thead>
                     <tbody id="tablelistTbody">
                     <tr v-for="(item,index) in items">
-                        <td class="center">{{item.time}}</td>
-                        <td class="center">{{item.newpopnum }}</td>
-                        <td class="center">{{item.activenum}}</td>
-                        <td class="center">{{item.allnum}}</td>
-                        <td class="center">{{item.maxactive}}</td>
+                        <td class="center">{{item.recorddate}}</td>
+                        <td class="center">{{item.registeruser }}</td>
+                        <td class="center">{{item.activeuser}}</td>
+                        <td class="center">{{item.alluser}}</td>
+                        <td class="center">{{item.activeusermax}}</td>
                     </tr>
 
                     </tbody>
@@ -192,10 +192,10 @@
         var userinfotdatas = new Vue({
             el: '#userInfoDat',
             data: {
-                newuswer: {"dayadd":20,"weekchange":35,"weekbl":50,"monthchange":89,"monthbl":37.2},
-                activeuser: {"dayadd":20,"weekchange":0,"weekbl":0,"monthchange":0,"monthbl":0},
-                alluser: {"dayadd":20,"weekchange":0,"weekbl":0,"monthchange":0,"monthbl":0},
-                maxuser: {"dayadd":20,"weekchange":0,"weekbl":0,"monthchange":0,"monthbl":0}
+                newuswer: {"dayadd":"","weekchange":"","weekbl":"","monthchange":"","monthbl":""},
+                activeuser: {"dayadd":"","weekchange":"","weekbl":"","monthchange":"","monthbl":""},
+                alluser: {"dayadd":"","weekchange":"","weekbl":"","monthchange":"","monthbl":""},
+                maxuser: {"dayadd":"","weekchange":"","weekbl":"","monthchange":"","monthbl":""}
             }
         });
 
@@ -203,7 +203,7 @@
         var tabledata = new Vue({
             el: '#tablelistTbody',
             data: {
-                items:[{"time":"2017-18-16","newpopnum":25,"activenum":555,"allnum":555,"maxactive":777}]
+                items:[]
             },
             // 在 `methods` 对象中定义方法
             methods: {
@@ -213,92 +213,45 @@
             }
         });
 
+        var echartsdata="";
         $(function(){
             var date = new Date();
+            var preDate = new Date(date.getTime() - 24*60*60*1000); //前一天
             var today=gettime(0);
             var yesterday=gettime(-1);
             var sevenday=gettime(-7);
             var fourteenday=gettime(-14);
             var monthday=gettime(-31);
-
+            console.log(date);
             $(".datechooseBox").attr("data-val",today);
             $("#yesterdayBtn").attr("data-val",yesterday);
             $("#sevendayBtn").attr("data-val",sevenday);
             $("#fourteendayBtn").attr("data-val",fourteenday);
             $("#monthdayBtn").attr("data-val",monthday);
             $('#begintime').datetimepicker({
-                value:date,
+                value:preDate,
                 format:'Y-m-d',
                 timepicker:false//关闭时间选项
             });
             $('#endtime').datetimepicker({
-                value:date,
+                value:preDate,
                 format:'Y-m-d',
                 timepicker:false//关闭时间选项
             });
+
+            getechatdatatop(yesterday,yesterday);
+            getechatdata(yesterday,yesterday);
+            getetabledata(yesterday,yesterday,1);
         });
 
-        /*标签切换*/
-        $(".labelpagetitle .labelpagebtn").click(function(){
-            $(this).addClass("active").siblings(".active").removeClass("active");
-            var showdiv=$(this).attr("data-page");
-            $(".labelpageechart.show").removeClass("show");
-            $("#"+showdiv).addClass("show");
-            switch(showdiv){
-                case "labelpage1":echart1();break;
-                case "labelpage2":echart2();break;
-                case "labelpage3":echart3();break;
-                case "labelpage4":echart4();break;
-            }
-        });
 
-        /*按钮选择时间*/
-        function changetime(e){
-            var starttime=$(e).attr("data-val");
-            var endtime=$(".datechooseBox").attr("data-val");
-            $(e).addClass("active").siblings(".active").removeClass("active");
-            getechatdata(starttime,endtime);
-        }
-        /*自定义input框选择时间*/
-        $(".echarttime input").change(function(){
-            var starttime=$("#begintime").val();
-            starttime=starttime.replace(/-/g, "");//
-            var endtime=$("#endtime").val();
-            endtime=endtime.replace(/-/g, "");//
-            var minView=gettime(-93);//最小时间
-            var today=gettime(0);//最大时间
-            var date = new Date();
-            if(Number(starttime)<Number(minView)){
-                layer.msg("开始时间不能在3个月前，请重新选择！！");
-                $('#begintime').datetimepicker({
-                    value:date,
-                    format:'Y-m-d',
-                    timepicker:false//关闭时间选项
-                });
-                return false;
-            }else if(Number(endtime)>Number(today)){
-                layer.msg("结束时间不能超过当日，请重新选择！！");
-                $('#endtime').datetimepicker({
-                    value:date,
-                    format:'Y-m-d',
-                    timepicker:false//关闭时间选项
-                });
-                return false;
-            }else{
-                getechatdata(starttime,endtime);
-                $(".datechooseBox .echartDateBtn.active").removeClass("active");
-            }
-
-        });
-
-//        获取数据
-        function getechatdata(starttime,endtime){
-            var datapost={"starttime":starttime,"endtime":endtime};
-            //console.log(datapost);
+        //获取数据top4
+        function getechatdatatop(starttime,endtime){
+            var datapost={"starttime":starttime,"endtime":endtime,"pageno":1,"pagesize":100};
+//            console.log(datapost);
             datapost=JSON.stringify(datapost);
-            layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000}) ;
             $.ajax({
-                url : path+'/',
+                url : path3+'/CTKJBUSINESS/analysis/analysisuser.do',
                 cache:false,//false就不会从浏览器缓存中加载请求信息了
                 type:"POST",
                 contentType: "application/json",
@@ -311,19 +264,190 @@
                     console.log(data);
                 },
                 success:function(diskJson){
-                    layer.closeAll();
-                        console.log("用户分析：");
-                        console.log(diskJson);
+                    console.log("用户分析：");
+                    console.log(diskJson);
                     if(diskJson.code=="1000"){
+                        topdata(diskJson.data.reportlist[0]);
+                    }else{
+                        layer.msg("数据有误，请刷新重试！！")
+                    }
+                }
+            });
+        }
 
+        //获取数据
+        function getechatdata(starttime,endtime){
+            var datapost={"starttime":starttime,"endtime":endtime,"pageno":1,"pagesize":100};
+//            console.log(datapost);
+            datapost=JSON.stringify(datapost);
+            $.ajax({
+                url : path3+'/CTKJBUSINESS/analysis/analysisuser.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: datapost,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    console.log("用户分析：");
+                    console.log(data);
+                },
+                success:function(diskJson){
+                    console.log("用户分析：");
+                    console.log(diskJson);
+                    if(diskJson.code=="1000"){
+                        echartsdata=diskJson.data.reportlist;
+                        var showdiv=$(".labelpagebtn.active").attr("data-page");
+                        switch(showdiv){
+                            case "labelpage1":echart1(diskJson.data.reportlist);break;
+                            case "labelpage2":echart2(diskJson.data.reportlist);break;
+                            case "labelpage3":echart3(diskJson.data.reportlist);break;
+                            case "labelpage4":echart4(diskJson.data.reportlist);break;
+                        }
+                    }else{
+                        layer.msg("数据有误，请刷新重试！！")
+                    }
+                }
+            });
+        }
+
+        //获取数据表格
+        function getetabledata(starttime,endtime,pageno){
+            var datapost={"starttime":starttime,"endtime":endtime,"pageno":pageno,"pagesize":10};
+//            console.log(datapost);
+            datapost=JSON.stringify(datapost);
+            $.ajax({
+                url : path3+'/CTKJBUSINESS/analysis/analysisuser.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: datapost,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    console.log("用户分析：");
+                    console.log(data);
+                },
+                success:function(diskJson){
+                    console.log("用户分析：");
+                    console.log(diskJson);
+                    if(diskJson.code=="1000"){
+                        pageinfo(diskJson.data,pageno);//翻页控件信息
+                        tabledata.items=diskJson.data.reportlist;
+                        var len=diskJson.data.reportlist.length-1;
+                        $("#tablelist .tablebegintime").html(diskJson.data.reportlist[0].recorddate);
+                        $("#tablelist .tableendtime").html(diskJson.data.reportlist[len].recorddate);
+                    }else{
+                        layer.msg("数据有误，请刷新重试！！")
                     }
                 }
             });
         }
 
 
+        /*top4*/
+        function topdata(topdata){
+            var newuswerlist={"dayadd":topdata.registeruser,"weekchange":topdata.registeruserw,"weekbl":topdata.registeruserwper,"monthchange":topdata.registeruserm,"monthbl":topdata.registerusermper};
+            var activeuserlist={"dayadd":topdata.activeuser,"weekchange":topdata.activeuserw,"weekbl":topdata.activeuserwper,"monthchange":topdata.activeuserm,"monthbl":topdata.activeusermper};
+            var alluserlist={"dayadd":topdata.alluser,"weekchange":topdata.alluserw,"weekbl":topdata.alluserwper,"monthchange":topdata.alluserm,"monthbl":topdata.allusermper};
+            var maxuserlist={"dayadd":topdata.activeusermax,"weekchange":topdata.activeusermaxw,"weekbl":topdata.activeusermaxwper,"monthchange":topdata.activeusermaxm,"monthbl":topdata.activeusermaxmper};
+            userinfotdatas.newuswer=newuswerlist;
+            userinfotdatas.activeuser=activeuserlist;
+            userinfotdatas.alluser=alluserlist;
+            userinfotdatas.maxuser=maxuserlist;
+        }
+
+        /*标签切换*/
+        $(".labelpagetitle .labelpagebtn").click(function(){
+            $(this).addClass("active").siblings(".active").removeClass("active");
+            var showdiv=$(this).attr("data-page");
+            $(".labelpageechart.show").removeClass("show");
+            $("#"+showdiv).addClass("show");
+            switch(showdiv){
+                case "labelpage1":echart1(echartsdata);break;
+                case "labelpage2":echart2(echartsdata);break;
+                case "labelpage3":echart3(echartsdata);break;
+                case "labelpage4":echart4(echartsdata);break;
+            }
+        });
+
+        /*按钮选择时间*/
+        function changetime(e){
+            var starttime=$(e).attr("data-val");
+            var endtime=$(".datechooseBox").attr("data-val");
+            $(e).addClass("active").siblings(".active").removeClass("active");
+            getechatdata(starttime,endtime);
+            getetabledata(starttime,endtime,1);
+        }
+        /*昨天*/
+        function yesterday(e){
+            var yearsday=$(e).attr("data-val");
+            $(e).addClass("active").siblings(".active").removeClass("active");
+            getechatdata(yearsday,yearsday);
+            getetabledata(yearsday,yearsday,1);
+        }
+        /*自定义input框选择时间*/
+        $(".echarttime input").change(function(){
+            var starttime=$("#begintime").val();
+            starttime=starttime.replace(/-/g, "");//
+            var endtime=$("#endtime").val();
+            endtime=endtime.replace(/-/g, "");//
+            var minView=gettime(-90);//最小时间
+            var today=gettime(-1);//最大时间
+            var date = new Date();
+            var preDate = new Date(date.getTime() - 24*60*60*1000); //前一天
+            if(Number(starttime)<Number(minView)){
+                layer.msg("开始时间不能在3个月前，请重新选择！！");
+                $('#begintime').datetimepicker({
+                    value:preDate,
+                    format:'Y-m-d',
+                    timepicker:false//关闭时间选项
+                });
+                return false;
+            }else if(Number(starttime)>Number(today)){
+                layer.msg("开始时间不能超过前一天日期！！");
+                $('#begintime').datetimepicker({
+                    value:preDate,
+                    format:'Y-m-d',
+                    timepicker:false//关闭时间选项
+                });
+                return false;
+            }else if(Number(endtime)>Number(today)){
+                layer.msg("结束时间不能超过前一日，请重新选择！！");
+                $('#endtime').datetimepicker({
+                    value:preDate,
+                    format:'Y-m-d',
+                    timepicker:false//关闭时间选项
+                });
+                return false;
+            }else if(Number(endtime)<Number(starttime)){
+                layer.msg("结束时间不能小于开始时间，请重新选择！！");
+                $('#endtime').datetimepicker({
+                    value:preDate,
+                    format:'Y-m-d',
+                    timepicker:false//关闭时间选项
+                });
+                return false;
+            }else{
+                getechatdata(starttime,endtime);
+                getetabledata(starttime,endtime,1);
+                $(".datechooseBox .echartDateBtn.active").removeClass("active");
+            }
+
+        });
+
+
+
+
         /*表1新增注册人数*/
-        function echart1(){
+        function echart1(edatas){
+            var xlist=[],ylist=[];
+            $.each(edatas,function(i,n){
+                xlist.push(n.recorddate);
+                ylist.push(n.registeruser);
+            });
             var eChart1 = echarts.init(document.getElementById("labelpage1"));
             var echartoption1 = {
                 title : {
@@ -337,22 +461,22 @@
                     {
                         type : 'category',
                         boundaryGap : false,
-                        data : ['周一','周二','周三','周四','周五','周六','周日']
+                        data : xlist
                     }
                 ],
                 yAxis : [
                     {
                         type : 'value',
                         axisLabel : {
-                            formatter: '{value} °C'
+                            formatter: '{value} 人'
                         }
                     }
                 ],
                 series : [
                     {
-                        name:'最高气温',
+                        name:'新增注册人数',
                         type:'line',
-                        data:[11, 11, 15, 13, 12, 13, 10],
+                        data:ylist,
                         markPoint : {
                             data : [
                                 {type : 'max', name: '最大值'},
@@ -371,7 +495,12 @@
         }
 
         /*表2活跃用户数*/
-        function echart2(){
+        function echart2(edatas){
+            var xlist=[],ylist=[];
+            $.each(edatas,function(i,n){
+                xlist.push(n.recorddate);
+                ylist.push(n.activeuser);
+            });
             var eChart2 = echarts.init(document.getElementById("labelpage2"));
             var echartoption1 = {
                 title : {
@@ -385,22 +514,22 @@
                     {
                         type : 'category',
                         boundaryGap : false,
-                        data : ['周一','周二','周三','周四','周五','周六','周日']
+                        data : xlist
                     }
                 ],
                 yAxis : [
                     {
                         type : 'value',
                         axisLabel : {
-                            formatter: '{value} °C'
+                            formatter: '{value} 人'
                         }
                     }
                 ],
                 series : [
                     {
-                        name:'最高气温',
+                        name:'活跃用户数',
                         type:'line',
-                        data:[11, 11, 15, 13, 12, 13, 10],
+                        data:ylist,
                         markPoint : {
                             data : [
                                 {type : 'max', name: '最大值'},
@@ -419,7 +548,12 @@
         }
 
         /*表3累计用户数*/
-        function echart3(){
+        function echart3(edatas){
+            var xlist=[],ylist=[];
+            $.each(edatas,function(i,n){
+                xlist.push(n.recorddate);
+                ylist.push(n.alluser);
+            });
             var eChart3 = echarts.init(document.getElementById("labelpage3"));
             var echartoption1 = {
                 title : {
@@ -433,22 +567,22 @@
                     {
                         type : 'category',
                         boundaryGap : false,
-                        data : ['周一','周二','周三','周四','周五','周六','周日']
+                        data : xlist
                     }
                 ],
                 yAxis : [
                     {
                         type : 'value',
                         axisLabel : {
-                            formatter: '{value} °C'
+                            formatter: '{value} 人'
                         }
                     }
                 ],
                 series : [
                     {
-                        name:'最高气温',
+                        name:'累计用户数',
                         type:'line',
-                        data:[11, 11, 15, 13, 12, 13, 10],
+                        data:ylist,
                         markPoint : {
                             data : [
                                 {type : 'max', name: '最大值'},
@@ -467,7 +601,12 @@
         }
 
         /*表4用户活跃时间段分布*/
-        function echart4(){
+        function echart4(edatas){
+            var xlist=[],ylist=[];
+            $.each(edatas,function(i,n){
+                xlist.push(n.recorddate);
+                ylist.push(n.activeusermax);
+            });
             var eChart4 = echarts.init(document.getElementById("labelpage4"));
             var echartoption1 = {
                 title : {
@@ -479,13 +618,13 @@
                 calculable : true,
                 xAxis: {
                     type: 'category',
-                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                    data: xlist
                 },
                 yAxis: {
                     type: 'value'
                 },
                 series: [{
-                    data: [120, 200, 150, 80, 70, 110, 130],
+                    data: ylist,
                     type: 'bar'
                 }]
             };

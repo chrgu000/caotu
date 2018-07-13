@@ -8,8 +8,8 @@
     <link rel="stylesheet" href="css/common.css"/>
     <link rel="stylesheet" href="plugin/font/iconfont.css"/>
 
-    <script type="application/javascript" src="js/jquery.min.js"></script>
-    <script type="application/javascript" src="js/vue.js"></script>
+    <script type="application/javascript" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/jquery.min.js"></script>
+    <script type="application/javascript" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/vue.js"></script>
     <script type="application/javascript" src="plugin/layer/layer.js"></script>
     <script type="application/javascript" src="js/index.js"></script>
 </head>
@@ -33,7 +33,7 @@
                 <h3 class="themecontitle">{{userhead}}</h3>
                 <p class="themContaine">{{commendTitle}}</p>
             </div>
-            <a  href="https://itunes.apple.com/cn/app/id1398165300?mt=8" download="头图.app"  id="themeAttentBtn" class="btn attentBtn"><img src="img/focus_on@2x.png" alt=""/></a>
+            <a  href="https://itunes.apple.com/cn/app/id1398165300?mt=8" download="头图.app"  id="themeAttentBtn" class="btn attentBtn"><img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/focuson2x.png" alt=""/></a>
 
         </div>
         <!--主题内容-->
@@ -54,7 +54,7 @@
                     <h4 class="conTitle">
                         <span class="imgBox"><img v-bind:src="item.userheadphoto" alt=""/></span>
                         <span class="conUserName">{{item.username}}</span>
-                        <a  href="https://itunes.apple.com/cn/app/id1398165300?mt=8" download="头图.app" class="btn attentBtn"><img src="img/focus_on@2x.png" alt=""/></a>
+                        <a  href="https://itunes.apple.com/cn/app/id1398165300?mt=8" download="头图.app" class="btn attentBtn"><img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/focuson2x.png" alt=""/></a>
                     </h4>
                     <p class="contentcomment">{{item.contenttitle}}</p>
                     <div class="themeMainBox">
@@ -74,9 +74,9 @@
 
                     </div>
                     <div class="btngroupBox">
-                        <a href="https://itunes.apple.com/cn/app/id1398165300?mt=8" download="头图.app" class="attentBox"><img src="img/praise@2x.png" alt=""/><i class="attentNum">{{item.contentgood}}</i></a>
-                        <a href="https://itunes.apple.com/cn/app/id1398165300?mt=8" download="头图.app" class="newsBox"><img src="img/comments@2x.png" alt=""/><i class="newsNum">{{item.contentcomment}}</i></a>
-                        <a href="https://itunes.apple.com/cn/app/id1398165300?mt=8" download="头图.app" class="more"><img src="img/report@2x.png" alt=""/></a>
+                        <a href="https://itunes.apple.com/cn/app/id1398165300?mt=8" download="头图.app" class="attentBox"><img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/praise@2x.png" alt=""/><i class="attentNum">{{item.contentgood}}</i></a>
+                        <a href="https://itunes.apple.com/cn/app/id1398165300?mt=8" download="头图.app" class="newsBox"><img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/comments2x.png" alt=""/><i class="newsNum">{{item.contentcomment}}</i></a>
+                        <a href="https://itunes.apple.com/cn/app/id1398165300?mt=8" download="头图.app" class="more"><img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/report2x.png" alt=""/></a>
 
                     </div>
                 </div>
@@ -319,73 +319,7 @@
         });
     }
 
-  /*  /!*关闭展示图片*!/
-    $("#faxAllBox").click(function(){
-        $("#faxAllBox").removeClass("show");
-        $("#faxAllBox ul").empty();
-    });
-    $("#faxAllBox .toptip .close").click(function(){
-        $("#faxAllBox").removeClass("show");
-        $("#faxAllBox ul").empty();
-    })
 
-    /!*展示图片的左右滑动*!/
-    var startPoint = null;
-    document.addEventListener("touchstart",function(e){
-        var e = e||window.event;
-        startPoint = e.touches[0];
-    })
-    document.addEventListener("touchend",function(e){
-        var e=e||window.event;
-        //e.changedTouches能找到离开手机的手指，返回的是一个数组
-        var endPoint = e.changedTouches[0];
-        //计算终点与起点的差值
-        var x = endPoint.clientX - startPoint.clientX;
-        var y = endPoint.clientY - startPoint.clientY;
-        //设置滑动距离的参考值
-        var d = 10;
-        var sn=Number($("#faxAllBox .toptip b.pre").html());//当前图片页
-        var an=Number($("#faxAllBox .toptip b.all").html());//所有图片的数量
-        if(Math.abs(x)>d){
-            if(x>0){
-                //console.log("向右滑动");
-                if(sn>1){
-                    $("#faxAllBox .toptip b.pre").html(sn-1);
-                    $("#faxAllBox ul li").slideUp();
-                    $("#faxAllBox ul li:nth-child("+(sn-1)+")").slideDown(500);
-
-                }
-            }else{
-                if(sn<an){
-                    $("#faxAllBox .toptip b.pre").html(sn+1);
-                    $("#faxAllBox ul li").slideUp();
-                    $("#faxAllBox ul li:nth-child("+(sn+1)+")").slideDown(500);
-                   // console.log("向左滑动");
-                }
-
-            }
-        }
-      /!*  if(Math.abs(y)>d){
-            if(y>0){
-                console.log("向下滑动");
-                if(sn>1){
-                    $("#faxAllBox .toptip b.pre").html(sn-1);
-                    $("#faxAllBox ul li").slideUp();
-                    $("#faxAllBox ul li:nth-child("+(sn-1)+")").slideDown();
-
-                }
-            }else{
-                console.log("向上滑动");
-                if(sn<an){
-                    $("#faxAllBox .toptip b.pre").html(sn+1);
-                    $("#faxAllBox ul li").slideUp();
-                    $("#faxAllBox ul li:nth-child("+(sn+1)+")").slideDown();
-                    // console.log("向左滑动");
-                }
-            }
-        }*!/
-
-    })*/
 
 </script>
 </body>
