@@ -58,7 +58,7 @@
                     </h4>
                     <p class="contentcomment">{{item.contenttitle}}</p>
                     <div class="themeMainBox">
-                        <div  v-if="item.contenttype ==3"  class="thempictureBox">
+                        <div  v-if="item.contenttype ==3 || item.contenttype ==4"  class="thempictureBox">
                             <div class="conntentsBox pictureList" v-bind:class="{ along: (item.contenturllist.length ==1)?true:false }">
                                 <span v-for="(pitem,index2) in item.contenturllist" :style="{backgroundImage: 'url('+pitem+')'}" class="imgbox wimg" v-on:click="showimg(item.contenturllist,index2)">
                                   <!--  <img v-bind:src="pitem" alt=""/>-->

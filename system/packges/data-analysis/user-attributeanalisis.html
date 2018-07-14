@@ -117,11 +117,91 @@
     <script>
 
         $(function(){
+            var yesterday=gettime(-1);
+            getebutedata(20180712,20180712);
 
-            echart5();
         });
+
+        //获取数据男女终端年龄
+        function getebutedata(starttime,endtime){
+            var datapost={"starttime":starttime,"endtime":endtime,"pageno":1,"pagesize":100};
+//            console.log(datapost);
+            datapost=JSON.stringify(datapost);
+            $.ajax({
+                url : path3+'/CTKJBUSINESS/analysis/analysisuser.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: datapost,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    console.log("用户分析：");
+                    console.log(data);
+                },
+                success:function(diskJson){
+                    console.log("用户分析：");
+                    console.log(diskJson);
+                    if(diskJson.code=="1000"){
+                        if(diskJson.data.reportlist.length>0){
+                            echart5(diskJson.data.reportlist);
+                            butefb(diskJson.data.reportlist[0]);
+                            terminalfb(diskJson.data.reportlist[0]);
+                        }else{
+                            layer.msg("暂无数据，请刷新重试！！")
+                        }
+
+                    }else{
+                        layer.msg("数据有误，请刷新重试！！")
+                    }
+                }
+            });
+        }
+
+        /*男女比例*/
+        function butefb(buedata){
+           let allusernum=Number(buedata.alluser);
+           let android=Number(buedata.mannum)/allusernum*100;
+            android=android.toFixed(2);
+           let ios=Number(buedata.womennum)/allusernum*100;
+            ios=ios.toFixed(2);
+            let unkonw=100-android-ios;
+            unkonw=unkonw.toFixed(2);
+            $("#terminal .android").css("width",android+"%");
+            $("#terminal .android .ratio").html(android+"%");
+            $("#terminal .ios").css("width",ios+"%");
+            $("#terminal .ios .ratio").html(ios+"%");
+            $("#terminal .unknow").css("width",unkonw+"%");
+            $("#terminal .unknow .ratio").html(unkonw+"%");
+        }
+
+        /*终端比例*/
+        function terminalfb(buedata){
+            let allusernum=Number(buedata.alluser);
+            let manper=Number(buedata.mannum)/allusernum*100;
+            manper=manper.toFixed(2);
+            let womennumper=Number(buedata.womennum)/allusernum*100;
+            womennumper=womennumper.toFixed(2);
+            let sexunkonw=100-manper-womennumper;
+            sexunkonw=sexunkonw.toFixed(2);
+            $("#sexRatio .man").css("width",manper+"%");
+            $("#sexRatio .man .ratio").html(manper+"%");
+            $("#sexRatio .woman").css("width",womennumper+"%");
+            $("#sexRatio .woman .ratio").html(womennumper+"%");
+            $("#sexRatio .unknow").css("width",sexunkonw+"%");
+            $("#sexRatio .unknow .ratio").html(sexunkonw+"%");
+        }
+
+
         /*表5年龄分布*/
-        function echart5(){
+        function echart5(edatas){
+            console.log(edatas);
+            var xlist=[],ylist=[];
+            $.each(edatas,function(i,n){
+                xlist.push(n.recorddate);
+                ylist.push(n.registeruser);
+            });
             var eChart5 = echarts.init(document.getElementById("ageDistribution"));
             var echartoption1 = {
                 title : {
@@ -138,13 +218,13 @@
                 calculable : true,
                 xAxis: {
                     type: 'category',
-                    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                    data: xlist
                 },
                 yAxis: {
                     type: 'value'
                 },
                 series: [{
-                    data: [120, 200, 150, 80, 70, 110, 130],
+                    data: ylist,
                     type: 'bar'
                 }]
             };

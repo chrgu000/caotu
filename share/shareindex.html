@@ -123,8 +123,8 @@
 
     /*获取url判断类型*/
     function iscontendtype(){
-       // var loctionsrc="?contendid=86a4848084b611e89599309c23a27303";//假设得到的location.search; //获取url中"?"符后的字串
-    var loctionsrc= window.location.search;
+        //var loctionsrc="?contendid=d093de36b1c34bd1925900cfb2fab860";//假设得到的location.search; //获取url中"?"符后的字串
+        var loctionsrc= window.location.search;
         var urldatas=GetRequest(loctionsrc);
 //        console.log(urldatas);
         getcommonddatas(urldatas.contendid);
@@ -186,7 +186,7 @@
                 $("#video").attr("poster",movieurl[0]);
 
             })
-        }else if(condatas.contenttype == "3"){
+        }else if(condatas.contenttype == "3" || condatas.contenttype == "4"){
 
             $("#mainContntShowbox").css({"height":"auto"});
             var picturelist=JSON.parse(condatas.contenturllist);

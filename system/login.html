@@ -117,8 +117,8 @@
                             layer.msg("登录成功!");
                             var str_jsonData = JSON.stringify(diskJson);
                             check(str_jsonData);//保存信息
-                            document.cookie="sign="+diskJson.data.userid;
-                            document.cookie="token="+diskJson.data.token;
+//                            document.cookie="sign="+diskJson.data.userid;
+//                            document.cookie="token="+diskJson.data.token;
                             setTimeout(function(){
                                 window.location.href="index.html";
                             },1000)

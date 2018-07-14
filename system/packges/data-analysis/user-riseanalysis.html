@@ -213,7 +213,7 @@
             }
         });
 
-        var echartsdata="";
+        var echartsdata="",yeasrday= 1,echartsdata4="";
         $(function(){
             var date = new Date();
             var preDate = new Date(date.getTime() - 24*60*60*1000); //前一天
@@ -222,7 +222,6 @@
             var sevenday=gettime(-7);
             var fourteenday=gettime(-14);
             var monthday=gettime(-31);
-            console.log(date);
             $(".datechooseBox").attr("data-val",today);
             $("#yesterdayBtn").attr("data-val",yesterday);
             $("#sevendayBtn").attr("data-val",sevenday);
@@ -241,6 +240,7 @@
 
             getechatdatatop(yesterday,yesterday);
             getechatdata(yesterday,yesterday);
+            getechatyerdata();//图4活跃
             getetabledata(yesterday,yesterday,1);
         });
 
@@ -260,14 +260,55 @@
                 data: datapost,
                 error: function(data){
                     layer.msg("服务器未响应,请稍后再试!");
+                    console.log("用户分析top4：");
+                    console.log(data);
+                },
+                success:function(diskJson){
+                    console.log("用户分析top4：");
+                    console.log(diskJson);
+                    if(diskJson.code=="1000"){
+                        if(diskJson.data.reportlist.length>=1){
+                            topdata(diskJson.data.reportlist[0]);
+                        }else{
+                            layer.msg("暂无数据，请刷新重试！！")
+                        }
+                    }else{
+                        layer.msg("数据有误，请刷新重试！！")
+                    }
+                }
+            });
+        }
+
+        //获取数据活跃时间昨天
+        function getechatyerdata(){
+            var datapost={"YES":"yes"};
+//            console.log(datapost);
+            datapost=JSON.stringify(datapost);
+            $.ajax({
+                url : path3+'/CTKJBUSINESS/analysis/analysisactive.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: datapost,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
                     console.log("用户分析：");
                     console.log(data);
                 },
                 success:function(diskJson){
-                    console.log("用户分析：");
+                    console.log("用户分析昨天：");
                     console.log(diskJson);
                     if(diskJson.code=="1000"){
-                        topdata(diskJson.data.reportlist[0]);
+                        if(diskJson.data.reportlist.length>=1){
+                            echartsdata4=diskJson.data.reportlist;
+                            yeasrday=1;
+                            echart4();
+                        }else{
+                            layer.msg("暂无数据，请刷新重试！！")
+                        }
+
                     }else{
                         layer.msg("数据有误，请刷新重试！！")
                     }
@@ -297,14 +338,21 @@
                     console.log("用户分析：");
                     console.log(diskJson);
                     if(diskJson.code=="1000"){
-                        echartsdata=diskJson.data.reportlist;
-                        var showdiv=$(".labelpagebtn.active").attr("data-page");
-                        switch(showdiv){
-                            case "labelpage1":echart1(diskJson.data.reportlist);break;
-                            case "labelpage2":echart2(diskJson.data.reportlist);break;
-                            case "labelpage3":echart3(diskJson.data.reportlist);break;
-                            case "labelpage4":echart4(diskJson.data.reportlist);break;
+                        if(diskJson.data.reportlist.length>0){
+                            echartsdata=diskJson.data.reportlist;
+                            yeasrday=2;
+                            var showdiv=$(".labelpagebtn.active").attr("data-page");
+                            switch(showdiv){
+                                case "labelpage1":echart1();break;
+                                case "labelpage2":echart2();break;
+                                case "labelpage3":echart3();break;
+                                case "labelpage4":echart4();break;
+                            }
+                        }else{
+                            echartsdata="";
+                            layer.msg("暂无数据，请刷新重试！！")
                         }
+
                     }else{
                         layer.msg("数据有误，请刷新重试！！")
                     }
@@ -327,18 +375,22 @@
                 data: datapost,
                 error: function(data){
                     layer.msg("服务器未响应,请稍后再试!");
-                    console.log("用户分析：");
+                    console.log("用户分析表格：");
                     console.log(data);
                 },
                 success:function(diskJson){
-                    console.log("用户分析：");
+                    console.log("用户分析表格：");
                     console.log(diskJson);
                     if(diskJson.code=="1000"){
-                        pageinfo(diskJson.data,pageno);//翻页控件信息
-                        tabledata.items=diskJson.data.reportlist;
-                        var len=diskJson.data.reportlist.length-1;
-                        $("#tablelist .tablebegintime").html(diskJson.data.reportlist[0].recorddate);
-                        $("#tablelist .tableendtime").html(diskJson.data.reportlist[len].recorddate);
+                        $("#tablelist .tablebegintime").html(starttime);
+                        $("#tablelist .tableendtime").html(endtime);
+                        if(diskJson.data.reportlist.length>=1){
+                            pageinfo(diskJson.data,pageno);//翻页控件信息
+                            tabledata.items=diskJson.data.reportlist;
+                        }else{
+                            layer.msg("暂无数据，请刷新重试！！")
+                        }
+
                     }else{
                         layer.msg("数据有误，请刷新重试！！")
                     }
@@ -366,10 +418,10 @@
             $(".labelpageechart.show").removeClass("show");
             $("#"+showdiv).addClass("show");
             switch(showdiv){
-                case "labelpage1":echart1(echartsdata);break;
-                case "labelpage2":echart2(echartsdata);break;
-                case "labelpage3":echart3(echartsdata);break;
-                case "labelpage4":echart4(echartsdata);break;
+                case "labelpage1":echart1();break;
+                case "labelpage2":echart2();break;
+                case "labelpage3":echart3();break;
+                case "labelpage4":echart4();break;
             }
         });
 
@@ -385,7 +437,7 @@
         function yesterday(e){
             var yearsday=$(e).attr("data-val");
             $(e).addClass("active").siblings(".active").removeClass("active");
-            getechatdata(yearsday,yearsday);
+            getechatyerdata();
             getetabledata(yearsday,yearsday,1);
         }
         /*自定义input框选择时间*/
@@ -442,12 +494,15 @@
 
 
         /*表1新增注册人数*/
-        function echart1(edatas){
+        function echart1(){
             var xlist=[],ylist=[];
-            $.each(edatas,function(i,n){
-                xlist.push(n.recorddate);
-                ylist.push(n.registeruser);
-            });
+            if(echartsdata.length>0){
+                $.each(echartsdata,function(i,n){
+                    xlist.push(n.recorddate);
+                    ylist.push(n.registeruser);
+                });
+            }
+
             var eChart1 = echarts.init(document.getElementById("labelpage1"));
             var echartoption1 = {
                 title : {
@@ -495,12 +550,15 @@
         }
 
         /*表2活跃用户数*/
-        function echart2(edatas){
+        function echart2(){
             var xlist=[],ylist=[];
-            $.each(edatas,function(i,n){
-                xlist.push(n.recorddate);
-                ylist.push(n.activeuser);
-            });
+            if(echartsdata.length>0){
+                $.each(echartsdata,function(i,n){
+                    xlist.push(n.recorddate);
+                    ylist.push(n.activeuser);
+                });
+            }
+
             var eChart2 = echarts.init(document.getElementById("labelpage2"));
             var echartoption1 = {
                 title : {
@@ -548,12 +606,15 @@
         }
 
         /*表3累计用户数*/
-        function echart3(edatas){
+        function echart3(){
             var xlist=[],ylist=[];
-            $.each(edatas,function(i,n){
-                xlist.push(n.recorddate);
-                ylist.push(n.alluser);
-            });
+            if(echartsdata.length>0){
+                $.each(echartsdata,function(i,n){
+                    xlist.push(n.recorddate);
+                    ylist.push(n.alluser);
+                });
+            }
+
             var eChart3 = echarts.init(document.getElementById("labelpage3"));
             var echartoption1 = {
                 title : {
@@ -601,16 +662,32 @@
         }
 
         /*表4用户活跃时间段分布*/
-        function echart4(edatas){
+        function echart4(){
             var xlist=[],ylist=[];
-            $.each(edatas,function(i,n){
-                xlist.push(n.recorddate);
-                ylist.push(n.activeusermax);
-            });
+            var titletime="";
+            if(yeasrday==1){
+                titletime=gettime(-1);
+                if(echartsdata4.length>0){
+                    $.each(echartsdata4,function(i,n){
+                        xlist.push(n.time.substring(8));
+                        ylist.push(n.useractive);
+                    });
+                }
+
+            }else{
+                if(echartsdata.length>0){
+                    $.each(echartsdata,function(i,n){
+                        xlist.push(n.recorddate);
+                        ylist.push(n.activeusermax);
+                    });
+                }
+
+            }
+
             var eChart4 = echarts.init(document.getElementById("labelpage4"));
             var echartoption1 = {
                 title : {
-                    text: '用户活跃时间段分布'
+                    text: '用户活跃时间段分布—'+titletime
                 },
                 tooltip : {
                     trigger: 'axis'
@@ -625,7 +702,8 @@
                 },
                 series: [{
                     data: ylist,
-                    type: 'bar'
+                    type: 'bar',
+                    name:'人数'
                 }]
             };
             eChart4.setOption(echartoption1);
