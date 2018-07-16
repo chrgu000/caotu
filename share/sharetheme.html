@@ -164,9 +164,9 @@
                 var stw='width:'+w+"px";
                 $.each(event,function(c,t){
                     if(c==i){
-                        $("#faxAllBox ul").append('<li style="'+stw+'" class="show" data-type="'+(c+1)+'"><img src="'+ t+'" alt=""/> </li>')
+                        $("#faxAllBox ul").append('<li style="'+stw+'" class="show" data-type="'+(c+1)+'"><div class="simgbox"><span class="simgspan"><img src="'+ t+'" alt=""/></span></div> </li>')
                     }else{
-                        $("#faxAllBox ul").append('<li style="'+stw+'" data-type="'+(c+1)+'"><img src="'+ t+'" alt=""/> </li>')
+                        $("#faxAllBox ul").append('<li style="'+stw+'" data-type="'+(c+1)+'"><div class="simgbox"><span class="simgspan"><img src="'+ t+'" alt=""/></span></div> </li>')
                     }
                 })
 
