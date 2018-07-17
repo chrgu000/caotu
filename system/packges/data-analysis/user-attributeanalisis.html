@@ -157,36 +157,39 @@
             });
         }
 
-        /*男女比例*/
+        /*终端比例*/
         function butefb(buedata){
            let allusernum=Number(buedata.alluser);
-           let android=Number(buedata.mannum)/allusernum*100;
+           let android=Number(buedata.aznum)/allusernum*100;
             android=android.toFixed(2);
-           let ios=Number(buedata.womennum)/allusernum*100;
+           let ios=Number(buedata.iosnum)/allusernum*100;
             ios=ios.toFixed(2);
             let unkonw=100-android-ios;
             unkonw=unkonw.toFixed(2);
-            $("#terminal .android").css("width",android+"%");
+            $("#terminal .android").css("width",android-1+"%");
             $("#terminal .android .ratio").html(android+"%");
-            $("#terminal .ios").css("width",ios+"%");
+            $("#terminal .ios").css("width",ios-1+"%");
             $("#terminal .ios .ratio").html(ios+"%");
+            if (unkonw <=0){ $("#terminal .unknow").css("display","none");}
             $("#terminal .unknow").css("width",unkonw+"%");
             $("#terminal .unknow .ratio").html(unkonw+"%");
         }
 
-        /*终端比例*/
+        /*男女比例*/
         function terminalfb(buedata){
             let allusernum=Number(buedata.alluser);
-            let manper=Number(buedata.aznum)/allusernum*100;
+            let manper=Number(buedata.mannum)/allusernum*100;
             manper=manper.toFixed(2);
-            let womennumper=Number(buedata.iosnum)/allusernum*100;
+            let womennumper=Number(buedata.womennum)/allusernum*100;
             womennumper=womennumper.toFixed(2);
             let sexunkonw=100-manper-womennumper;
             sexunkonw=sexunkonw.toFixed(2);
-            $("#sexRatio .man").css("width",manper+"%");
+
+            $("#sexRatio .man").css("width",manper-1+"%");
             $("#sexRatio .man .ratio").html(manper+"%");
-            $("#sexRatio .woman").css("width",womennumper+"%");
+            $("#sexRatio .woman").css("width",womennumper-1+"%");
             $("#sexRatio .woman .ratio").html(womennumper+"%");
+            if (sexunkonw <=0){ $("#sexRatio .unknow").css("display","none");}
             $("#sexRatio .unknow").css("width",sexunkonw+"%");
             $("#sexRatio .unknow .ratio").html(sexunkonw+"%");
         }

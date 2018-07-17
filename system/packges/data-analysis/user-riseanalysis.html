@@ -329,7 +329,7 @@
                 type:"POST",
                 contentType: "application/json",
                 dataType:"JSON",
-                async:true,
+                async:false,
                 data: datapost,
                 error: function(data){
                     layer.msg("服务器未响应,请稍后再试!");
@@ -696,11 +696,11 @@
             var xlist=[],ylist=[];
             var titletime="",max="";
             if(yeasrday==1){
-                titletime=gettime(-1);
+                titletime=echartsdata4[0].time+"—"+echartsdata4[echartsdata4.length-1].time;
                 if(echartsdata4.length>0){
                     max=Number($("#userInfoDat .maxusernum").html());
                     $.each(echartsdata4,function(i,n){
-                        xlist.push(n.time.substring(8));
+                        xlist.push(n.time.substring(8)+"点");
                         ylist.push(n.useractive);
                     });
                     ec4();
@@ -725,7 +725,7 @@
                 var eChart4 = echarts.init(document.getElementById("labelpage4"));
                 var echartoption1 = {
                     title : {
-                        text: '用户活跃时间段分布—'+titletime
+                        text: '用户活跃时间段分布('+titletime+')'
                     },
                     tooltip : {
                         trigger: 'axis'
