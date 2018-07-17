@@ -33,6 +33,7 @@
         #tablelistbox td,
         #tablelistbox th{text-align: center;}
         #tablelist .tabletitle{margin:0;padding:5px 10px;background:#ddd;font-weight: 600;}
+        .eachartstips{text-align: center;height:250px;line-height: 250px;}
     </style>
 
 
@@ -46,13 +47,13 @@
                     <span class="title">周</span>
                     <span class="changeNum">{{newuswer.weekchange}}</span>
                     <i class="icon iconfont">{{newuswer.weekbl ==0 ? "--" :(newuswer.weekbl >0)?"&#xe8fa;" : "&#xe8f9;"}}</i>
-                    <span class="changeNum">{{newuswer.weekbl}}%</span>
+                    <span class="changeNum">{{newuswer.weekbl== "NaN" ? "--" :newuswer.weekbl  }}%</span>
                 </div>
                 <div>
                     <span class="title">月</span>
                     <span class="changeNum">{{newuswer.monthchange}}</span>
                     <i class="icon iconfont">{{newuswer.monthbl ==0 ? "--" :(newuswer.monthbl >0)?"&#xe8fa;" : "&#xe8f9;"}}</i>
-                    <span class="changeNum">{{newuswer.monthbl}}%</span>
+                    <span class="changeNum">{{newuswer.monthbl == "NaN" ? "--" :newuswer.monthbl }}%</span>
                 </div>
             </div>
             <div class="col-md-3 col-xs-6 col-sm-3 dataConBox">
@@ -62,13 +63,13 @@
                     <span class="title">周</span>
                     <span class="changeNum">{{activeuser.weekchange}}</span>
                     <i class="icon iconfont">{{activeuser.weekbl ==0 ? "--" :(activeuser.weekbl >0)?"&#xe8fa;" : "&#xe8f9;"}}</i>
-                    <span class="changeNum">{{activeuser.weekbl}}%</span>
+                    <span class="changeNum">{{activeuser.weekbl == "NaN" ? "--" : activeuser.weekbl}}%</span>
                 </div>
                 <div>
                     <span class="title">月</span>
                     <span class="changeNum">{{activeuser.monthchange}}</span>
                     <i class="icon iconfont">{{activeuser.monthbl ==0 ? "--" :(activeuser.monthbl >0)?"&#xe8fa;" : "&#xe8f9;"}}</i>
-                    <span class="changeNum">{{activeuser.monthbl}}%</span>
+                    <span class="changeNum">{{activeuser.monthbl == "NaN" ?  "--" : activeuser.monthbl}}%</span>
                 </div>
             </div>
             <div class="col-md-3 col-xs-6 col-sm-3 dataConBox">
@@ -78,30 +79,30 @@
                     <span class="title">周</span>
                     <span class="changeNum">{{alluser.weekchange}}</span>
                     <i class="icon iconfont">{{alluser.weekbl ==0 ? "--" :(alluser.weekbl >0)?"&#xe8fa;" : "&#xe8f9;"}}</i>
-                    <span class="changeNum">{{alluser.weekbl}}%</span>
+                    <span class="changeNum">{{alluser.weekbl == "NaN" ? "--" :  alluser.weekbl }}%</span>
                 </div>
                 <div>
                     <span class="title">月</span>
                     <span class="changeNum">{{activeuser.monthchange}}</span>
                     <i class="icon iconfont">{{activeuser.monthbl ==0 ? "--" :(activeuser.monthbl >0)?"&#xe8fa;" : "&#xe8f9;"}}</i>
-                    <span class="changeNum">{{activeuser.monthbl}}%</span>
+                    <span class="changeNum">{{activeuser.monthbl == "NaN" ? "--" : activeuser.monthbl}}%</span>
                 </div>
 
             </div>
-            <div class="col-md-3 col-xs-6 col-sm-3 dataConBox">
+            <div class="col-md-3 col-xs-6 col-sm-3 dataConBox" >
                 <p>活跃时段最大用户数(日)</p>
-                <p class="usershownum">{{maxuser.dayadd}}</p>
+                <p class="usershownum maxusernum">{{maxuser.dayadd}}</p>
                 <div>
                     <span class="title">周</span>
                     <span class="changeNum">{{maxuser.weekchange}}</span>
                     <i class="icon iconfont">{{maxuser.weekbl ==0 ? "--" :(maxuser.weekbl >0)?"&#xe8fa;" : "&#xe8f9;"}}</i>
-                    <span class="changeNum">{{maxuser.weekbl}}%</span>
+                    <span class="changeNum">{{maxuser.weekbl== "NaN" ? "--" : maxuser.weekbl }}%</span>
                 </div>
                 <div>
                     <span class="title">月</span>
                     <span class="changeNum">{{maxuser.monthchange}}</span>
                     <i class="icon iconfont">{{maxuser.monthbl ==0 ? "--" :(maxuser.monthbl >0)?"&#xe8fa;" : "&#xe8f9;"}}</i>
-                    <span class="changeNum">{{maxuser.monthbl}}%</span>
+                    <span class="changeNum">{{ maxuser.monthbl == "NaN" ? "--" : maxuser.monthbl}}%</span>
                 </div>
 
             </div>
@@ -163,7 +164,7 @@
                         <td class="center">{{item.registeruser }}</td>
                         <td class="center">{{item.activeuser}}</td>
                         <td class="center">{{item.alluser}}</td>
-                        <td class="center">{{item.activeusermax}}</td>
+                        <td class="center">{{item.activeusermax}} ({{item.activeusermaxtime =="all" ? "— —" : item.activeusermaxtime}})</td>
                     </tr>
 
                     </tbody>
@@ -248,10 +249,10 @@
         //获取数据top4
         function getechatdatatop(starttime,endtime){
             var datapost={"starttime":starttime,"endtime":endtime,"pageno":1,"pagesize":100};
-//            console.log(datapost);
+//            //console.log(datapost);
             datapost=JSON.stringify(datapost);
             $.ajax({
-                url : path3+'/CTKJBUSINESS/analysis/analysisuser.do',
+                url : path+'/CTKJBUSINESS/analysis/analysisuser.do',
                 cache:false,//false就不会从浏览器缓存中加载请求信息了
                 type:"POST",
                 contentType: "application/json",
@@ -260,12 +261,12 @@
                 data: datapost,
                 error: function(data){
                     layer.msg("服务器未响应,请稍后再试!");
-                    console.log("用户分析top4：");
-                    console.log(data);
+                    //console.log("用户分析top4：");
+                    //console.log(data);
                 },
                 success:function(diskJson){
-                    console.log("用户分析top4：");
-                    console.log(diskJson);
+//                    console.log("用户分析top4：");
+//                    console.log(diskJson);
                     if(diskJson.code=="1000"){
                         if(diskJson.data.reportlist.length>=1){
                             topdata(diskJson.data.reportlist[0]);
@@ -282,10 +283,10 @@
         //获取数据活跃时间昨天
         function getechatyerdata(){
             var datapost={"YES":"yes"};
-//            console.log(datapost);
+//            //console.log(datapost);
             datapost=JSON.stringify(datapost);
             $.ajax({
-                url : path3+'/CTKJBUSINESS/analysis/analysisactive.do',
+                url : path+'/CTKJBUSINESS/analysis/analysisactive.do',
                 cache:false,//false就不会从浏览器缓存中加载请求信息了
                 type:"POST",
                 contentType: "application/json",
@@ -294,19 +295,20 @@
                 data: datapost,
                 error: function(data){
                     layer.msg("服务器未响应,请稍后再试!");
-                    console.log("用户分析：");
-                    console.log(data);
+                    //console.log("用户分析：");
+                    //console.log(data);
                 },
                 success:function(diskJson){
-                    console.log("用户分析昨天：");
-                    console.log(diskJson);
+//                    console.log("用户分析昨天：");
+//                    console.log(diskJson);
                     if(diskJson.code=="1000"){
                         if(diskJson.data.reportlist.length>=1){
                             echartsdata4=diskJson.data.reportlist;
                             yeasrday=1;
                             echart4();
                         }else{
-                            layer.msg("暂无数据，请刷新重试！！")
+                            layer.msg("暂无数据，请刷新重试！！");
+                            $("#labelpage4").html("<h1 class='eachartstips'>暂无数据！！！</h1>")
                         }
 
                     }else{
@@ -319,10 +321,10 @@
         //获取数据
         function getechatdata(starttime,endtime){
             var datapost={"starttime":starttime,"endtime":endtime,"pageno":1,"pagesize":100};
-//            console.log(datapost);
+//            //console.log(datapost);
             datapost=JSON.stringify(datapost);
             $.ajax({
-                url : path3+'/CTKJBUSINESS/analysis/analysisuser.do',
+                url : path+'/CTKJBUSINESS/analysis/analysisuser.do',
                 cache:false,//false就不会从浏览器缓存中加载请求信息了
                 type:"POST",
                 contentType: "application/json",
@@ -331,12 +333,12 @@
                 data: datapost,
                 error: function(data){
                     layer.msg("服务器未响应,请稍后再试!");
-                    console.log("用户分析：");
-                    console.log(data);
+                    //console.log("用户分析：");
+                    //console.log(data);
                 },
                 success:function(diskJson){
-                    console.log("用户分析：");
-                    console.log(diskJson);
+                    //console.log("用户分析：");
+                    //console.log(diskJson);
                     if(diskJson.code=="1000"){
                         if(diskJson.data.reportlist.length>0){
                             echartsdata=diskJson.data.reportlist;
@@ -350,10 +352,12 @@
                             }
                         }else{
                             echartsdata="";
-                            layer.msg("暂无数据，请刷新重试！！")
+                            $("#labelpage1").html("<h1 class='eachartstips'>暂无数据！！！</h1>");
+                           // layer.msg("暂无数据，请刷新重试！！")
                         }
 
                     }else{
+                        $("#labelpage1").html("<h1 class='eachartstips'>数据有误，请刷新重试！！！</h1>");
                         layer.msg("数据有误，请刷新重试！！")
                     }
                 }
@@ -363,10 +367,10 @@
         //获取数据表格
         function getetabledata(starttime,endtime,pageno){
             var datapost={"starttime":starttime,"endtime":endtime,"pageno":pageno,"pagesize":10};
-//            console.log(datapost);
+//            //console.log(datapost);
             datapost=JSON.stringify(datapost);
             $.ajax({
-                url : path3+'/CTKJBUSINESS/analysis/analysisuser.do',
+                url : path+'/CTKJBUSINESS/analysis/analysisuser.do',
                 cache:false,//false就不会从浏览器缓存中加载请求信息了
                 type:"POST",
                 contentType: "application/json",
@@ -375,12 +379,12 @@
                 data: datapost,
                 error: function(data){
                     layer.msg("服务器未响应,请稍后再试!");
-                    console.log("用户分析表格：");
-                    console.log(data);
+                    //console.log("用户分析表格：");
+                    //console.log(data);
                 },
                 success:function(diskJson){
-                    console.log("用户分析表格：");
-                    console.log(diskJson);
+//                    console.log("用户分析表格：");
+//                    console.log(diskJson);
                     if(diskJson.code=="1000"){
                         $("#tablelist .tablebegintime").html(starttime);
                         $("#tablelist .tableendtime").html(endtime);
@@ -401,10 +405,18 @@
 
         /*top4*/
         function topdata(topdata){
-            var newuswerlist={"dayadd":topdata.registeruser,"weekchange":topdata.registeruserw,"weekbl":topdata.registeruserwper,"monthchange":topdata.registeruserm,"monthbl":topdata.registerusermper};
-            var activeuserlist={"dayadd":topdata.activeuser,"weekchange":topdata.activeuserw,"weekbl":topdata.activeuserwper,"monthchange":topdata.activeuserm,"monthbl":topdata.activeusermper};
-            var alluserlist={"dayadd":topdata.alluser,"weekchange":topdata.alluserw,"weekbl":topdata.alluserwper,"monthchange":topdata.alluserm,"monthbl":topdata.allusermper};
-            var maxuserlist={"dayadd":topdata.activeusermax,"weekchange":topdata.activeusermaxw,"weekbl":topdata.activeusermaxwper,"monthchange":topdata.activeusermaxm,"monthbl":topdata.activeusermaxmper};
+            let newweekbl=Number(topdata.registeruserwper).toFixed(2);
+            let newmonthbl=Number(topdata.registerusermper).toFixed(2);
+            let actweekbl=Number(topdata.activeuserwper).toFixed(2);
+            let actmonthbl=Number(topdata.activeusermper).toFixed(2);
+            let allweekbl=Number(topdata.alluserwper).toFixed(2);
+            let allmonthbl=Number(topdata.allusermper).toFixed(2);
+            let maxweekbl=Number(topdata.activeusermaxwper).toFixed(2);
+            let maxmonthbl=Number(topdata.activeusermaxmper).toFixed(2);
+            var newuswerlist={"dayadd":topdata.registeruser,"weekchange":topdata.registeruserw,"weekbl":newweekbl,"monthchange":topdata.registeruserm,"monthbl":newmonthbl};
+            var activeuserlist={"dayadd":topdata.activeuser,"weekchange":topdata.activeuserw,"weekbl":actweekbl,"monthchange":topdata.activeuserm,"monthbl":actmonthbl};
+            var alluserlist={"dayadd":topdata.alluser,"weekchange":topdata.alluserw,"weekbl":allweekbl,"monthchange":topdata.alluserm,"monthbl":allmonthbl};
+            var maxuserlist={"dayadd":topdata.activeusermax,"weekchange":topdata.activeusermaxw,"weekbl":maxweekbl,"monthchange":topdata.activeusermaxm,"monthbl":maxmonthbl};
             userinfotdatas.newuswer=newuswerlist;
             userinfotdatas.activeuser=activeuserlist;
             userinfotdatas.alluser=alluserlist;
@@ -437,6 +449,7 @@
         function yesterday(e){
             var yearsday=$(e).attr("data-val");
             $(e).addClass("active").siblings(".active").removeClass("active");
+            getechatdata(yearsday,yearsday);
             getechatyerdata();
             getetabledata(yearsday,yearsday,1);
         }
@@ -485,6 +498,9 @@
             }else{
                 getechatdata(starttime,endtime);
                 getetabledata(starttime,endtime,1);
+                if(starttime == today ){
+                    getechatyerdata();
+                }
                 $(".datechooseBox .echartDateBtn.active").removeClass("active");
             }
 
@@ -497,216 +513,248 @@
         function echart1(){
             var xlist=[],ylist=[];
             if(echartsdata.length>0){
+                var max=Number(echartsdata[echartsdata.length-1].alluser);
                 $.each(echartsdata,function(i,n){
                     xlist.push(n.recorddate);
                     ylist.push(n.registeruser);
                 });
+                var eChart1 = echarts.init(document.getElementById("labelpage1"));
+                var echartoption1 = {
+                    title : {
+                        text: '新增注册人数'
+                    },
+                    tooltip : {
+                        trigger: 'axis'
+                    },
+                    xAxis : [
+                        {
+                            type : 'category',
+                            boundaryGap : false,
+                            data : xlist
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value',
+                            max: max+150,
+                            min: 0,
+                            axisLabel : {
+                                formatter: '{value} 人'
+                            }
+                        }
+                    ],
+                    series : [
+                        {
+                            name:'新增注册人数',
+                            type:'line',
+                            data:ylist,
+                            markPoint : {
+                                data : [
+                                    {type : 'max', name: '最大值'},
+                                    {type : 'min', name: '最小值'}
+                                ]
+                            },
+                            markLine : {
+                                data : [
+                                    {type : 'average', name: '平均值'}
+                                ]
+                            }
+                        }
+                    ]
+                };
+                eChart1.setOption(echartoption1);
+            }else{
+                $("#labelpage1").html("<h1 class='eachartstips'>暂无数据！！！</h1>")
             }
 
-            var eChart1 = echarts.init(document.getElementById("labelpage1"));
-            var echartoption1 = {
-                title : {
-                    text: '新增注册人数'
-                },
-                tooltip : {
-                    trigger: 'axis'
-                },
-                calculable : true,
-                xAxis : [
-                    {
-                        type : 'category',
-                        boundaryGap : false,
-                        data : xlist
-                    }
-                ],
-                yAxis : [
-                    {
-                        type : 'value',
-                        axisLabel : {
-                            formatter: '{value} 人'
-                        }
-                    }
-                ],
-                series : [
-                    {
-                        name:'新增注册人数',
-                        type:'line',
-                        data:ylist,
-                        markPoint : {
-                            data : [
-                                {type : 'max', name: '最大值'},
-                                {type : 'min', name: '最小值'}
-                            ]
-                        },
-                        markLine : {
-                            data : [
-                                {type : 'average', name: '平均值'}
-                            ]
-                        }
-                    }
-                ]
-            };
-            eChart1.setOption(echartoption1);
         }
 
         /*表2活跃用户数*/
         function echart2(){
             var xlist=[],ylist=[];
             if(echartsdata.length>0){
+                var max=Number(echartsdata[echartsdata.length-1].alluser);
                 $.each(echartsdata,function(i,n){
                     xlist.push(n.recorddate);
                     ylist.push(n.activeuser);
                 });
+                var eChart2 = echarts.init(document.getElementById("labelpage2"));
+                var echartoption1 = {
+                    title : {
+                        text: '活跃用户数'
+                    },
+                    tooltip : {
+                        trigger: 'axis'
+                    },
+                    xAxis : [
+                        {
+                            type : 'category',
+                            boundaryGap : false,
+                            data : xlist
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value',
+                            max: max+150,
+                            min: 0,
+                            axisLabel : {
+                                formatter: '{value} 人'
+                            }
+                        }
+                    ],
+                    series : [
+                        {
+                            name:'活跃用户数',
+                            type:'line',
+                            data:ylist,
+                            markPoint : {
+                                data : [
+                                    {type : 'max', name: '最大值'},
+                                    {type : 'min', name: '最小值'}
+                                ]
+                            },
+                            markLine : {
+                                data : [
+                                    {type : 'average', name: '平均值'}
+                                ]
+                            }
+                        }
+                    ]
+                };
+                eChart2.setOption(echartoption1);
+            }else{
+                $("#labelpage2").html("<h1 class='eachartstips'>暂无数据！！！</h1>")
             }
 
-            var eChart2 = echarts.init(document.getElementById("labelpage2"));
-            var echartoption1 = {
-                title : {
-                    text: '活跃用户数'
-                },
-                tooltip : {
-                    trigger: 'axis'
-                },
-                calculable : true,
-                xAxis : [
-                    {
-                        type : 'category',
-                        boundaryGap : false,
-                        data : xlist
-                    }
-                ],
-                yAxis : [
-                    {
-                        type : 'value',
-                        axisLabel : {
-                            formatter: '{value} 人'
-                        }
-                    }
-                ],
-                series : [
-                    {
-                        name:'活跃用户数',
-                        type:'line',
-                        data:ylist,
-                        markPoint : {
-                            data : [
-                                {type : 'max', name: '最大值'},
-                                {type : 'min', name: '最小值'}
-                            ]
-                        },
-                        markLine : {
-                            data : [
-                                {type : 'average', name: '平均值'}
-                            ]
-                        }
-                    }
-                ]
-            };
-            eChart2.setOption(echartoption1);
+
         }
 
         /*表3累计用户数*/
         function echart3(){
             var xlist=[],ylist=[];
             if(echartsdata.length>0){
+                var max=Number(echartsdata[echartsdata.length-1].alluser);
                 $.each(echartsdata,function(i,n){
                     xlist.push(n.recorddate);
                     ylist.push(n.alluser);
                 });
+                var eChart3 = echarts.init(document.getElementById("labelpage3"));
+                var echartoption1 = {
+                    title : {
+                        text: '累计用户数'
+                    },
+                    tooltip : {
+                        trigger: 'axis'
+                    },
+                    xAxis : [
+                        {
+                            type : 'category',
+                            boundaryGap : false,
+                            data : xlist
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value',
+                            max: max+150,
+                            min: 0,
+                            axisLabel : {
+                                formatter: '{value} 人'
+                            }
+                        }
+                    ],
+                    series : [
+                        {
+                            name:'累计用户数',
+                            type:'line',
+                            data:ylist,
+                            markPoint : {
+                                data : [
+                                    {type : 'max', name: '最大值'},
+                                    {type : 'min', name: '最小值'}
+                                ]
+                            },
+                            markLine : {
+                                data : [
+                                    {type : 'average', name: '平均值'}
+                                ]
+                            }
+                        }
+                    ]
+                };
+                eChart3.setOption(echartoption1);
+            }else{
+                $("#labelpage3").html("<h1 class='eachartstips'>暂无数据！！！</h1>")
             }
 
-            var eChart3 = echarts.init(document.getElementById("labelpage3"));
-            var echartoption1 = {
-                title : {
-                    text: '累计用户数'
-                },
-                tooltip : {
-                    trigger: 'axis'
-                },
-                calculable : true,
-                xAxis : [
-                    {
-                        type : 'category',
-                        boundaryGap : false,
-                        data : xlist
-                    }
-                ],
-                yAxis : [
-                    {
-                        type : 'value',
-                        axisLabel : {
-                            formatter: '{value} 人'
-                        }
-                    }
-                ],
-                series : [
-                    {
-                        name:'累计用户数',
-                        type:'line',
-                        data:ylist,
-                        markPoint : {
-                            data : [
-                                {type : 'max', name: '最大值'},
-                                {type : 'min', name: '最小值'}
-                            ]
-                        },
-                        markLine : {
-                            data : [
-                                {type : 'average', name: '平均值'}
-                            ]
-                        }
-                    }
-                ]
-            };
-            eChart3.setOption(echartoption1);
+
         }
 
         /*表4用户活跃时间段分布*/
         function echart4(){
             var xlist=[],ylist=[];
-            var titletime="";
+            var titletime="",max="";
             if(yeasrday==1){
                 titletime=gettime(-1);
                 if(echartsdata4.length>0){
+                    max=Number($("#userInfoDat .maxusernum").html());
                     $.each(echartsdata4,function(i,n){
                         xlist.push(n.time.substring(8));
                         ylist.push(n.useractive);
                     });
+                    ec4();
+                }else{
+                    $("#labelpage4").html("<h1 class='eachartstips'>暂无数据！！！</h1>")
                 }
 
             }else{
                 if(echartsdata.length>0){
+                    max=Number(echartsdata[echartsdata.length-1].alluser);
                     $.each(echartsdata,function(i,n){
                         xlist.push(n.recorddate);
                         ylist.push(n.activeusermax);
                     });
+                    ec4();
+                }else{
+                    $("#labelpage4").html("<h1 class='eachartstips'>暂无数据！！！</h1>")
                 }
-
             }
 
-            var eChart4 = echarts.init(document.getElementById("labelpage4"));
-            var echartoption1 = {
-                title : {
-                    text: '用户活跃时间段分布—'+titletime
-                },
-                tooltip : {
-                    trigger: 'axis'
-                },
-                calculable : true,
-                xAxis: {
-                    type: 'category',
-                    data: xlist
-                },
-                yAxis: {
-                    type: 'value'
-                },
-                series: [{
-                    data: ylist,
-                    type: 'bar',
-                    name:'人数'
-                }]
-            };
-            eChart4.setOption(echartoption1);
+            function ec4(){
+                var eChart4 = echarts.init(document.getElementById("labelpage4"));
+                var echartoption1 = {
+                    title : {
+                        text: '用户活跃时间段分布—'+titletime
+                    },
+                    tooltip : {
+                        trigger: 'axis'
+                    },
+                    grid: {
+                        left: '1%',
+                        right: '1%',
+                        bottom: '1%',
+                        containLabel: true
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: xlist
+                    },
+                    yAxis: {
+                        type: 'value',
+                        max: max+150,
+                        min: 0
+                    },
+                    series: [{
+                        data: ylist,
+                        barMaxWidth: '50',  //解决问题2：在柱子数量少的时候，剩下的柱子不要太粗，否则不好看；
+                        type: 'bar',
+                        name:'人数'
+                    }]
+                };
+                eChart4.setOption(echartoption1);
+            }
+
         }
 
 //        $(window).resize(eChart.resize);
