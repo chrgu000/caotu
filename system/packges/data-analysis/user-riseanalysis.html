@@ -512,6 +512,7 @@
         /*表1新增注册人数*/
         function echart1(){
             var xlist=[],ylist=[];
+            $("#labelpage1").empty();
             if(echartsdata.length>0){
                 var max=Number(echartsdata[echartsdata.length-1].alluser);
                 $.each(echartsdata,function(i,n){
@@ -536,7 +537,8 @@
                     yAxis : [
                         {
                             type : 'value',
-                            max: max+150,
+                            minInterval : 1,
+                            boundaryGap : [ 0, 0.1 ],
                             min: 0,
                             axisLabel : {
                                 formatter: '{value} 人'
@@ -572,6 +574,7 @@
         /*表2活跃用户数*/
         function echart2(){
             var xlist=[],ylist=[];
+            $("#labelpage2").empty();
             if(echartsdata.length>0){
                 var max=Number(echartsdata[echartsdata.length-1].alluser);
                 $.each(echartsdata,function(i,n){
@@ -596,7 +599,8 @@
                     yAxis : [
                         {
                             type : 'value',
-                            max: max+150,
+                            minInterval : 1,
+                            boundaryGap : [ 0, 0.1 ],
                             min: 0,
                             axisLabel : {
                                 formatter: '{value} 人'
@@ -633,6 +637,7 @@
         /*表3累计用户数*/
         function echart3(){
             var xlist=[],ylist=[];
+            $("#labelpage3").empty();
             if(echartsdata.length>0){
                 var max=Number(echartsdata[echartsdata.length-1].alluser);
                 $.each(echartsdata,function(i,n){
@@ -657,7 +662,8 @@
                     yAxis : [
                         {
                             type : 'value',
-                            max: max+150,
+                            minInterval : 1,
+                            boundaryGap : [ 0, 0.1 ],
                             min: 0,
                             axisLabel : {
                                 formatter: '{value} 人'
@@ -695,6 +701,7 @@
         function echart4(){
             var xlist=[],ylist=[];
             var titletime="",max="";
+            $("#labelpage4").empty();
             if(yeasrday==1){
                 titletime=echartsdata4[0].time+"—"+echartsdata4[echartsdata4.length-1].time;
                 if(echartsdata4.length>0){
@@ -742,15 +749,24 @@
                     },
                     yAxis: {
                         type: 'value',
-                        max: max+150,
+                        minInterval : 1,
+                        boundaryGap : [ 0, 0.1 ],
                         min: 0
                     },
                     series: [{
                         data: ylist,
+                        itemStyle: {
+                            normal: {
+                                label: {
+                                    show: true//是否展示
+                                }
+                            }
+                        },
                         barMaxWidth: '50',  //解决问题2：在柱子数量少的时候，剩下的柱子不要太粗，否则不好看；
                         type: 'bar',
                         name:'人数'
                     }]
+
                 };
                 eChart4.setOption(echartoption1);
             }

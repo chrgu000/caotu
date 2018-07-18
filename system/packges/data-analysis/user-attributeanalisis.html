@@ -138,14 +138,16 @@
                     //console.log(data);
                 },
                 success:function(diskJson){
-                    //console.log("用户分析：");
-                    //console.log(diskJson);
+//                    console.log("属性分析：");
+//                    console.log(diskJson);
                     if(diskJson.code=="1000"){
                         if(diskJson.data.reportlist.length>0){
+                            console.log(1);
                             echart5(diskJson.data.reportlist[0]);
                             butefb(diskJson.data.reportlist[0]);
                             terminalfb(diskJson.data.reportlist[0]);
                         }else{
+                            console.log(2);
                             layer.msg("暂无数据，请刷新重试！！");
                             $("#ageDistribution").html("<h1 class='eachartstips'>暂无数据！！！</h1>")
                         }
@@ -197,9 +199,10 @@
 
         /*表5年龄分布*/
         function echart5(edatas){
-            var needdatas=JSON.parse(edatas.agenum);
-            if(needdatas.length >0){
-                //console.log(1);
+            $("#ageDistribution").empty();
+            $("#ageRadio tbody").empty();
+            if(edatas.agenum && edatas.agenum!=""){
+                var needdatas=JSON.parse(edatas.agenum);
                 var xlist=["0-18","19-23","24-30","31-40","41-50","50+","未知"],ylist=[0,0,0,0,0,0,needdatas.unknow];
                 var max=edatas.alluser;
                 for(var key in needdatas){
@@ -222,7 +225,6 @@
                         ylist[5]=ylist[5]+Number(needdatas[key]);
                     }
                 }
-                $("#ageRadio tbody").empty();
                 for(var i=0;i<xlist.length;i++){
                     $("#ageRadio tbody").append(' <tr><td>'+xlist[i]+'</td><td>'+ylist[i]+'</td></tr>')
                 }
@@ -266,6 +268,13 @@
                     series: [{
                         data: ylist,
                         type: 'bar',
+                        itemStyle: {
+                            normal: {
+                                label: {
+                                    show: true//是否展示
+                                }
+                            }
+                        },
                         barMaxWidth: '50',  //解决问题2：在柱子数量少的时候，剩下的柱子不要太粗，否则不好看；
                         markPoint : {
                             data : [
