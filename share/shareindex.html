@@ -24,7 +24,7 @@
             <a  href="https://itunes.apple.com/cn/app/id1398165300?mt=8" download="头图.app"  id="downappbtn">下 载</a>
         </header>
 
-        <div class="conntentsBox" id="mainContentBox">
+        <div class="conntentsBox" id="mainContentBox" v-cloak>
             <div id="userheadbox">
                 <div class="titleBox">
                     <span class="imgbox">
@@ -44,7 +44,7 @@
             </div>
         </div>
         <!--更多推荐-->
-        <div id="moreRecommendBox">
+        <div id="moreRecommendBox" v-cloak>
             <h3 class="title">更多推荐</h3>
             <div class="allrecommendBox">
                 <div class="rcommendBox" v-for="(item,index) in items" v-bind:data-id="item.tagid">
@@ -123,7 +123,7 @@
 
     /*获取url判断类型*/
     function iscontendtype(){
-        //var loctionsrc="?contendid=d093de36b1c34bd1925900cfb2fab860";//假设得到的location.search; //获取url中"?"符后的字串
+        //var loctionsrc="?contendid=bf0e8836834711e8aa38309c23a27303";//假设得到的location.search; //获取url中"?"符后的字串
         var loctionsrc= window.location.search;
         var urldatas=GetRequest(loctionsrc);
 //        console.log(urldatas);
