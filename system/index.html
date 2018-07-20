@@ -39,7 +39,7 @@
                     <a class="navbar-minimalize minimalize-styl-2 btn btn-info " href="#"><i class="fa fa-bars"></i> </a>
                     <h3 class="headerTitle"><img class="logo" src="img/logo.png" alt=""/>头图运营管理后台</h3>
                 </div>
-                <ul class="nav navbar-top-links navbar-right" id="userInfoTop">
+                <ul class="nav navbar-top-links navbar-right" id="userInfoTop" v-cloak>
                     <li class="dropdown">
                         <a v-if="info.iscode =='1000'" id="userHead" href="#"><span class="userHeadBox"><img v-bind:src="info.userheadimg" alt=""/></span><span class="userName">{{info.username}}</span></a>
                         <a v-else  href="login.html">登陆</a>

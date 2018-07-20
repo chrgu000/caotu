@@ -8,6 +8,7 @@
 #userHead .userHeadBox img{width:100%;}
 #userHead .userName{}
 #pageLoadBox{width:100%;}
+[v-cloak]{display: none;}
 /*·­Ò³*/
 #pagerlist{width:100%;height:30px;border:1px solid #ddd;color:#333;position: relative;}
 #pagerbtnlist{width:245px;margin:0 auto;text-align: center;}

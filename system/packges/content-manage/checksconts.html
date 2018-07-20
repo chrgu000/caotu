@@ -248,13 +248,13 @@
             <div class="commentSection" v-for="(item,i) in items" v-bind:data-commentid="item.commentid" v-bind:data-commentreply="item.commentreply" v-bind:data-replycomment="item.replycomment" v-bind:data-replyuser="item.replyuser" v-bind:data-replyfirst="item.replyfirst">
                 <p class="userTitle">
                     <span class="imgBox"><img v-bind:src="item.userimg" alt=""/></span>
-                    <span class="userName" v-bind:data-id="item.userid">{{item.userName}}</span>
+                    <span class="userName" v-bind:data-id="item.userid">{{item.userName}}：</span>
                 </p>
                 <div class="conmentsConts" v-bind:data-replyuser="item.replyuser">
                     <p class="selefCon" v-bind:data-contentid="item.contentid">{{item.commenttext}}</p>
 
                     <div class="recalltalkcon" v-for="(itemcon,d) in item.recall"  v-bind:data-contentid="item.contentid"  v-bind:data-commentid="itemcon.commentid" v-bind:data-commentreply="itemcon.commentreply" v-bind:data-replycomment="itemcon.replycomment" v-bind:data-replyuser="itemcon.replyuser" v-bind:data-replyfirst="itemcon.replyfirst">
-                        <span class="recalluser" :data-id="itemcon.userid"  v-bind:data-replyuser="item.replyuser">{{itemcon.userName}}</span>
+                        <span class="recalluser" :data-id="itemcon.userid"  v-bind:data-replyuser="item.replyuser">{{itemcon.userName}}  回复  {{itemcon.replyusername}}：</span>
                         {{itemcon.commenttext}}
                         <div class="callDoBox">
                             <span class="reply" v-on:click="backcalltalk(itemcon,i,d)">回复</span>
@@ -339,7 +339,7 @@
                 $("#commontsSrBox").attr("data-type",1);
                 $("#commontsSrBox").attr("data-list",i);
                 $("#commontsSrBox").attr("data-list2","");
-                $("#myComments").val("回复"+callname+"：")
+                $("#myComments").attr("placeholder","回复"+callname+"：")
             },
             backcalltalk:function(event,i,d){
                 var callid=this.items[i].recall[d].userid;
@@ -347,7 +347,7 @@
                 $("#commontsSrBox").attr("data-type",2);
                 $("#commontsSrBox").attr("data-list",i);
                 $("#commontsSrBox").attr("data-list2",d);
-                $("#myComments").val("回复"+callname+"：")
+                $("#myComments").attr("placeholder","回复"+callname+"：")
             }
         }
     });
@@ -559,24 +559,25 @@
             var createtime=getmytime();
 
             if(lvty ==0){
-                usertalk.items.push( { "commentid":commentid,"userid":userid,"replyuser":"","commentreply":1,"userimg":userHead,"userName":userName,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":"","replyfirst":commentid,"createtime":createtime,recall:[]});
+                usertalk.items.push( { "commentid":commentid,"userid":userid,"replyuser":"","replyusername":"","commentreply":1,"userimg":userHead,"userName":userName,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":"","replyfirst":commentid,"createtime":createtime,recall:[]});
             }else if(lvty ==1){
                 var replyuser=usertalk.items[index].userid;
                 var replyusername=usertalk.items[index].userName;
                var replycomment =usertalk.items[index].commentid;
-                usertalk.items[index].recall.push({ "commentid":commentid,"userid":userid,"replyuser":replyuser,"commentreply":0,"userimg":userHead,"userName":userName,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":replycomment,"replyfirst":replycomment,"createtime":createtime});
+                usertalk.items[index].recall.push({ "commentid":commentid,"userid":userid,"replyuser":replyuser,"replyusername":replyusername,"commentreply":0,"userimg":userHead,"userName":userName,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":replycomment,"replyfirst":replycomment,"createtime":createtime});
             }else if(lvty ==2){
                 var replyuser=usertalk.items[index].recall[index2].userid;
                 var replyusername=usertalk.items[index].recall[index2].userName;
                 var replycomment =usertalk.items[index].recall[index2].commentid;
                 var replyfirst =usertalk.items[index].commentid;
-                usertalk.items[index].recall.push({ "commentid":commentid,"userid":userid,"replyuser":replyuser,"commentreply":0,"userimg":userHead,"userName":userName,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":replycomment,"replyfirst":replyfirst,"createtime":createtime});
+                usertalk.items[index].recall.push({ "commentid":commentid,"userid":userid,"replyuser":replyuser,"replyusername":replyusername,"commentreply":0,"userimg":userHead,"userName":userName,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":replycomment,"replyfirst":replyfirst,"createtime":createtime});
             }
             $("#commontsSrBox").attr("data-type",0);
             $("#myComments").val("");
             $("#mySetNum").val(1);
             talknum++;
             $("#talkAboutBox .talkNum").html(talknum);
+            $("#myComments").attr("placeholder","");
 
         }
 
