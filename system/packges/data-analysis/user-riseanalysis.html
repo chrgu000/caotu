@@ -517,7 +517,7 @@
                 var max=Number(echartsdata[echartsdata.length-1].alluser);
                 $.each(echartsdata,function(i,n){
                     xlist.push(n.recorddate);
-                    ylist.push(n.registeruser);
+                    ylist.push(parseInt(n.registeruser));
                 });
                 var eChart1 = echarts.init(document.getElementById("labelpage1"));
                 var echartoption1 = {
@@ -549,6 +549,13 @@
                         {
                             name:'新增注册人数',
                             type:'line',
+                            itemStyle: {
+                                normal: {
+                                    label: {
+                                        show: true//是否展示
+                                    }
+                                }
+                            },
                             data:ylist,
                             markPoint : {
                                 data : [
@@ -579,7 +586,7 @@
                 var max=Number(echartsdata[echartsdata.length-1].alluser);
                 $.each(echartsdata,function(i,n){
                     xlist.push(n.recorddate);
-                    ylist.push(n.activeuser);
+                    ylist.push(parseInt(n.activeuser));
                 });
                 var eChart2 = echarts.init(document.getElementById("labelpage2"));
                 var echartoption1 = {
@@ -611,6 +618,13 @@
                         {
                             name:'活跃用户数',
                             type:'line',
+                            itemStyle: {
+                                normal: {
+                                    label: {
+                                        show: true//是否展示
+                                    }
+                                }
+                            },
                             data:ylist,
                             markPoint : {
                                 data : [
@@ -642,7 +656,7 @@
                 var max=Number(echartsdata[echartsdata.length-1].alluser);
                 $.each(echartsdata,function(i,n){
                     xlist.push(n.recorddate);
-                    ylist.push(n.alluser);
+                    ylist.push(parseInt(n.alluser));
                 });
                 var eChart3 = echarts.init(document.getElementById("labelpage3"));
                 var echartoption1 = {
@@ -674,6 +688,13 @@
                         {
                             name:'累计用户数',
                             type:'line',
+                            itemStyle: {
+                                normal: {
+                                    label: {
+                                        show: true//是否展示
+                                    }
+                                }
+                            },
                             data:ylist,
                             markPoint : {
                                 data : [
@@ -708,7 +729,7 @@
                     max=Number($("#userInfoDat .maxusernum").html());
                     $.each(echartsdata4,function(i,n){
                         xlist.push(n.time.substring(8)+"点");
-                        ylist.push(n.useractive);
+                        ylist.push(parseInt(n.useractive));
                     });
                     ec4();
                 }else{
@@ -720,7 +741,7 @@
                     max=Number(echartsdata[echartsdata.length-1].alluser);
                     $.each(echartsdata,function(i,n){
                         xlist.push(n.recorddate);
-                        ylist.push(n.activeusermax);
+                        ylist.push(parseInt(n.activeusermax));
                     });
                     ec4();
                 }else{
