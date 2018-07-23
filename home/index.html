@@ -17,20 +17,27 @@
         #rightKzBox li:hover,
         #rightKzBox li.active{background:#ff698f;}
         .imgbox{position: relative;}
-        #downerweimaBox{position: absolute;bottom:15px;right:15px;}
-        #downerweimaBox .downbox{display: inline-block;width:80rem;height:80rem;position: relative;}
-        #downerweimaBox .downbox img{width:100%;height:100%;}
-        #downerweimaBox .downbox .title{position: absolute;top:-18px;left:0;width:100%;text-align: center;font-weight:500;font-size:13rem;}
+        #downerweimaBox{position: fixed;bottom:30px;right:25px;width:220px;text-align: center;}
+        #downerweimaBox .downbox{width:48%;position: relative;float:left;margin:0 2px;}
+        #downerweimaBox .titleBox{width:98%;margin:5px auto;height:40px;text-align: center;}
+        #downerweimaBox .titleBox .downhref{text-align: center;display: inline-block;width:100%;height:100%;background:#ff9fb7;color:#333;
+            -webkit-border-radius: 3px;font-size:14px;line-height: 40px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;}
+        #downerweimaBox .titleBox .downhref:hover{background:#e25176;}
+        #downerweimaBox .downhref img{height:26px;width:auto;vertical-align: middle;margin-right:3px;}
 
+        #downerweimaBox .downbox .title{text-align: center;font-weight:500;font-size:25px;}
+        #downerweimaBox .erm{width:92%;height:auto;}
         #footdiv{text-align: center;height:55px;line-height: 55px;position: absolute;bottom:0;left:0;width:100%;font-size:12px;}
         #footdiv p span{display: inline-block;margin:0 6px;color:#666;}
     </style>
 </head>
 <body>
     <div class="conbox">
-        <div id="img1" class="imgbox"><img src="img/1.png" alt=""/></div>
-        <div id="img2" class="imgbox" style="margin-top:-6px;"><img src="img/2.png" alt=""/></div>
-        <div id="img3" class="imgbox"  style="margin-top:-6px;"><img src="img/3.png" alt=""/>
+        <div id="img1" class="imgbox"><img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/home1.png" alt=""/></div>
+        <div id="img2" class="imgbox" style="margin-top:-6px;"><img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/home2.png" alt=""/></div>
+        <div id="img3" class="imgbox"  style="margin-top:-6px;"><img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/home3.png" alt=""/>
             <div id="footdiv">
                 <p>
                     <span>鲁ICP备15027719号-1</span><span>杭州草图科技网络有限公司</span>
@@ -38,20 +45,32 @@
                 </p>
             </div>
         </div>
-
-        <!--<div id="downerweimaBox">-->
-            <!--<span id="iosdown" class="downbox">-->
-                <!--<b class="title">IOS扫描下载</b>-->
-                <!--<img src="img/ioserweima.png" alt="ios"/>-->
-            <!--</span>-->
-        <!--</div>-->
     </div>
-
+    <!--下载区-->
+    <div id="downerweimaBox">
+            <div id="iosdown" class="downbox">
+                <div class="titleBox">
+                    <a class="downhref" href="https://itunes.apple.com/cn/app/id1398165300?mt=8">
+                        <img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/home-ios.png" alt="ios下载"/>iphone
+                    </a>
+                </div>
+                <img class="erm" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/home-ioserweima.png" alt="ios"/>
+            </div>
+            <div id="andrdown" class="downbox">
+                <div class="titleBox">
+                    <a class="downhref" href="http://caotukeji.file.alimmdn.com/app-release.apk">
+                        <img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/home-andro.png" alt="Android下载"/>Android
+                    </a>
+                </div>
+                <img  class="erm" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/home-anderweima.png" alt="ios"/>
+            </div>
+    </div>
     <ul id="rightKzBox">
         <li data-id="img1" class="active"><a href="javascript:void(0)" class="jumpbtn active"></a></li>
         <li data-id="img2"><a href="javascript:void(0)" class="jumpbtn"></a></li>
         <li data-id="img3"><a href="javascript:void(0)" class="jumpbtn"></a></li>
     </ul>
+
 
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery.mousewheel.min.js"></script>
