@@ -118,6 +118,9 @@ function putObject(file) {
         }
     }, function (err, data) {
         //console.log(err || data);
+        if(err){
+            layer.msg("图片上传失败，请重试！！")
+        }
 
     });
     cos.getObjectUrl({
@@ -132,6 +135,7 @@ function putObject(file) {
             costdk=data.Url.substring(0, data.Url.indexOf('?'));
             //console.log("costdk:");
             //console.log(costdk);
+
         }
 
     });
@@ -141,11 +145,13 @@ function putObject(file) {
 //多张图片
 var cosjurl=[];
 function putlistObject(urllist,callback) {
-
+    cosjurl=[];
     $.each(urllist,function(i,n){
         muchlist(n)
-    })
-    callback
+    });
+    callback;
+
+
 }
 function muchlist(file){
     // 创建测试文件
@@ -167,10 +173,12 @@ function muchlist(file){
             //console.log(JSON.stringify(progressData));
         }
     }, function (err, data) {
-/*
-        console.log("cos提交：：");
-        console.log(err || data);
-*/
+        //console.log("cos提交：：");
+        //console.log(err || data);
+        if(err){
+            layer.msg("图片上传失败，请重试！！")
+        }
+
 
     });
     cos.getObjectUrl({
@@ -180,8 +188,8 @@ function muchlist(file){
         Sign: true,
         Origin:"http://101.69.230.98"
     }, function (err, data) {
- /*       console.log("cos获取：：");
-        console.log(err || data.Url);*/
+        //console.log("cos获取：：");
+        //console.log(err || data);
         if(data){
             var onetdk=data.Url.substring(0, data.Url.indexOf('?'));
             cosjurl.push(onetdk);

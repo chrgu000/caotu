@@ -131,6 +131,7 @@
         })
 
         var rotate= 0,imgact="";
+        /*1.旋转绘画canvas*/
         $("#blueimp-gallery .rotate").click(function(){
             $("#blueimp-gallery .rotateBtn").addClass("can");
             var rotetjd=Number($(this).attr("data-id"));
@@ -178,30 +179,36 @@
 
         var movielist=[];//文件流
         var changeindex=[];//改变的图片的下标
+        /*2.保存按钮保存canvas图片*/
         $("#blueimp-gallery ").delegate(".rotateBtn.can","click",function(){
             layer.confirm('确定保存旋转后的图片吗？', {
                 btn: ['确定','取消'] //按钮
             }, function(index){
-                iffilechange=3;//图片旋转
-                cosjurl=[];changeindex=[];
-                $("#blueimp-gallery .rotateBtn.can").removeClass("can");
-                var canvaslist=$("#blueimp-gallery .slides .slide canvas");
-                movielist=[];
-                $.each(canvaslist,function(i,n){
-                    var cid=$(n).attr("id");
-                    var slideindex=$(n).parent(".slide").index();
-                    changeindex.push(slideindex);
-                    getcanvae(cid);
-                });
-
-                putlistObject(movielist,getcc());
+                savecanvas();
                 layer.close(index);
             }, function(index){
                 layer.close(index);
             });
-        })
+        });
 
-        /*获取canvas图片流*/
+        /*保存canvas*/
+        function savecanvas(){
+            iffilechange=3;//图片旋转
+            cosjurl=[];changeindex=[];
+            $("#blueimp-gallery .rotateBtn.can").removeClass("can");
+            var canvaslist=$("#blueimp-gallery .slides .slide canvas");
+            movielist=[];
+            $.each(canvaslist,function(i,n){
+                var cid=$(n).attr("id");
+                var slideindex=$(n).parent(".slide").index();
+                changeindex.push(slideindex);
+                getcanvae(cid);
+            });
+
+            putlistObject(movielist,getcc());
+        }
+
+        /*3.获取canvas图片流*/
         function getcanvae(cid){
             var ctx = document.getElementById(cid);
           /*  var canvasw=$(".blueimp-gallery .slides .slide").width();
@@ -225,11 +232,8 @@ function getcc(){
             fielchangelist[n].imgurl=cosjurl[i];
             $("#imgconbox a:nth-child("+(n+1)+")").attr("href",cosjurl[i]);
             $("#imgconbox a:nth-child("+(n+1)+") img").attr("src",cosjurl[i]);
-        })
-
+        });
     },1000)
-
-
 }
 
 
@@ -248,7 +252,23 @@ function getcc(){
 
         /*翻页时的判断*/
         function iscanchange(){
-            rotate=0;
+            if($("#blueimp-gallery .rotateBtn").hasClass("can")){
+                rotate=0;
+                var imgact=Number($(".blueimp-gallery>.indicator li.active").attr("data-index"));
+                $("#blueimp-gallery .rotateBtn.can").removeClass("can");
+                $("#blueimp-gallery .indicator li:nth-child("+(imgact)+")").click();
+                layer.confirm('图片尚未保存，确定保存吗？', {
+                    btn: ['确定','取消'] //按钮
+                }, function(index){
+                    savecanvas();
+                    layer.close(index);
+                }, function(index){
+                    layer.close(index);
+                    $(".blueimp-gallery .slides .slide:nth-child("+(imgact+1)+") img").css({"display":"block"});
+                    $(".blueimp-gallery .slides .slide:nth-child("+(imgact+1)+") canvas").remove();
+                });
+            }
+
            // $("#blueimp-gallery .rotateBtn.can").removeClass("can");
         }
             $("#blueimp-gallery .prev").click(function(){
@@ -265,7 +285,7 @@ function getcc(){
             iscanchange()
         });
         $("#blueimp-gallery .close").click(function(){
-            iscanchange();
+            rotate=0;
             $("#blueimp-gallery .rotateBtn.can").removeClass("can");
         });
 

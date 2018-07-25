@@ -88,197 +88,197 @@
 </head>
 
 <body class="gray-bg">
-    <div id="topKzCon">
+<div id="topKzCon">
 
-        <a class="backBtn btn "  href="javascript:void(0);" onclick="backuncheck()">返回</a>
-        <a href="#" class="preBtn btn" >上一页</a>
-        <a href="#" class="nextBtn btn" >下一页</a>
-        <span class="submit btn" onclick="subd()">提交</span>
-        <a href="#" class="requck btn btnRight">重置</a>
-    </div>
-    <div class="conBox">
-        <div id="mainCont">
-            <div class="mainContitleBox">
-                标题 <textarea id="mainConTitle" maxlength="140" placeholder="我是标题"></textarea>
-                <i class="contitleTip">4个字</i>
-            </div>
-            <!--视频和图片页面的容器-->
-            <div id="mainContain">
-
-            </div>
+    <a class="backBtn btn "  href="javascript:void(0);" onclick="backuncheck()">返回</a>
+    <a href="#" class="preBtn btn" >上一页</a>
+    <a href="#" class="nextBtn btn" >下一页</a>
+    <span class="submit btn" onclick="subd()">提交</span>
+    <a href="#" class="requck btn btnRight">重置</a>
+</div>
+<div class="conBox">
+    <div id="mainCont">
+        <div class="mainContitleBox">
+            标题 <textarea id="mainConTitle" maxlength="140" placeholder="我是标题"></textarea>
+            <i class="contitleTip">4个字</i>
         </div>
-        <div id="detailCon">
-            <table class="detailContitleBox">
-                <tbody>
-                    <tr>
-                        <td id="movietypetd">
-                            横竖视频：
-                            <span id="movieStyle" data-val="1"></span>
+        <!--视频和图片页面的容器-->
+        <div id="mainContain">
 
-                        </td>
-                        <td>
-                            内容等级
-                            <select name="" id="checkConLevel">
-                                <option value="">请选择</option>
-                                <option value="3">A</option>
-                                <option value="2">B</option>
-                                <option value="1">C</option>
-                                <option value="D">D</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td id="conlabeltd" colspan="2">
-                            <div class="left title">
-                                标签分类:
-                            </div>
-                            <div class="left searchMenu">
-                                <input type="search" value="" data-val="" placeholder="请选择标签" id="checkTagSearch1" class="searchTag"/>
-                                <ul class="searchSecondMenu" id="checkTagul1">
+        </div>
+    </div>
+    <div id="detailCon">
+        <table class="detailContitleBox">
+            <tbody>
+            <tr>
+                <td id="movietypetd">
+                    横竖视频：
+                    <span id="movieStyle" data-val="1"></span>
 
-                                </ul>
-                            </div>
-                            <div class="left searchMenu">
-                                <input type="search" value="" data-val="" placeholder="请选择标签" id="checkTagSearch2" class="searchTag"/>
-                                <ul class="searchSecondMenu" id="checkTagul2">
-
-                                </ul>
-                            </div>
-                            <div class="left searchMenu">
-                                <input type="search" value="" data-val="" placeholder="请选择标签" id="checkTagSearch3" class="searchTag"/>
-                                <ul class="searchSecondMenu" id="checkTagul3">
-
-                                </ul>
-                            </div>
-
-                         <!--   <select name="" id="checkTag">
-                               &lt;!&ndash; <option value="1">标签1</option>
-                                <option value="2">标签2</option>
-                                <option value="3">标签3</option>&ndash;&gt;
-                            </select>
-                            <select name="" id="checkTag2">
-                              &lt;!&ndash;  <option value="1">标签1</option>
-                                <option value="2">标签2</option>
-                                <option value="3">标签3</option>&ndash;&gt;
-                            </select>
-                            <select name="" id="checkTag3">
-                                &lt;!&ndash;<option value="1">标签1</option>
-                                <option value="2">标签2</option>
-                                <option value="3">标签3</option>&ndash;&gt;
-                            </select>-->
-                        </td>
-
-                    </tr>
-
-                    <tr>
-                        <td>
-                            点赞数 <input type="number" id="goodNum" value="1" min="0"/>
-                        </td>
-                        <td>
-                            发布人
-                            <select name="" id="checkpublisher">
-                                <!--<option value="A">A</option>
-                                <option value="B">B</option>
-                                <option value="C">C</option>-->
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            抓取来源：<span id="checkGetfrom">新浪微博</span> <!--<a href="#">源地址：www.5555.com</a>-->
-                        </td>
-                    </tr>
-                   <!-- <tr>
-                        <td colspan="2" style="height:133px;">
-                            专栏选择：<select name="" id="checkColumChoose" style="width:200px;">
-                            <option value="1">我是专栏一</option>
-                        </select>
-                        </td>
-                    </tr>-->
-                    <tr>
-                        <td colspan="2">
-                            预发布时间：
-                            <input type="text" value="" id="prereleaseTime" style="width:200px;"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td colspan="2">
-                            最后审核人：
-                            <span id="finalAuditor"></span>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-            <div id="commentlistBox">
-                <ul>
-                    <li></li>
-                </ul>
-            </div>
-             <div>
-                 <button id="editoBtn" class="">图片编辑</button>
-                 <div id="movieImgBox" class="">
-                    <div class="movieshowimg">
-                        <img src="" alt=""/>
+                </td>
+                <td>
+                    内容等级
+                    <select name="" id="checkConLevel">
+                        <option value="">请选择</option>
+                        <option value="3">A</option>
+                        <option value="2">B</option>
+                        <option value="1">C</option>
+                        <option value="D">D</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td id="conlabeltd" colspan="2">
+                    <div class="left title">
+                        标签分类:
                     </div>
-                     <p class="tips">*视频与缩略图的宽高比有误，请检查！！</p>
-                     <div class="movieinputBox">
+                    <div class="left searchMenu">
+                        <input type="search" value="" data-val="" placeholder="请选择标签" id="checkTagSearch1" class="searchTag"/>
+                        <ul class="searchSecondMenu" id="checkTagul1">
 
-                         <div style="width:100%;position: relative;height:27px;">
-                             <input type="file" id="movieimgfile" value="" accept=".png,.jpg,.gif,.jpeg"/>
-                             <span class="moviebtn">替换封面</span>
-                         </div>
+                        </ul>
+                    </div>
+                    <div class="left searchMenu">
+                        <input type="search" value="" data-val="" placeholder="请选择标签" id="checkTagSearch2" class="searchTag"/>
+                        <ul class="searchSecondMenu" id="checkTagul2">
 
-                     </div>
+                        </ul>
+                    </div>
+                    <div class="left searchMenu">
+                        <input type="search" value="" data-val="" placeholder="请选择标签" id="checkTagSearch3" class="searchTag"/>
+                        <ul class="searchSecondMenu" id="checkTagul3">
 
-                 </div>
-             </div>
+                        </ul>
+                    </div>
 
+                    <!--   <select name="" id="checkTag">
+                          &lt;!&ndash; <option value="1">标签1</option>
+                           <option value="2">标签2</option>
+                           <option value="3">标签3</option>&ndash;&gt;
+                       </select>
+                       <select name="" id="checkTag2">
+                         &lt;!&ndash;  <option value="1">标签1</option>
+                           <option value="2">标签2</option>
+                           <option value="3">标签3</option>&ndash;&gt;
+                       </select>
+                       <select name="" id="checkTag3">
+                           &lt;!&ndash;<option value="1">标签1</option>
+                           <option value="2">标签2</option>
+                           <option value="3">标签3</option>&ndash;&gt;
+                       </select>-->
+                </td>
+
+            </tr>
+
+            <tr>
+                <td>
+                    点赞数 <input type="number" id="goodNum" value="1" min="0"/>
+                </td>
+                <td>
+                    发布人
+                    <select name="" id="checkpublisher">
+                        <!--<option value="A">A</option>
+                        <option value="B">B</option>
+                        <option value="C">C</option>-->
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    抓取来源：<span id="checkGetfrom">新浪微博</span> <!--<a href="#">源地址：www.5555.com</a>-->
+                </td>
+            </tr>
+            <!-- <tr>
+                 <td colspan="2" style="height:133px;">
+                     专栏选择：<select name="" id="checkColumChoose" style="width:200px;">
+                     <option value="1">我是专栏一</option>
+                 </select>
+                 </td>
+             </tr>-->
+            <tr>
+                <td colspan="2">
+                    预发布时间：
+                    <input type="text" value="" id="prereleaseTime" style="width:200px;"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    最后审核人：
+                    <span id="finalAuditor"></span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div id="commentlistBox">
+            <ul>
+                <li></li>
+            </ul>
+        </div>
+        <div>
+            <button id="editoBtn" class="">图片编辑</button>
+            <div id="movieImgBox" class="">
+                <div class="movieshowimg">
+                    <img src="" alt=""/>
+                </div>
+                <p class="tips">*视频与缩略图的宽高比有误，请检查！！</p>
+                <div class="movieinputBox">
+
+                    <div style="width:100%;position: relative;height:27px;">
+                        <input type="file" id="movieimgfile" value="" accept=".png,.jpg,.gif,.jpeg"/>
+                        <span class="moviebtn">替换封面</span>
+                    </div>
+
+                </div>
+
+            </div>
         </div>
 
     </div>
 
-    <!--底部评论管理-->
-    <div id="talkAboutBox">
-        <div class="tittleBox">
-            <span style="width:43%;">评论管理</span>
-            <span style="width:25%;border-right:1px solid #bbb;border-left:1px solid #bbb;">评论数 ：<b class="talkNum"></b></span>
-            <span style="width:25%;">热评数 :<b class="hotTalkNum"></b></span>
-        </div>
-        <div class="commentSectionBox" id="commentSectionBox">
-            <div class="commentSection" v-for="(item,i) in items" v-bind:data-commentid="item.commentid" v-bind:data-commentreply="item.commentreply" v-bind:data-replycomment="item.replycomment" v-bind:data-replyuser="item.replyuser" v-bind:data-replyfirst="item.replyfirst">
-                <p class="userTitle">
-                    <span class="imgBox"><img v-bind:src="item.userimg" alt=""/></span>
-                    <span class="userName" v-bind:data-id="item.userid">{{item.userName}}：</span>
-                </p>
-                <div class="conmentsConts" v-bind:data-replyuser="item.replyuser">
-                    <p class="selefCon" v-bind:data-contentid="item.contentid">{{item.commenttext}}</p>
+</div>
 
-                    <div class="recalltalkcon" v-for="(itemcon,d) in item.recall"  v-bind:data-contentid="item.contentid"  v-bind:data-commentid="itemcon.commentid" v-bind:data-commentreply="itemcon.commentreply" v-bind:data-replycomment="itemcon.replycomment" v-bind:data-replyuser="itemcon.replyuser" v-bind:data-replyfirst="itemcon.replyfirst">
-                        <span class="recalluser" :data-id="itemcon.userid"  v-bind:data-replyuser="item.replyuser">{{itemcon.userName}}  回复  {{itemcon.replyusername}}：</span>
-                        {{itemcon.commenttext}}
-                        <div class="callDoBox">
-                            <span class="reply" v-on:click="backcalltalk(itemcon,i,d)">回复</span>
-                            <span class="praiseBox"  v-on:click="callgoods(itemcon,i,d)"><i class="glyphicon glyphicon-thumbs-up"></i><b class="praiseNum">{{itemcon.commentgood}}</b></span>
-                        </div>
+<!--底部评论管理-->
+<div id="talkAboutBox">
+    <div class="tittleBox">
+        <span style="width:43%;">评论管理</span>
+        <span style="width:25%;border-right:1px solid #bbb;border-left:1px solid #bbb;">评论数 ：<b class="talkNum"></b></span>
+        <span style="width:25%;">热评数 :<b class="hotTalkNum"></b></span>
+    </div>
+    <div class="commentSectionBox" id="commentSectionBox">
+        <div class="commentSection" v-for="(item,i) in items" v-bind:data-commentid="item.commentid" v-bind:data-commentreply="item.commentreply" v-bind:data-replycomment="item.replycomment" v-bind:data-replyuser="item.replyuser" v-bind:data-replyfirst="item.replyfirst">
+            <p class="userTitle">
+                <span class="imgBox"><img v-bind:src="item.userimg" alt=""/></span>
+                <span class="userName" v-bind:data-id="item.userid">{{item.userName}}：</span>
+            </p>
+            <div class="conmentsConts" v-bind:data-replyuser="item.replyuser">
+                <p class="selefCon" v-bind:data-contentid="item.contentid">{{item.commenttext}}</p>
+
+                <div class="recalltalkcon" v-for="(itemcon,d) in item.recall"  v-bind:data-contentid="item.contentid"  v-bind:data-commentid="itemcon.commentid" v-bind:data-commentreply="itemcon.commentreply" v-bind:data-replycomment="itemcon.replycomment" v-bind:data-replyuser="itemcon.replyuser" v-bind:data-replyfirst="itemcon.replyfirst">
+                    <span class="recalluser" :data-id="itemcon.userid"  v-bind:data-replyuser="item.replyuser">{{itemcon.userName}}  回复  {{itemcon.replyusername}}：</span>
+                    {{itemcon.commenttext}}
+                    <div class="callDoBox">
+                        <span class="reply" v-on:click="backcalltalk(itemcon,i,d)">回复</span>
+                        <span class="praiseBox"  v-on:click="callgoods(itemcon,i,d)"><i class="glyphicon glyphicon-thumbs-up"></i><b class="praiseNum">{{itemcon.commentgood}}</b></span>
                     </div>
+                </div>
 
-                </div>
-                <div class="doBox">
-                    <span class="reply" v-on:click="backtalk(item,i)">回复</span>
-                    <span class="praiseBox" v-on:click="goods(item,i)"><i class="glyphicon glyphicon-thumbs-up"></i><b class="praiseNum">{{item.commentgood}}</b></span>
-                </div>
             </div>
-
+            <div class="doBox">
+                <span class="reply" v-on:click="backtalk(item,i)">回复</span>
+                <span class="praiseBox" v-on:click="goods(item,i)"><i class="glyphicon glyphicon-thumbs-up"></i><b class="praiseNum">{{item.commentgood}}</b></span>
+            </div>
         </div>
 
+    </div>
 
 
-        <div class="commontsSrBox" id="commontsSrBox" data-type="0" data-list="" data-list2="" style="background:#f0f3f4;border-top:1px solid #bbb;padding:3px;padding-bottom:20px;">
-            <select name="" id="myNameSelect">
-               <!-- <option value="12313"><span class="myname">我是马甲用户</span></option>
-                <option value="123134"><span class="myname">我是马甲用户2</span></option>
-                <option value="123135"><span class="myname">我是马甲用户3</span></option>-->
-            </select>
+
+    <div class="commontsSrBox" id="commontsSrBox" data-type="0" data-list="" data-list2="" style="background:#f0f3f4;border-top:1px solid #bbb;padding:3px;padding-bottom:20px;">
+        <select name="" id="myNameSelect">
+            <!-- <option value="12313"><span class="myname">我是马甲用户</span></option>
+             <option value="123134"><span class="myname">我是马甲用户2</span></option>
+             <option value="123135"><span class="myname">我是马甲用户3</span></option>-->
+        </select>
             <textarea rows="1" cols="20" id="myComments" maxlength="200">
 
             </textarea>
@@ -288,17 +288,17 @@
                 <button type="button" class="btn btn-sm btn-primary" id="myConmentsSub" onclick="subd()">提交</button>
             </span>
 
-        </div>
     </div>
+</div>
 
 
-    <script src="../../js/jquery.min.js?v=2.1.4"></script>
-    <script src="../../plugin/datepicker/jquery.datetimepicker.full.min.js"></script>
-    <script src="../../plugin/layer/layer.js"></script>
-    <script src="../../js/vue.js"></script>
-    <script type="text/javascript" src="../../js/index.js"></script>
-    <script src="../../plugin/cos-js-sdl-v5/cos-js-sdk-v5.min.js"></script>
-    <script src="../../plugin/cos-js-sdl-v5/cos.js"></script>
+<script src="../../js/jquery.min.js?v=2.1.4"></script>
+<script src="../../plugin/datepicker/jquery.datetimepicker.full.min.js"></script>
+<script src="../../plugin/layer/layer.js"></script>
+<script src="../../js/vue.js"></script>
+<script type="text/javascript" src="../../js/index.js"></script>
+<script src="../../plugin/cos-js-sdl-v5/cos-js-sdk-v5.min.js"></script>
+<script src="../../plugin/cos-js-sdl-v5/cos.js"></script>
 <script type="text/javascript">
 
 
@@ -313,7 +313,7 @@
             value:date,
             format:'Y-m-d',
             timepicker:false//关闭时间选项
-         });
+        });
 
     })
     var fileslist=[];//图片流
@@ -354,11 +354,11 @@
 
     /*获取审核类型加载视频/图片页面*/
     function getchecktype(){
-       //根据iframe的id获取对象
+        //根据iframe的id获取对象
         layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:1000}) ;
-       let ifinfo = window.location.search;
+        let ifinfo = window.location.search;
         ifinfo=ifinfo.substring(4);
-       ifinfo=ifinfo.split(",");
+        ifinfo=ifinfo.split(",");
         var rehref = window.location.href;
         $("#topKzCon .requck ").attr("href",rehref);//重置
         var localindodata22=JSON.parse(localStorage.uncheckdata);
@@ -387,7 +387,7 @@
             var contype2=localindodata22.ContentList[nextnum].daqtype;
             $("#topKzCon .nextBtn ").attr("href","checksconts.html?in="+nextnum+","+contype2+","+pageno);//下一页
         }
-       //ifinfo=JSON.parse(ifinfo);
+        //ifinfo=JSON.parse(ifinfo);
         ////console.log(ifinfo);
         var murl="moveicheck.html";
 
@@ -403,7 +403,7 @@
 
         }
         ////console.log(ifinfo[1]);
-       // //console.log(murl);
+        // //console.log(murl);
         $("#mainContain").load(murl,function(){
 
         });
@@ -412,7 +412,7 @@
 
             var rightindodata=localindodata22.ContentList[index];
             ////console.log("rightindodata:");
-           // //console.log(rightindodata);
+            // //console.log(rightindodata);
             rightinfo(rightindodata);
         }
     }
@@ -472,7 +472,7 @@
             }
         });
     }
-/*标签搜索框焦点事件*/
+    /*标签搜索框焦点事件*/
     $("#detailCon .searchMenu .searchTag").focus(function(){
         $(this).siblings(".searchSecondMenu").addClass("show");
     });
@@ -509,7 +509,7 @@
     function getpush(){
         var createuser=userdatas.data.userid;
         var tjdatas={"pageno":1,"pagesize":999};
-         tjdatas=JSON.stringify(tjdatas);
+        tjdatas=JSON.stringify(tjdatas);
         $.ajax({
             url : path2+'/CTKJBUSINESS/vest/vestlist.do',
             cache:true,//false就不会从浏览器缓存中加载请求信息了
@@ -563,7 +563,7 @@
             }else if(lvty ==1){
                 var replyuser=usertalk.items[index].userid;
                 var replyusername=usertalk.items[index].userName;
-               var replycomment =usertalk.items[index].commentid;
+                var replycomment =usertalk.items[index].commentid;
                 usertalk.items[index].recall.push({ "commentid":commentid,"userid":userid,"replyuser":replyuser,"replyusername":replyusername,"commentreply":0,"userimg":userHead,"userName":userName,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":replycomment,"replyfirst":replycomment,"createtime":createtime});
             }else if(lvty ==2){
                 var replyuser=usertalk.items[index].recall[index2].userid;
@@ -629,7 +629,7 @@
             ////console.log(locationListString);
             /*审核视频的 //若果缩略图被替换*/
             if(iffilechange==2){
-                var movielist=[fileslist[0]]
+                var movielist=[fileslist[0]];
                 putlistObject(movielist,movietoyun());
             }else{
                 movietoyun();
@@ -639,9 +639,9 @@
         }
     }
 
-    /*提交视频的--未替换图片*/
+    /*提交视频/图片-1*/
     function movietoyun(){
-       var searchyunlist=[];
+        var searchyunlist=[];
         //若果缩略图被替换
         if(iffilechange==2){
             fileslist.splice(0,1);
@@ -668,10 +668,13 @@
             //data: {taglevel:3,pageno:1,pagesize:999},
             error: function(data){
                 layer.closeAll();
-                layer.msg("服务器未响应,请稍后再试!");
-//                console.log("提交图片/视频流失败：");
-//                console.log(data);
-                $("#myConmentsSub").attr("disabled",false);
+                layer.msg("提交失败，刷新页面后重试！！",{
+                    offset:['50%'],
+                    time: 1500 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    location.reload();
+                });
+
 
             },
             success:function(diskJson){
@@ -690,89 +693,93 @@
                     }
                     subd2(geturl);
                 }else{
-                    $("#myConmentsSub").attr("disabled",false);
                     layer.closeAll();
-                    layer.msg("视频/图片地址有误，请检查后重试！！")
+                    layer.msg("提交失败，刷新页面后重试！！",{
+                        offset:['50%'],
+                        time: 1500 //2秒关闭（如果不配置，默认是3秒）
+                    },function(){
+                        location.reload();
+                    });
                 }
             }
         });
     }
 
-/*最中提交*/
+    /*最中提交*/
 
-function subd2(contenturllist){
-    var ifinfo = window.location.search;
-    ifinfo=ifinfo.substring(4);
-    ifinfo=ifinfo.split(",");
-    var localindodata=JSON.parse(localStorage.uncheckdata);
-    var index=ifinfo[0];
-    var tjlocdata=localindodata.ContentList[index];
+    function subd2(contenturllist){
+        var ifinfo = window.location.search;
+        ifinfo=ifinfo.substring(4);
+        ifinfo=ifinfo.split(",");
+        var localindodata=JSON.parse(localStorage.uncheckdata);
+        var index=ifinfo[0];
+        var tjlocdata=localindodata.ContentList[index];
 
-    var contenttitle=$("#mainConTitle").val();
-    var contentid=tjlocdata.daqid;
-    var contenttype="";
-    var contentleve=$("#checkConLevel").val();
-    var tag1=$("#checkTagSearch1").attr("data-val");
-    var tag2=$("#checkTagSearch2").attr("data-val");
-    var tag3=$("#checkTagSearch3").attr("data-val");
-    var contenttag=[];
-    var contentgoods=Number($("#goodNum").val());
-    var contentuid=$("#checkpublisher").val();
-    var contentsource=tjlocdata.daqsource;
-    var createtime=$("#prereleaseTime").val();
+        var contenttitle=$("#mainConTitle").val();
+        var contentid=tjlocdata.daqid;
+        var contenttype="";
+        var contentleve=$("#checkConLevel").val();
+        var tag1=$("#checkTagSearch1").attr("data-val");
+        var tag2=$("#checkTagSearch2").attr("data-val");
+        var tag3=$("#checkTagSearch3").attr("data-val");
+        var contenttag=[];
+        var contentgoods=Number($("#goodNum").val());
+        var contentuid=$("#checkpublisher").val();
+        var contentsource=tjlocdata.daqsource;
+        var createtime=$("#prereleaseTime").val();
         createtime=createtime.replace(/-/g, "");//
-    var lastchenker=userdatas.data.userid;
-    var commenttext=usertalk.items;
-    var contenttext="";
+        var lastchenker=userdatas.data.userid;
+        var commenttext=usertalk.items;
+        var contenttext="";
 
-    //判断是否为D删除的
-    if(contentleve != "D"){
-        if(tag1 =="" && tag2=="" && tag3 ==""){
-            layer.closeAll();
-            layer.msg("请至少选择一项标签！！");
-            $("#myConmentsSub").attr("disabled",false);
+        //判断是否为D删除的
+        if(contentleve != "D"){
+            if(tag1 =="" && tag2=="" && tag3 ==""){
+                layer.closeAll();
+                layer.msg("请至少选择一项标签！！");
+                $("#myConmentsSub").attr("disabled",false);
 
-            return false;
-        }else{
-            if(tag1 !="" && tag1 !=null){contenttag.push(tag1)}
-            if(tag2 !="" && tag2 !=null){contenttag.push(tag2)}
-            if(tag3 !="" && tag3 !=null){contenttag.push(tag3)}
-            contenttag=unique10(contenttag)
+                return false;
+            }else{
+                if(tag1 !="" && tag1 !=null){contenttag.push(tag1)}
+                if(tag2 !="" && tag2 !=null){contenttag.push(tag2)}
+                if(tag3 !="" && tag3 !=null){contenttag.push(tag3)}
+                contenttag=unique10(contenttag)
+            }
         }
-    }
 //    判断contenttype类型
-    if(tjlocdata.daqtype != "3"){
-        contenttype=$("#movieStyle").attr("data-val");
-        let w=$("#movieImgBox .movieshowimg img").attr("data-width");
-        let h=$("#movieImgBox .movieshowimg img").attr("data-height");
-        contenttext=w+","+h;
+        if(tjlocdata.daqtype != "3"){
+            contenttype=$("#movieStyle").attr("data-val");
+            let w=$("#movieImgBox .movieshowimg img").attr("data-width");
+            let h=$("#movieImgBox .movieshowimg img").attr("data-height");
+            contenttext=w+","+h;
 
-    }else{
-        contenttype=3;
-        let w=$("#imgconbox a:first-child").attr("data-width");
-        let h=$("#imgconbox a:first-child").attr("data-height");
-        contenttext=w+","+h;
-    }
+        }else{
+            contenttype=3;
+            let w=$("#imgconbox a:first-child").attr("data-width");
+            let h=$("#imgconbox a:first-child").attr("data-height");
+            contenttext=w+","+h;
+        }
 
-    var tjdatas={
-        "contenttitle":contenttitle,
-        "contentid":contentid,
-        "contenttype":contenttype,
-        "contenturllist":contenturllist,
-        "contentlevel":contentleve,
-        "contenttag":contenttag,
-        "contentgoods":contentgoods,
-        "contentuid":contentuid,
-        "contentsource":contentsource,
-        "createtime":createtime,
-        "checkuid":lastchenker,
-        "contenttext":contenttext,
-        "commenttext": commenttext};
+        var tjdatas={
+            "contenttitle":contenttitle,
+            "contentid":contentid,
+            "contenttype":contenttype,
+            "contenturllist":contenturllist,
+            "contentlevel":contentleve,
+            "contenttag":contenttag,
+            "contentgoods":contentgoods,
+            "contentuid":contentuid,
+            "contentsource":contentsource,
+            "createtime":createtime,
+            "checkuid":lastchenker,
+            "contenttext":contenttext,
+            "commenttext": commenttext};
 
-/*    console.log("tijiao 2postdata:");
-    console.log(tjdatas);*/
+//            console.log("tijiao 2postdata:");
+//         console.log(tjdatas);
 
-    tjdatas=JSON.stringify(tjdatas);
+        tjdatas=JSON.stringify(tjdatas);
         $.ajax({
             url : path+'/CTKJBUSINESS/content/pushcontent.do',
             cache:true,//false就不会从浏览器缓存中加载请求信息了
@@ -783,47 +790,57 @@ function subd2(contenturllist){
             data: tjdatas,
             error: function(data){
                 layer.closeAll();
-                layer.msg("服务器未响应,请稍后再试!");
-                $("#myConmentsSub").attr("disabled",false);
+                layer.msg("提交失败，刷新页面后重试！！",{
+                    offset:['50%'],
+                    time: 1500 //2秒关闭（如果不配置，默认是3秒）
+                },function(){
+                    location.reload();
+                });
 
                 //console.log("提交图片/视频流失败：");
                 //console.log(data);
             },
             success:function(diskJson){
                 layer.closeAll();
-/*                console.log("提交审核：");
-                console.log(diskJson);*/
+                /*                console.log("提交审核：");
+                 console.log(diskJson);*/
                 if(diskJson.code =="1000"){
                     layer.msg('提交成功...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:250}) ;
                     backuncheck();
                 }else{
-                    layer.msg("服务器未响应,请稍后再试!");
-                    $("#myConmentsSub").attr("disabled",false);
+                    layer.msg("提交失败，刷新页面后重试！！",{
+                        offset:['50%'],
+                        time: 1500 //2秒关闭（如果不配置，默认是3秒）
+                    },function(){
+                        location.reload();
+                    });
                 }
 
             }
         });
 
-}
+    }
 
 
 
-/*判断字数*/
-$("#mainConTitle").keyup(function(){
-   var len=$(this).val().length;
-    $("#mainCont .contitleTip").html(len+"个字");
-});
+    /*判断字数*/
+    $("#mainConTitle").keyup(function(){
+        var len=$(this).val().length;
+        $("#mainCont .contitleTip").html(len+"个字");
+    });
 
-function backuncheck(){
-    let ifinfo = window.location.search;
-    ifinfo=ifinfo.substring(4);
-    ifinfo=ifinfo.split(",");
-    setTimeout(function(){
+    function backuncheck(){
+        let ifinfo = window.location.search;
+        ifinfo=ifinfo.substring(4);
+        ifinfo=ifinfo.split(",");
+        setTimeout(function(){
 //        console.log(ifinfo);
 //        console.log(ifinfo[2]);
-        window.location.href="content-check.html?pageon="+ifinfo[2];
-    },250)
-}
+            window.location.href="content-check.html?pageon="+ifinfo[2];
+        },250)
+    }
+
+
 
     $("#editoBtn").click(function(){
         $("#imgEditBox").addClass("show");
