@@ -54,8 +54,8 @@
     </div>
     <div class="wrapper wrapper-content  animated fadeInRight">
         <h3 class="formtitle">数据列表
-            <button type="button" class="btn btn-sm btn-primary" id="passBtn">通过</button>
-            <button type="button" class="btn btn-sm btn-primary" id="unpassBtn">未通过</button>
+          <!--  <button type="button" class="btn btn-sm btn-primary" id="passBtn">通过</button>
+            <button type="button" class="btn btn-sm btn-primary" id="unpassBtn">未通过</button>-->
         </h3>
         <div class="row">
             <div class="col-sm-12">
@@ -65,7 +65,6 @@
                         <table  class="table table-striped" id="tablelistbox">
                             <thead>
                             <tr>
-                                <th></th>
                                 <th>编号</th>
                                 <th>举报原因</th>
                                 <th>举报内容</th>
@@ -79,7 +78,7 @@
                             </thead>
                             <tbody id="tablelistTbody">
                             <tr v-for="(item,index) in items">
-                                <td class="center"><input type="radio" value=""/></td>
+                              <!--  <td class="center"><input type="radio" value=""/></td>-->
                                 <td class="center">{{index+1}}</td>
                                 <td class="center">{{item.reportdes }}</td>
                                 <td>{{item.reporttext}}</td>
@@ -88,7 +87,10 @@
                                 <td class="center">{{item.createtime}}</td>
                                 <td class="center">{{item.reportusername}}</td>
                                 <td class="center">{{item.dealres=="0"?"待处理":(item.dealres=="1"?"通过":"未通过")}}</td>
-                                <td class="center">
+                                <td class="center" v-if="item.dealres==1">
+                                    <button type="button" class="btn" v-if="item.reporttype==1" v-on:click="lookconten(item)">详情</button>
+                                </td>
+                                <td class="center" v-else>
                                     <button type="button" class="btn" v-if="item.reporttype==1" v-on:click="lookconten(item)">详情</button>
                                     <button type="button" class="pass btn" v-on:click="pass(item)">通过</button>
                                     <button type="button" class="unpass btn" v-on:click="unpass(item)">不通过</button>

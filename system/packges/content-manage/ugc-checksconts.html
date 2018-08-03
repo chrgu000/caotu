@@ -66,7 +66,7 @@
         #commentlistBox{width:100%;height:160px;overflow-y: auto;}
         #detailCon .searchMenu .searchTag{width:76px;height:30px;}
         #detailCon .searchMenu .searchSecondMenu{position: absolute;width:100%;left:0;top:28px;background:#eee;color:#bbb;list-style: none;padding:0;z-index: 98;border:1px solid #bbb;border-top:none;display: none;max-height: 420px;overflow-y: auto;}
-        #detailCon .searchMenu .searchSecondMenu.show{display: block;}
+        #detailCon .searchMenu .searchSecondMenu.active{display: block;}
         #detailCon .searchSecondMenu li{width:100%;text-align: left;padding-left:3px;cursor: pointer;line-height: 23px;}
         #detailCon .searchSecondMenu li:hover{background:#fff;color:#333;border-top:1px solid #bbb;}
         #editoBtn{margin:10px; display: none;}
@@ -114,6 +114,10 @@
                         <td id="movietypetd">
                             类型：
                             <span id="movieStyle" data-val="1"></span>
+                            <select name="" id="movieSelect" style="display: none;">
+                                <option value="1">横视频</option>
+                                <option value="2">竖视频</option>
+                            </select>
 
                         </td>
                         <td>
@@ -134,9 +138,9 @@
                             </div>
                             <div class="left searchMenu">
                                 <input type="search" value="" data-val="" placeholder="请选择标签" id="checkTagSearch1" class="searchTag" readonly/>
-                             <!--   <ul class="searchSecondMenu" id="checkTagul1">
+                                <ul class="searchSecondMenu" id="checkTagul1">
 
-                                </ul>-->
+                                </ul>
                             </div>
                             <div class="left searchMenu">
                                 <input type="search" value="" data-val="" placeholder="请选择标签" id="checkTagSearch2" class="searchTag"/>
@@ -198,7 +202,60 @@
             </div>
 
         </div>
+    </div>
 
+    <!--底部评论管理-->
+    <div id="talkAboutBox">
+        <div class="tittleBox">
+            <span style="width:43%;">评论管理</span>
+            <span style="width:25%;border-right:1px solid #bbb;border-left:1px solid #bbb;">评论数 ：<b class="talkNum"></b></span>
+            <span style="width:25%;">热评数 :<b class="hotTalkNum"></b></span>
+        </div>
+        <div class="commentSectionBox" id="commentSectionBox">
+            <div class="commentSection" v-for="(item,i) in items" v-bind:data-commentid="item.commentid" v-bind:data-commentreply="item.commentreply" v-bind:data-replycomment="item.replycomment" v-bind:data-replyuser="item.replyuser" v-bind:data-replyfirst="item.replyfirst">
+                <p class="userTitle">
+                    <span class="imgBox"><img v-bind:src="item.userimg" alt=""/></span>
+                    <span class="userName" v-bind:data-id="item.userid">{{item.userName}}：</span>
+                </p>
+                <div class="conmentsConts" v-bind:data-replyuser="item.replyuser">
+                    <p class="selefCon" v-bind:data-contentid="item.contentid">{{item.commenttext}}</p>
+
+                    <div class="recalltalkcon" v-for="(itemcon,d) in item.recall"  v-bind:data-contentid="item.contentid"  v-bind:data-commentid="itemcon.commentid" v-bind:data-commentreply="itemcon.commentreply" v-bind:data-replycomment="itemcon.replycomment" v-bind:data-replyuser="itemcon.replyuser" v-bind:data-replyfirst="itemcon.replyfirst">
+                        <span class="recalluser" :data-id="itemcon.userid"  v-bind:data-replyuser="item.replyuser">{{itemcon.userName}}  回复  {{itemcon.replyusername}}：</span>
+                        {{itemcon.commenttext}}
+                        <div class="callDoBox">
+                            <span class="reply" v-on:click="backcalltalk(itemcon,i,d)">回复</span>
+                            <span class="praiseBox"  v-on:click="callgoods(itemcon,i,d)"><i class="glyphicon glyphicon-thumbs-up"></i><b class="praiseNum">{{itemcon.commentgood}}</b></span>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="doBox">
+                    <span class="reply" v-on:click="backtalk(item,i)">回复</span>
+                    <span class="praiseBox" v-on:click="goods(item,i)"><i class="glyphicon glyphicon-thumbs-up"></i><b class="praiseNum">{{item.commentgood}}</b></span>
+                </div>
+            </div>
+
+        </div>
+
+
+
+        <div class="commontsSrBox" id="commontsSrBox" data-type="0" data-list="" data-list2="" style="background:#f0f3f4;border-top:1px solid #bbb;padding:3px;padding-bottom:20px;">
+            <select name="" id="myNameSelect">
+                <!-- <option value="12313"><span class="myname">我是马甲用户</span></option>
+                 <option value="123134"><span class="myname">我是马甲用户2</span></option>
+                 <option value="123135"><span class="myname">我是马甲用户3</span></option>-->
+            </select>
+            <textarea rows="1" cols="20" id="myComments" maxlength="200">
+
+            </textarea>
+            <span class="" style="position: relative;">
+                点赞数 <input type="number" id="mySetNum" value="1"/>
+                <button type="button" class="btn btn-sm btn-primary" id="myConmentsEnter" onclick="enterd()">发送</button>
+                <button type="button" class="btn btn-sm btn-primary" id="myConmentsSub" onclick="subd()">提交</button>
+            </span>
+
+        </div>
     </div>
 
 
@@ -216,9 +273,43 @@
     var isreload=1;
     $(function(){
         getcheckdata();
+        getpush();
         let dataval="",searchid=0;
         getlabellist(dataval,searchid);//标签
 
+    });
+
+    /*品论区*/
+    var usertalk = new Vue({
+        el: '#commentSectionBox',
+        data: {
+            items: []
+        },
+        // 在 `methods` 对象中定义方法
+        methods: {
+            goods: function (event,i) {
+                this.items[i].commentgood++;
+            },
+            callgoods:function (event,i,d) {
+                this.items[i].recall[d].commentgood++;
+            },
+            backtalk:function(event,i){
+                var callid=this.items[i].userid;
+                var callname=this.items[i].userName;
+                $("#commontsSrBox").attr("data-type",1);
+                $("#commontsSrBox").attr("data-list",i);
+                $("#commontsSrBox").attr("data-list2","");
+                $("#myComments").attr("placeholder","回复"+callname+"：")
+            },
+            backcalltalk:function(event,i,d){
+                var callid=this.items[i].recall[d].userid;
+                var callname=this.items[i].recall[d].userName;
+                $("#commontsSrBox").attr("data-type",2);
+                $("#commontsSrBox").attr("data-list",i);
+                $("#commontsSrBox").attr("data-list2",d);
+                $("#myComments").attr("placeholder","回复"+callname+"：")
+            }
+        }
     });
 
     /*获取审核数据*/
@@ -248,7 +339,13 @@
                     $("#finalAuditor").html(userdatas.data.username);
                     $("#checkpublisher").html(diskJson.data.contentuid);
                     $("#detailCon").attr("data-id",diskJson.data.contentid);
-                    $("#checkTagSearch1").attr("data-val",diskJson.data.contenttag).val(diskJson.data.tagshow);
+                    if(diskJson.data.contenttag ==""){
+                        $("#checkTagSearch1").attr("data-val","").val("").attr("readonly",false);
+                    }else{
+                        $("#checkTagSearch1").attr("data-val",diskJson.data.contenttag).val(diskJson.data.tagshow).attr("readonly",true);
+                        $("#checkTagul1").css("display","none");
+                    }
+
                     var contenttype="", murl="ugc-moveicheck.html";
                     switch(diskJson.data.contenttype){
                         case "1":contenttype="横视频";murl="ugc-moveicheck.html";break;
@@ -286,6 +383,38 @@
         })
     }
 
+    /*马甲用户列表获取*/
+    function getpush(){
+        var createuser=userdatas.data.userid;
+        var tjdatas={"pageno":1,"pagesize":999};
+        tjdatas=JSON.stringify(tjdatas);
+        $.ajax({
+            url : path2+'/CTKJBUSINESS/vest/vestlist.do',
+            cache:true,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: tjdatas,
+            //data: {taglevel:3,pageno:1,pagesize:999},
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+                //console.log("马甲用户列表失败：");
+                //console.log(data);
+            },
+            success:function(diskJson){
+//               console.log("马甲用户列表获取：");
+//               console.log(diskJson);
+                $("#checkpublisher").empty();
+                $("#myNameSelect").empty();
+                $.each(diskJson.data.rows,function(i,n){
+                    $("#myNameSelect").append(' <option  data-head="'+n.userheadphoto+'" value="'+ n.userid+'">'+ n.username+'</option>');
+                })
+
+
+            }
+        });
+    }
 
     /*标签列表获取*/
     function getlabellist(dataval,searchid){
@@ -329,12 +458,12 @@
     }
 /*标签搜索框焦点事件*/
     $("#detailCon .searchMenu .searchTag").focus(function(){
-        $(this).siblings(".searchSecondMenu").addClass("show");
+        $(this).siblings(".searchSecondMenu").addClass("active");
     });
     $("#detailCon .searchMenu .searchTag").blur(function(){
         var searchid=$(this).attr("id");
         setTimeout(function(){
-            $("#"+searchid).siblings(".searchSecondMenu").removeClass("show");
+            $("#"+searchid).siblings(".searchSecondMenu").removeClass("active");
         },500);
     });
     /*标签选择*/
@@ -359,6 +488,49 @@
         }
     });
 
+    /*发送*/
+    var talknum=0;
+    function enterd(){
+        var text= $("#myComments").val();
+        text= $.trim(text);
+        if(text == ""){
+            layer.msg("发送内容不能为空！");
+        }else{
+            var userid=$("#myNameSelect").val();
+            var userName=$("#myNameSelect option:checked").text();
+            var userHead=$("#myNameSelect option:checked").attr("data-head");
+            var lvty= $("#commontsSrBox").attr("data-type");
+            var index= $("#commontsSrBox").attr("data-list");
+            var index2= $("#commontsSrBox").attr("data-list2");
+            var goods=Number($("#mySetNum").val());
+            var commentid=genID(22);//评论ID
+            var contentid=genID(22);//内容ID
+            var createtime=getmytime();
+
+            if(lvty ==0){
+                usertalk.items.push( { "commentid":commentid,"userid":userid,"replyuser":"","replyusername":"","commentreply":1,"userimg":userHead,"userName":userName,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":"","replyfirst":commentid,"createtime":createtime,recall:[]});
+            }else if(lvty ==1){
+                var replyuser=usertalk.items[index].userid;
+                var replyusername=usertalk.items[index].userName;
+                var replycomment =usertalk.items[index].commentid;
+                usertalk.items[index].recall.push({ "commentid":commentid,"userid":userid,"replyuser":replyuser,"replyusername":replyusername,"commentreply":0,"userimg":userHead,"userName":userName,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":replycomment,"replyfirst":replycomment,"createtime":createtime});
+            }else if(lvty ==2){
+                var replyuser=usertalk.items[index].recall[index2].userid;
+                var replyusername=usertalk.items[index].recall[index2].userName;
+                var replycomment =usertalk.items[index].recall[index2].commentid;
+                var replyfirst =usertalk.items[index].commentid;
+                usertalk.items[index].recall.push({ "commentid":commentid,"userid":userid,"replyuser":replyuser,"replyusername":replyusername,"commentreply":0,"userimg":userHead,"userName":userName,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":replycomment,"replyfirst":replyfirst,"createtime":createtime});
+            }
+            $("#commontsSrBox").attr("data-type",0);
+            $("#myComments").val("");
+            $("#mySetNum").val(1);
+            talknum++;
+            $("#talkAboutBox .talkNum").html(talknum);
+            $("#myComments").attr("placeholder","");
+
+        }
+
+    }
 
     /*下一个*/
     function nextcheck(){
@@ -399,6 +571,7 @@
         let checkuid=userdatas.data.userid;
         let contentid= $("#detailCon").attr("data-id");
         let contentlevel= $("#checkConLevel").val();
+        var commenttext=usertalk.items;
         var tag1=$("#checkTagSearch1").attr("data-val");
         var tag2=$("#checkTagSearch2").attr("data-val");
         var tag3=$("#checkTagSearch3").attr("data-val");
@@ -407,6 +580,10 @@
         if(tag2 !="" && tag2 !=null){contenttag.push(tag2)}
         if(tag3 !="" && tag3 !=null){contenttag.push(tag3)}
         contenttag=unique10(contenttag);
+        if(contenttag== "" || contenttag.length==0){
+            layer.msg("请至少选择一项标签！！");
+            return false;
+        }
         var ispass="YES";
         if(contentlevel == "0"){
             layer.msg("请选择V以外的内容等级");
@@ -417,7 +594,14 @@
         }else{
             ispass="YES";
         }
-        var datapost={"checkuid":checkuid,"contentid":contentid,"contentlevel":contentlevel,"contenttag":contenttag,"ispass":ispass};
+        var datapost={
+            "checkuid":checkuid,
+            "contentid":contentid,
+            "contentlevel":contentlevel,
+            "contenttag":contenttag,
+            "commenttext":commenttext,
+            "ispass":ispass
+        };
         //console.log(datapost);
         datapost=JSON.stringify(datapost);
         $.ajax({

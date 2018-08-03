@@ -6,8 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
-    <title> 绩效管理</title>
+    <title> 搜索管理</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
 
@@ -23,11 +22,8 @@
         /* Additional style to fix warning dialog position */
 
         .btitle{padding-left:20px;height:45px;border-bottom:1px solid #bbb; line-height: 37px;}
-        #exportBtn{float: right;margin-right:20px;background:#6cade3;color:#fff;}
+        #exportBtn{background:#6cade3;color:#fff;}
         #exportBtn:hover{background:#4688bf;}
-        #daychoose{padding-left:6px;}
-        .choosetime{padding-left:6px;width:100px;}
-        .choosetimeBox{margin-left:4px;}
         .timebtnlist button.active{ background-color: #204d74;border-color: #122b40;}
         #tablelistbox td,
         #tablelistbox th{text-align: center;}
@@ -36,14 +32,8 @@
 </head>
 
 <body class="gray-bg">
-<h3 class="btitle">系统管理—绩效管理</h3>
+<h3 class="btitle">内容管理——搜索管理</h3>
     <div style="padding-left:28px;padding-top:10px;" class="timebtnlist">
-        <p class="nowday" data-val="">截止至今天早上2：00</p>
-        <button type="button" class="btn btn-sm btn-primary active" data-val="" id="yesterdayBtn" onclick="changetime(this)">当天</button>
-        <button type="button" class="btn btn-sm btn-primary" data-val="" id="sevendayBtn" onclick="changetime(this)">7天</button>
-        <button type="button" class="btn btn-sm btn-primary" data-val="" id="monthdayBtn" onclick="changetime(this)">30天</button>
-        <span class="choosetimeBox">开始时间：<input type="text" id="daychooseBegain" class="choosetime" value="" onchange="changebegintime(this)"/></span>
-        <span class="choosetimeBox">结束时间：<input type="text" id="daychooseEnd" class="choosetime" value=""  onchange="changeendtime(this)"/></span>
         <button type="button" class="btn " id="exportBtn" onclick="saveexcel()">导出excel</button>
     </div>
 
@@ -56,24 +46,19 @@
                     <table  class="table table-striped" id="tablelistbox">
                         <thead>
                         <tr>
-                            <th>内容运营</th>
-                            <th>审核信息数</th>
-                            <th>上传信息数</th>
-                            <th>发表评论数</th>
-                            <th>活跃马甲数</th>
-                            <th>举报处理数</th>
+                            <th>序号</th>
+                            <th>搜索关键字</th>
+                            <th>搜索次数</th>
+                            <th>最新搜索时间</th>
                         </tr>
                         </thead>
                         <tbody id="tablelistTbody">
                         <tr v-for="(item,index) in items">
-                            <td class="center">{{item.userid}}</td>
-                            <td class="center">{{item.allcheck }}</td>
-                            <td class="center">{{item.allpush}}</td>
-                            <td class="center">{{item.allcomment}}</td>
-                            <td class="center">{{item.activeuser}}</td>
-                            <td class="center">{{item.allreport}}</td>
+                            <td class="center">{{index+1}}</td>
+                            <td class="center">{{item.keyword }}</td>
+                            <td class="center">{{item.searchcount}}</td>
+                            <td class="center">{{item.lastsearchtime}}</td>
                         </tr>
-
                         </tbody>
                     </table>
                     <div id="pagerlist">
@@ -106,31 +91,8 @@
 
     <!-- Page-Level Scripts -->
     <script>
-        var starttime="",endtime="";
 
         $(function(){
-            var date = new Date();
-            var today=gettime(0);
-            var yesterday=gettime(-1);
-            var sevenday=gettime(-7);
-            var monthday=gettime(-31);
-
-            $(".nowday").attr("data-val",today);
-            $("#yesterdayBtn").attr("data-val",today);
-            $("#sevendayBtn").attr("data-val",sevenday);
-            $("#monthdayBtn").attr("data-val",monthday);
-            starttime=$(".timebtnlist button.active").attr("data-val");
-            endtime=today;
-            $('#daychooseBegain').datetimepicker({
-                value:date,
-                format:'Y-m-d',
-                timepicker:false//关闭时间选项
-            });
-            $('#daychooseEnd').datetimepicker({
-                value:date,
-                format:'Y-m-d',
-                timepicker:false//关闭时间选项
-            });
             getcheck(1);
 
         });
@@ -150,11 +112,11 @@
 
         function getcheck(pageno){
             layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000});
-            var postdata={"pageno":pageno,"starttime":starttime,"endtime":endtime};
+            var postdata={"pageno":pageno,"yes":"yes","pagesize":10};
 //            console.log(postdata);
             postdata=JSON.stringify(postdata);
             $.ajax({
-                url : path+'/CTKJBUSINESS/sysuser/getcheckuserper.do',
+                url : path+'/CTKJBUSINESS/search/querysearchlist.do',
                 cache:false,//false就不会从浏览器缓存中加载请求信息了
                 type:"POST",
                 contentType: "application/json",
@@ -168,45 +130,26 @@
                 },
                 success:function(diskJson){
                     layer.closeAll();
-//                    console.log("绩效管理：");
-//                    console.log(diskJson);
+                    console.log("搜索关键词：");
+                    console.log(diskJson);
                     /*翻页信息*/
                     pageinfo(diskJson.data,pageno);//翻页控件信息
-                    tabledata.items=diskJson.data.reportList;
+                    tabledata.items=diskJson.data.SearchList;
                     tabledata.pageno=pageno;
                 }
             });
         }
 
 
-        /*按钮选择时间*/
-        function changetime(e){
-            starttime=$(e).attr("data-val");
-            endtime=$(".nowday").attr("data-val");
-            $(e).addClass("active").siblings("button.active").removeClass("active");
-            getcheck(1);
-        }
-        /*自定义input框选择时间*/
-        function changebegintime(e){
-            starttime=$(e).val();
-            starttime=starttime.replace(/-/g, "");//
-            $(".timebtnlist button.active").removeClass("active");
-            getcheck(1);
-        }
-        function changeendtime(e){
-            endtime=$(e).val();
-            endtime=endtime.replace(/-/g, "");//
-            $(".timebtnlist button.active").removeClass("active");
-            getcheck(1);
-        }
+
 
         /*导出excel*/
         function saveexcel(){
             layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000});
-            var postdata={"starttime":starttime,"endtime":endtime};
+            var postdata={"pageno":1,"pagesize":999};
             postdata=JSON.stringify(postdata);
             $.ajax({
-                url : path+'/CTKJBUSINESS/sysuser/getcheckperexcel.do',
+                url : path+'/CTKJBUSINESS/search/exportsearchlist.do',
                 cache:false,//false就不会从浏览器缓存中加载请求信息了
                 type:"POST",
                 contentType: "application/json",
@@ -220,12 +163,12 @@
                 },
                 success:function(diskJson){
                     layer.closeAll();
-//                    console.log("导出绩效管理：");
-//                    console.log(diskJson);
+                    console.log("导出搜索关键词：");
+                    console.log(diskJson);
                     if(diskJson.code==1000){
                         var path3="/CTKJBUSINESS/file/downFileByName.do?filelocation=";
                         var aLink = document.createElement('a');
-                        aLink.download = "绩效管理";
+                        aLink.download = "搜索关键词";
                         aLink.href = path+path3+diskJson.data;
                         aLink.click();
                     }else{

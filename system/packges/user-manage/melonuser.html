@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-    <title> 马甲用户</title>
+    <title> 吃瓜用户</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
 
@@ -26,7 +26,6 @@
             top: 900px !important;
         }
         #createLabel{margin-top:10px;margin-left:30px;}
-        #createmelon{margin-top:10px;}
         .btitle{padding-left:20px;height:45px;border-bottom:1px solid #bbb; line-height: 37px;}
         #tablelistbox .btn{color:#5a656d;}
         #tablelistbox .btn:hover{color:#fff;background:#0088cc;}
@@ -37,8 +36,7 @@
 <body>
 
     <div id="contentPageBox">
-        <button type="button" class="btn btn-sm btn-primary" id="createLabel">新增马甲</button>
-        <button type="button" class="btn btn-sm btn-primary" id="createmelon">吃瓜</button>
+        <button type="button" class="btn btn-sm btn-primary" id="createLabel">新增吃瓜用户</button>
         <div class="wrapper wrapper-content  animated fadeInRight">
             <div class="row">
                 <div class="col-sm-12">
@@ -50,28 +48,16 @@
                                 <tr>
                                     <th>序号</th>
                                     <th>用户名</th>
-                                    <th>地区</th>
-                                    <th>年龄</th>
-                                    <th>创建专栏数</th>
-                                    <th>发布信息数</th>
-                                    <th>最新发布信息时间</th>
                                     <th>创建时间</th>
                                     <th>创建人</th>
-                                    <th>操作</th>
                                 </tr>
                                 </thead>
                                 <tbody id="tablelistTbody">
                                     <tr v-for="(item,index) in items">
                                         <td class="center">{{index+1}}</td>
                                         <td class="center">{{item.username}}</td>
-                                        <td class="center">{{item.taglevel }}</td>
-                                        <td class="center">{{item.userbirthday}}</td>
-                                        <td class="center">{{item.tagcount}}</td>
-                                        <td class="center">{{item.contentcount}}</td>
-                                        <td class="center">{{item.lastcontenttime}}</td>
-                                        <td class="center">{{item.createtime}}</td>
-                                        <td class="center">{{item.createuser}}</td>
-                                        <td class="center"><button type="button" class="btn">分配马甲</button></td>
+                                        <td class="center" :data-userid="item.userid">{{item.createtime}}</td>
+                                        <td class="center">{{item.creator}}</td>
                                     </tr>
 
                                 </tbody>
@@ -123,7 +109,7 @@
             var postdata={"pageno":pageno,"pagesize":10};
             postdata=JSON.stringify(postdata);
             $.ajax({
-                url : path2+'/CTKJBUSINESS/vest/vestlist.do',
+                url : path2+'/CTKJBUSINESS/vest/gualist.do',
                 cache:false,//false就不会从浏览器缓存中加载请求信息了
                 type:"POST",
                 contentType: "application/json",
@@ -132,12 +118,12 @@
                 data: postdata,
                 error: function(data){
                     layer.msg("服务器未响应,请稍后再试!");
-                    //console.log("获取失败：");
-                    //console.log(data);
+                    ////console.log("获取失败：");
+                    ////console.log(data);
                 },
                 success:function(diskJson){
                     layer.closeAll();
-                    //console.log("马甲用户：");
+                    //console.log("吃瓜用户：");
                     //console.log(diskJson);
 
                     /*翻页信息*/
@@ -151,14 +137,9 @@
 
         //新增马甲
         $("#createLabel").click(function(){
-            $("#contentPageBox").load("newuser.html");
+            $("#contentPageBox").load("newmelon.html");
 
-        });
-        //吃瓜
-        $("#createmelon").click(function(){
-            $("#contentPageBox").load("eatmelon.html");
-
-        });
+        })
     </script>
 
     

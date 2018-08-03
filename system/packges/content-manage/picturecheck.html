@@ -21,7 +21,7 @@
             width: 30%;
         }
         .gohome{display: none;}
-        .blueimp-gallery>.slides>.slide>.slide-content{max-height: none;max-width: 56%;margin: 10% auto;}
+        .blueimp-gallery>.slides>.slide>.slide-content{max-height: none;max-width: 60%;margin: 10% auto; min-width: 50%;}
         .blueimp-gallery>.slides>.slide{overflow-y: auto;}
         #imgEditBox{position: fixed;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,.7);z-index:999;display: none;}
         #imgEditBox.show{display: block;}
@@ -29,8 +29,8 @@
         #imgEditBox .close:hover{opacity:.9;}
         #blueimp-gallery .rotate{position: absolute;top:19px;right:43px;color:#d1d1d1;cursor: pointer;font-size:18px;}
         #blueimp-gallery .rotate:hover{color:#fff;}
-        #blueimp-gallery .rightRotate{right:75px;}
-        #blueimp-gallery .leftRotate{right:96px;}
+        #blueimp-gallery .rightRotate{right:100px;}
+        #blueimp-gallery .leftRotate{right:125px;}
         #blueimp-gallery .rotateBtn{background:#d1d1d1;font-size:8px;width:29px;height:20px;line-height: 22px;text-align: center;color:#a7a6a6;
             position: absolute;top:20px;right:43px;cursor:context-menu;
             -webkit-border-radius: 50%;
@@ -38,7 +38,10 @@
             border-radius: 50%;}
         #blueimp-gallery .rotateBtn.can{color:#333;cursor: pointer;}
         #blueimp-gallery .rotateBtn.can:hover{color:#fff;}
+        #blueimp-gallery .deletebtn{position: absolute;top:19px;right:75px;color:#d1d1d1;cursor: pointer;font-size:18px;}
+        #blueimp-gallery .deletebtn:hover{color:#ff698f;}
         #blueimp-gallery .slide canvas{position: absolute;left: 0;  right: 0;  top: 0;  bottom: 0;margin:auto;}
+        /*#blueimp-gallery .slides .slide{width:100%;height:100%;}*/
     </style>
 
 </head>
@@ -65,6 +68,7 @@
                                 <a class="next">›</a>
                                 <a class="iconfont rotate leftRotate" data-id="-1">&#xe62a;</a>
                                 <a class="iconfont rotate rightRotate" data-id="1">&#xe622;</a>
+                                <a class="iconfont deletebtn" onclick="deleteimg()">&#xe65b;</a>
                                 <a class=" rotateBtn">确定</a>
                                 <a class="close">×</a>
                                 <a class="play-pause"></a>
@@ -87,6 +91,7 @@
     <script src="../../js/content.js?v=1.0.0"></script>
 
     <!-- blueimp gallery -->
+<!--    <script src="../../js/pictureshow.js"></script>-->
     <script src="../../js/plugins/blueimp/jquery.blueimp-gallery.min.js"></script>
 
 
@@ -178,7 +183,7 @@
 
 
         var movielist=[];//文件流
-        var changeindex=[];//改变的图片的下标
+        var changeindex=0;//改变的图片的下标
         /*2.保存按钮保存canvas图片*/
         $("#blueimp-gallery ").delegate(".rotateBtn.can","click",function(){
             layer.confirm('确定保存旋转后的图片吗？', {
@@ -194,18 +199,13 @@
         /*保存canvas*/
         function savecanvas(){
             iffilechange=3;//图片旋转
-            cosjurl=[];changeindex=[];
+            cosjurl=[];changeindex=0;
             $("#blueimp-gallery .rotateBtn.can").removeClass("can");
-            var canvaslist=$("#blueimp-gallery .slides .slide canvas");
+            var canvasindex=Number($(".blueimp-gallery>.indicator li.active").attr("data-index"));
+            var cid=$("#blueimp-gallery .slides .slide:nth-child("+(canvasindex+1)+") canvas").attr("id");
             movielist=[];
-            $.each(canvaslist,function(i,n){
-                var cid=$(n).attr("id");
-                var slideindex=$(n).parent(".slide").index();
-                changeindex.push(slideindex);
-                getcanvae(cid);
-            });
-
-            putlistObject(movielist,getcc());
+            changeindex=canvasindex;
+            getcanvae(cid);
         }
 
         /*3.获取canvas图片流*/
@@ -222,17 +222,16 @@
             var date= Date.now().toString(36);
             file1.name=String(x)+String(date)+".gif";
             movielist.push(file1);
+            putlistObject(movielist,getcc);
 
         }
 
 function getcc(){
     setTimeout(function(){
-        $.each(changeindex,function(i,n){
-            fielchangelist[n].ischange=true;
-            fielchangelist[n].imgurl=cosjurl[i];
-            $("#imgconbox a:nth-child("+(n+1)+")").attr("href",cosjurl[i]);
-            $("#imgconbox a:nth-child("+(n+1)+") img").attr("src",cosjurl[i]);
-        });
+            fielchangelist[changeindex].ischange=true;
+            fielchangelist[changeindex].imgurl=cosjurl[0];
+            $("#imgconbox a:nth-child("+(changeindex+1)+")").attr("href",cosjurl[0]);
+            $("#imgconbox a:nth-child("+(changeindex+1)+") img").attr("src",cosjurl[0]);
     },1000)
 }
 
@@ -253,7 +252,6 @@ function getcc(){
         /*翻页时的判断*/
         function iscanchange(){
             if($("#blueimp-gallery .rotateBtn").hasClass("can")){
-                rotate=0;
                 var imgact=Number($(".blueimp-gallery>.indicator li.active").attr("data-index"));
                 $("#blueimp-gallery .rotateBtn.can").removeClass("can");
                 $("#blueimp-gallery .indicator li:nth-child("+(imgact)+")").click();
@@ -272,16 +270,20 @@ function getcc(){
            // $("#blueimp-gallery .rotateBtn.can").removeClass("can");
         }
             $("#blueimp-gallery .prev").click(function(){
+                rotate=0;
                 iscanchange();
 
             });
             $("#blueimp-gallery .next").click(function(){
+                rotate=0;
                 iscanchange()
             });
             $(".blueimp-gallery .indicator").delegate("li","click",function(){
+                rotate=0;
                 iscanchange()
-            })
+            });
         $("#blueimp-gallery .play-pause").click(function(){
+            rotate=0;
             iscanchange()
         });
         $("#blueimp-gallery .close").click(function(){
@@ -289,6 +291,70 @@ function getcc(){
             $("#blueimp-gallery .rotateBtn.can").removeClass("can");
         });
 
+        /*删除图片-1*/
+        function deleteimg(){
+            layer.confirm('确定要删除该图片吗？', {
+                btn: ['确定','取消'] //按钮
+            }, function(index){
+                deleteimg2();
+                layer.close(index);
+            }, function(index){
+                layer.close(index);
+            });
+        }
+
+        /*删除图片-2*/
+
+
+        function deleteimg2(){
+            var imgact=Number($(".blueimp-gallery>.indicator li.active").index());
+            var imglist=$("#blueimp-gallery .slides .slide");
+         /*   var indicatorlist= $(".blueimp-gallery>.indicator li");
+            var indictlength=indicatorlist.length;
+            console.log(indicatorlist);
+            console.log(indictlength);
+            var slidew=$("#blueimp-gallery .slides .slide").width();
+            var slidesw=$("#blueimp-gallery .slides").width();
+            $("#blueimp-gallery .slides").css({"width":slidesw-slidew+"px"});
+            //blueimp.Gallery.splice(imgact,1);
+            if((imgact+1)>=indictlength){
+                $(".blueimp-gallery>.indicator li.active").removeClass("active");
+                $("#imgconbox a:nth-child("+(imgact+1)+")").remove();
+                $("#blueimp-gallery .slides .slide:nth-child("+(imgact+1)+")").remove();
+                $(".blueimp-gallery>.indicator li:nth-child("+(imgact+1)+"").remove();
+                $("#blueimp-gallery .slides .slide:first-child").css({"transform":"translate(0px, 0px) translateZ(0px)","transition-duration":"400ms"});
+                $(".blueimp-gallery>.indicator li:first-child").addClass("active");
+            }else{
+                $.each(imglist,function(i,n){
+                    var imgindex=Number($(n).attr("data-index"));
+                    if(imgindex>imgact){
+                        var slidew2=parseInt($("#blueimp-gallery .slides .slide:nth-child("+(imgindex+1)+")").css("left"));
+                        $("#blueimp-gallery .slides .slide:nth-child("+(imgindex+1)+")").attr("data-index",imgindex-1).css({"left":slidew+slidew2+"px"});
+                    }
+                });
+                $.each(indicatorlist,function(i,n){
+                    var indicator=Number($(n).attr("data-index"));
+                    if(indicator>imgact){
+                        $(".blueimp-gallery>.indicator li:nth-child("+(indicator+1)+"").attr("data-index",indicator-1);
+                    }
+                });
+                $(".blueimp-gallery>.indicator li.active").removeClass("active");
+                $("#imgconbox a:nth-child("+(imgact+1)+")").remove();
+                $("#blueimp-gallery .slides .slide:nth-child("+(imgact+1)+")").remove();
+                $(".blueimp-gallery>.indicator li:nth-child("+(imgact+1)+"").remove();
+                $("#blueimp-gallery .slides .slide:nth-child("+(imgact+1)+")").css({"transform":"translate(0px, 0px) translateZ(0px)","transition-duration":"400ms"});
+                $(".blueimp-gallery>.indicator li:nth-child("+(imgact+1)+"").addClass("active");
+            }*/
+            $("#imgconbox a:nth-child("+(imgact+1)+")").remove();
+            $("#blueimp-gallery .slides .slide:nth-child("+(imgact+1)+")").remove();
+            $(".blueimp-gallery>.indicator li:nth-child("+(imgact+1)+"").remove();
+            fielchangelist.splice(imgact,1);
+            fileslist.splice(imgact,1);
+            layer.msg("删除成功！！");
+            $(".blueimp-gallery>.close").click();
+
+
+        }
     </script>
 
     

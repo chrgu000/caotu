@@ -149,7 +149,7 @@ function putlistObject(urllist,callback) {
     $.each(urllist,function(i,n){
         muchlist(n)
     });
-    callback;
+    callback();
 
 
 }
@@ -188,8 +188,8 @@ function muchlist(file){
         Sign: true,
         Origin:"http://101.69.230.98"
     }, function (err, data) {
-        //console.log("cos获取：：");
-        //console.log(err || data);
+        console.log("cos获取：：");
+        console.log(err || data);
         if(data){
             var onetdk=data.Url.substring(0, data.Url.indexOf('?'));
             cosjurl.push(onetdk);

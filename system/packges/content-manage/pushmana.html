@@ -1,24 +1,4 @@
-<!DOCTYPE html>
-<html>
 
-<head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
-    <title> 马甲用户</title>
-    <meta name="keywords" content="">
-    <meta name="description" content="">
-
-    <link href="../../css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
-    <link href="../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
-    <link href="../../plugin/layer/skin/layer.css" rel="stylesheet">
-    <link href="../../css/common.css" rel="stylesheet">
-    <link href="../../css/animate.css" rel="stylesheet">
-    <link href="../../css/style.css?v=4.1.0" rel="stylesheet">
-    <script src="../../plugin/layer/layer.js"></script>
-    <script src="../../js/vue.js"></script>
     <style>
         /* Additional style to fix warning dialog position */
 
@@ -26,19 +6,14 @@
             top: 900px !important;
         }
         #createLabel{margin-top:10px;margin-left:30px;}
-        #createmelon{margin-top:10px;}
         .btitle{padding-left:20px;height:45px;border-bottom:1px solid #bbb; line-height: 37px;}
         #tablelistbox .btn{color:#5a656d;}
         #tablelistbox .btn:hover{color:#fff;background:#0088cc;}
     </style>
 
-</head>
-
-<body>
 
     <div id="contentPageBox">
-        <button type="button" class="btn btn-sm btn-primary" id="createLabel">新增马甲</button>
-        <button type="button" class="btn btn-sm btn-primary" id="createmelon">吃瓜</button>
+        <button type="button" class="btn btn-sm btn-primary" id="createLabel">创建消息</button>
         <div class="wrapper wrapper-content  animated fadeInRight">
             <div class="row">
                 <div class="col-sm-12">
@@ -49,14 +24,11 @@
                                 <thead>
                                 <tr>
                                     <th>序号</th>
-                                    <th>用户名</th>
-                                    <th>地区</th>
-                                    <th>年龄</th>
-                                    <th>创建专栏数</th>
-                                    <th>发布信息数</th>
-                                    <th>最新发布信息时间</th>
-                                    <th>创建时间</th>
-                                    <th>创建人</th>
+                                    <th>类型</th>
+                                    <th>标题</th>
+                                    <th>推送时间</th>
+                                    <th>推送成功次数</th>
+                                    <th>推送失败次数</th>
                                     <th>操作</th>
                                 </tr>
                                 </thead>
@@ -64,14 +36,11 @@
                                     <tr v-for="(item,index) in items">
                                         <td class="center">{{index+1}}</td>
                                         <td class="center">{{item.username}}</td>
-                                        <td class="center">{{item.taglevel }}</td>
-                                        <td class="center">{{item.userbirthday}}</td>
-                                        <td class="center">{{item.tagcount}}</td>
-                                        <td class="center">{{item.contentcount}}</td>
-                                        <td class="center">{{item.lastcontenttime}}</td>
-                                        <td class="center">{{item.createtime}}</td>
+                                        <td class="center" :data-userid="item.userid">{{item.createtime}}</td>
                                         <td class="center">{{item.createuser}}</td>
-                                        <td class="center"><button type="button" class="btn">分配马甲</button></td>
+                                        <td class="center">{{item.createuser}}</td>
+                                        <td class="center">{{item.createuser}}</td>
+                                        <td class="center">{{item.createuser}}</td>
                                     </tr>
 
                                 </tbody>
@@ -98,9 +67,7 @@
     </div>
 
 
-    <!-- 全局js -->
-    <script src="../../js/jquery.min.js?v=2.1.4"></script>
-    <script type="text/javascript" src="../../js/index.js"></script>
+
     <!-- Page-Level Scripts -->
     <script>
         var majiadata = new Vue({
@@ -123,7 +90,7 @@
             var postdata={"pageno":pageno,"pagesize":10};
             postdata=JSON.stringify(postdata);
             $.ajax({
-                url : path2+'/CTKJBUSINESS/vest/vestlist.do',
+                url : path2+'/CTKJBUSINESS/vest/gualist.do',
                 cache:false,//false就不会从浏览器缓存中加载请求信息了
                 type:"POST",
                 contentType: "application/json",
@@ -137,8 +104,8 @@
                 },
                 success:function(diskJson){
                     layer.closeAll();
-                    //console.log("马甲用户：");
-                    //console.log(diskJson);
+                    console.log("推送信息：");
+                    console.log(diskJson);
 
                     /*翻页信息*/
                     pageinfo2(diskJson.data,pageno);//翻页控件信息
@@ -149,21 +116,12 @@
 
 
 
-        //新增马甲
+        //新增推送消息
         $("#createLabel").click(function(){
-            $("#contentPageBox").load("newuser.html");
+            $("#contentPageBox").load("pushnew.html");
 
-        });
-        //吃瓜
-        $("#createmelon").click(function(){
-            $("#contentPageBox").load("eatmelon.html");
-
-        });
+        })
     </script>
 
     
-    
 
-</body>
-
-</html>

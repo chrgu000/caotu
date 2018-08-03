@@ -19,7 +19,7 @@
             width:100% !important;
             height: 100% !important;
         }
-#quklod{position: absolute;bottom:34px;left:1px;display: none;}
+        #quklod{position: absolute;bottom:34px;left:1px;display: none;}
         #videobox:hover #quklod{display: block;}
         #imgyulookBox{position: absolute;right:0;bottom:33px;border:1px solid #fff;overflow: hidden;width:80px;height:80px;z-index:95;line-height: 80px;text-align: center;background:rgba(255,255,255,.4);cursor: pointer;}
         #imgyulookBox img{width:auto;height:auto;max-width: 80px;max-height: 80px;}
@@ -52,6 +52,25 @@
         function geturl(checkdatas){
             var nedurllist=checkdatas.data.contenturllist;
             nedurllist=JSON.parse(nedurllist);
+
+            video.addEventListener('canplaythrough',function(){
+                var videoval= 1,videoval2=Number($("#movieStyle").attr("data-val"));
+                console.log(video.videoWidth);
+                console.log(video.videoHeight);
+                if(video.videoWidth>=video.videoHeight){
+                    videoval= 1;
+                }else{
+                    videoval= 2;
+                }
+
+                if(videoval2!=videoval){
+                    $("#movieStyle").css({"display":"none"});
+                    $("#movieSelect").css({"display":"table-cell"});
+                }else{
+                    $("#movieStyle").css({"display":"inline-block"});
+                    $("#movieSelect").css({"display":"none"});
+                }
+            });
             $("#video").attr("src",nedurllist[1]);
         }
 

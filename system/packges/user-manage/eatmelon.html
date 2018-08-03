@@ -1,0 +1,153 @@
+
+<style>
+    /* Additional style to fix warning dialog position */
+    .labelBox{width:80%;min-width:370px;margin:0 auto;padding:40px 20px;border:1px solid #bbb;margin-top:15px;min-height: 450px;}
+    .lineBox{width:100%;margin:20px 0;position: relative;}
+    .lineBox .lineTitle{display:inline-block;width:120px;margin-right:6px;text-align: right;}
+    .lineBox input,
+    .lineBox select{width:200px;height:30px;padding-left:7px;}
+    #backbtn{float:right;margin-top:-9px;}
+     .searchMenu .searchSecondMenu{position: absolute;width:100%;left:0;top:28px;background:#eee;color:#bbb;list-style: none;padding:0;z-index: 98;border:1px solid #bbb;border-top:none;display: none;max-height: 420px;overflow-y: auto;}
+     .searchMenu .searchSecondMenu.active{display: block;}
+     .searchSecondMenu li{width:100%;text-align: left;padding-left:3px;cursor: pointer;line-height: 23px;}
+     .searchSecondMenu li:hover{background:#fff;color:#333;border-top:1px solid #bbb;}
+    .searchMenu .searchTag{height:30px;}
+</style>
+
+<div style="width:80%;margin:0 auto;margin-top:25px;">
+    <h4>吃瓜操作 <button type="button" class="btn btn-sm btn-primary" id="backbtn">返回》</button></h4>
+</div>
+<div class="labelBox">
+    <div class="lineBox searchMenu">
+        <span class="lineTitle">马甲名或用户名：</span>
+        <input type="search" class="repead searchTag" id="labelId" value="" data-val="" placeholder="请输入马甲名或用户名"/>
+        <button class="btn" type="button" id="searchbtn" onclick="searchmajia()">搜索</button>
+
+    </div>
+    <div class="lineBox">
+        <span class="lineTitle">吃瓜用户：</span>
+        <input type="number" min="0" class="repead" id="labelName" value="" placeholder=""/>
+        <b class="must">*</b>
+    </div>
+    <div class="lineBox">
+        <span class="lineTitle">创建人：</span>
+        <input type="text" id="creatuser" value="" readonly/>
+    </div>
+    <div class="lineBox" style="padding-left:130px;margin-top:35px;">
+        <button type="button" class="btn btn-sm btn-primary" id="submit" onclick="creatlabel()">提 交</button>
+        <button type="button" class="btn btn-sm btn-primary" id="replay" onclick="replay()">重 置</button>
+    </div>
+</div>
+
+
+<script>
+    $(function(){
+        $("#creatuser").val(userdatas.data.username)
+    });
+    /*返回*/
+    $("#backbtn").click(function(){
+        $("#contentPageBox").load("majiauser.html");
+    });
+    //账号限制
+    $("#labelId").blur(function(){
+        var dva=$(this).val();
+        if(dva==""){
+            layer.msg("账号不能为空！！")
+        }
+    });
+    $("#labelName").blur(function(){
+        var dva=$(this).val();
+        if(dva==""){
+            layer.msg("用户名不能为空！！")
+        }
+    });
+
+
+
+    /*搜索用户*/
+    function searchmajia(){
+        var dataval=$("#labelId").val();
+        var datapost={"pageno":1,"pagesize":999,"username":dataval};
+        datapost=JSON.stringify(datapost);
+        $.ajax({
+            url : path+'/CTKJBUSINESS/vest/searchuser.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+
+            },
+            success:function(diskJson){
+                console.log("用户列表获取：");
+                console.log(diskJson);
+                if(diskJson.code=="1000" && diskJson.data){
+                    layer.msg("匹配成功！！");
+                    $("#labelId").attr("data-val",diskJson.data.userid);
+                }else{
+                    $("#labelId").attr("data-val","");
+                    layer.msg("该用户不存在，请重新搜索！！")
+                }
+
+
+            }
+        });
+    }
+    /*吃瓜*/
+    function creatlabel(){
+        var userid=$("#labelId").attr("data-val");
+        var fancount=$("#labelName").val();
+        if(userid==""){
+            layer.msg("马甲用户不能为空，请先搜索！！");
+            return false;
+        }
+        if(fancount==""){
+            layer.msg("吃瓜用户数量不能为空！！");
+            return false;
+        }
+        var createuser=userdatas.data.userid;
+        var datapost={"userid":userid,"fancount":fancount};
+        datapost=JSON.stringify(datapost);
+        $.ajax({
+            url : path+'/CTKJBUSINESS/vest/setfans.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: datapost,
+            error: function(data){
+                layer.msg("吃瓜失败,请稍后再试!");
+//                   console.log("新增内容运营失败：");
+//                   console.log(data);
+            },
+            success:function(diskJson){
+                layer.closeAll();
+                    console.log("吃瓜：");
+                    console.log(diskJson);
+                if(diskJson.code =="1000"){
+                    layer.msg("吃瓜成功！！");
+                    replay();
+                }else{
+                    layer.msg(diskJson.message);
+                }
+
+
+            }
+        });
+    }
+
+
+
+    /*重置*/
+    function replay(){
+        $("input.repead").val("");
+        $("#labelId").attr("data-val","");
+    }
+</script>
+
+    
+    
