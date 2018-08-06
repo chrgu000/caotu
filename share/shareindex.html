@@ -123,8 +123,8 @@
 
     /*获取url判断类型*/
     function iscontendtype(){
-       // var loctionsrc="?contendid=bf0e8336834711e8aa38309c23a27303";//假设得到的location.search; //获取url中"?"符后的字串
-        var loctionsrc= window.location.search;
+        var loctionsrc="?contendid=cd2eb59577b14fcaade54bf28e5a0d95";//假设得到的location.search; //获取url中"?"符后的字串
+        //var loctionsrc= window.location.search;
         var urldatas=GetRequest(loctionsrc);
 //        console.log(urldatas);
         getcommonddatas(urldatas.contendid);
@@ -150,13 +150,13 @@
                 console.log(data);
             },
             success:function(diskJson){
-                console.log("gettijiao 2:");
+                console.log("gettijiao2:");
                 console.log(diskJson);
                 if(diskJson.code =="1000"){
                     if(diskJson.data.contenttitle && diskJson.data.contenttitle!=""){
                         condataqf(diskJson.data);
                     }else{
-                        window.location.href="sharelack.html"
+                       // window.location.href="sharelack.html"
                     }
 
                 }else{
