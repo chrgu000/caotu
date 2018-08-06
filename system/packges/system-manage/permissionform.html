@@ -1,6 +1,11 @@
 <style>
     #tablelistbox .repecePsd{margin-right:5px;}
     #tablelistbox .state{color:#6674ba;}
+    #allotMajaBox{width:100%;margin:0 auto;height:100%;border:1px solid #ddd;background:#fff;padding:30px;display: none;}
+    #allotMajaBox .majiaListBox{width:100%;height:440px;overflow-y: auto;padding:6px;border:1px solid #ddd;}
+    #allotMajaBox .majiaListBox label{cursor: pointer;margin:15px;}
+    #allotMajaBox .majiaListBox input{vertical-align: sub;margin-right:3px;cursor: pointer;}
+    #sureAllortBtn{float:right;margin-right:3px;background:#52b5dc;color:#fff;margin-bottom:10px;}
 </style>
     <div style="padding-left:28px;padding-top:10px;" class="pagebtnlist">
         <button type="button" class="btn btn-sm btn-primary" id="newOperateBtn" data-val="permissionnew.html">新增内容运营</button>
@@ -22,6 +27,7 @@
                                 <th>马甲数</th>
                                 <th>创建人</th>
                                 <th>状态</th>
+                                <th>操作</th>
                             </tr>
                             </thead>
                             <tbody id="tablelistTbody">
@@ -33,6 +39,7 @@
                                 <td class="center">{{item.tusercount}}</td>
                                 <td class="center">{{item.createusername}}</td>
                                 <td class="center state"><button v-on:click="resetpsd(item.userid)" type="button" class="repecePsd btn btn-danger">重置密码</button>{{item.userstatus == "1" ? "使用中":"停用"}}</td>
+                                <td class="center"><button type="button" class="btn" v-on:click="allot(item,index)">分配马甲</button></td>
                             </tr>
 
                             </tbody>
@@ -54,6 +61,14 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+    <!--分配马甲-->
+    <div id="allotMajaBox">
+        <h4>账号：<span class="userid" style="color:#007fff;margin-right:25px;">{{userid}}</span>用户名：<span class="username" style="color:#007fff;">{{username}}</span><button type="button" class="btn" id="sureAllortBtn" @click="resetpsd()">确认</button></h4>
+        <div class="majiaListBox">
+            <label v-for="(item,index) in items" :for="'majia'+index"><input type="checkbox" :id="'majia'+index" :value="item.userid" v-model="checkmajia"/>{{item.username}}</label>
+
         </div>
     </div>
 
@@ -82,11 +97,59 @@
                         layer.close(index);
                     });
 
+                },
+                allot:function(events,index){
+                    layer.open({
+                        type: 1,
+                        title: '分配马甲',
+                        shadeClose: true,
+                        maxmin: true, //开启最大化最小化按钮
+                        shade: 0.6,
+                        area: ['70%', '65%'],
+                        content: $("#allotMajaBox"), //iframe的url
+                        success: function (layero, index) {
+//                            console.log(events);
+//                            console.log(index);
+                            allotmajia.userid=events.userid;
+                            allotmajia.username=events.username;
+                            allotmajia.checkmajia=[];//已经选择的马甲放在这个数组里
+                        }
+                    });
+
                 }
             }
         });
 
-        getcheck(1);
+        /*分配马甲初始*/
+        var allotmajia = new Vue({
+            el: '#allotMajaBox',
+            data: {
+                userid:"",
+                username:"",
+                items:[],
+                checkmajia:[]
+            },
+            // 在 `methods` 对象中定义方法
+            methods: {
+                resetpsd: function (event) {
+                    layer.confirm('确定分配该批马甲吗？', {
+                        btn: ['确定','取消'] //按钮
+                    }, function(index){
+                       console.log(allotmajia.checkmajia);
+                        layer.close(index);
+                    }, function(index){
+                        layer.close(index);
+                    });
+
+                }
+            }
+        });
+
+        $(function(){
+            getcheck(1);
+            majialist();
+        });
+
         function getcheck(pageno){
             var datapost={"pageno":pageno,"pagesize":10};
             datapost=JSON.stringify(datapost);
@@ -143,6 +206,42 @@
                     }else{
                         layer.msg("重置失败，请重试...！");
                     }
+
+                }
+            });
+        }
+
+
+        /*马甲列表*/
+        function majialist(){
+            var tjdatas={"pageno":1,"pagesize":999};
+            tjdatas=JSON.stringify(tjdatas);
+            $.ajax({
+                url : path2+'/CTKJBUSINESS/vest/vestlist.do',
+                cache:true,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: tjdatas,
+                //data: {taglevel:3,pageno:1,pagesize:999},
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    //console.log("马甲用户列表失败：");
+                    //console.log(data);
+                },
+                success:function(diskJson){
+//                    console.log("马甲用户列表获取：");
+//                    console.log(diskJson);
+                    if(diskJson.code =="1000"){
+                        allotmajia.items=diskJson.data.rows;
+
+                    }else{
+                        layer.msg("马甲用户列表获取失败！！")
+                    }
+
+
+
 
                 }
             });

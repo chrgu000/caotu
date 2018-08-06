@@ -137,12 +137,14 @@
                             //console.log(data);
                         },
                         success:function(diskJson){
-                            layer.msg("创建成功!");
-                            $("#replay").click();
 //                            console.log("创建吃瓜用户：");
 //                            console.log(diskJson);
-
-
+                            if(diskJson.code =="1000"){
+                                layer.msg("创建成功!");
+                                $("#replay").click();
+                            }else {
+                                layer.msg(diskJson.message);
+                            }
                         }
                     });
                 },2000)
