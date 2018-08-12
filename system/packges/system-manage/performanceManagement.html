@@ -116,7 +116,7 @@
             var monthday=gettime(-31);
 
             $(".nowday").attr("data-val",today);
-            $("#yesterdayBtn").attr("data-val",today);
+            $("#yesterdayBtn").attr("data-val",yesterday);
             $("#sevendayBtn").attr("data-val",sevenday);
             $("#monthdayBtn").attr("data-val",monthday);
             starttime=$(".timebtnlist button.active").attr("data-val");
@@ -224,16 +224,16 @@
 //                    console.log(diskJson);
                     if(diskJson.code==1000){
                         var path3="/CTKJBUSINESS/file/downFileByName.do?filelocation=";
-                        var aLink = document.createElement('a');
-                        aLink.download = "绩效管理";
-                        aLink.href = path+path3+diskJson.data;
-                        aLink.click();
+                        var url=path+path3+diskJson.data;
+                        downloadFile(url)
                     }else{
                         layer.msg("数据有误请重试！！")
                     }
                 }
             });
         }
+
+
 
     </script>
 

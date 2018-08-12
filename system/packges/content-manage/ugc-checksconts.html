@@ -136,11 +136,11 @@
                             <div class="left title">
                                 标签分类:
                             </div>
-                            <div class="left searchMenu">
+                            <div class="left searchMenu" id="checkTagul1Box">
                                 <input type="search" value="" data-val="" placeholder="请选择标签" id="checkTagSearch1" class="searchTag" readonly/>
-                                <ul class="searchSecondMenu" id="checkTagul1">
+                               <!-- <ul class="searchSecondMenu" id="checkTagul1">
 
-                                </ul>
+                                </ul>-->
                             </div>
                             <div class="left searchMenu">
                                 <input type="search" value="" data-val="" placeholder="请选择标签" id="checkTagSearch2" class="searchTag"/>
@@ -274,8 +274,7 @@
     $(function(){
         getcheckdata();
         getpush();
-        let dataval="",searchid=0;
-        getlabellist(dataval,searchid);//标签
+
 
     });
 
@@ -331,8 +330,8 @@
 //                console.log(data);
             },
             success:function(diskJson){
-//                console.log("ugc审核数据：");
-//                console.log(diskJson);
+                console.log("ugc审核数据：");
+                console.log(diskJson);
                 if(diskJson.code=="1000"){
                     $("#mainConTitle").html(diskJson.data.contenttitle);
                     $("#mainCont .contitleTip").html(diskJson.data.contenttitle.length+"/字");
@@ -341,9 +340,10 @@
                     $("#detailCon").attr("data-id",diskJson.data.contentid);
                     if(diskJson.data.contenttag ==""){
                         $("#checkTagSearch1").attr("data-val","").val("").attr("readonly",false);
+                        $("#checkTagul1Box").append(' <ul class="searchSecondMenu" id="checkTagul1"> </ul>');
                     }else{
                         $("#checkTagSearch1").attr("data-val",diskJson.data.contenttag).val(diskJson.data.tagshow).attr("readonly",true);
-                        $("#checkTagul1").css("display","none");
+                        $("#checkTagul1").remove();
                     }
 
                     var contenttype="", murl="ugc-moveicheck.html";
@@ -362,6 +362,9 @@
                     }else{
                         $("#movieImgBox").css("display","none");
                     }
+                    /*标签*/
+                    let dataval="",searchid=0;
+                    getlabellist(dataval,searchid);//标签
                     /*加载视频，图片页面*/
                     $("#mainContain").load(murl,function(){
                         geturl(diskJson);
@@ -372,6 +375,7 @@
                 }else if(diskJson.code=="2000"){
                     layer.msg(diskJson.message);
                     setTimeout(function(){
+                        $('#leftNavsRebox', window.parent.document).removeClass("show");
                         window.location.href="../index_v1.html"
                     },2000)
                 }else{
@@ -405,7 +409,6 @@
             success:function(diskJson){
 //               console.log("马甲用户列表获取：");
 //               console.log(diskJson);
-                $("#checkpublisher").empty();
                 $("#myNameSelect").empty();
                 $.each(diskJson.data.rows,function(i,n){
                     $("#myNameSelect").append(' <option  data-head="'+n.userheadphoto+'" value="'+ n.userid+'">'+ n.username+'</option>');
@@ -538,12 +541,11 @@
             btn: ['确定',"取消"] //按钮
         }, function(index){
             /*初始化*/
-            $("#detailCon .searchMenu .searchTag").val("");
-            $("#checkConLevel").val("0");
-            getcheckdata();
-            let dataval="",searchid=0;
-            getlabellist(dataval,searchid);//标签
+            backzero();
+
+        //    window.location.href="../content-manage/ugc-checksconts.html"
             layer.close(index);
+
         },function(index){
             layer.close(index);
         });
@@ -618,8 +620,8 @@
                 //console.log(data);
             },
             success:function(diskJson){
-                //console.log("ugc审核提交：");
-                //console.log(diskJson);
+                console.log("ugc审核提交：");
+                console.log(diskJson);
                 if(diskJson.code=="1000"){
                     layer.msg("提交成功！！",{
                         icon: 16,
@@ -636,11 +638,9 @@
                                     time: 1500 //2秒关闭（如果不配置，默认是3秒）
                                 },function(){
                                     /*初始化*/
-                                    $("#detailCon .searchMenu .searchTag").val("");
-                                    $("#checkConLevel").val("0");
-                                    getcheckdata();
-                                    let dataval="",searchid=0;
-                                    getlabellist(dataval,searchid);//标签
+                                    backzero();
+                                  //  window.location.href="../content-manage/ugc-checksconts.html";
+
                                 });
                             }else{
                                 layer.msg("返回首页！！",{
@@ -652,15 +652,16 @@
                                     isreload=2;
                                     $('#leftNavsRebox', window.parent.document).removeClass("show");
                                     window.location.href="../index_v1.html";
-                                });
 
+                                });
                             }
                         },1500);
 
-
-
                 }else{
-                    layer.msg("数据有误请检查后重试！！")
+                    layer.msg("数据有误请检查后重试！！");
+                    /*初始化*/
+                    backzero();
+
                 }
 
 
@@ -676,6 +677,15 @@
         }
 
     };
+
+    /*初始化*/
+    function backzero(){
+        $("#detailCon .searchMenu .searchTag").val("");
+        $("#checkConLevel").val("0");
+        talknum=0;
+        usertalk.items=[];
+        getcheckdata();
+    }
 
     /*改变内容等级赋予默认点赞数*/
     /*$("#checkConLevel").change(function(){

@@ -27,7 +27,7 @@
                                 <th>马甲数</th>
                                 <th>创建人</th>
                                 <th>状态</th>
-                                <th>操作</th>
+                              <!--  <th>操作</th>-->
                             </tr>
                             </thead>
                             <tbody id="tablelistTbody">
@@ -39,7 +39,7 @@
                                 <td class="center">{{item.tusercount}}</td>
                                 <td class="center">{{item.createusername}}</td>
                                 <td class="center state"><button v-on:click="resetpsd(item.userid)" type="button" class="repecePsd btn btn-danger">重置密码</button>{{item.userstatus == "1" ? "使用中":"停用"}}</td>
-                                <td class="center"><button type="button" class="btn" v-on:click="allot(item,index)">分配马甲</button></td>
+                                <!--<td class="center"><button type="button" class="btn" v-on:click="allot(item,index)">分配马甲</button></td>-->
                             </tr>
 
                             </tbody>

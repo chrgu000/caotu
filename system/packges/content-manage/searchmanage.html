@@ -34,10 +34,11 @@
 <body class="gray-bg">
 <h3 class="btitle">内容管理——搜索管理</h3>
     <div style="padding-left:28px;padding-top:10px;" class="timebtnlist">
-        <button type="button" class="btn " id="exportBtn" onclick="saveexcel()">导出excel</button>
+        <a href="" class="btn " download="搜索管理" id="exportBtn">导出excel</a>
     </div>
 
 <div class="wrapper wrapper-content  animated fadeInRight">
+
     <div class="row">
         <div class="col-sm-12">
             <div class="ibox-content">
@@ -94,6 +95,7 @@
 
         $(function(){
             getcheck(1);
+            saveexcel();
 
         });
         var tabledata = new Vue({
@@ -167,10 +169,12 @@
                     console.log(diskJson);
                     if(diskJson.code==1000){
                         var path3="/CTKJBUSINESS/file/downFileByName.do?filelocation=";
-                        var aLink = document.createElement('a');
+                      /*  var aLink = document.createElement('a');
                         aLink.download = "搜索关键词";
                         aLink.href = path+path3+diskJson.data;
-                        aLink.click();
+                        aLink.click();*/
+                        $("#exportBtn").attr("href",path+path3+diskJson.data);
+
                     }else{
                         layer.msg("数据有误请重试！！")
                     }

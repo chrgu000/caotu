@@ -99,7 +99,7 @@
 <div class="conBox">
     <div id="mainCont">
         <div class="mainContitleBox">
-            标题 <textarea id="mainConTitle" maxlength="140" placeholder="我是标题"></textarea>
+            文字描述 <textarea id="mainConTitle" maxlength="300" placeholder="我是标题"></textarea>
             <i class="contitleTip">4个字</i>
         </div>
         <!--视频和图片页面的容器-->
@@ -293,8 +293,8 @@
             </textarea>
             <span class="" style="position: relative;">
                 点赞数 <input type="number" id="mySetNum" value="1"/>
-                <button type="button" class="btn btn-sm btn-primary" id="myConmentsEnter" onclick="enterd()">发送</button>
-                <button type="button" class="btn btn-sm btn-primary" id="myConmentsSub" onclick="subd()">提交</button>
+                <button type="button" class="btn btn-sm btn-primary" id="myConmentsEnter" onclick="enterd()">发 送</button>
+                <!--<button type="button" class="btn btn-sm btn-primary" id="myConmentsSub" onclick="subd()">提交</button>-->
             </span>
 
     </div>
@@ -618,12 +618,16 @@
             }else{
                 //判断标题字数
                 var content=$("#mainConTitle").val();
-                if(content.length >140){
+                var substr="MGC";
+                if(content.length >300){
                     layer.closeAll();
                     layer.msg("标题超过限定字数！！");
                     //console.log(contenttitle.length);
                     $("#myConmentsSub").attr("disabled",false);
                     return false;
+                }else if(content.indexOf(substr)>=0){
+                   layer.msg("标题含有敏感词");
+                   return false;
                 }
                 /*判断标签选择*/
                 var ta1=$("#checkTagSearch1").attr("data-val");
@@ -636,18 +640,15 @@
 
                     return false;
                 }
-
+                ////console.log(locationListString);
+                /*审核视频的 //若果缩略图被替换*/
+                if(iffilechange==2){
+                    var movielist=[fileslist[0]];
+                    putlistObject(movielist,movietoyun);
+                }else{
+                    movietoyun();
+                }
             }
-            ////console.log(locationListString);
-            /*审核视频的 //若果缩略图被替换*/
-            if(iffilechange==2){
-                var movielist=[fileslist[0]];
-                putlistObject(movielist,movietoyun);
-            }else{
-                movietoyun();
-            }
-
-
         }
     }
 
@@ -715,6 +716,8 @@
 
     /*最中提交*/
     function subd2(contenturllist){
+//        console.log("contenturllist::");
+//        console.log(contenturllist);
         var ifinfo = window.location.search;
         ifinfo=ifinfo.substring(4);
         ifinfo=ifinfo.split(",");
