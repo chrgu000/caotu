@@ -1,0 +1,137 @@
+/* 通用样式*/
+@font-face {
+    font-family: 'MiNiJian';   /*字体名称*/
+    src: url('../css/MiNiJianZhanBiHei-1.ttf');       /*字体源文件*/
+}
+html,body{width:100%;height:100%;}
+body{
+    font:12px "MiNiJian";
+    color:#666;
+    margin:0;
+    padding:0;
+    background:#fff;
+    -webkit-text-size-adjust : 100% ;
+    -moz-text-size-adjust : 100% ;
+    -ms-text-size-adjust : 100% ;
+    text-size-adjust : 100%;
+    -moz-user-select: none; /*火狐*/
+    -webkit-user-select: none; /*webkit浏览器*/
+    -ms-user-select: none; /*IE10*/
+    -khtml-user-select: none; /*早期浏览器*/
+    user-select: none;
+}
+
+ul,ol,p,h1,h2,h3,h4,h5,h6,dl,dt,dd{
+    margin:0;
+    padding:0;
+    list-style:none;
+}
+input{
+    border:none;
+}
+a{
+    color:#666;
+    text-decoration:none;
+}
+a:hover{
+    color:#ff0700;
+    text-decoration:none;
+}
+.lf{
+    float:left;
+}
+.rt{
+    float:right;
+}
+.clear{
+    clear:both;
+}
+
+*{box-sizing: border-box;}
+[v-cloak]{display: none;}
+.btn{display: inline-block;padding:6px 9px;background:#FF698F;color:#fff;text-align: center;cursor: pointer;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;}
+.btn img{width:100%;height:auto;}
+
+.conntentsBox{width:100%;height:100%;background-size:cover;padding:80px;position: relative;}
+.actPages{width:100%;height:100%;display: none;text-align: center;font-size:2.4rem;position: relative;}
+.actPages.active{display: block;}
+.actpagebg{width:100%;height:100%;position: absolute;top:0;left:0;z-index:-1;}
+.quepagebg{width:100%;height:auto;position: absolute;top:200px;left:0;z-index:-1;}
+.queheadimgBox{width:100%;text-align: left;margin-bottom:35px;}
+.queheadimg{width:82%;height:auto;margin-left:8%;margin-top:5px;}
+.queBh{margin-left:8%;margin-top:65px;color:#333;font-size:2.5rem; font-family: "Microsoft YaHei";}
+#indexpage .fontcontents{width:100%;height:550px;margin-top:30px;position: relative;}
+#indexpage .fontcontents .title{width:110%;height:auto;position: absolute;left:-50px;top:215px;}
+#indexpage .fontcontents .head{width:148px;height:auto;position: absolute;right:105px;top:415px;}
+#music{
+    width: 8%;
+    position: absolute;
+    padding: 5px;
+    top: 2%;
+    right: 4%;
+    z-index: 10;
+}
+
+#indexpage .imgbox{width:120px;height:120px;border:1px solid #ddd;margin:50px auto;overflow: hidden;}
+#indexpage .imgbox img{width:100%;height:100%;}
+#indexpage .sexChooseBox{width:100%;height:220px;margin:0 auto;margin-top:195px;}
+#indexpage .sexbtn{width:300px;height:130px;text-align: center;line-height: 92px;color:#333;font-size:36px;border:0;}
+#indexpage .sexChooseBox .man{background:url("../img/man.png") no-repeat;background-size: cover;float:left;margin-left:7%;}
+#indexpage .sexChooseBox .woman{background:url("../img/girl.png") no-repeat;background-size: cover;float:right;margin-right:10%;}
+#indexpage .foot{width:100%;height:150px;position: relative;margin-top:-40px;}
+#indexpage .foot .manfoot{width:45%;height:auto;float: left;margin-left:-80px;}
+#indexpage .foot .girlfoot{width:45%;height:auto;float: right;margin-right:-80px;}
+
+.question{display:none;width:100%;height:100%;color:#fff;}
+.question.active{display:block;}
+.nextQuestion,.sureSub{width:325px;height:130px;line-height: 85px;background: url("../img/next.png") no-repeat;background-size: cover;border:0;margin-top:55px;}
+.sureSub{background: url("../img/suresub.png") no-repeat;background-size: cover;}
+.actPages .quelist{width:85%;margin:0 auto;}
+.actPages .quelist li{width:100%;height:142px;cursor: pointer;line-height: 142px;text-align: left;padding-left:140px;position: relative;margin:9px 0;font-size:2.1rem;outline: none;padding-right:45px;}
+.actPages .quelist li.long{line-height: 42px;padding-top:35px;}
+.actPages .quelist li:active,
+.actPages .quelist li:visited,
+.actPages .quelist li:focus{background:none;border:none;}
+.actPages .quelist li .chooing{width:140px;height:auto;position: absolute;left:0;top:0;}
+.actPages .quelist li:first-child{background:url("../img/a.png") no-repeat;background-size:cover;}
+.actPages .quelist li:nth-child(2){background:url("../img/b.png") no-repeat;background-size:cover;}
+.actPages .quelist li:nth-child(3){background:url("../img/c.png") no-repeat;background-size:cover;}
+.actPages .quelist li:nth-child(4){background:url("../img/d.png") no-repeat;background-size:cover;}
+#lastpage .lastheadtitle{text-align: left;font-size:1.6rem;color:#333;position: absolute;left:-55px;top:-80px;}
+#lastpage .lastheadtitle .logospan{display: inline-block;width:62px;height:62px;border:2px solid #333;margin-right:10px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;}
+#lastpage .lastheadtitle img{width:100%;height:auto;vertical-align: middle;}
+#lastpage .dogHeadBox{width:100%;text-align: center;position: relative;height:367px;}
+#lastpage .dogHeadBox .dogHead{width:41%;height:auto;position: absolute;left:65px;bottom:-27px;z-index:-6;}
+#lastpage .dogHeadBox .dogHeadsay{width:56%;height:auto;margin-left:41%;margin-top:45px;}
+#lastpage .lastpagebg{width:100%;height:auto;position: absolute;top:350px;left:0;z-index:-1;}
+#lastpage .lastGetInfoBox{width:100%;margin-top:135px;position: relative;}
+#lastpage .userinfobox{width:530px;margin:0 auto;height:170px;overflow: hidden;padding:20px;background:url("../img/jiaobu.png") no-repeat;background-size: cover;}
+#lastpage .userinfobox .headImgBox{width:110px;height:110px;border:4px solid #333;overflow: hidden;float:left;margin-left:35px;margin-top:12px;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+}
+#lastpage .headImgBox img{width:100%;height:100%;}
+#lastpage .userinfobox .userInfo{width:calc(100% - 160px);height:100%;float:left;color:#333;font-size:2.9rem;text-align: left;padding-left:10px;padding-top:9px;overflow: hidden;}
+#lastpage .userinfobox .userInfo .userName{ overflow: hidden;text-overflow:ellipsis;white-space: nowrap;}
+#lastpage .userInfo .dogName{font-weight:700;font-size:3.4rem;}
+#lastpage .grade{color:#FB3C3C;font-size:7rem;text-align: center;margin:20px 0;}
+#lastpage .evaluate{color:#333;font-size:2.8rem;text-align: center;margin:20px auto;width:67%;}
+
+#lastpage .smbox{width:410px;margin:0 auto;height:170px;}
+#lastpage .ewmimg{width:100px;height:100px;float:left;margin-top:12px;  }
+#lastpage .smbox .info{width:265px;height:100%;float:left;color:#333;font-size:1.8rem;text-align: left;padding-left:10px;padding-top:24px;overflow: hidden;}
+#lastpage .lastBtnListBox{width:95%;margin:0 auto;margin-top:15px;position: relative;}
+#lastpage .lastBtnListBox .btn{width:320px;height:125px;line-height: 85px;border:0;position: absolute;top:0;}
+#shareActiveBtn{background: url("../img/doudou.png") no-repeat;background-size: cover;left:0;}
+#downAppBtn{background: url("../img/final.png") no-repeat;background-size: cover;right:0;}
+#flowImgBox{width:100%;height:100%;position: fixed;top:0;right:0;text-align: center;background:rgba(0,0,0,.6);z-index:92;display: none;}
+#flowImgBox img{width:90%;height:auto;}
+#flowImgBox.show{display: block;}
+

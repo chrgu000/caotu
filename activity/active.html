@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta content=”initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width” name=”viewport” />
+    <meta content=”telephone=no” name=”format-detection” />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="头图——七夕活动">
+    <title>头图——七夕活动</title>
+    <link href="img/logo.png" rel="shortcut icon">
+    <link rel="stylesheet" href="css/common.css"/>
+    <link rel="stylesheet" href="plugin/font/iconfont.css"/>
+
+    <!-- 必须引入的文件-->
+    <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <script type="application/javascript" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/jquery.min.js"></script>
+    <script type="application/javascript" src="plugin/layer/layer.js"></script>
+    <!-- 组装微信配置信息js文件-->
+<!--    <script src="js/wxShare_data.js"></script>-->
+
+    <script type="application/javascript" src="js/index.js"></script>
+    <script src="js/sha1.js"></script>
+    <!-- 微信分享时调用对应的接口js文件-->
+    <script src="js/wxShare.js"></script>
+</head>
+
+<body>
+    <div class="conntentsBox">
+        <img style="z-index:-10;" class="actpagebg" src="img/bg.png" alt=""/>
+        <!--首页-->
+        <div id="indexpage" data-page="s0" class="actPages active">
+            <img class="actpagebg" src="img/home_paper.png" alt=""/>
+            <div class="fontcontents">
+                <img class="title" src="img/title.png" alt="title"/>
+                <img class="head" src="img/zhuazi.png" alt="title"/>
+            </div>
+            <div class="sexChooseBox">
+                <button class="man sexbtn" data-index="1" onclick="choosesex(1)"></button>
+                <button  class="woman sexbtn" data-index="2" onclick="choosesex(2)"></button>
+            </div>
+            <div class="foot">
+                <img src="img/maotui.png" alt="" class="manfoot"/>
+                <img src="img/meitui.png" alt="" class="girlfoot"/>
+            </div>
+        </div>
+        <!--男的问题-->
+        <div id="manquestion" class="question">
+            <!--问题1-->
+            <div id="manPage1" data-page="m1" class="actPages">
+                <img class="quepagebg" src="img/paperbg.png" alt=""/>
+                <div class="questionBox">
+                    <div class="queheadimgBox">
+                        <h3 class="queBh">1/5</h3>
+                        <img class="queheadimg" src="img/nan1.png" alt=""/>
+                    </div>
+                    <ul class="quelist">
+                        <li data-index="20">你去年买了这块表？</li>
+                        <li data-index="12">嘿，美女，你这个表子真好看啊</li>
+                        <li data-index="5">重嘛，我帮你拖着吧</li>
+                        <li data-index="0">Can you speak Chinese？</li>
+                    </ul>
+                     <button class="nextQuestion" type="button"></button>
+                </div>
+            </div>
+            <!--问题2-->
+            <div id="manPage2"  data-page="m2" class="actPages">
+                <img class="quepagebg" src="img/paperbg.png" alt=""/>
+                <div class="questionBox">
+                    <div class="queheadimgBox">
+                        <h3 class="queBh">2/5</h3>
+                        <img class="queheadimg" src="img/nan2.png" alt=""/>
+                    </div>
+                    <ul class="quelist">
+                        <li data-index="20">儿子，快，叫爸爸！</li>
+                        <li data-index="12">这是我给你介绍的男朋友呀～</li>
+                        <li data-index="5">谢谢你，替我们占了座位哦～</li>
+                        <li data-index="0" class="long">对不起呀，我微信群发了这个消息的</li>
+                    </ul>
+                    <button class="nextQuestion" type="button"></button>
+                </div>
+            </div>
+            <!--问题3-->
+            <div id="manPage3"  data-page="m3" class="actPages">
+                <img class="quepagebg" src="img/paperbg.png" alt=""/>
+                <div class="questionBox">
+                    <div class="queheadimgBox">
+                        <h3 class="queBh">3/5</h3>
+                        <img class="queheadimg" src="img/nan3.png" alt=""/>
+                    </div>
+                    <ul class="quelist">
+                        <li data-index="20">“西湖美景，三月天呐～”</li>
+                        <li data-index="12">“当山峰没有棱叫的西厚!”</li>
+                        <li data-index="5">“让我们一起学土拨鼠叫！啊！”</li>
+                        <li data-index="0">这时候才发现电风扇根本没开？！</li>
+                    </ul>
+                    <button class="nextQuestion" type="button"></button>
+                </div>
+            </div>
+            <!--问题4-->
+            <div id="manPage4" data-page="m4" class="actPages">
+                <img class="quepagebg" src="img/paperbg.png" alt=""/>
+                <div class="questionBox">
+                    <div class="queheadimgBox">
+                        <h3 class="queBh">4/5</h3>
+                        <img class="queheadimg" src="img/nan4.png" alt=""/>
+                    </div>
+                    <ul class="quelist">
+                        <li data-index="20">贴心地把表调到了7点</li>
+                        <li data-index="12" class="long">把你推倒在马路上，撒了孜然，翻了几圈</li>
+                        <li data-index="5" class="long">她说：“我就知道刚才的五桶爆米花，你吃不饱。”</li>
+                        <li data-index="0" class="long">她说：“你吃我吧，我不是个东西。”</li>
+                    </ul>
+                    <button class="nextQuestion" type="button"></button>
+                </div>
+            </div>
+            <!--问题5-->
+            <div id="manPage5" data-page="m5" class="actPages lastque">
+                <img class="quepagebg" src="img/paperbg.png" alt=""/>
+                <div class="questionBox">
+                    <div class="queheadimgBox">
+                        <h3 class="queBh">5/5</h3>
+                        <img class="queheadimg" src="img/nan5.png" alt=""/>
+                    </div>
+                    <ul class="quelist">
+                        <li data-index="20" class="long">扇了你一巴掌，并激动地说我打死了一只蚊子呢～</li>
+                        <li data-index="12">戳瞎了蚊子的双眼</li>
+                        <li data-index="5">和蚊子促膝长谈，感化它改吃素。</li>
+                        <li data-index="0">说：“是我叫的，你说像不像啊～”</li>
+                    </ul>
+                    <button class="sureSub" type="button"></button>
+                </div>
+            </div>
+
+
+        </div>
+
+        <!--女的问题-->
+        <div id="womanquestion" class="question ">
+            <!--问题1-->
+            <div id="womPage1" data-page="w1" class="actPages" >
+                <img class="quepagebg" src="img/paperbg.png" alt=""/>
+                <div class="questionBox">
+                    <div class="queheadimgBox">
+                        <h3 class="queBh">1/5</h3>
+                        <img class="queheadimg" src="img/nv1.png" alt=""/>
+                    </div>
+                    <ul class="quelist">
+                        <li data-index="20">他们一惊：包大人！</li>
+                        <li data-index="12">他们俩被面前的白雪公主闪瞎了</li>
+                        <li data-index="5">也挤进了他们的伞里～</li>
+                        <li data-index="0">我说人家有伞，我有大头！</li>
+                    </ul>
+                    <button class="nextQuestion" type="button"></button>
+                </div>
+            </div>
+            <!--问题2-->
+            <div id="womPage2"  data-page="w2" class="actPages">
+                <img class="quepagebg" src="img/paperbg.png" alt=""/>
+                <div class="questionBox">
+                    <div class="queheadimgBox">
+                        <h3 class="queBh">2/5</h3>
+                        <img class="queheadimg" src="img/nv2.png" alt=""/>
+                    </div>
+                    <ul class="quelist">
+                        <li data-index="20">你好，请问你看见我女朋友了吗?</li>
+                        <li data-index="12">宝宝，你钢盔哪里买的</li>
+                        <li data-index="5">宝宝，要不你剃度吧</li>
+                        <li data-index="0">生气地将TONY告上了法庭</li>
+                    </ul>
+                    <button class="nextQuestion" type="button"></button>
+                </div>
+            </div>
+
+            <!--问题3-->
+            <div id="womPage3"  data-page="w3" class="actPages">
+                <img class="quepagebg" src="img/paperbg.png" alt=""/>
+                <div class="questionBox">
+                    <div class="queheadimgBox">
+                        <h3 class="queBh">3/5</h3>
+                        <img class="queheadimg" src="img/nv3.png" alt=""/>
+                    </div>
+                    <ul class="quelist">
+                        <li data-index="20" class="long">我被气鼓了以后，他就认不出我来了嘛？</li>
+                        <li data-index="12">他没钱付账被店家打断腿了？！</li>
+                        <li data-index="5">他一个人把烤肉吃完了？！</li>
+                        <li data-index="0">他被粉丝围堵了吗？</li>
+                    </ul>
+                    <button class="nextQuestion" type="button"></button>
+                </div>
+            </div>
+            <!--问题4-->
+            <div id="womPage4"  data-page="w4" class="actPages">
+                <img class="quepagebg" src="img/paperbg.png" alt=""/>
+                <div class="questionBox">
+                    <div class="queheadimgBox">
+                        <h3 class="queBh">4/5</h3>
+                        <img class="queheadimg" src="img/nv4.png" alt=""/>
+                    </div>
+                    <ul class="quelist">
+                        <li data-index="20">他说: “这女孩子的胸比你大！”</li>
+                        <li data-index="12">解释权归公园办事处所有。</li>
+                        <li data-index="5" class="long">定睛一看，原来是喝醉了酒的高贵妃呀～</li>
+                        <li data-index="0">女孩：“我拦住他，你快跑啊！”</li>
+                    </ul>
+                    <button class="nextQuestion" type="button"></button>
+                </div>
+            </div>
+            <!--问题5-->
+            <div id="womPage5"  data-page="w5" class="actPages lastque">
+                <img class="quepagebg" src="img/paperbg.png" alt=""/>
+                <div class="questionBox">
+                    <div class="queheadimgBox">
+                        <h3 class="queBh">5/5</h3>
+                        <img class="queheadimg" src="img/nv5.png" alt=""/>
+                    </div>
+                    <ul class="quelist">
+                        <li data-index="20" class="long">跑过来一男子，道：“睡个p睡，燃烧你的卡路里！”</li>
+                        <li data-index="12" class="long">树上蹦下一男子，对你说：“妖精，还我爷爷！”</li>
+                        <li data-index="5" class="long">一个男子靠了过来:“我叫朱一龙，请问你带火机莫得？”</li>
+                        <li data-index="0" class="long">他的敞篷保时捷的停车声惊醒了你！</li>
+                    </ul>
+                    <button class="sureSub" type="button"></button>
+                </div>
+            </div>
+
+
+        </div>
+        <!--结果页面-->
+        <div id="lastpage" data-page="end0" class="actPages">
+            <p class="lastheadtitle"><span class="logospan"><img src="img/logo.png" alt="logo"/></span>头图-超内涵的搞笑社区</p>
+            <!--引导图-->
+            <div id="flowImgBox">
+                <img src="" alt=""/>
+            </div>
+            <img class="lastpagebg" src="img/zhengshu.png" alt=""/>
+            <div class="dogHeadBox" style="margin-top:20px;">
+                <img class="dogHead" src="" alt="dog"/>
+                <img class="dogHeadsay" src="img/talk.png" alt="dog"/>
+            </div>
+            <div class="lastGetInfoBox">
+                <div class="userinfobox">
+                    <span class="headImgBox">
+                        <img id="userInfoHead" src="img/logo.png" alt="头像"/>
+                    </span>
+                    <div class="userInfo">
+                        <p class="userName" id="userInfoName">偷偷她她她她她她她她她</p>
+                        <p class="dogName">纯种哈士奇</p>
+                    </div>
+                </div>
+                <p class="grade">110分</p>
+                <p class="evaluate">你还是狗吗？按年龄算，叫单身鳖；按体型算，叫单身猪</p>
+                <div class="smbox">
+                    <img class="ewmimg" src="img/actlink.png" alt=""/>
+                    <div class="info">
+                        <p class="">长按保存图片</p>
+                        <p class="">测一测单身狗属性</p>
+                    </div>
+                </div>
+                <div class="lastBtnListBox">
+                    <a href="https://ctkj.share/card" id="shareActiveBtn" class="btn" onclick="sharefriend()"></a>
+                    <a id="downAppBtn" href="" download="头图app"  class="btn" onclick="downApp()"></a>
+                </div>
+               <!-- <a id="appshareBtn" style="visibility: hidden;" href="https://ctkj.share/card" download="头图app" >app分享</a>-->
+            </div>
+
+        </div>
+
+
+    </div>
+
+    <!--音乐按钮-->
+    <div id="music">
+        <img src="img/music_open.png"/>
+    </div>
+    <audio src="audio/bgm.mp3" id="bgm" autoplay="autoplay" loop="loop"></audio>
+    <audio src="audio/click.mp3" id="choosemusic" loop="loop"></audio>
+
+
+
+
+<script>
+     var result={"grade":0,"dog":"","evaluate":"","sex":1,"dogimg":""};
+    $(function(){
+        magnitude("s0");
+    });
+
+    /*统计数量*/
+    function magnitude(pagestr){
+        var tjdatas={"pagestr":pagestr};
+        tjdatas=JSON.stringify(tjdatas);
+//        console.log(tjdatas);
+        $.ajax({
+            url : path3+'/CTKJSEVER/activepage/countactive.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:false,
+            data: tjdatas,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+                console.log("获取失败：");
+                console.log(data);
+            },
+            success:function(diskJson){
+              /*  console.log("diskJson:");
+                console.log(diskJson);*/
+                if(diskJson.code =="1000"){
+
+                }else{
+
+                    layer.msg("网络异常，请重试！！")
+                }
+
+            }
+        });
+    }
+    /*男女选择*/
+    function choosesex(sex){
+        $("#indexpage").removeClass("active");
+        if(sex=="1"){
+            $("#manquestion").addClass("active");
+            $("#manPage1").addClass("active");
+            magnitude("m1");
+            result.sex=1;
+        }else{
+            $("#womanquestion").addClass("active");
+            $("#womPage1").addClass("active");
+            magnitude("w1");
+            result.sex=2;
+        }
+    }
+
+    /*选择答案*/
+    $(".actPages .quelist li").click(function(){
+        $("#choosemusic").get(0).play();
+        setTimeout(function(){
+            $("#choosemusic").get(0).pause();
+        },250);
+
+        $(".actPages .quelist li.choose").removeClass("choose");
+        $(".actPages .quelist li .chooing").remove();
+        $(this).addClass("choose");
+        $(this).append('<img class="chooing" src="img/xuanzhong.png" alt=""/>')
+    });
+    /*下一题*/
+    $(".actPages .nextQuestion").click(function(){
+        var isc=$(this).siblings(".quelist").children("li").hasClass("choose");
+        if(isc){
+            var thisgrade=Number($(".actPages .quelist li.choose").attr("data-index"));
+            result.grade+=thisgrade;
+            $(this).closest(".actPages").removeClass("active").next(".actPages").addClass("active");
+           var pagestr=$(".actPages.active").attr("data-page");
+            magnitude(pagestr);
+
+        }
+
+
+
+    });
+
+     /*确认提交*/
+     $(".actPages .sureSub").click(function(){
+         var isc=$(this).siblings(".quelist").children("li").hasClass("choose");
+         if(isc){
+             var thisgrade=Number($(".actPages .quelist li.choose").attr("data-index"));
+             result.grade+=thisgrade;
+                 /*最后个问题*/
+                 $(this).closest(".actPages").removeClass("active");
+                 $(".question.active").removeClass("active");
+                 $("#lastpage").addClass("active");
+                 if(result.grade ==0){
+                     result.dog="微笑萨摩耶";
+                     result.dogimg="samoye.png";
+                     result.evaluate="别人都在等伞，只有你在等雨停。";
+                 }else if(result.grade>=1 && result.grade <=20){
+                     result.dog="暖男金毛";
+                     result.dogimg="jinmao.png";
+                     result.evaluate="我有孤独和酒，至今还是单身狗。";
+                 }else if(result.grade>=21 && result.grade <=40){
+                     result.dog="网红斗牛梗";
+                     result.dogimg="douniudog.png";
+                     result.evaluate="对象几时有，把酒问苍天。";
+                 }else if(result.grade>=41 && result.grade <=60){
+                     result.dog="忠诚拉布拉多";
+                     result.dogimg="labuladuo.png";
+                     result.evaluate="太久没牵手，吃个凤爪都会感觉温柔。";
+                 }else if(result.grade>=61 && result.grade <=80){
+                     result.dog="小短腿柯基";
+                     result.dogimg="keji.png";
+                     result.evaluate="秀恩爱没有那么容易，单身狗有它的脾气。";
+                 }else if(result.grade>=81 && result.grade <=89){
+                     result.dog="法国斗牛犬";
+                     result.dogimg="douniu.png";
+                     result.evaluate="全世界都在散发着恋爱的酸臭味，只有你散发着单身狗的清香。";
+                 }else if(result.grade>=91 && result.grade <=99){
+                     result.dog="真皮柴犬";
+                     result.dogimg="chai.png";
+                     result.evaluate="单身很可耻，浪费国家好多纸。";
+                 }else if(result.grade ==100){
+                     result.dog="纯种哈士奇";
+                     result.dogimg="hashiqi.png";
+                     result.evaluate="你的单身狗指数已经满分，你有手就够。";
+                 }
+                $("#lastpage .userInfo .dogName").html(result.dog);
+                $("#lastpage .grade").html(result.grade);
+                $("#lastpage .evaluate").html(result.evaluate);
+                $("#lastpage .dogHeadBox .dogHead").attr("src","img/dog/"+ result.dogimg);
+                magnitude("end0");
+             getuserinfo();
+
+         }
+
+
+
+     });
+    //音乐开关
+    var musicplay=true;//播放开关
+    $(window).one("touchstart",function(){
+        $("#bgm").get(0).play();
+    });
+    $("#music").click(function () {
+        if (musicplay) {
+            $(this).html("<img src='img/music_colse.png'/>");
+            $("#bgm").get(0).pause();
+            musicplay=false;
+        }else{
+            $(this).html("<img src='img/music_open.png'/>");
+            $("#bgm").get(0).play();
+            musicplay=true;
+        }
+    });
+
+     /*逗逗好友分享*/
+     function sharefriend(){
+         var phonetype=phoneType();
+       if(phonetype == 1){
+//           微信分享
+           $("#shareActiveBtn").attr("href","javascript:void(0)");
+           $("#flowImgBox").addClass("show").css("background","rgba(0,0,0,.6)");
+           $("#flowImgBox img").attr("src","img/shareflow.png");
+       }else if(phonetype==2){
+//            安卓手机分享
+//           $("#appshareBtn").click();
+            console.log("安卓手机分享");
+           $("#shareActiveBtn").attr("href","https://ctkj.share/url");
+       }else if(phonetype==3){
+//              苹果手机分享
+//           $("#appshareBtn").click();
+           console.log("苹果手机分享");
+           $("#shareActiveBtn").attr("href","https://ctkj.share/card");
+       }
+     }
+
+/*结束狗生下载APP*/
+    function downApp(e){
+        var phonetype=phoneType();
+        if(phonetype == 1){
+//           微信下载
+            $("#downAppBtn").attr("href","javascript:void(0)");
+            $("#flowImgBox").addClass("show").css("background","#fff");
+            $("#flowImgBox img").attr("src","img/downflow.png");
+        }
+    }
+     /*获取用户信息-1*/
+     function getuserinfo(){
+//         var account= $.cookie('name');
+         var phonetype=phoneType();
+         if(phonetype == 1){
+//           微信信息
+             console.log("微信信息::");
+             $("#downAppBtn").attr("href","javascript:void(0)");
+             $("#lastpage .userinfobox").empty();
+             $("#lastpage .userinfobox").append('<p class="dogNameOnly" style="color: #333;font-size: 4.5rem;line-height: 145px;">'+result.dog+'</p>');
+             return false;
+         }else if(phonetype==2){
+//            安卓手机用户信息
+             console.log("安卓手机用户信息::");
+             getuserinfo2();
+             $("#downAppBtn").attr("href","https://itunes.apple.com/cn/app/id1398165300?mt=8");
+             return false;
+         }else if(phonetype==3){
+//              苹果手机用户信息
+             console.log("苹果手机用户信息::");
+             $("#downAppBtn").attr("href","https://itunes.apple.com/cn/app/id1398165300?mt=8");
+             getuserinfo2();
+             return false;
+         }else{
+//             console.log("其他");
+//             console.log(result.dog);
+             $("#downAppBtn").attr("href","javascript:void(0)");
+             $("#lastpage .userinfobox").empty();
+             $("#lastpage .userinfobox").append('<p class="dogNameOnly" style="color: #333;font-size: 4.5rem;line-height: 145px;">'+result.dog+'</p>')
+         }
+
+     }
+
+     /*app获取用户信息-2*/
+     function getuserinfo2(){
+        // var loctionsrc="?eyJuYW1lIjoi5YK755m9IiwiaW1hZ2UiOiJodHRwOi8vY3Rrai0xMjU2Njc1MjcwLmNvcy5hcC1zaGFuZ2hhaS5teXFjbG91ZC5jb20vN0NGRUY3MzEtRUIzNS00NkUyLTk4ODItMTBDODYyNjg0MkNELnBuZyJ9";//假设得到的location.search; //获取url中"?"符后的字串
+         var loctionsrc= window.location.search;
+         if(loctionsrc && loctionsrc!=""){
+             var result2 = utf8to16(base64decode(loctionsrc));
+             result2=JSON.parse( result2 );
+//             console.log("result2::");
+//             console.log(result2);
+
+             if(result2 && result2!=""){
+                 $("#userInfoHead").attr("src",result2.image);
+                 $("#userInfoName").html(result2.name);
+             }else{
+                 $("#lastpage .userinfobox").empty();
+                 $("#lastpage .userinfobox").append('<p class="dogNameOnly" style="color: #333;font-size: 4.5rem;line-height: 145px;">'+result.dog+'</p>');
+
+             }
+         }else{
+             $("#lastpage .userinfobox").empty();
+             $("#lastpage .userinfobox").append('<p class="dogNameOnly" style="color: #333;font-size: 4.5rem;line-height: 145px;">'+result.dog+'</p>');
+         }
+
+
+     }
+    /*获取当前页是否是最后一页*/
+    function getpage(){
+        var isy=$(".actPages.active").attr("data-page");
+        if(isy == "end0"){
+            return 1;
+        }else{
+            return 0;
+        }
+    }
+
+//     *手机长按事件*/
+     // 函数名longpress，参数为: 需长按元素的id、长按之后的逻辑函数func
+    /* var timeout ;
+
+     $("#lastpage").mousedown(function(e) {
+         e.preventDefault();
+         timeout = setTimeout(function() {
+             alert(1);
+         }, 500);
+     });
+
+     $("#lastpage").mouseup(function() {
+         e.preventDefault();
+         clearTimeout(timeout);
+         alert(2);
+     });
+
+     $("#lastpage").mouseout(function() {
+         e.preventDefault();
+         clearTimeout(timeout);
+         alert(3);
+     });
+
+     /!*保存图片*!/
+     function saveImg(){
+         alert(1);
+     }*/
+
+</script>
+</body>
+</html>
