@@ -2,11 +2,11 @@
  * Created by zhu on 2018/5/31.
  */
 
-//const path="http://192.168.1.114:8807";
-//const path2="http://192.168.1.114:8807";
-const path3="https://dev.api.toutushare.com/";
 
-
+const path="https://api.itoutu.com:8898/";//线上
+//const path3="https://dev.api.toutushare.com/";//测试服
+const path4="http://192.168.1.111:8091/";//老冯
+var result={"grade":0,"dog":"","evaluate":"","sex":1,"dogimg":"","username":"","mgc":0};
 /*随机字符串*/
 function randomString(len) {
     len = len || 16;
@@ -22,23 +22,62 @@ function randomString(len) {
 /*手机类型&浏览器类型*/
 function phoneType() {
     var ua = window.navigator.userAgent.toLowerCase();
-    if(ua.match(/MicroMessenger/i) == 'micromessenger' || ua.match(/_SQ_/i) == '_sq_'){
-        //alert("微信打开");
-        console.log("微信打开");
+    if(ua.match(/MicroMessenger/i) == 'micromessenger'){
+
+        //console.log("微信打开");
         return 1;
-    }else{
-        var u = navigator.userAgent;
-        if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {//安卓手机
-            //alert("安卓手机");
-            return 2;
-        } else if (u.indexOf('iPhone') > -1) {//苹果手机
-            //alert("苹果手机");
-            return 3;
-        } else if (u.indexOf('Windows Phone') > -1) {//winphone手机
-            //alert("winphone手机");
-            return 4;
-        }
+    }else if(ua.match(/QQ/i) == "qq"){
+        //console.log("qq");
+        return "qq";
     }
+
+    var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+
+
+    if (userAgent.indexOf("Opera") > -1) {
+
+        return "Opera"
+
+    }; //判断是否Opera浏览器
+
+    if (userAgent.indexOf("Firefox") > -1) {
+
+        return "FF";
+
+    } //判断是否Firefox浏览器
+
+    if (userAgent.indexOf("Chrome") > -1){
+
+        return "Chrome";
+
+    }
+
+    if (userAgent.indexOf("Safari") > -1) {
+
+        return "Safari";
+
+    } //判断是否Safari浏览器
+
+    if (userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera) {
+
+        return "IE";
+
+    }
+
+}
+function phoneType2() {
+    var u = navigator.userAgent;
+    if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {//安卓手机
+        //console.log("Android");
+        return 2;
+    } else if (u.indexOf('iPhone') > -1) {//苹果手机
+        //console.log("苹果手机");
+        return 3;
+    } else if (u.indexOf('Windows Phone') > -1) {//winphone手机
+        //console.log("winphone手机");
+        return 4;
+    }
+
 
 }
 
@@ -151,5 +190,85 @@ function utf8to16(str) {
     }
     return out;
 }
+
+/*js通过两种方法获取url传递参数：*/
+function GetRequest(url) {
+    /* var url = location.search; //获取url中"?"符后的字串*/
+    var theRequest = new Object();
+    if (url.indexOf("?") != -1) {
+        var str = url.substr(1);
+        var strs = str.split("&");
+        for(var i = 0; i < strs.length; i ++) {
+            theRequest[strs[i].split("=")[0]]=(strs[i].split("=")[1]);
+        }
+    }
+    return theRequest;
+}
+
+
+/*铭感词*/
+function ismgc(checkword){
+    var tjdatas={"checkword":checkword};
+    tjdatas=JSON.stringify(tjdatas);
+    $.ajax({
+        url : path+'CTKJSEVER/content/sencheck.do',
+        cache:false,//false就不会从浏览器缓存中加载请求信息了
+        type:"POST",
+        dataType:"JSON",
+        contentType: "application/json",
+        async:false,
+        data: tjdatas,
+        error: function(data){
+            //console.log("获取失败：");
+            //console.log(data);
+        },
+        success:function(diskJson){
+            //console.log("铭感词:");
+            //console.log(diskJson);
+            if(diskJson.code =="1000" && diskJson.data == "Y"){
+                $(".creatUsernameBox .tips").addClass("show").html("碰到敏感词啦，改一下呗");
+                result.mgc=1;
+            }else{
+                result.mgc=0;
+                saveni(checkword);
+
+            }
+
+        }
+    });
+
+}
+
+/*保存昵称*/
+function saveni(checkword){
+    var tjdatas={"name":checkword};
+    tjdatas=JSON.stringify(tjdatas);
+    $.ajax({
+        url : path+'CTKJSEVER/activepage/putothername.do',
+        cache:false,//false就不会从浏览器缓存中加载请求信息了
+        type:"POST",
+        dataType:"JSON",
+        contentType: "application/json",
+        async:true,
+        data: tjdatas,
+        error: function(data){
+            console.log("获取失败：");
+            console.log(data);
+        },
+        success:function(diskJson){
+            //console.log("保存昵称:");
+            //console.log(diskJson);
+            if(diskJson.code =="1000" && diskJson.data.nickname){
+
+
+            }else{
+
+            }
+
+        }
+    });
+
+}
+
 
 
