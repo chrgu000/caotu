@@ -85,7 +85,6 @@ function phoneType2() {
 
 //Js实现Base64编码、解码
 //下面是64个基本的编码
-
 //解码的方法
 function base64decode(str) {
     var base64EncodeChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";

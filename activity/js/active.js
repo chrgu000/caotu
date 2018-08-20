@@ -7,7 +7,7 @@ $(function(){
     if(phonetype == 1){
 //           微信分享
         getweixininfo();
-        //$("#lastpage .userinfobox").addClass("weixin");
+       // $("#lastpage .userinfobox").addClass("weixin");
     }
     isllq();
     magnitude("s0");
@@ -19,10 +19,10 @@ function isllq(){
     var phonetype=phoneType();
     var phonetype2=phoneType2();
     //console.log(phonetype);
-    if(phonetype =="qq" || phonetype =="Opera" || phonetype =="FF" || phonetype =="Chrome" ||  phonetype =="IE"){
+    if(phonetype =="qq" || phonetype =="Opera" || phonetype =="FF" ||  phonetype =="IE"){
         $(".creatUsernameBox").css("display","block");
         $("#indexpage").attr("data-name","1");
-        $("#lastpage .userinfobox").addClass("weixin");
+
         $("#indexpage .sexChooseBox").addClass("no");
     }else{
         $(".creatUsernameBox").css("display","none");
@@ -255,11 +255,12 @@ function getuserinfo(){
 //           微信信息
 
     }else{
+
         getuserinfo2();
     }
     setTimeout(function(){
         getcanvasimg();//生成图片
-    },250);
+    },500);
 
 
 
@@ -275,25 +276,23 @@ function getuserinfo2(){
         result2=JSON.parse( result2 );
 //             //console.log("result2::");
 //             //console.log(result2);
-        if(result2 && result2!=""){
-            $("#userInfoHead").attr("src",result2.image);
+        if(result2 && result2!="" && result2.name!="(null)"){
+            //$("#lastpage .userinfobox").removeClass("weixin");
+            //$("#userInfoHead").attr("src",result2.image);
             $("#userInfoName").html(result2.name);
+
         }else{
             if(result.username !=""){
                 $("#userInfoName").html(result.username);
-                $("#lastpage .userinfobox").addClass("weixin");
                 $("#lastpage .userInfo .dogName").html(result.dog);
             }else{
                 $("#lastpage .userinfobox").empty();
                 $("#lastpage .userinfobox").append('<p class="dogNameOnly" style="color: #333;font-size: 4.5rem;line-height: 145px;">'+result.dog+'</p>');
             }
-
-
         }
     }else{
         if(result.username !=""){
             $("#userInfoName").html(result.username);
-            $("#lastpage .userinfobox").addClass("weixin");
             $("#lastpage .userInfo .dogName").html(result.dog);
         }else{
             $("#lastpage .userinfobox").empty();
@@ -317,26 +316,6 @@ function getpage(){
         return 0;
     }
 }
-
-
-//     *手机长按事件_0长按*/
-
-//         var time = 0;//初始化起始时间
-//         $("#lastpage .lastGetInfoBox").on('touchstart', function(e){
-////             e.preventDefault();
-//           //  e.stopPropagation();
-//             time = setTimeout(function(){
-//                 getcanvasimg();
-//             }, 300);//这里设置长按响应时间
-//         });
-//
-//         $("#lastpage .lastGetInfoBox").on('touchend', function(e){
-//            // e.preventDefault();
-//            // e.stopPropagation();
-//             clearTimeout(time);
-//         });
-
-
 
 
 
