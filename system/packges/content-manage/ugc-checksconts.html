@@ -67,6 +67,7 @@
         #detailCon .searchMenu .searchTag{width:76px;height:30px;}
         #detailCon .searchMenu .searchSecondMenu{position: absolute;width:100%;left:0;top:28px;background:#eee;color:#bbb;list-style: none;padding:0;z-index: 98;border:1px solid #bbb;border-top:none;display: none;max-height: 420px;overflow-y: auto;}
         #detailCon .searchMenu .searchSecondMenu.active{display: block;}
+        #detailCon .searchMenu .searchSecondMenu.hid{display: none;}
         #detailCon .searchSecondMenu li{width:100%;text-align: left;padding-left:3px;cursor: pointer;line-height: 23px;}
         #detailCon .searchSecondMenu li:hover{background:#fff;color:#333;border-top:1px solid #bbb;}
         #editoBtn{margin:10px; display: none;}
@@ -138,9 +139,9 @@
                             </div>
                             <div class="left searchMenu" id="checkTagul1Box">
                                 <input type="search" value="" data-val="" placeholder="请选择标签" id="checkTagSearch1" class="searchTag" readonly/>
-                               <!-- <ul class="searchSecondMenu" id="checkTagul1">
+                                <ul class="searchSecondMenu" id="checkTagul1">
 
-                                </ul>-->
+                                </ul>
                             </div>
                             <div class="left searchMenu">
                                 <input type="search" value="" data-val="" placeholder="请选择标签" id="checkTagSearch2" class="searchTag"/>
@@ -330,20 +331,20 @@
 //                console.log(data);
             },
             success:function(diskJson){
-                console.log("ugc审核数据：");
-                console.log(diskJson);
+//                console.log("ugc审核数据：");
+//                console.log(diskJson);
                 if(diskJson.code=="1000"){
                     $("#mainConTitle").html(diskJson.data.contenttitle);
                     $("#mainCont .contitleTip").html(diskJson.data.contenttitle.length+"/字");
                     $("#finalAuditor").html(userdatas.data.username);
                     $("#checkpublisher").html(diskJson.data.contentuid);
                     $("#detailCon").attr("data-id",diskJson.data.contentid);
-                    if(diskJson.data.contenttag ==""){
-                        $("#checkTagSearch1").attr("data-val","").val("").attr("readonly",false);
-                        $("#checkTagul1Box").append(' <ul class="searchSecondMenu" id="checkTagul1"> </ul>');
+                    if(diskJson.data.contenttag =="" || diskJson.data.contenttag == null || diskJson.data.contenttag == undefined){
+                        $("#checkTagSearch1").attr("data-val","").val("").removeAttr("readonly");
+                        $("#checkTagul1").removeClass("hid");
                     }else{
                         $("#checkTagSearch1").attr("data-val",diskJson.data.contenttag).val(diskJson.data.tagshow).attr("readonly",true);
-                        $("#checkTagul1").remove();
+                        $("#checkTagul1").addClass("hid");
                     }
 
                     var contenttype="", murl="ugc-moveicheck.html";
@@ -582,6 +583,7 @@
         if(tag2 !="" && tag2 !=null){contenttag.push(tag2)}
         if(tag3 !="" && tag3 !=null){contenttag.push(tag3)}
         contenttag=unique10(contenttag);
+        console.log(contenttag);
         if(contenttag== "" || contenttag.length==0){
             layer.msg("请至少选择一项标签！！");
             return false;
