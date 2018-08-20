@@ -3,24 +3,24 @@
  */
 
 /*const path="http://192.168.1.114:8807";
-const path2="http://192.168.1.114:8807";*/
+ const path2="http://192.168.1.114:8807";*/
 
-/*ÏßÉÏ*/
+/*çº¿ä¸Š*/
 //const path="http://118.126.68.108:8808";
 //const path2="http://118.126.68.108:8808";
-/*ÏßÉÏ¸Ä*/
+/*çº¿ä¸Šæ”¹*/
 const path="https://api.itoutu.com:8898";
 const path2="https://api.itoutu.com:8898";
 
 function check(diskJson) {
-    // ±£´æ»º´æ
+    // ä¿å­˜ç¼“å­˜
     // console.log(diskJson);
     localStorage.userdata = diskJson;
 
 }
 
 function getload() {
-    // ¶ÁÈ¡»º´æ
+    // è¯»å–ç¼“å­˜
     if (localStorage.userdata) {
         // console.log(localStorage.userdata);
         var userdata=JSON.parse(localStorage.userdata);
@@ -30,9 +30,9 @@ function getload() {
 }
 
 
-/*jsÍ¨¹ıÁ½ÖÖ·½·¨»ñÈ¡url´«µİ²ÎÊı£º*/
+/*jsé€šè¿‡ä¸¤ç§æ–¹æ³•è·å–urlä¼ é€’å‚æ•°ï¼š*/
 function GetRequest(url) {
-   /* var url = location.search; //»ñÈ¡urlÖĞ"?"·ûºóµÄ×Ö´®*/
+    /* var url = location.search; //è·å–urlä¸­"?"ç¬¦åçš„å­—ä¸²*/
     var theRequest = new Object();
     if (url.indexOf("?") != -1) {
         var str = url.substr(1);
@@ -45,20 +45,20 @@ function GetRequest(url) {
 }
 
 
-/*------×Ô¶¨ÒåµÄÍ¼Æ¬×óÓÒÇĞ»»--------*/
-/*¹Ø±ÕÍ¼Æ¬Õ¹Ê¾*/
+/*------è‡ªå®šä¹‰çš„å›¾ç‰‡å·¦å³åˆ‡æ¢--------*/
+/*å…³é—­å›¾ç‰‡å±•ç¤º*/
 function closeimg(){
     $("#faxAllBox").removeClass("show");
     $("#faxAllBox ul").empty();
 }
-/*½ûÖ¹ä¯ÀÀÆ÷×ó»¬·µ»Ø*/
+/*ç¦æ­¢æµè§ˆå™¨å·¦æ»‘è¿”å›*/
 document.addEventListener('touchmove',function(e){
     if($("#faxAllBox").hasClass("show")){
         e.preventDefault();
     }
 
 }, false);
-/*Õ¹Ê¾Í¼Æ¬µÄ×óÓÒ»¬¶¯*/
+/*å±•ç¤ºå›¾ç‰‡çš„å·¦å³æ»‘åŠ¨*/
 var startPoint = null;
 document.addEventListener("touchstart",function(e){
     var e = e||window.event;
@@ -66,20 +66,20 @@ document.addEventListener("touchstart",function(e){
 })
 document.addEventListener("touchend",function(e){
     var e=e||window.event;
-    //e.changedTouchesÄÜÕÒµ½Àë¿ªÊÖ»úµÄÊÖÖ¸£¬·µ»ØµÄÊÇÒ»¸öÊı×é
+    //e.changedTouchesèƒ½æ‰¾åˆ°ç¦»å¼€æ‰‹æœºçš„æ‰‹æŒ‡ï¼Œè¿”å›çš„æ˜¯ä¸€ä¸ªæ•°ç»„
     var endPoint = e.changedTouches[0];
-    //¼ÆËãÖÕµãÓëÆğµãµÄ²îÖµ
+    //è®¡ç®—ç»ˆç‚¹ä¸èµ·ç‚¹çš„å·®å€¼
     var x = endPoint.clientX - startPoint.clientX;
     var y = endPoint.clientY - startPoint.clientY;
-    //ÉèÖÃ»¬¶¯¾àÀëµÄ²Î¿¼Öµ
+    //è®¾ç½®æ»‘åŠ¨è·ç¦»çš„å‚è€ƒå€¼
     var d = 10;
-    var sn=Number($("#faxAllBox .toptip b.pre").html());//µ±Ç°Í¼Æ¬Ò³
-    var an=Number($("#faxAllBox .toptip b.all").html());//ËùÓĞÍ¼Æ¬µÄÊıÁ¿
+    var sn=Number($("#faxAllBox .toptip b.pre").html());//å½“å‰å›¾ç‰‡é¡µ
+    var an=Number($("#faxAllBox .toptip b.all").html());//æ‰€æœ‰å›¾ç‰‡çš„æ•°é‡
     var w=$("#faxAllBox ul li").width();
     w=w+"px";
     if(Math.abs(x)>d){
         if(x>0){
-            //console.log("ÏòÓÒ»¬¶¯");
+            //console.log("å‘å³æ»‘åŠ¨");
             if(sn>1){
                 $("#faxAllBox .toptip b.pre").html(sn-1);
                 $("#faxAllBox ul li:nth-child("+(sn-1)+")").css("margin-left","-"+w).addClass("show").animate({
@@ -95,14 +95,14 @@ document.addEventListener("touchend",function(e){
                     marginLeft:"-"+w
                 },250);
 
-                // console.log("Ïò×ó»¬¶¯");
+                // console.log("å‘å·¦æ»‘åŠ¨");
             }
 
         }
     }
     /*  if(Math.abs(y)>d){
      if(y>0){
-     console.log("ÏòÏÂ»¬¶¯");
+     console.log("å‘ä¸‹æ»‘åŠ¨");
      if(sn>1){
      $("#faxAllBox .toptip b.pre").html(sn-1);
      $("#faxAllBox ul li").slideUp();
@@ -110,14 +110,17 @@ document.addEventListener("touchend",function(e){
 
      }
      }else{
-     console.log("ÏòÉÏ»¬¶¯");
+     console.log("å‘ä¸Šæ»‘åŠ¨");
      if(sn<an){
      $("#faxAllBox .toptip b.pre").html(sn+1);
      $("#faxAllBox ul li").slideUp();
      $("#faxAllBox ul li:nth-child("+(sn+1)+")").slideDown();
-     // console.log("Ïò×ó»¬¶¯");
+     // console.log("å‘å·¦æ»‘åŠ¨");
      }
      }
      }*/
 
-})
+});
+
+
+

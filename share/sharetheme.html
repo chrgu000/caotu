@@ -5,13 +5,14 @@
     <meta content=”initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width” name=”viewport” />
     <meta content=”telephone=no” name=”format-detection” />
     <title>头图</title>
+    <link href="img/logo.png" rel="shortcut icon">
     <link rel="stylesheet" href="css/common.css"/>
     <link rel="stylesheet" href="plugin/font/iconfont.css"/>
 
     <script type="application/javascript" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/jquery.min.js"></script>
     <script type="application/javascript" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/vue.js"></script>
     <script type="application/javascript" src="plugin/layer/layer.js"></script>
-    <script type="application/javascript" src="js/index.js"></script>
+
 </head>
 <body>
     <div class="conntentsBox">
@@ -22,7 +23,7 @@
                     头图
                 </span>
             </div>
-            <a  href="https://itunes.apple.com/cn/app/id1398165300?mt=8" download="头图.app" id="downappbtn">打 开</a>
+            <a class="downhrefbtn"  href="#" id="downappbtn">打 开</a>
         </header>
 
         <div class="conntentsBox" id="themeContentBox" style="text-align: center;">
@@ -33,7 +34,7 @@
                 <h3 class="themecontitle">{{userhead}}</h3>
                 <p class="themContaine">{{commendTitle}}</p>
             </div>
-            <a  href="https://itunes.apple.com/cn/app/id1398165300?mt=8" download="头图.app"  id="themeAttentBtn" class="btn attentBtn"><img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/focuson2x.png" alt=""/></a>
+            <a class="downhrefbtn btn attentBtn"  href="#" id="themeAttentBtn"><img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/focuson2x.png" alt=""/></a>
 
         </div>
         <!--主题内容-->
@@ -54,7 +55,7 @@
                     <h4 class="conTitle">
                         <span class="imgBox"><img v-bind:src="item.userheadphoto" alt=""/></span>
                         <span class="conUserName">{{item.username}}</span>
-                        <a  href="https://itunes.apple.com/cn/app/id1398165300?mt=8" download="头图.app" class="btn attentBtn"><img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/focuson2x.png" alt=""/></a>
+                        <a class="downhrefbtn btn attentBtn"  v-bind:href="downhref"><img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/focuson2x.png" alt=""/></a>
                     </h4>
                     <p class="contentcomment">{{item.contenttitle}}</p>
                     <div class="themeMainBox">
@@ -74,9 +75,9 @@
 
                     </div>
                     <div class="btngroupBox">
-                        <a href="https://itunes.apple.com/cn/app/id1398165300?mt=8" download="头图.app" class="attentBox"><img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/praise@2x.png" alt=""/><i class="attentNum">{{item.contentgood}}</i></a>
-                        <a href="https://itunes.apple.com/cn/app/id1398165300?mt=8" download="头图.app" class="newsBox"><img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/comments2x.png" alt=""/><i class="newsNum">{{item.contentcomment}}</i></a>
-                        <a href="https://itunes.apple.com/cn/app/id1398165300?mt=8" download="头图.app" class="more"><img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/report2x.png" alt=""/></a>
+                        <a class="downhrefbtn attentBox" v-bind:href="downhref"><img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/praise@2x.png" alt=""/><i class="attentNum">{{item.contentgood}}</i></a>
+                        <a class="downhrefbtn newsBox" v-bind:href="downhref"><img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/comments2x.png" alt=""/><i class="newsNum">{{item.contentcomment}}</i></a>
+                        <a class="downhrefbtn more"  v-bind:href="downhref"><img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/report2x.png" alt=""/></a>
 
                     </div>
                 </div>
@@ -84,7 +85,7 @@
             </div>
         </div>
         <div style="text-align: center;margin:40px 0;">
-            <a href="https://itunes.apple.com/cn/app/id1398165300?mt=8" download="头图.app" id="seeDetails" class="btn">打开头图APP，阅读更多内容</a>
+            <a class="downhrefbtn btn"  href="#" id="seeDetails" >打开头图APP，阅读更多内容</a>
         </div>
         <!--更多推荐-->
         <div id="moreRecommendBox" v-cloak>
@@ -121,7 +122,7 @@
         <a class="bds_count" data-cmd="count"></a>
     </div>-->
 
-
+    <script type="application/javascript" src="js/index.js"></script>
 <script>
 
     var themcommendinfo = new Vue({
@@ -146,7 +147,8 @@
     var themcommendmore = new Vue({
         el: '#allThemeConBox',
         data: {
-            items: ""
+            items: "",
+            downhref:""
         },
         // 在 `methods` 对象中定义方法
         methods: {
@@ -179,7 +181,8 @@
     var commendmore = new Vue({
         el: '#moreRecommendBox',
         data: {
-            items: ""
+            items: "",
+            downhref:""
         },
         // 在 `methods` 对象中定义方法
         methods: {
@@ -189,8 +192,27 @@
         }
     });
     $(function(){
-        iscontendtype()
+        iscontendtype();
+        phoneType();
     });
+
+    /*手机类型判断*/
+    function phoneType() {
+        var u = navigator.userAgent;
+        if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {//安卓手机
+            //alert("安卓手机");
+            $(".downhrefbtn").attr("href","http://sj.qq.com/myapp/detail.htm?apkName=com.caotu.toutu");
+            themcommendmore.downhref="http://sj.qq.com/myapp/detail.htm?apkName=com.caotu.toutu";//专题分享页的更多主题内容
+        } else if (u.indexOf('iPhone') > -1) {//苹果手机
+            $(".downhrefbtn").attr("href","https://itunes.apple.com/cn/app/id1398165300?mt=8");
+            themcommendmore.downhref="https://itunes.apple.com/cn/app/id1398165300?mt=8";//专题分享页的更多主题内容
+            //alert("苹果手机");
+        } else if (u.indexOf('Windows Phone') > -1) {//winphone手机
+            //alert("winphone手机");
+            $(".downhrefbtn").attr("href","http://sj.qq.com/myapp/detail.htm?apkName=com.caotu.toutu");
+            themcommendmore.downhref="http://sj.qq.com/myapp/detail.htm?apkName=com.caotu.toutu";
+        }
+    }
 
     /*获取url判断类型*/
     function iscontendtype(){
