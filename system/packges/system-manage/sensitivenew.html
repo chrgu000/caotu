@@ -46,8 +46,13 @@
 
        $("#sentName").blur(function(){
            var dva=$(this).val();
+           var dvlength=dva.length;
            if(dva==""){
                layer.msg("敏感词不能为空！！")
+           }
+           console.log(dvlength);
+           if(dvlength > 10){
+               layer.msg("敏感词小于10个数字！！！")
            }
        });
 
@@ -55,8 +60,13 @@
        function creatlabel(){
            var senvalue=$("#sentName").val();
            var sentype=$("#sensType").val();
+           var dvlength=senvalue.length;
            if(senvalue==""){
                layer.msg("敏感词不能为空！！");
+               return false;
+           }
+           if(dvlength > 10){
+               layer.msg("敏感词小于10个数字！！！");
                return false;
            }
            var createuser=userdatas.data.userid;
@@ -83,7 +93,7 @@
                        layer.msg("创建成功！！");
                        replay();
                    }else{
-                       layer.msg("创建失败，请重试！！")
+                       layer.msg("该敏感词已创建，请重新创建！！")
                    }
 
 

@@ -27,7 +27,7 @@
                                 <th>马甲数</th>
                                 <th>创建人</th>
                                 <th>状态</th>
-                              <!--  <th>操作</th>-->
+                                <th>操作</th>
                             </tr>
                             </thead>
                             <tbody id="tablelistTbody">
@@ -39,7 +39,7 @@
                                 <td class="center">{{item.tusercount}}</td>
                                 <td class="center">{{item.createusername}}</td>
                                 <td class="center state"><button v-on:click="resetpsd(item.userid)" type="button" class="repecePsd btn btn-danger">重置密码</button>{{item.userstatus == "1" ? "使用中":"停用"}}</td>
-                                <!--<td class="center"><button type="button" class="btn" v-on:click="allot(item,index)">分配马甲</button></td>-->
+                                <td class="center"><button type="button" class="btn" v-on:click="allot(item,index)">分配马甲</button></td>
                             </tr>
 
                             </tbody>
@@ -65,7 +65,7 @@
     </div>
     <!--分配马甲-->
     <div id="allotMajaBox">
-        <h4>账号：<span class="userid" style="color:#007fff;margin-right:25px;">{{userid}}</span>用户名：<span class="username" style="color:#007fff;">{{username}}</span><button type="button" class="btn" id="sureAllortBtn" @click="resetpsd()">确认</button></h4>
+        <h4>账号：<span class="userid" style="color:#007fff;margin-right:25px;">{{userid}}</span>用户名：<span class="username" style="color:#007fff;">{{username}}</span><button type="button" class="btn" id="sureAllortBtn" @click="allotmajia()">确认</button></h4>
         <div class="majiaListBox">
             <label v-for="(item,index) in items" :for="'majia'+index"><input type="checkbox" :id="'majia'+index" :value="item.userid" v-model="checkmajia"/>{{item.username}}</label>
 
@@ -131,7 +131,7 @@
             },
             // 在 `methods` 对象中定义方法
             methods: {
-                resetpsd: function (event) {
+                allotmajia: function (event) {
                     layer.confirm('确定分配该批马甲吗？', {
                         btn: ['确定','取消'] //按钮
                     }, function(index){
