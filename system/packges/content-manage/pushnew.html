@@ -8,8 +8,18 @@
     .lineBox select,#contentText{width:300px;height:30px;padding-left:7px;}
     #contentText{height:90px;vertical-align:top;}
     #backbtn{float:right;margin-top:-9px;}
-    #allUser{height:20px;width:25px;cursor: pointer;}
+    #allUser,#pushNow{height:20px;width:25px;cursor: pointer;}
     .must{color:#f11c1c;}
+    .searchMenu .searchTag{width:76px;height:30px;}
+    .searchMenu .searchSecondMenu{position: absolute;width:100%;left:0;top:28px;background:#eee;color:#bbb;list-style: none;padding:0;z-index: 98;border:1px solid #bbb;border-top:none;display: none;max-height: 420px;overflow-y: auto;}
+    .searchMenu .searchSecondMenu.show{display: block;}
+     .searchSecondMenu li{width:100%;text-align: left;padding-left:3px;cursor: pointer;line-height: 23px;}
+     .searchSecondMenu li:hover{background:#fff;color:#333;border-top:1px solid #bbb;}
+    #contenDetailBox{width:300px;margin-left:130px;margin-top:-20px;}
+    #contenDetailBox>div{width:100%;position: relative;}
+    #contenDetailBox input{width:100%;}
+    .chooseDiv{display: none;}
+    .chooseDiv.show{display: block;}
 </style>
 
 <div style="width:80%;margin:0 auto;margin-top:25px;">
@@ -18,29 +28,42 @@
 <div class="labelBox">
     <div class="lineBox">
         <span class="lineTitle">标题：</span>
-        <input type="text" class="repead" id="newsTitle" value="" placeholder="请输入名称"/>
-        <i class="must">*在300字以内</i>
+        <input type="text" class="repead" id="newsTitle" value="" placeholder="标题"/>
+        <i class="must">*在40字以内</i>
     </div>
     <div class="lineBox">
         <span class="lineTitle">内容：</span>
-        <textarea rows="1" cols="20" id="contentText" maxlength="200"></textarea>
-        <i class="must" style="position: absolute;bottom:0;left:440px;">*在300字以内</i>
+        <textarea class="repead" rows="1" cols="20" id="contentText" maxlength="140"></textarea>
+        <i class="must" style="position: absolute;bottom:0;left:440px;">*在140字以内</i>
     </div>
     <div class="lineBox">
         <span class="lineTitle">内容类型：</span>
         <select name="" id="contentType">
-            <option value="专栏">专栏</option>
-            <option value="banner">banner</option>
-            <option value="内容">内容</option>
-            <option value="打开APP">打开APP</option>
+            <option value="1">内容</option>
+            <option value="3">bannner</option>
+            <option value="4">H5</option>
+            <option value="7">专栏</option>
+            <!--<option value="2">关注消息</option>-->
+            <!--<option value="5">评论消息</option>-->
+            <!--<option value="6">点赞消息</option>-->
+
         </select>
     </div>
     <div class="lineBox">
         <span class="lineTitle">详情：</span>
-        <select name="" id="contenturl">
-            <option value="专栏">专栏</option>
+        <div id="contenDetailBox">
+            <!-- banner/专栏-->
+            <div class="chooseDiv searchMenu">
+                <input type="search" value="" data-val="" placeholder="请选择标签" id="checkTagSearch1" class="searchTag repead"/>
+                <ul class="searchSecondMenu" id="checkTagul1">
 
-        </select>
+                </ul>
+            </div>
+            <!--内容/h5-->
+            <div class="chooseDiv conTypeInput show">
+                <input type="search" value="" class="repead" data-val="" placeholder="请选择标签" id="conH5" />
+            </div>
+        </div>
     </div>
     <div class="lineBox">
         <span class="lineTitle">创建人：</span>
@@ -52,11 +75,16 @@
     </div>
     <div class="lineBox">
         <span class="lineTitle">单个：</span>
-        <input type="text" id="oneUser" data-id="" value="" placeholder="输入用户昵称"/>
+        <input type="text" id="oneUser" class="repead" data-id="" value="" placeholder="输入用户昵称"/>
     </div>
     <div class="lineBox">
         <span class="lineTitle">推送时间：</span>
         <input type="text" id="pushTime" value="" />
+        <i class="must" style="position: absolute;bottom:0;left:440px;">注：最早只能选当前两个小时之后</i>
+    </div>
+    <div class="lineBox">
+        <span class="lineTitle">立即推送：</span>
+        <input type="checkbox" data-id="" id="pushNow" value=""/>
     </div>
     <div class="lineBox" style="padding-left:130px;margin-top:35px;">
         <button type="button" class="btn btn-sm btn-primary" id="submit" onclick="creatlabel()">提 交</button>
@@ -72,10 +100,132 @@
         $('#pushTime').datetimepicker({
             minView : 2,
             value:date,
-            format:'Y-m-d h:i',
+            hours12:false,
+            format:'Y-m-d H:m:i',
             timepicker:true//关闭时间选项(true打开false关闭)
         });
     });
+
+    /*标签列表获取*/
+    function getlabellist(dataval){
+        var datapost={"taglevel":3,"pageno":1,"pagesize":999,"tagname":dataval};
+        datapost=JSON.stringify(datapost);
+        $.ajax({
+            url : path2+'/CTKJBUSINESS/tag/taglist.do',
+            cache:true,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:false,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+                //console.log("标签列表获取失败：");
+                //console.log(data);
+            },
+            success:function(diskJson){
+//                console.log("标签列表获取：");
+//                console.log(diskJson);
+                $(".searchSecondMenu").empty();
+                $.each(diskJson.data.rows,function(i,n){
+                    if(n.tagid&&n.tagid !=null && n.tagname && n.tagname!=null){
+                        $(".searchSecondMenu").append(' <li data-val="'+ n.tagid+'">'+ n.tagname+'</li>');
+                    }
+                });
+
+
+
+            }
+        });
+    }
+
+    /*banner列表获取*/
+    function getbannerlist(dataval){
+        var datapost={"bannertext":dataval};
+        datapost=JSON.stringify(datapost);
+        $.ajax({
+            url : path2+'/CTKJBUSINESS/push/searchbanner.do',
+            cache:true,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:false,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+                //console.log("标签列表获取失败：");
+                //console.log(data);
+            },
+            success:function(diskJson){
+//                console.log("banner列表获取：");
+//                console.log(diskJson);
+                $(".searchSecondMenu").empty();
+                $.each(diskJson.data,function(i,n){
+                    if(n.bannerid&&n.bannerid !=null && n.bannertext && n.bannertext!=null){
+                        $(".searchSecondMenu").append(' <li data-val="'+ n.bannerid+'">'+ n.bannertext+'</li>');
+                    }
+                });
+
+
+
+            }
+        });
+    }
+    /*标签搜索框焦点事件*/
+    $("#contenDetailBox .searchMenu .searchTag").focus(function(){
+        $(this).siblings(".searchSecondMenu").addClass("show");
+        isbantag("");
+    });
+    $("#contenDetailBox .searchMenu .searchTag").blur(function(){
+        setTimeout(function(){
+            $(".searchSecondMenu").removeClass("show");
+        },500);
+
+    });
+    /*标签选择*/
+    $("#contenDetailBox .searchMenu .searchSecondMenu").delegate("li","click",function(){
+        let txt=$(this).html();
+        let dataval=$(this).attr("data-val");
+        $(this).parent(".searchSecondMenu").siblings(".searchTag").val(txt).attr("data-val",dataval);
+    });
+    /*搜索框键盘输入*/
+    $("#contenDetailBox .searchMenu .searchTag").keyup(function(){
+        $(this).attr("data-val","");
+        var dataval=$(this).val();
+        isbantag(dataval);
+
+    });
+    $("#contenDetailBox .searchMenu .searchTag").keydown(function(event) {
+        if (event.keyCode == 13) {
+            $(this).attr("data-val","");
+            var dataval=$(this).val();
+            isbantag(dataval);
+        }
+    });
+
+/*识别banner和标签*/
+    function isbantag(dataval){
+        var conType=$("#contentType").val();
+        if(conType == 3 ){
+            getbannerlist(dataval);
+        }else if(conType == 7){
+            getlabellist(dataval);
+        }
+    }
+
+    /*选择内容类型*/
+    $("#contentType").change(function(){
+      var conType=$(this).val();
+        $("#contenDetailBox input").val("");
+        if(conType == 3 || conType == 7){
+            $("#contenDetailBox .searchMenu ").addClass("show");
+            $("#contenDetailBox .conTypeInput ").removeClass("show");
+        }else{
+            $("#contenDetailBox .searchMenu ").removeClass("show");
+            $("#contenDetailBox .conTypeInput ").addClass("show");
+        }
+    });
+
     /*返回*/
     $("#backbtn").click(function(){
         $("#contentPageBox").load("pushmana.html");
@@ -85,16 +235,19 @@
         var dva=$(this).val();
         if(dva==""){
             layer.msg("标题不能为空！！")
-        }/*else if(dva<4000 || dva>9999){
-            layer.msg("请填写4000-9999范围内！！")
-        }*/
+        }else if(dva.length >40){
+            layer.msg("标题在40字以内！！")
+        }
     });
     $("#contentText").blur(function(){
         var dva=$(this).val();
         if(dva==""){
             layer.msg("消息内容不能为空！！")
+        }else if(dva.length >140){
+            layer.msg("标题在300字以内！！")
         }
     });
+    /*指定人*/
     $("#allUser").click(function(){
         if($("input[type='checkbox']").is(':checked')){
             $("#oneUser").val("").attr("data-id","");
@@ -103,30 +256,99 @@
     $("#oneUser").focus(function(){
         $("#allUser").attr("checked",false);
     });
+/*推送时间*/
+    $("#pushNow").click(function(){
+        if($("#pushNow").is(':checked')){
+            $("#pushTime").val("");
+        }
+    });
+    $("#pushTime").focus(function(){
+        $("#pushNow").attr("checked",false);
+    });
+    $("#pushTime").change(function(){
+        var pushtime= $.trim($(this).val());
+        pushtime=pushtime.replace(/\s+/g,"");
+        pushtime=pushtime.replace(/-/g, "");
+        pushtime=parseInt(pushtime.replace(/:/g, ""));
+        var date = parseInt(getmytime());
+        if(pushtime<(date+20000)){
+            layer.msg("最早只能选当前两个小时之后！！");
+        }
 
+    })
     /*创建运营账号*/
     function creatlabel(){
-        var newsTitle=$("#newsTitle").val();
-        var contentText=$("#contentText").val();
-        var password=$("#password").val();
-        var passwordsure=$("#passwordsure").val();
-        if(newsTitle==""){
+        var pushtitle=$("#newsTitle").val();//推送标题
+        var pushcontent=$("#contentText").val();//推送内容
+        var createuser=userdatas.data.userid;//创建人id
+        var pushtype=$("#contentType").val();//推送类型
+        var pushextra="";//推送类型附带详情
+        if(pushtype == 3 || pushtype == 7){
+            pushextra=$("#checkTagSearch1").attr("data-val");
+        }else{
+            pushextra=$("#conH5").val();
+        }
+        var pushuserid="";//指定推送用户id 群发不传此字段
+        if($("#allUser").is(':checked')){
+            pushuserid="";
+        }else{
+            var pushduser= $.trim($("#oneUser").val());
+            if(pushduser==""){
+                layer.msg("请输入指定用户昵称！！");
+                return false;
+            }else{
+                pushuserid=pushduser;
+            }
+        }
+        var pushtime=$("#pushTime").val();//指定推送时间
+        if($("#pushNow").is(':checked')){
+            pushtime="";
+        }else{
+            var choosetime=$("#pushTime").val();//指定推送时间
+            if(choosetime==""){
+                layer.msg("请输入推送时间！！");
+                return false;
+            }else{
+                choosetime=choosetime.replace(/\s+/g,"");
+                choosetime=choosetime.replace(/-/g, "");
+                choosetime=parseInt(choosetime.replace(/:/g, ""));
+                var date = parseInt(getmytime());
+                if(choosetime<(date+20000)){
+                    layer.msg("最早只能选当前两个小时之后！！");
+                    return false;
+                }else{
+                    pushtime=choosetime;
+                }
+            }
+        }
+
+        if(pushtitle==""){
             layer.msg("标题不能为空！！");
             return false;
-        }/*else if(newsTitle<4000 || newsTitle>9999){
-            layer.msg("请填写4000-9999范围内！！")
+        }else if(pushtitle.length >40){
+            layer.msg("标题在40字以内！！");
             return false;
-        }*/
-        if(contentText==""){
+        }
+        if(pushcontent==""){
             layer.msg("消息内容不能为空！！");
+            return false;
+        }else if(pushcontent.length >140){
+            layer.msg("标题在140字以内！！");
             return false;
         }
 
-        var createuser=userdatas.data.userid;
-        var datapost={"contentText":contentText,"createuser":createuser,"newsTitle":newsTitle};
+        var datapost={
+            "createuser":createuser,
+            "pushcontent":pushcontent,
+            "pushextra":pushextra,
+            "pushtime":pushtime,
+            "pushtitle":pushtitle,
+            "pushtype":pushtype,
+            "pushuserid":pushuserid
+        };
         datapost=JSON.stringify(datapost);
         $.ajax({
-            url : path+'/CTKJBUSINESS/sysuser/addsysuser.do',
+            url : path+'/CTKJBUSINESS/push/addpush.do',
             cache:false,//false就不会从浏览器缓存中加载请求信息了
             type:"POST",
             contentType: "application/json",
@@ -140,10 +362,10 @@
             },
             success:function(diskJson){
                 layer.closeAll();
-//                    console.log("新增内容运营：");
+//                    console.log("新增推送消息：");
 //                    console.log(diskJson);
                 if(diskJson.code =="1000"){
-                    layer.msg("创建成功！！")
+                    layer.msg("创建成功！！");
                     replay();
                 }else{
                     layer.msg("创建失败，请重试！！")
@@ -158,7 +380,7 @@
 
     /*重置*/
     function replay(){
-        $("input.repead").val("")
+        $(".repead").val("")
     }
 </script>
 

@@ -98,7 +98,7 @@
                     });
 
                 },
-                allot:function(events,index){
+                allot:function(events,indexcc){
                     layer.open({
                         type: 1,
                         title: '分配马甲',
@@ -109,10 +109,13 @@
                         content: $("#allotMajaBox"), //iframe的url
                         success: function (layero, index) {
 //                            console.log(events);
-//                            console.log(index);
+//                            console.log("index::");
+//                            console.log(indexcc);
                             allotmajia.userid=events.userid;
                             allotmajia.username=events.username;
+                            allotmajia.tabledataindex=indexcc;
                             allotmajia.checkmajia=[];//已经选择的马甲放在这个数组里
+                            majialist2(events.userid);
                         }
                     });
 
@@ -126,6 +129,7 @@
             data: {
                 userid:"",
                 username:"",
+                tabledataindex:"",
                 items:[],
                 checkmajia:[]
             },
@@ -135,8 +139,13 @@
                     layer.confirm('确定分配该批马甲吗？', {
                         btn: ['确定','取消'] //按钮
                     }, function(index){
-                       console.log(allotmajia.checkmajia);
                         layer.close(index);
+                        var vestuserid="";
+                        $.each(allotmajia.checkmajia,function(i,n){
+                            vestuserid=n+","+vestuserid;
+                        });
+                      //  console.log(vestuserid);
+                        choosemaja(allotmajia.userid,vestuserid);
                     }, function(index){
                         layer.close(index);
                     });
@@ -147,7 +156,6 @@
 
         $(function(){
             getcheck(1);
-            majialist();
         });
 
         function getcheck(pageno){
@@ -160,7 +168,7 @@
                 type:"POST",
                 contentType: "application/json",
                 dataType:"JSON",
-                async:true,
+                async:false,
                 data: datapost,
                 error: function(data){
                     layer.msg("服务器未响应,请稍后再试!");
@@ -174,6 +182,7 @@
                     /*翻页信息*/
                     pageinfo2(diskJson.data,pageno);//翻页控件信息
                     tabledata.items=diskJson.data.rows;
+                    majialist(); /*马甲列表(所有)*/
 
                 }
             });
@@ -212,9 +221,10 @@
         }
 
 
-        /*马甲列表*/
+        /*马甲列表(所有)*/
         function majialist(){
             var tjdatas={"pageno":1,"pagesize":999};
+           // console.log(tjdatas);
             tjdatas=JSON.stringify(tjdatas);
             $.ajax({
                 url : path2+'/CTKJBUSINESS/vest/vestlist.do',
@@ -222,7 +232,7 @@
                 type:"POST",
                 contentType: "application/json",
                 dataType:"JSON",
-                async:true,
+                async:false,
                 data: tjdatas,
                 //data: {taglevel:3,pageno:1,pagesize:999},
                 error: function(data){
@@ -231,11 +241,10 @@
                     //console.log(data);
                 },
                 success:function(diskJson){
-//                    console.log("马甲用户列表获取：");
+//                    console.log("马甲用户列表所有获取：");
 //                    console.log(diskJson);
                     if(diskJson.code =="1000"){
                         allotmajia.items=diskJson.data.rows;
-
                     }else{
                         layer.msg("马甲用户列表获取失败！！")
                     }
@@ -243,6 +252,75 @@
 
 
 
+                }
+            });
+        }
+
+        /*马甲列表指定账号*/
+        function majialist2(createuser){
+            var tjdatas={"pageno":1,"pagesize":999,"createuser":createuser};
+           // console.log(tjdatas);
+            tjdatas=JSON.stringify(tjdatas);
+            $.ajax({
+                url : path2+'/CTKJBUSINESS/vest/vestlist.do',
+                cache:true,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:false,
+                data: tjdatas,
+                //data: {taglevel:3,pageno:1,pagesize:999},
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    //console.log("马甲用户列表失败：");
+                    //console.log(data);
+                },
+                success:function(diskJson){
+//                    console.log("马甲用户列表指定的获取：");
+//                    console.log(diskJson);
+                    if(diskJson.code =="1000"){
+                        var checkmajia=[];
+                        $.each(diskJson.data.rows,function(i,n){
+                            checkmajia.push(n.userid);
+                        });
+
+                        allotmajia.checkmajia=checkmajia;//已经选择的马甲放在这个数组里
+                    }else{
+                        layer.msg("马甲用户列表获取失败！！")
+                    }
+                }
+            });
+        }
+
+
+        /*分配马甲*/
+        function choosemaja(sysuserid,vestuserid){
+            var tjdatas={"sysuserid":sysuserid,"vestuserid":vestuserid};
+         //   console.log(tjdatas);
+            tjdatas=JSON.stringify(tjdatas);
+            $.ajax({
+                url : path2+'/CTKJBUSINESS/vest/givevestuser.do',
+                cache:true,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:false,
+                data: tjdatas,
+                //data: {taglevel:3,pageno:1,pagesize:999},
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    //console.log("马甲用户列表失败：");
+                    //console.log(data);
+                },
+                success:function(diskJson){
+//                    console.log("分配马甲：");
+//                    console.log(diskJson);
+                    if(diskJson.code =="1000"){
+
+                        tabledata.items[allotmajia.tabledataindex].tusercount=allotmajia.checkmajia.length;
+                    }else{
+                        layer.msg("马甲用户列表获取失败！！")
+                    }
                 }
             });
         }

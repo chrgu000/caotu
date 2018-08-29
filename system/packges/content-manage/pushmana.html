@@ -27,20 +27,18 @@
                                     <th>类型</th>
                                     <th>标题</th>
                                     <th>推送时间</th>
-                                    <th>推送成功次数</th>
-                                    <th>推送失败次数</th>
-                                    <th>操作</th>
+                                    <th>推送状态</th>
+                                    <th>推送查看次数</th>
                                 </tr>
                                 </thead>
                                 <tbody id="tablelistTbody">
-                                    <tr v-for="(item,index) in items">
+                                    <tr v-for="(item,index) in items" :data-id="item.pushid">
                                         <td class="center">{{index+1}}</td>
-                                        <td class="center">{{item.username}}</td>
-                                        <td class="center" :data-userid="item.userid">{{item.createtime}}</td>
-                                        <td class="center">{{item.createuser}}</td>
-                                        <td class="center">{{item.createuser}}</td>
-                                        <td class="center">{{item.createuser}}</td>
-                                        <td class="center">{{item.createuser}}</td>
+                                        <td class="center">{{item.pushtype == "1" ? "内容":item.pushtype == "2" ? "关注消息":item.pushtype == "3" ? "banner":item.pushtype == "4" ? "H5":item.pushtype == "5" ? "评论消息":item.pushtype == "6" ? "点赞消息":"专栏"}}</td>
+                                        <td class="center">{{item.pushtitle}}</td>
+                                        <td class="center">{{item.pushtime}}</td>
+                                        <td class="center">{{item.pushflag == "1" ? "已推送":"未推送"}}</td>
+                                        <td class="center">{{item.opentimes}}</td>
                                     </tr>
 
                                 </tbody>
@@ -90,12 +88,12 @@
             var postdata={"pageno":pageno,"pagesize":10};
             postdata=JSON.stringify(postdata);
             $.ajax({
-                url : path2+'/CTKJBUSINESS/vest/gualist.do',
+                url : path2+'/CTKJBUSINESS/push/pushlist.do',
                 cache:false,//false就不会从浏览器缓存中加载请求信息了
                 type:"POST",
                 contentType: "application/json",
                 dataType:"JSON",
-                async:true,
+                async:false,
                 data: postdata,
                 error: function(data){
                     layer.msg("服务器未响应,请稍后再试!");
@@ -108,7 +106,7 @@
                     console.log(diskJson);
 
                     /*翻页信息*/
-                    pageinfo2(diskJson.data,pageno);//翻页控件信息
+                    pageinfo3(pageno,diskJson.data.count,diskJson.data.pagesize);//翻页控件信息
                     majiadata.items=diskJson.data.rows;
                 }
             });

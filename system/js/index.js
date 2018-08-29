@@ -1,6 +1,6 @@
 
 
-//const path4="http://192.168.1.111:8080";//老冯
+const path4="http://192.168.1.111:8080";//老冯
 const path="http://192.168.1.114:8818";//测试服务器
 const path2="http://192.168.1.114:8818";//测试服务器
 
@@ -87,6 +87,12 @@ function pageinfo(data,pageno){
 function pageinfo2(data,pageno){
     var num=data.count;
     var pi=data.pagesize;
+    $("#pagerlist #allconts").html("共"+num+"条");
+    $("#pagerlist #addpageinput").val(pageno).attr("max",Math.ceil(num/pi));
+    $("#pagerlist #allpage").html( Math.ceil(num/pi));
+}
+/*页面信息自定*/
+function pageinfo3(pageno,num,pi){
     $("#pagerlist #allconts").html("共"+num+"条");
     $("#pagerlist #addpageinput").val(pageno).attr("max",Math.ceil(num/pi));
     $("#pagerlist #allpage").html( Math.ceil(num/pi));

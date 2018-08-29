@@ -29,6 +29,7 @@
             top: 900px !important;
         }
 
+
     </style>
 
 </head>
@@ -45,7 +46,14 @@
                         <tr>
                             <th>标题</th>
                             <th>类型</th>
-                            <th>内容等级</th>
+                            <th>内容等级
+                                <select name="" id="contlevChoose">
+                                    <option value="">全</option>
+                                    <option value="3">A</option>
+                                    <option value="2">B</option>
+                                    <option value="1">C</option>
+                                </select>
+                            </th>
                             <th>发布时间</th>
                             <th>专栏</th>
                             <th>发布人</th>
@@ -108,8 +116,10 @@
     });
 
     function getcheck(pageno){
+        var contentlevel=$("#contlevChoose").val();
         layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000}) ;
-        var tjdatas={"pageno":pageno,"pagesize":10,"querytype":"ISPUSH"};
+        var tjdatas={"pageno":pageno,"pagesize":10,"querytype":"ISPUSH","contentlevel":contentlevel};
+        console.log(tjdatas);
         tjdatas=JSON.stringify(tjdatas);
         $.ajax({
             url : path+'/CTKJBUSINESS/content/checkyet.do',
@@ -135,7 +145,9 @@
         });
     }
 
-
+    $("#contlevChoose").change(function(){
+        getcheck(1);
+    })
 
 </script>
 

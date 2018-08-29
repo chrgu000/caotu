@@ -18,7 +18,7 @@
         #topKzCon .btn{color:#0055aa;}
         #topKzCon .btn:hover{    background-image: none;  outline: 0;  -webkit-box-shadow: inset 0 3px 5px rgba(0,0,0,.125); }
         .btnRight{float:right;}
-        .conBox{width:100%;height:535px;border:1px solid #bbb;}
+        .conBox{width:100%;height:550px;border:1px solid #bbb;}
         #mainCont{width:60%;height:100%;float:left;border-right:1px solid #bbb;}
         #detailCon{width:40%;height:100%;float:left;}
         #mainCont .mainContitleBox{width:100%;height:74px;line-height: 45px;padding:0 6px;border-bottom:1px solid rgba(187,187,187,1);}
@@ -452,7 +452,7 @@
             type:"POST",
             contentType: "application/json",
             dataType:"JSON",
-            async:true,
+            async:false,
             data: datapost,
             //data: {taglevel:3,pageno:1,pagesize:999},
             error: function(data){
@@ -520,7 +520,7 @@
     /*马甲用户列表获取*/
     function getpush(){
         var createuser=userdatas.data.userid;
-        var tjdatas={"pageno":1,"pagesize":999};
+        var tjdatas={"pageno":1,"pagesize":999,"createuser":createuser};
         tjdatas=JSON.stringify(tjdatas);
         $.ajax({
             url : path2+'/CTKJBUSINESS/vest/vestlist.do',
@@ -528,7 +528,7 @@
             type:"POST",
             contentType: "application/json",
             dataType:"JSON",
-            async:true,
+            async:false,
             data: tjdatas,
             //data: {taglevel:3,pageno:1,pagesize:999},
             error: function(data){
@@ -626,7 +626,7 @@
                     $("#myConmentsSub").attr("disabled",false);
                     return false;
                 }else if(content.indexOf(substr)>=0){
-                   layer.msg("标题含有敏感词");
+                   layer.msg("标题含有敏感词，请检查！！");
                    return false;
                 }
                 /*判断标签选择*/
@@ -643,8 +643,8 @@
                 ////console.log(locationListString);
                 /*审核视频的 //若果缩略图被替换*/
                 if(iffilechange==2){
-                    var movielist=[fileslist[0]];
-                    putlistObject(movielist,movietoyun);
+                    var movielist=fileslist[0];
+                    putObject(movielist,movietoyun);
                 }else{
                     movietoyun();
                 }
@@ -657,8 +657,10 @@
         var searchyunlist=[];
         //若果缩略图被替换
         if(iffilechange==2){
-            fileslist.splice(0,1);
-            searchyunlist=fileslist
+            if(fileslist.length>1){
+                fileslist.splice(0,1);
+            }
+            searchyunlist=fileslist;
         }else if(iffilechange==3){
             $.each(fielchangelist,function(i,n){
                 if(n.ischange == false){
@@ -693,7 +695,7 @@
                 if(diskJson.code =="1000"){
                     var geturl=diskJson.data;
                     if(iffilechange==2){
-                        geturl.unshift(cosjurl[0]);
+                        geturl.unshift(costdk);
                     }else if(iffilechange==3){
                         $.each(fielchangelist,function(i,n){
                             if(n.ischange == true){
@@ -908,9 +910,9 @@
         var level=$(this).val();
         var minnum="",maxnum="",minnum2="",maxnum2="";
         switch(level){
-            case "3":minnum=100;maxnum=200;minnum2=3000;maxnum2=6000;break;
-            case "2":minnum=50;maxnum=130;minnum2=1000;maxnum2=3000;break;
-            case "1":minnum=20;maxnum=80;minnum2=300;maxnum2=2000;break;
+            case "3":minnum=1500;maxnum=3000;minnum2=30000;maxnum2=60000;break;
+            case "2":minnum=1000;maxnum=2000;minnum2=20000;maxnum2=40000;break;
+            case "1":minnum=500;maxnum=1000;minnum2=10000;maxnum2=30000;break;
         }
         var num=randomnum(minnum,maxnum);
         var num2=randomnum(minnum2,maxnum2);

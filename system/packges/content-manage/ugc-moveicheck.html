@@ -55,8 +55,8 @@
 
             video.addEventListener('canplaythrough',function(){
                 var videoval= 1,videoval2=Number($("#movieStyle").attr("data-val"));
-                console.log(video.videoWidth);
-                console.log(video.videoHeight);
+//                console.log(video.videoWidth);
+//                console.log(video.videoHeight);
                 if(video.videoWidth>=video.videoHeight){
                     videoval= 1;
                 }else{
@@ -64,11 +64,8 @@
                 }
 
                 if(videoval2!=videoval){
-                    $("#movieStyle").css({"display":"none"});
+                    $("#movieStyle").css({"display":"none"}).attr("data-change","1");
                     $("#movieSelect").css({"display":"table-cell"});
-                }else{
-                    $("#movieStyle").css({"display":"inline-block"});
-                    $("#movieSelect").css({"display":"none"});
                 }
             });
             $("#video").attr("src",nedurllist[1]);

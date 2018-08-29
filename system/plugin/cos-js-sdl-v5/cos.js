@@ -96,7 +96,7 @@ var cos = new COS({
 var costdk="";
 
 //单张图片
-function putObject(file) {
+function putObject(file,callback) {
     // 创建测试文件
    // var filename = file.name;
     var x= Math.random(32).toString(36).substr(3,32);
@@ -117,28 +117,36 @@ function putObject(file) {
             //console.log(JSON.stringify(progressData));
         }
     }, function (err, data) {
-        //console.log(err || data);
+        //console.log("err::");
+        //console.log(err);
+        //console.log( "data::");
+        //console.log( data);
         if(err){
             layer.msg("图片上传失败，请重试！！")
+        }else{
+            cos.getObjectUrl({
+                Bucket: config.Bucket, // Bucket 格式：test-1250000000
+                Region: config.Region,
+                Key: filename,
+                Sign: true,
+                Origin:"http://101.69.230.98"
+            }, function (err, data) {
+                //console.log(err || data.Url);
+                if(data){
+                    costdk=data.Url.substring(0, data.Url.indexOf('?'));
+                    //console.log("costdk:");
+                    //console.log(costdk);
+                    if(callback && callback !=""){
+                        callback();
+                    }
+
+                }
+
+            });
         }
 
     });
-    cos.getObjectUrl({
-        Bucket: config.Bucket, // Bucket 格式：test-1250000000
-        Region: config.Region,
-        Key: filename,
-        Sign: true,
-        Origin:"http://101.69.230.98"
-    }, function (err, data) {
-        //console.log(err || data.Url);
-        if(data){
-            costdk=data.Url.substring(0, data.Url.indexOf('?'));
-            //console.log("costdk:");
-            //console.log(costdk);
 
-        }
-
-    });
 }
 
 
@@ -177,23 +185,25 @@ function muchlist(file){
         //console.log(err || data);
         if(err){
             layer.msg("图片上传失败，请重试！！")
+        }else{
+            cos.getObjectUrl({
+                Bucket: config.Bucket, // Bucket 格式：test-1250000000
+                Region: config.Region,
+                Key: filename,
+                Sign: true,
+                Origin:"http://101.69.230.98"
+            }, function (err, data) {
+                //console.log("cos获取：：");
+                //console.log(err || data);
+                if(data){
+                    var onetdk=data.Url.substring(0, data.Url.indexOf('?'));
+                    cosjurl.push(onetdk);
+                }
+
+            });
         }
 
 
     });
-    cos.getObjectUrl({
-        Bucket: config.Bucket, // Bucket 格式：test-1250000000
-        Region: config.Region,
-        Key: filename,
-        Sign: true,
-        Origin:"http://101.69.230.98"
-    }, function (err, data) {
-        console.log("cos获取：：");
-        console.log(err || data);
-        if(data){
-            var onetdk=data.Url.substring(0, data.Url.indexOf('?'));
-            cosjurl.push(onetdk);
-        }
 
-    });
 }

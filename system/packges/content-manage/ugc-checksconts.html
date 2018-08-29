@@ -87,6 +87,8 @@
         #movieImgBox .tips.show{display: block;}
         .layui-layer-btn{padding:25px 5px !important;}
         .layui-layer-dialog .layui-layer-content{color:#fff;}
+        #fixedTips{position: fixed;width:100%;height:100%;background:rgba(0,0,0,.5);z-index: 98;color:#fff;left:0;top:0;display: none;}
+        #fixedTips .tips{color:#fff;font-size: 27px;text-align: center;line-height: 350px;}
     </style>
 
 </head>
@@ -94,7 +96,7 @@
 <body class="gray-bg" >
     <div id="topKzCon">
         <span class="nextBtn btn" onclick="nextcheck()">下一个</span>
-        <span class="submit btn" onclick="subd()">提交</span>
+        <span class="submit btn" id="ugcsubbtn" onclick="subd()">提交</span>
         <span class="requck btnRight">待审核数：<b id="unchecknum"></b></span>
     </div>
     <div class="conBox">
@@ -114,7 +116,7 @@
                     <tr>
                         <td id="movietypetd">
                             类型：
-                            <span id="movieStyle" data-val="1"></span>
+                            <span id="movieStyle" data-change="0" data-val="1"></span>
                             <select name="" id="movieSelect" style="display: none;">
                                 <option value="1">横视频</option>
                                 <option value="2">竖视频</option>
@@ -258,7 +260,9 @@
 
         </div>
     </div>
-
+<div id="fixedTips">
+    <h3 class="tips">已无审核内容！！！</h3>
+</div>
 
 
 
@@ -339,6 +343,8 @@
                     $("#finalAuditor").html(userdatas.data.username);
                     $("#checkpublisher").html(diskJson.data.contentuid);
                     $("#detailCon").attr("data-id",diskJson.data.contentid);
+                    $("#movieStyle").css({"display":"inline-block"}).attr("data-change","0");
+                    $("#movieSelect").css({"display":"none"});
                     if(diskJson.data.contenttag =="" || diskJson.data.contenttag == null || diskJson.data.contenttag == undefined){
                         $("#checkTagSearch1").attr("data-val","").val("").removeAttr("readonly");
                         $("#checkTagul1").removeClass("hid");
@@ -376,6 +382,12 @@
                 }else if(diskJson.code=="2000"){
                     layer.msg(diskJson.message);
                     setTimeout(function(){
+                        $("#fixedTips").css({"display":"block"});
+                        $("#myConmentsSub").attr("disabled",true);
+                        $("#ugcsubbtn").attr("disabled",true);
+                        $("#mainConTitle").html("");
+                        $("#checkpublisher").html("");
+                        $("#mainContain").empty();
                         $('#leftNavsRebox', window.parent.document).removeClass("show");
                         window.location.href="../index_v1.html"
                     },2000)
@@ -391,7 +403,7 @@
     /*马甲用户列表获取*/
     function getpush(){
         var createuser=userdatas.data.userid;
-        var tjdatas={"pageno":1,"pagesize":999};
+        var tjdatas={"pageno":1,"pagesize":999,"createuser":createuser};
         tjdatas=JSON.stringify(tjdatas);
         $.ajax({
             url : path2+'/CTKJBUSINESS/vest/vestlist.do',
@@ -399,7 +411,7 @@
             type:"POST",
             contentType: "application/json",
             dataType:"JSON",
-            async:true,
+            async:false,
             data: tjdatas,
             //data: {taglevel:3,pageno:1,pagesize:999},
             error: function(data){
@@ -430,7 +442,7 @@
             type:"POST",
             contentType: "application/json",
             dataType:"JSON",
-            async:true,
+            async:false,
             data: datapost,
             error: function(data){
                 layer.msg("服务器未响应,请稍后再试!");
@@ -583,7 +595,7 @@
         if(tag2 !="" && tag2 !=null){contenttag.push(tag2)}
         if(tag3 !="" && tag3 !=null){contenttag.push(tag3)}
         contenttag=unique10(contenttag);
-        console.log(contenttag);
+       // console.log(contenttag);
         if(contenttag== "" || contenttag.length==0){
             layer.msg("请至少选择一项标签！！");
             return false;
@@ -598,15 +610,23 @@
         }else{
             ispass="YES";
         }
+        var contenttype=$("#movieStyle").attr("data-change");
+        if(contenttype =="0"){
+            contenttype=""
+        }else{
+            contenttype=$("#movieSelect").val();
+        }
         var datapost={
             "checkuid":checkuid,
             "contentid":contentid,
             "contentlevel":contentlevel,
             "contenttag":contenttag,
             "commenttext":commenttext,
+            "contenttype":contenttype,
             "ispass":ispass
         };
-        //console.log(datapost);
+//        console.log("datapost:::");
+//        console.log(datapost);
         datapost=JSON.stringify(datapost);
         $.ajax({
             url : path+'/CTKJBUSINESS/content/pushchecked.do',
@@ -622,8 +642,8 @@
                 //console.log(data);
             },
             success:function(diskJson){
-                console.log("ugc审核提交：");
-                console.log(diskJson);
+//                console.log("ugc审核提交：");
+//                console.log(diskJson);
                 if(diskJson.code=="1000"){
                     layer.msg("提交成功！！",{
                         icon: 16,

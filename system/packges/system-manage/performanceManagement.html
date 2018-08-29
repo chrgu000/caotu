@@ -2,11 +2,8 @@
 <html>
 
 <head>
-
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
     <title> 绩效管理</title>
     <meta name="keywords" content="">
     <meta name="description" content="">
@@ -39,8 +36,8 @@
 <h3 class="btitle">系统管理—绩效管理</h3>
     <div style="padding-left:28px;padding-top:10px;" class="timebtnlist">
         <p class="nowday" data-val="">截止至今天早上2：00</p>
-        <button type="button" class="btn btn-sm btn-primary active" data-val="" id="yesterdayBtn" onclick="changetime(this)">当天</button>
-        <button type="button" class="btn btn-sm btn-primary" data-val="" id="sevendayBtn" onclick="changetime(this)">7天</button>
+        <button type="button" class="btn btn-sm btn-primary" data-val="" id="yesterdayBtn" onclick="nowPerform(this)">当前</button>
+        <button type="button" class="btn btn-sm btn-primary active" data-val="" id="sevendayBtn" onclick="changetime(this)">7天</button>
         <button type="button" class="btn btn-sm btn-primary" data-val="" id="monthdayBtn" onclick="changetime(this)">30天</button>
         <span class="choosetimeBox">开始时间：<input type="text" id="daychooseBegain" class="choosetime" value="" onchange="changebegintime(this)"/></span>
         <span class="choosetimeBox">结束时间：<input type="text" id="daychooseEnd" class="choosetime" value=""  onchange="changeendtime(this)"/></span>
@@ -131,6 +128,15 @@
                 format:'Y-m-d',
                 timepicker:false//关闭时间选项
             });
+//            只有S级可查询当前业绩
+            var userInfoList=getload();
+           //console.log(userlever);
+            var userlever=userInfoList.data.userlevel;
+            if(userlever == "S"){
+                $("#yesterdayBtn").css({"display":"inline-block"});
+            }else{
+                $("#yesterdayBtn").css({"display":"none"});
+            }
             getcheck(1);
 
         });
@@ -159,7 +165,7 @@
                 type:"POST",
                 contentType: "application/json",
                 dataType:"JSON",
-                async:true,
+                async:false,
                 data: postdata,
                 error: function(data){
                     layer.msg("服务器未响应,请稍后再试!");
@@ -190,15 +196,52 @@
         function changebegintime(e){
             starttime=$(e).val();
             starttime=starttime.replace(/-/g, "");//
+            endtime=$("#daychooseEnd").val();
+            endtime=endtime.replace(/-/g, "");//
             $(".timebtnlist button.active").removeClass("active");
             getcheck(1);
         }
         function changeendtime(e){
+            starttime=$("#daychooseBegain").val();
+            starttime=starttime.replace(/-/g, "");//
             endtime=$(e).val();
             endtime=endtime.replace(/-/g, "");//
             $(".timebtnlist button.active").removeClass("active");
             getcheck(1);
         }
+
+
+        /*当天当前审核状况*/
+        function nowPerform(e){
+            $(e).addClass("active").siblings("button.active").removeClass("active");
+            starttime=$(e).attr("data-val");
+            endtime=$(".nowday").attr("data-val");
+            var postdata={"pageno":1};
+            postdata=JSON.stringify(postdata);
+            $.ajax({
+                url : path+'/CTKJBUSINESS/sysuser/getcurcheckuserper.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:false,
+                data: postdata,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+//                    console.log("获取失败：");
+//                    console.log(data);
+                },
+                success:function(diskJson){
+                    layer.closeAll();
+//                    console.log("当天当前审核状况：");
+//                    console.log(diskJson);
+                    /*翻页信息*/
+                    pageinfo3(1,diskJson.data.length,diskJson.data.length);//翻页控件信息
+                   tabledata.items=diskJson.data;
+                }
+            });
+        }
+
 
         /*导出excel*/
         function saveexcel(){
@@ -232,6 +275,7 @@
                 }
             });
         }
+
 
 
 
