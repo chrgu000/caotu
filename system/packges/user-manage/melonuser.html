@@ -56,7 +56,7 @@
                                     <tr v-for="(item,index) in items">
                                         <td class="center">{{index+1}}</td>
                                         <td class="center">{{item.username}}</td>
-                                        <td class="center" :data-userid="item.userid">{{item.createtime}}</td>
+                                        <td class="center" :data-userid="item.userid">{{item.createtime | time}}</td>
                                         <td class="center">{{item.creator}}</td>
                                     </tr>
 

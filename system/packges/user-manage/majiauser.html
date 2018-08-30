@@ -68,8 +68,8 @@
                                         <td class="center">{{item.userbirthday}}</td>
                                         <td class="center">{{item.tagcount}}</td>
                                         <td class="center">{{item.contentcount}}</td>
-                                        <td class="center">{{item.lastcontenttime}}</td>
-                                        <td class="center">{{item.createtime}}</td>
+                                        <td class="center">{{item.lastcontenttime | time}}</td>
+                                        <td class="center">{{item.createtime | time}}</td>
                                         <td class="center">{{item.fanscount}}</td>
                                         <td class="center">{{item.createuser}}</td>
                                     </tr>
@@ -137,8 +137,8 @@
                 },
                 success:function(diskJson){
                     layer.closeAll();
-                    console.log("马甲用户：");
-                    console.log(diskJson);
+//                    console.log("马甲用户：");
+//                    console.log(diskJson);
 
                     /*翻页信息*/
                     pageinfo2(diskJson.data,pageno);//翻页控件信息

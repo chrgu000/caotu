@@ -83,9 +83,9 @@
                 </div>
                 <div>
                     <span class="title">月</span>
-                    <span class="changeNum">{{activeuser.monthchange}}</span>
-                    <i class="icon iconfont">{{activeuser.monthbl ==0 ? "--" :(activeuser.monthbl >0)?"&#xe8fa;" : "&#xe8f9;"}}</i>
-                    <span class="changeNum">{{activeuser.monthbl == "NaN" ? "--" : activeuser.monthbl}}%</span>
+                    <span class="changeNum">{{alluser.monthchange}}</span>
+                    <i class="icon iconfont">{{alluser.monthbl ==0 ? "--" :(alluser.monthbl >0)?"&#xe8fa;" : "&#xe8f9;"}}</i>
+                    <span class="changeNum">{{alluser.monthbl == "NaN" ? "--" : alluser.monthbl}}%</span>
                 </div>
 
             </div>
@@ -171,13 +171,13 @@
                 </table>
                 <div id="pagerlist">
                     <div id="pagerbtnlist">
-                        <span class="glyphicon glyphicon-backward gbtn" id="prepagebtn" onclick="prepage()"></span>
+                        <span class="glyphicon glyphicon-backward gbtn" id="prepagebtn" onclick="prepage(getetabledata)"></span>
                                 <span class="addpagebox">
-                                    <span id="jumppage" onclick="jumppage()">跳转到</span>
+                                    <span id="jumppage" onclick="jumppage(getetabledata)">跳转到</span>
                                     <input type="number" id="addpageinput" value="1" max="" min="1"/>
                                     共 <span id="allpage">1</span>页
                                 </span>
-                        <span class="glyphicon glyphicon-forward gbtn" id="nextpagebtn" onclick="nextpage()"></span>
+                        <span class="glyphicon glyphicon-forward gbtn" id="nextpagebtn" onclick="nextpage(getetabledata)"></span>
                     </div>
                     <div id="allcontbox">
                         <p id="allconts"></p>
@@ -242,7 +242,9 @@
             getechatdatatop(yesterday,yesterday);
             getechatdata(yesterday,yesterday);
             getechatyerdata();//图4活跃
-            getetabledata(yesterday,yesterday,1);
+            tablestarttime=yesterday;
+            tableendtime=yesterday;
+            getetabledata(1);
         });
 
 
@@ -365,9 +367,10 @@
         }
 
         //获取数据表格
-        function getetabledata(starttime,endtime,pageno){
-            var datapost={"starttime":starttime,"endtime":endtime,"pageno":pageno,"pagesize":10};
-//            //console.log(datapost);
+        var tablestarttime="",tableendtime="";
+        function getetabledata(pageno){
+            var datapost={"starttime":tablestarttime,"endtime":tableendtime,"pageno":pageno,"pagesize":10};
+//            console.log(datapost);
             datapost=JSON.stringify(datapost);
             $.ajax({
                 url : path+'/CTKJBUSINESS/analysis/analysisuser.do',
@@ -386,8 +389,8 @@
 //                    console.log("用户分析表格：");
 //                    console.log(diskJson);
                     if(diskJson.code=="1000"){
-                        $("#tablelist .tablebegintime").html(starttime);
-                        $("#tablelist .tableendtime").html(endtime);
+                        $("#tablelist .tablebegintime").html(tablestarttime);
+                        $("#tablelist .tableendtime").html(tableendtime);
                         if(diskJson.data.reportlist.length>=1){
                             pageinfo(diskJson.data,pageno);//翻页控件信息
                             tabledata.items=diskJson.data.reportlist;
@@ -413,6 +416,7 @@
             let allmonthbl=Number(topdata.allusermper).toFixed(2);
             let maxweekbl=Number(topdata.activeusermaxwper).toFixed(2);
             let maxmonthbl=Number(topdata.activeusermaxmper).toFixed(2);
+
             var newuswerlist={"dayadd":topdata.registeruser,"weekchange":topdata.registeruserw,"weekbl":newweekbl,"monthchange":topdata.registeruserm,"monthbl":newmonthbl};
             var activeuserlist={"dayadd":topdata.activeuser,"weekchange":topdata.activeuserw,"weekbl":actweekbl,"monthchange":topdata.activeuserm,"monthbl":actmonthbl};
             var alluserlist={"dayadd":topdata.alluser,"weekchange":topdata.alluserw,"weekbl":allweekbl,"monthchange":topdata.alluserm,"monthbl":allmonthbl};
@@ -441,9 +445,11 @@
         function changetime(e){
             var starttime=$(e).attr("data-val");
             var endtime=$(".datechooseBox").attr("data-val");
+            tablestarttime=starttime;
+            tableendtime=endtime;
             $(e).addClass("active").siblings(".active").removeClass("active");
             getechatdata(starttime,endtime);
-            getetabledata(starttime,endtime,1);
+            getetabledata(1);
         }
         /*昨天*/
         function yesterday(e){
@@ -451,7 +457,9 @@
             $(e).addClass("active").siblings(".active").removeClass("active");
             getechatdata(yearsday,yearsday);
             getechatyerdata();
-            getetabledata(yearsday,yearsday,1);
+            tablestarttime=yearsday;
+            tableendtime=yearsday;
+            getetabledata(1);
         }
         /*自定义input框选择时间*/
         $(".echarttime input").change(function(){
@@ -497,7 +505,9 @@
                 return false;
             }else{
                 getechatdata(starttime,endtime);
-                getetabledata(starttime,endtime,1);
+                tablestarttime=starttime;
+                tableendtime=endtime;
+                getetabledata(1);
                 if(starttime == today ){
                     getechatyerdata();
                 }

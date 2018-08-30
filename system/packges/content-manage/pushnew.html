@@ -20,6 +20,9 @@
     #contenDetailBox input{width:100%;}
     .chooseDiv{display: none;}
     .chooseDiv.show{display: block;}
+    #oneUser{width:220px;color:#ccc;}
+    #searchUserbtn{background:#0086b3;color:#fff;}
+    #searchUserbtn:hover{background:#7266ba;}
 </style>
 
 <div style="width:80%;margin:0 auto;margin-top:25px;">
@@ -40,7 +43,7 @@
         <span class="lineTitle">内容类型：</span>
         <select name="" id="contentType">
             <option value="1">内容</option>
-            <option value="3">bannner</option>
+           <!-- <option value="3">bannner</option>-->
             <option value="4">H5</option>
             <option value="7">专栏</option>
             <!--<option value="2">关注消息</option>-->
@@ -76,6 +79,7 @@
     <div class="lineBox">
         <span class="lineTitle">单个：</span>
         <input type="text" id="oneUser" class="repead" data-id="" value="" placeholder="输入用户昵称"/>
+        <button class="btn" type="button" id="searchUserbtn" onclick="searchmajia()">搜索匹配</button>
     </div>
     <div class="lineBox">
         <span class="lineTitle">推送时间：</span>
@@ -132,9 +136,6 @@
                         $(".searchSecondMenu").append(' <li data-val="'+ n.tagid+'">'+ n.tagname+'</li>');
                     }
                 });
-
-
-
             }
         });
     }
@@ -226,6 +227,38 @@
         }
     });
 
+    /*搜索用户*/
+    function searchmajia(){
+        var dataval=$("#oneUser").val();
+        var datapost={"username":dataval};
+        datapost=JSON.stringify(datapost);
+        $.ajax({
+            url : path+'/CTKJBUSINESS/vest/searchuser.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+
+            },
+            success:function(diskJson){
+//                console.log("用户列表获取：");
+//                console.log(diskJson);
+                if(diskJson.code=="1000" && diskJson.data){
+                    layer.msg("匹配成功！！");
+                    $("#oneUser").attr("data-id",diskJson.data.userid).css("color","#333");
+                }else{
+                    $("#oneUser").attr("data-id","").css("color","#ccc");
+                    layer.msg("该用户不存在，请重新搜索！！")
+                }
+
+
+            }
+        });
+    }
     /*返回*/
     $("#backbtn").click(function(){
         $("#contentPageBox").load("pushmana.html");
@@ -256,6 +289,9 @@
     $("#oneUser").focus(function(){
         $("#allUser").attr("checked",false);
     });
+    $("#oneUser").keydown(function(){
+        $("#oneUser").attr("data-id","").css("color","#ccc");
+    })
 /*推送时间*/
     $("#pushNow").click(function(){
         if($("#pushNow").is(':checked')){
@@ -292,9 +328,9 @@
         if($("#allUser").is(':checked')){
             pushuserid="";
         }else{
-            var pushduser= $.trim($("#oneUser").val());
+            var pushduser= $.trim($("#oneUser").attr("data-id"));
             if(pushduser==""){
-                layer.msg("请输入指定用户昵称！！");
+                layer.msg("用户不存在请重新搜索匹配！！");
                 return false;
             }else{
                 pushuserid=pushduser;
@@ -361,14 +397,13 @@
 //                   console.log(data);
             },
             success:function(diskJson){
-                layer.closeAll();
-//                    console.log("新增推送消息：");
-//                    console.log(diskJson);
+                    console.log("新增推送消息：");
+                    console.log(diskJson);
                 if(diskJson.code =="1000"){
                     layer.msg("创建成功！！");
                     replay();
                 }else{
-                    layer.msg("创建失败，请重试！！")
+                    layer.msg(diskJson.message);
                 }
 
 

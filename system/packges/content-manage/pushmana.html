@@ -36,7 +36,7 @@
                                         <td class="center">{{index+1}}</td>
                                         <td class="center">{{item.pushtype == "1" ? "内容":item.pushtype == "2" ? "关注消息":item.pushtype == "3" ? "banner":item.pushtype == "4" ? "H5":item.pushtype == "5" ? "评论消息":item.pushtype == "6" ? "点赞消息":"专栏"}}</td>
                                         <td class="center">{{item.pushtitle}}</td>
-                                        <td class="center">{{item.pushtime}}</td>
+                                        <td class="center">{{item.pushtime|time}}</td>
                                         <td class="center">{{item.pushflag == "1" ? "已推送":"未推送"}}</td>
                                         <td class="center">{{item.opentimes}}</td>
                                     </tr>
@@ -102,8 +102,8 @@
                 },
                 success:function(diskJson){
                     layer.closeAll();
-                    console.log("推送信息：");
-                    console.log(diskJson);
+//                    console.log("推送信息：");
+//                    console.log(diskJson);
 
                     /*翻页信息*/
                     pageinfo3(pageno,diskJson.data.count,diskJson.data.pagesize);//翻页控件信息

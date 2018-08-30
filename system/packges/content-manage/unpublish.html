@@ -66,7 +66,7 @@
                                 <td>{{item.contenttitle}}</td>
                                 <td class="center">{{item.contenttype == "3" ? "图片":(item.contenttype == "1" ? "横视频":"竖视频")}}</td>
                                 <td class="center">{{item.contentlevel == "3" ? "A":(item.contentlevel == "2" ? "B":"C")}}</td>
-                                <td class="center">{{item.createtime}}</td>
+                                <td class="center">{{item.createtime | time}}</td>
                                 <td class="center tabbig">{{item.tagshow}}</td>
                                 <td class="center tabbig">{{item.checkbak}}</td>
                                 <td class="center">{{item.checkuid}}</td>
@@ -136,8 +136,8 @@
                 },
                 success:function(diskJson){
                     layer.closeAll();
-                    console.log("未发布列表：");
-                    console.log(diskJson);
+//                    console.log("未发布列表：");
+//                    console.log(diskJson);
                     /*翻页信息*/
                     pageinfo(diskJson.data,pageno);//翻页控件信息
                     unpusblishtabledata.items=diskJson.data.ContentList;

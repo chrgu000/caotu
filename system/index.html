@@ -192,13 +192,14 @@
            sestop();
            if(userdatas && userdatas.code && userdatas.code=="1000"){
                var datas=userdatas.data.userrolelist;
+              // console.log(datas);
                $.each(datas,function(i,n){
                    $("#"+ n.rolepid).append(' <li><a data-id="'+ n.roleid+'" class="J_menuItem" href="'+ n.rolepath+'.html">'+ n.rolename+'</a> </li>')
                });
 //               //举报信息
 //            $("#upstage5").append(' <li><a data-id="006" class="J_menuItem" href="system-manage/reportinform.html">举报信息</a> </li>');
 //               //删除管理
-//               $("#upstage2").append(' <li><a data-id="009" class="J_menuItem" href="content-manage/deletemanage.html">删除管理</a> </li>');
+//            $("#upstage2").append(' <li><a data-id="009" class="J_menuItem" href="content-manage/deletemanage.html">删除管理</a> </li>');
 //              // 搜索管理
 //               $("#upstage2").append(' <li><a data-id="010" class="J_menuItem" href="content-manage/searchmanage.html">搜索管理</a> </li>');
 //             //  吃瓜用户管理

@@ -51,29 +51,44 @@ function getload() {
 
 /*翻页*/
 /*下一页*/
-function nextpage(){
+function nextpage(callback){
     var page=parseInt($("#addpageinput").val());
     var allpage=parseInt($("#allpage").html());
   /*  console.log(page);
     console.log(allpage);*/
     if(page < allpage){
-        getcheck(page+1);
+        if(callback && callback!=""){
+            callback(page+1)
+        }else{
+            getcheck(page+1);
+        }
+
     }
 }
 /*上一页*/
-function prepage(){
+function prepage(callback){
     var page=parseInt($("#addpageinput").val());
     var allpage=parseInt($("#allpage").html());
   /*  console.log(page);
     console.log(allpage);*/
     if(page >1){
-        getcheck(page-1);
+        if(callback && callback!=""){
+            callback(page-1)
+        }else{
+            getcheck(page-1);
+        }
     }
 }
 /*跳转到页面*/
-function jumppage(){
+function jumppage(callback){
     var page=parseInt($("#addpageinput").val());
-    getcheck(page);
+    if(callback && callback!=""){
+        callback(page);
+    }else{
+        getcheck(page);
+
+    }
+
 }
 
 /*页面信息*/
@@ -258,7 +273,28 @@ $(function(){
         var t = Y + '-' + m + '-' + d;
         return t;
     })});*/
+$().ready(function() {
+ <!-- 自定义filter名称为'time' -->
+ Vue.filter('time', function(value)
+ {
+     if(value && value!=""){
+         if(value.length >=8){
+             var tt=value.slice(0,4)+"-"+value.slice(4);
+             tt=tt.slice(0,7)+"-"+tt.slice(7);
+             if(value.length >=12){
+                 tt=tt.slice(0,10)+" "+tt.slice(10);
+                 tt=tt.slice(0,13)+":"+tt.slice(13);
+                 tt=tt.slice(0,16)+":"+tt.slice(16);
+             }
+             return tt;
+         }else{
+             return value;
+         }
 
+
+     }
+
+ })});
 
 
 

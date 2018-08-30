@@ -45,7 +45,7 @@
                                 <td>{{item.senid}}</td>
                                 <td class="center">{{item.senvalue }}</td>
                                 <td class="center">{{item.sentype}}</td>
-                                <td class="center">{{item.createtime}}</td>
+                                <td class="center">{{item.createtime | time}}</td>
                                 <td class="center">{{item.createuser}}</td>
                                 <td class="center"><button type="button" class="btn btn-danger deletebtn" v-on:click="greet(item.senid)">删除</button></td>
                             </tr>

@@ -85,7 +85,7 @@
                                 <td class="center">{{item.feedtext}}</td>
                                 <td class="feedurllist center" v-on:click="bigimg(item)"><img v-bind:src="item.feedurllist" alt=""/></td>
                                 <td class="center">{{item.contactway}}</td>
-                                <td class="center">{{item.createtime}}</td>
+                                <td class="center">{{item.createtime | time}}</td>
                                 <td class="center">{{item.feedusername}}</td>
                                 <td class="center isdeal" v-if="item.isdeal ==0" :data-id="item.isdeal" v-on:click="greet(item,index)">未处理</td>
                                 <td class="center isdeal" v-else :data-id="item.isdeal" style="color:#333;">已处理</td>

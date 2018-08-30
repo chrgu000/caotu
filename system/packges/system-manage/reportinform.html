@@ -84,7 +84,7 @@
                                 <td>{{item.reporttext}}</td>
                                 <td class="center">{{item.reporttype=="1"?"内容":"评论"}}</td>
                                 <td class="center">{{item.reportObject}}</td>
-                                <td class="center">{{item.createtime}}</td>
+                                <td class="center">{{item.createtime | time}}</td>
                                 <td class="center">{{item.reportusername}}</td>
                                 <td class="center">{{item.dealres=="0"?"待处理":(item.dealres=="1"?"通过":"未通过")}}</td>
                                 <td class="center" v-if="item.dealres==1">

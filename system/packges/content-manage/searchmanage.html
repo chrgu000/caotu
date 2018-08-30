@@ -58,7 +58,7 @@
                             <td class="center">{{index+1}}</td>
                             <td class="center">{{item.keyword }}</td>
                             <td class="center">{{item.searchcount}}</td>
-                            <td class="center">{{item.lastsearchtime}}</td>
+                            <td class="center">{{item.lastsearchtime | time}}</td>
                         </tr>
                         </tbody>
                     </table>
@@ -132,8 +132,8 @@
                 },
                 success:function(diskJson){
                     layer.closeAll();
-                    console.log("搜索关键词：");
-                    console.log(diskJson);
+//                    console.log("搜索关键词：");
+//                    console.log(diskJson);
                     /*翻页信息*/
                     pageinfo(diskJson.data,pageno);//翻页控件信息
                     tabledata.items=diskJson.data.SearchList;
@@ -160,13 +160,13 @@
                 data: postdata,
                 error: function(data){
                     layer.msg("服务器未响应,请稍后再试!");
-                    console.log("获取失败：");
-                    console.log(data);
+//                    console.log("获取失败：");
+//                    console.log(data);
                 },
                 success:function(diskJson){
                     layer.closeAll();
-                    console.log("导出搜索关键词：");
-                    console.log(diskJson);
+//                    console.log("导出搜索关键词：");
+//                    console.log(diskJson);
                     if(diskJson.code==1000){
                         var path3="/CTKJBUSINESS/file/downFileByName.do?filelocation=";
                       /*  var aLink = document.createElement('a');

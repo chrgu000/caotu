@@ -34,8 +34,8 @@
                             <tr v-for="(item,index) in items" :data-id="item.userid">
                                 <td class="center">{{item.userid}}</td>
                                 <td class="center">{{item.username}}</td>
-                                <td class="center">{{item.createtime }}</td>
-                                <td class="center">{{item.lastlogin}}</td>
+                                <td class="center">{{item.createtime | time}}</td>
+                                <td class="center">{{item.lastlogin | time}}</td>
                                 <td class="center">{{item.tusercount}}</td>
                                 <td class="center">{{item.createusername}}</td>
                                 <td class="center state"><button v-on:click="resetpsd(item.userid)" type="button" class="repecePsd btn btn-danger">重置密码</button>{{item.userstatus == "1" ? "使用中":"停用"}}</td>
@@ -316,7 +316,7 @@
 //                    console.log("分配马甲：");
 //                    console.log(diskJson);
                     if(diskJson.code =="1000"){
-
+                        console.log(allotmajia.checkmajia.length);
                         tabledata.items[allotmajia.tabledataindex].tusercount=allotmajia.checkmajia.length;
                     }else{
                         layer.msg("马甲用户列表获取失败！！")
