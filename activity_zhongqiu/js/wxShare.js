@@ -6,8 +6,8 @@
 var wxlist={"appId":"wx7209465a9ddef7e2","timestamp":"","nonceStr":"","signature":""};
 var wxfxxinfo={"imgUrl":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/seven_xi2.png",
     "link" : "",
-    "desc" : "单身狗属性测试了解一下～",   // 分享描述
-    "title" : "没想到我竟然是这种狗...."   // 分享标题*/
+    "desc" : "中秋活动了解一下～",   // 分享描述
+    "title" : "没想到我竟然是这种月饼...."   // 分享标题*/
 };
 
 gettiken();
@@ -65,7 +65,7 @@ function gettiken(){
 //配置微信信息
 function config(wxlist){
     wx.config ({
-        debug : false,    // true:调试时候弹窗
+        debug : true,    // true:调试时候弹窗
         appId : wxlist.appId,  // 微信appid
         timestamp : wxlist.timestamp, // 时间戳
         nonceStr : wxlist.noncestr,  // 随机字符串
@@ -153,26 +153,25 @@ wx.ready(function () {
         }
     });
 });
-/*
 wx.error(function(res){
     // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
    //console.log(res);
-});*/
+});
 
 
 /*获取微信用户信息*/
 function getweixininfo(){
     var loctionsrc= window.location.search;
    var cc= GetRequest(loctionsrc);
-    //console.log("cc");
-    //console.log(cc);
+    console.log("cc");
+    console.log(cc);
     //alert(cc.code);
    if(cc.code=="" || cc.code==null){
        //alert(1);
        //console.log("cc");
        //console.log(cc);
         //var redirect_uri=location.href;//分享网址
-        var redirect_uri=encodeURIComponent("https://v3.toutushare.com/activity_weixinces/active.html");
+        var redirect_uri=encodeURIComponent("https://v3.toutushare.com/activity_zhongqiu/active.html");
         window.location.href='https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx5527fcd602603a18&redirect_uri='+redirect_uri+'&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect';
 
    }else{
@@ -188,18 +187,17 @@ function getweixininfo(){
         async:true,
         data: tjdatas,
         error: function(data){
-            //layer.msg("服务器未响应,请稍后再试!");
-            //console.log("获取失败：");
-            //console.log(data);
-            $("#userInfoName").attr("data-id","0");
+            layer.msg("服务器未响应,请稍后再试!");
+            console.log("获取微信用户信息失败：");
+            console.log(data);
         },
         success:function(diskJson){
-            //console.log("获取微信用户信息:");
-            //console.log(diskJson);
+            console.log("获取微信用户信息:");
+            console.log(diskJson);
             if(diskJson.code =="1000" && diskJson.data.nickname){
                 result.username=diskJson.data.nickname;
                 $("#userInfoHead").attr("src",diskJson.data.headimgurl);
-                $("#userInfoName").attr("data-id","1");
+                $("#userInfoName").html(diskJson.data.nickname);
                 getBase64Image(diskJson.data.headimgurl);
 
             }else{
@@ -227,17 +225,18 @@ function getBase64Image(imgurl) {
     //console.log(imgurl);
     var img = new Image();
     img.src = imgurl;
-    img.crossOrigin = 'Anonymous';
+    img.setAttribute('crossOrigin', 'anonymous');
     img.onload=function(){
         var canvas = document.createElement("canvas");
         canvas.width = 300;//这个设置不能丢，否者会成为canvas默认的300*150的大小
-        canvas.height = 300;//这个设置不能丢，否者会成为canvas默认的300*
+        canvas.height = 300;//这个设置不能丢，否者会成为canvas默认的300*150的大小
         var ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0, 300, 300);
         var dataURL = canvas.toDataURL("image/png");
-        //console.log("dataURL");
-        //console.log(dataURL);
+      /*  console.log("dataURL");
+        console.log(dataURL);*/
         $("#userInfoHead").attr("src",dataURL);
+        isimgload=1;
 
     }
 }

@@ -253,7 +253,7 @@
 
             </textarea>
             <span class="" style="position: relative;">
-                点赞数 <input type="number" id="mySetNum" value="1"/>
+                点赞数 <input type="number" max="300" id="mySetNum" value="1"/>
                 <button type="button" class="btn btn-sm btn-primary" id="myConmentsEnter" onclick="enterd()">发送</button>
                 <button type="button" class="btn btn-sm btn-primary" id="myConmentsSub" onclick="subd()">提交</button>
             </span>
@@ -503,6 +503,14 @@
             getlabellist(dataval,searchid);
         }
     });
+
+    /*点赞数限制*/
+    $("#mySetNum").blur(function(){
+        var num=$("#mySetNum").val();
+        if(num >300){
+            $("#mySetNum").val(300);
+        }
+    })
 
     /*发送*/
     var talknum=0;

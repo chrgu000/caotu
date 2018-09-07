@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta content=”initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width” name=”viewport” />
     <meta content=”telephone=no” name=”format-detection” />
+    <META HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+    <META HTTP-EQUIV="expires" CONTENT="0">
     <title>头图</title>
     <link href="img/logo.png" rel="shortcut icon">
     <link rel="stylesheet" href="css/common.css"/>
@@ -16,15 +19,16 @@
 </head>
 <body>
     <div class="conntentsBox">
-        <header id="shareHeader">
-            <div class="logobox">
+        <a id="shareHeader" class="downhrefbtn"  href="#">
+            <img class="shareHeaderImg" style="width:100%;height:auto;" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/titltbg3.png" alt=""/>
+           <!-- <div class="logobox">
                 <img class="logo" src="img/logo.png" alt="logo"/>
                 <span>
                     头图
                 </span>
             </div>
-            <a class="downhrefbtn"  href="#" id="downappbtn">打 开</a>
-        </header>
+            <a class="downhrefbtn"  href="#" id="downappbtn">打 开</a>-->
+        </a>
 
         <div class="conntentsBox" id="themeContentBox" style="text-align: center;">
             <div>
@@ -34,7 +38,7 @@
                 <h3 class="themecontitle">{{userhead}}</h3>
                 <p class="themContaine">{{commendTitle}}</p>
             </div>
-            <a class="downhrefbtn btn attentBtn"  href="#" id="themeAttentBtn"><img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/focuson2x.png" alt=""/></a>
+            <a class="downhrefbtn btn attentBtn"  href="#" id="themeAttentBtn"><img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/sharefocus.png" alt=""/></a>
 
         </div>
         <!--主题内容-->
@@ -52,11 +56,14 @@
             <!--<h3 class="title">主题内容</h3>-->
             <div class="allrecommendBox" id="allThemeConBox">
                 <div class="themeContent" v-for="(item,index) in items" v-bind:data-id="item.tagid">
-                    <h4 class="conTitle">
-                        <span class="imgBox"><img v-bind:src="item.userheadphoto" alt=""/></span>
+                    <div class="conTitle">
+                        <div class="headTitleBox">
+                            <img class="caidan" v-if="item.guajianurl && item.guajianurl.length >0" v-bind:src="item.guajianurl" alt=""/>
+                            <span class="imgBox"><img v-bind:src="item.userheadphoto" alt=""/></span>
+                        </div>
                         <span class="conUserName">{{item.username}}</span>
-                        <a class="downhrefbtn btn attentBtn"  v-bind:href="downhref"><img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/focuson2x.png" alt=""/></a>
-                    </h4>
+                        <a class="downhrefbtn btn attentBtn"  v-bind:href="downhref"><img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/sharefocus.png" alt=""/></a>
+                    </div>
                     <p class="contentcomment">{{item.contenttitle}}</p>
                     <div class="themeMainBox">
                         <div  v-if="item.contenttype ==3 || item.contenttype ==4"  class="thempictureBox">
@@ -67,7 +74,7 @@
                             </div>
                         </div>
                         <div v-else class="videoBox">
-                            <video id="video"  controls="controls" height="100%" width="100%" v-bind:poster="item.contenturllist[0]">
+                            <video id="video" x5-video-player-type="h5"  controls="controls" height="100%" width="100%" v-bind:poster="item.contenturllist[0]">
                                 <source v-bind:src="item.contenturllist[1]">
                                 Your browser does not support the video tag.
                             </video>
@@ -290,8 +297,8 @@
                 console.log(data);
             },
             success:function(diskJson){
-//                console.log("获取主题内容:");
-//                console.log(diskJson);
+                console.log("获取主题内容:");
+                console.log(diskJson);
                 if(diskJson.code =="1000"){
                     themcommendmore.items=diskJson.data;
                     $.each(diskJson.data,function(i,n){

@@ -27,7 +27,9 @@
 .layui-layer-dialog .layui-layer-content{color:#fff;}
 .must{color:red;font-size:11px;font-weight: 500;}
 #tablelistbox .tabbig{min-width: 95px;}
-
+#tablelistbox tr{display: flex;}
+#tablelistbox td,
+#tablelistbox th{  flex: 1;}
 /*#tablelist #conttypeChoose{position: absolute;top:0;left:20px;width:50px;height:25px;}*/
 #leftNavsRebox{width:100%;height:100%;background:rgba(134, 130, 130, 0.7);;z-index:999;position: absolute;left:0;top:0;display: none;}
 #leftNavsRebox.show{display: block;}

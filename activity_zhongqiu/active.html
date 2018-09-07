@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta content=”initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width” name=”viewport” />
+    <meta content=”telephone=no” name=”format-detection” />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="七夕单身狗指数测试">
+    <meta name="viewport" content="maximum-scale=1.0, user-scalable=0">
+    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <META HTTP-EQUIV="Expires" CONTENT="0">
+    <title>中秋</title>
+    <link href="img/logo.png" rel="shortcut icon">
+    <link rel="stylesheet" href="css/common.css"/>
+    <link rel="stylesheet" href="plugin/font/iconfont.css"/>
+
+    <!-- 必须引入的文件-->
+    <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <script type="application/javascript" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/jquery.min.js"></script>
+    <script type="application/javascript" src="plugin/layer/layer.js"></script>
+    <script type="application/javascript" src="js/canvas2image.js"></script>
+    <!-- 组装微信配置信息js文件-->
+<!--    <script src="js/wxShare_data.js"></script>-->
+
+    <script type="application/javascript" src="js/index.js"></script>
+    <script src="js/sha1.js"></script>
+    <!-- 微信分享时调用对应的接口js文件-->
+    <script src="js/wxShare.js"></script>
+</head>
+
+<body>
+    <div class="conntentsBox">
+        <img style="z-index:-10;" class="actpagebg" src="img/bg.png" alt=""/>
+        <!--首页-->
+        <div id="indexpage" data-page="s0" data-name="" class="actPages active">
+            <img class="actpagebg" src="img/home_paper.png" alt=""/>
+            <div class="fontcontents">
+                <img class="title" src="img/title.png" alt="title"/>
+                <img class="head" src="img/zhuazi.png" alt="title"/>
+            </div>
+            <div class="creatUsernameBox">
+                <input id="testParameter" type="date" value="" placeholder="请输入你的生日"/>
+                <p class="tips">*请输入你的生日</p>
+            </div>
+            <div class="sexChooseBox">
+                <button class="btn" id="beginTest" onclick="begintest()" style="">开始测试</button>
+            </div>
+            <div class="foot">
+                <img src="img/maotui.png" alt="" class="manfoot"/>
+                <img src="img/meitui.png" alt="" class="girlfoot"/>
+            </div>
+        </div>
+        <!--结果页面-->
+        <div id="lastpage" data-page="end0" class="actPages">
+
+            <p class="lastheadtitle"><span class="logospan"><img src="img/logo.png" alt="logo"/></span>头图-超内涵的搞笑社区</p>
+            <!--引导图-->
+            <div id="flowImgBox">
+                <img src="" alt=""/>
+            </div>
+            <img class="lastpagebg" src="img/zhengshu.png" alt=""/>
+            <div class="lastallBox" style="width:100%;position: relative;padding:10px;">
+                <!--<img style="" src="" alt="" id="canimg"/>-->
+                <div class="dogHeadBox" style="margin-top:20px;">
+                    <!--<img class="dogHead" src="" alt="dog"/>-->
+                    <!--<img class="dogHeadsay" src="img/talk.png" alt="dog"/>-->
+                </div>
+                <div class="lastGetInfoBox">
+                    <div class="userinfobox">
+                        <span class="headImgBox">
+                            <img id="userInfoHead" src="img/logo.png" alt="头像"/>
+                        </span>
+                        <div class="userInfo">
+                            <p class="userName" id="userInfoName" data-id="">偷偷她她她她她她她她她</p>
+                            <p class="dogName">纯种哈士奇</p>
+                        </div>
+                    </div>
+                    <p class="grade">110分</p>
+                    <div class="evaluate">你还是狗吗？按年龄算，叫单身鳖；按体型算，叫单身猪</div>
+                    <div class="smbox">
+                        <img class="ewmimg" src="img/actlink.png" alt=""/>
+                        <div class="info">
+                            <p class="">长按保存图片</p>
+                            <p class="">测一测单身狗属性</p>
+                        </div>
+                    </div>
+
+                    <!-- <a id="appshareBtn" style="visibility: hidden;" href="https://ctkj.share/card" download="头图app" >app分享</a>-->
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <img src="" alt="" id="canimg"/>
+    <div id="lastBtnListBox">
+        <a href="https://ctkj.share/card" id="shareActiveBtn" class="btn" onclick="sharefriend()"></a>
+        <a id="downAppBtn" href="http://sj.qq.com/myapp/detail.htm?apkName=com.caotu.toutu" class="btn" onclick="downApp()"></a>
+    </div>
+    <!--音乐按钮-->
+    <div id="music">
+        <img src="img/music_open.png"/>
+    </div>
+    <audio src="audio/bgm.mp3" id="bgm"  loop="loop"></audio><!--autoplay="autoplay"-->
+    <audio src="audio/click.mp3" id="choosemusic"></audio>
+
+<!--友盟-->
+    <script src="https://s19.cnzz.com/z_stat.php?id=1274437800&web_id=1274437800" language="JavaScript"></script>
+    <script src="js/html2canvas.js"></script>
+    <script type="text/javascript">
+        var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1274437800'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1274437800' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript" src="js/active.js"></script>
+</body>
+</html>

@@ -6,6 +6,7 @@
 const path="https://api.itoutu.com:8898/";//线上
 //const path3="https://dev.api.toutushare.com/";//测试服
 const path4="http://192.168.1.111:8091/";//老冯
+
 var result={
     "grade":0,//分数
     "dog":"",//狗名
@@ -214,69 +215,7 @@ function GetRequest(url) {
 }
 
 
-/*铭感词*/
-function ismgc(checkword){
-    var tjdatas={"checkword":checkword};
-    tjdatas=JSON.stringify(tjdatas);
-    $.ajax({
-        url : path+'CTKJSEVER/content/sencheck.do',
-        cache:false,//false就不会从浏览器缓存中加载请求信息了
-        type:"POST",
-        dataType:"JSON",
-        contentType: "application/json",
-        async:false,
-        data: tjdatas,
-        error: function(data){
-            //console.log("获取失败：");
-            //console.log(data);
-        },
-        success:function(diskJson){
-            //console.log("铭感词:");
-            //console.log(diskJson);
-            if(diskJson.code =="1000" && diskJson.data == "Y"){
-                $(".creatUsernameBox .tips").addClass("show").html("碰到敏感词啦，改一下呗");
-                result.mgc=1;
-            }else{
-                result.mgc=0;
-                saveni(checkword);
 
-            }
-
-        }
-    });
-
-}
-
-/*保存昵称*/
-function saveni(checkword){
-    var tjdatas={"name":checkword};
-    tjdatas=JSON.stringify(tjdatas);
-    $.ajax({
-        url : path+'CTKJSEVER/activepage/putothername.do',
-        cache:false,//false就不会从浏览器缓存中加载请求信息了
-        type:"POST",
-        dataType:"JSON",
-        contentType: "application/json",
-        async:true,
-        data: tjdatas,
-        error: function(data){
-            console.log("获取失败：");
-            console.log(data);
-        },
-        success:function(diskJson){
-            //console.log("保存昵称:");
-            //console.log(diskJson);
-            if(diskJson.code =="1000" && diskJson.data.nickname){
-
-
-            }else{
-
-            }
-
-        }
-    });
-
-}
 
 
 

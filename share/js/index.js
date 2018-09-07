@@ -2,8 +2,8 @@
  * Created by zhu on 2018/5/31.
  */
 
-/*const path="http://192.168.1.114:8807";
- const path2="http://192.168.1.114:8807";*/
+//const path="http://192.168.1.114:8807";
+//const path2="http://192.168.1.114:8807";
 
 /*线上*/
 //const path="http://118.126.68.108:8808";

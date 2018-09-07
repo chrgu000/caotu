@@ -13,6 +13,11 @@ body{
     -ms-text-size-adjust : 100% ;
     text-size-adjust : 100%;
 }
+html, body, form, fieldset, p, div, h1, h2, h3, h4, h5, h6 {
+
+    -webkit-text-size-adjust:100%;
+
+}
 ul,ol,p,h1,h2,h3,h4,h5,h6,dl,dt,dd{
     margin:0;
     padding:0;
@@ -38,23 +43,28 @@ a:hover{
 .clear{
     clear:both;
 }
+Element {
+    -webkit-tap-highlight-color:rgba(255,255,255,0)
+}
 [v-cloak]{display: none;}
-.btn{display: inline-block;padding:6px 9px;background:#FF698F;color:#fff;text-align: center;cursor: pointer;
+.btn{display: inline-block;padding:6px 9px;background:#FF3D6F;color:#fff;text-align: center;cursor: pointer;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;}
 .btn img{width:100%;height:auto;}
 .conntentsBox{width:100%;}
-#shareHeader{background:url("../img/titltbg.png") no-repeat; /*filter: blur(2px);*/background-size:cover;height:120px;position: fixed;top:0;left:0;width:100%;z-index:99;line-height: 120px;}
+#shareHeader{/*filter: blur(2px);*/height:140px;position: fixed;top:0;left:0;width:100%;z-index:910;line-height: 120px;display: block;}
 #shareHeader .logobox{float: left;padding-left:30px;position: relative;height:100%;line-height: 120px;}
 #shareHeader .logo{height:80px;width:auto;vertical-align: middle;margin-top: -14px;}
+#shareHeader .shareHeaderImg{width:100%;height:auto;}
+#shareHeaderDownBtn{position: absolute;top:0;left:0;z-index:95;}
 #shareHeader .logobox span{font-size:2.7rem;color:#fff;display: inline-block;height:100%;line-height: 120px;margin-left:16px;}
 #downappbtn{width:132px;height:73px;line-height: 73px;text-align: center;color:#fff;background:#FF698F;display: inline-block;float:right;margin-top:20px;margin-right:20px;font-size:2.2rem;cursor: pointer;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;}
 #userheadbox{position: relative;height:100px;padding-left:25px;padding-top:8px;}
-#userheadbox .imgbox{display: inline-block;width:101px;height:101px;background:#FF698F;overflow: hidden;vertical-align:top;margin-right:9px;
+#userheadbox .imgbox{display: inline-block;width:101px;height:101px;background:#FF698F;overflow: hidden;margin-top:9px;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;}
@@ -64,7 +74,7 @@ a:hover{
 #attentBtn .iconfont{ font-size: 2.1rem;margin-right: 5px;}
 #contentTittle{font-size:2.5rem;padding-left:30px;color:#333;line-height: 3.3rem;margin-top:15px;min-height:35px;max-height:350px;}
 #mainContntShowbox{width:95%;margin:27px auto;height:400px;}
-#mainContentBox{margin-top:132px;}
+#mainContentBox{margin-top:190px;}
 #seeDetails{width:80%;height:70px;line-height: 70px;border:0;font-size:2rem;font-family: serif;
     -webkit-border-radius: 100px;
     -moz-border-radius: 100px;
@@ -89,15 +99,15 @@ a:hover{
 #moreRecommendBox .recommendMiddleBox{float:left;width:calc(100% - 265px);height:100%;padding:10px 0;padding-left:35px;overflow: hidden;box-sizing: border-box;line-height: 126px;}
 
 /*∑÷œÌ÷˜Ã‚*/
-#themeContentBox{margin-top:145px;padding-bottom:45px;}
+#themeContentBox{margin-top:200px;padding-bottom:45px;}
 #themeContentBox .themeContentHead{width:150px;height:150px;border-radius: 7px;}
 #themeContentBox .themecontitle{width:70%;margin:0 auto;font-size:2.7rem;color:#333;word-wrap: break-word;
     word-break: normal; }
 #themeContentBox .themContaine{font-size:2.1rem;color:#999;max-height:116px;overflow: hidden;line-height: 41px;margin:13px 0;}
 .attentBtn{color:#fff;font-size:1.8rem;width:165px;height:62px;background:none;line-height: 62px;padding:0;}
 .attentBtn .iconfont{font-size:2.1rem;margin-right:5px;}
-#allThemeConBox .conTitle{position: relative;}
-#allThemeConBox .imgBox{display: inline-block;width:90px;height:90px;overflow: hidden;vertical-align: top;
+#allThemeConBox .conTitle{position: relative;height:110px;}
+#allThemeConBox .imgBox{display: inline-block;width:100px;height:100px;overflow: hidden;vertical-align: top;margin-top:9px;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;}
@@ -137,3 +147,6 @@ a:hover{
 .pictureList.along .imgbox{width:50%;height:330px;}
 .imgbox img{width:100%;height:auto;}
 .imgbox.wimg img{width:auto;height:100%;}
+
+.headTitleBox{width:110px;height:110px;float:left;position: relative;margin-right:11px;text-align: center;}
+.caidan{position: absolute;left:0;top:0;width:100%;height:100%;z-index:89;}

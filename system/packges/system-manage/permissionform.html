@@ -172,13 +172,13 @@
                 data: datapost,
                 error: function(data){
                     layer.msg("服务器未响应,请稍后再试!");
-//                    console.log("内容运营列表失败：");
-//                    console.log(data);
+                    console.log("内容运营列表失败：");
+                    console.log(data);
                 },
                 success:function(diskJson){
                     layer.closeAll();
-//                        console.log("内容运营列表：");
-//                        console.log(diskJson);
+                        console.log("内容运营列表：");
+                        console.log(diskJson);
                     /*翻页信息*/
                     pageinfo2(diskJson.data,pageno);//翻页控件信息
                     tabledata.items=diskJson.data.rows;
@@ -316,10 +316,11 @@
 //                    console.log("分配马甲：");
 //                    console.log(diskJson);
                     if(diskJson.code =="1000"){
-                        console.log(allotmajia.checkmajia.length);
+                        //console.log(allotmajia.checkmajia.length);
+                        layer.msg("马甲分配成功！！");
                         tabledata.items[allotmajia.tabledataindex].tusercount=allotmajia.checkmajia.length;
                     }else{
-                        layer.msg("马甲用户列表获取失败！！")
+                        layer.msg("马甲分配失败！！")
                     }
                 }
             });

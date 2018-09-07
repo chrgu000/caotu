@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta content=”initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width” name=”viewport” />
     <meta content=”telephone=no” name=”format-detection” />
+    <META HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+    <META HTTP-EQUIV="expires" CONTENT="0">
     <title>头图</title>
     <link href="img/logo.png" rel="shortcut icon">
     <link rel="stylesheet" href="css/common.css"/>
@@ -15,25 +18,29 @@
 </head>
 <body>
     <div class="conntentsBox">
-        <header id="shareHeader">
-            <div class="logobox">
+        <a id="shareHeader" class="downhrefbtn"  href="#">
+            <img class="shareHeaderImg" style="width:100%;height:auto;"  src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/titltbg3.png" alt=""/>
+           <!-- <div class="logobox">
                 <img class="logo" src="img/logo.png" alt="logo"/>
                 <span>
                     头图
                 </span>
             </div>
-            <a class="downhrefbtn"  href="#"  id="downappbtn">下 载</a>
-        </header>
+            <a class="downhrefbtn"  href="#"  id="downappbtn">下 载</a>-->
+        </a>
 
         <div class="conntentsBox" id="mainContentBox" v-cloak>
             <div id="userheadbox">
                 <div class="titleBox">
-                    <span class="imgbox">
-                         <img class="logo" v-bind:src="userheadphoto" alt="logo"/>
-                    </span>
+                    <div class="headTitleBox">
+                        <img class="caidan"  v-if="guajianurl !=0" v-bind:src="guajianurl" alt=""/>
+                         <span class="imgbox">
+                            <img class="logo" v-bind:src="userheadphoto" alt="logo"/>
+                        </span>
+                    </div>
                     <span class="title">{{userhead}}</span>
                 </div>
-                <a class="downhrefbtn btn"  href="downhref"  id="attentBtn"> <img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/focuson2x.png" alt=""/></a>
+                <a class="downhrefbtn btn"  href="downhref"  id="attentBtn"> <img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/sharefocus.png" alt=""/></a>
             </div>
             <p id="contentTittle">{{commendTitle}}</p>
             <div id="mainContntShowbox">
@@ -61,7 +68,7 @@
                     </div>
 
                     <a class="downhrefbtn concernBtn" v-bind:href="downhref" >
-                        <img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/focuson2x.png" alt=""/>
+                        <img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/sharefocus.png" alt=""/>
                     </a>
                 </div>
             </div>
@@ -89,6 +96,7 @@
         data: {
             "items": [],
             "userhead":"",
+            "guajianurl":"",
             "commendTitle":"",
             "userheadphoto":"img/logo.png"
 
@@ -146,8 +154,8 @@
 
     /*获取url判断类型*/
     function iscontendtype(){
-        //var loctionsrc="?contendid=c9eed87478d811e8b717309c23a27303";//假设得到的location.search; //获取url中"?"符后的字串
-        var loctionsrc= window.location.search;
+       // var loctionsrc="?contendid=5e470a20e34e4a9e88a98ce2436284d1";//假设得到的location.search; //获取url中"?"符后的字串
+       var loctionsrc= window.location.search;
         var urldatas=GetRequest(loctionsrc);
 //        console.log(urldatas);
         getcommonddatas(urldatas.contendid);
@@ -179,7 +187,7 @@
                     if(diskJson.data.contenttitle && diskJson.data.contenttitle!=""){
                         condataqf(diskJson.data);
                     }else{
-                       // window.location.href="sharelack.html"
+                       window.location.href="sharelack.html"
                     }
 
                 }else{
@@ -202,6 +210,12 @@
         }
         if(condatas.contenttitle && condatas.contenttitle !=""){
             commendinfo.commendTitle=condatas.contenttitle;
+        }
+
+        if(condatas.guajianurl && condatas.guajianurl !=""){
+            commendinfo.guajianurl=condatas.guajianurl;
+        }else{
+            commendinfo.guajianurl=0;
         }
 
         if(condatas.contenttype == "1" || condatas.contenttype == "2"){
