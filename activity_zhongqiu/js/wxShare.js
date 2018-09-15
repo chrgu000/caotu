@@ -10,7 +10,13 @@ var wxfxxinfo={"imgUrl":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/se
     "title" : "没想到我竟然是这种月饼...."   // 分享标题*/
 };
 
-gettiken();
+$(function(){
+    var phonetype=phoneType();
+    if(phonetype ==1){
+        gettiken();//获取微信token
+    }
+})
+
 /*获取token*/
 function gettiken(){
     $.ajax({
@@ -65,7 +71,7 @@ function gettiken(){
 //配置微信信息
 function config(wxlist){
     wx.config ({
-        debug : true,    // true:调试时候弹窗
+        debug : false,    // true:调试时候弹窗
         appId : wxlist.appId,  // 微信appid
         timestamp : wxlist.timestamp, // 时间戳
         nonceStr : wxlist.noncestr,  // 随机字符串
@@ -240,3 +246,26 @@ function getBase64Image(imgurl) {
 
     }
 }
+
+
+/*
+/!*微博分享配置*!/
+(function(){
+    var _w = 90 , _h = 24;
+    var param = {
+        url:"https://v3.toutushare.com/activity_zhongqiu/active.html",
+        type:'2',
+        count:'', /!**是否显示分享数，1显示(可选)*!/
+        appkey:'', /!**您申请的应用appkey,显示分享来源(可选)*!/
+        title:'中秋月饼', /!**分享的文字内容(可选，默认为所在页面的title)*!/
+        pic:'https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/seven_xi2.png', /!**分享图片的路径(可选)*!/
+        ralateUid:'', /!**关联用户的UID，分享微博会@该用户(可选)*!/
+        language:'zh_cn', /!**设置语言，zh_cn|zh_tw(可选)*!/
+        rnd:new Date().valueOf()
+    } ;
+    var temp = [];
+    for( var p in param ){
+        temp.push(p + '=' + encodeURIComponent( param[p] || '' ) )
+    }
+    document.write('<iframe allowTransparency="true" frameborder="0" scrolling="no" src="http://hits.sinajs.cn/A1/weiboshare.html?' + temp.join('&') + '" width="'+ _w+'" height="'+_h+'"></iframe>')
+})() ;*/

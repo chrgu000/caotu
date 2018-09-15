@@ -64,7 +64,7 @@ Element {
     -moz-border-radius: 2px;
     border-radius: 2px;}
 #userheadbox{position: relative;height:100px;padding-left:25px;padding-top:8px;}
-#userheadbox .imgbox{display: inline-block;width:101px;height:101px;background:#FF698F;overflow: hidden;margin-top:9px;
+#userheadbox .imgbox{display: inline-block;width:101px;height:101px;overflow: hidden;margin-top:9px;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;}
@@ -72,7 +72,7 @@ Element {
 #userheadbox span.title{color:#666;font-size:2.2rem;display: inline-block;height:101px;line-height: 101px;}
 #attentBtn{color:#fff;font-size:1.8rem;position: absolute;right:40px;top:20px;width:165px;height:70px;background:none;line-height: 70px;padding:0;}
 #attentBtn .iconfont{ font-size: 2.1rem;margin-right: 5px;}
-#contentTittle{font-size:2.5rem;padding-left:30px;color:#333;line-height: 3.3rem;margin-top:15px;min-height:35px;max-height:350px;}
+#contentTittle{font-size:2.5rem;padding-left:30px;color:#333;line-height: 3.3rem;margin-top:15px;min-height:35px;}
 #mainContntShowbox{width:95%;margin:27px auto;height:400px;}
 #mainContentBox{margin-top:190px;}
 #seeDetails{width:80%;height:70px;line-height: 70px;border:0;font-size:2rem;font-family: serif;
@@ -114,7 +114,7 @@ Element {
 #allThemeConBox .imgBox img{width:100%;height:100%;}
 #allThemeConBox .conUserName{font-size:2.4rem;display: inline-block;height:85px;line-height: 85px;margin-left:5px;font-weight:500;}
 #allThemeConBox .attentBtn{position: absolute;right:3px;top:5px;}
-#allThemeConBox .contentcomment{font-size:2.7rem;line-height: 3.2rem;margin:20px 8px;min-height:28px;max-height:250px;color:#333;}
+#allThemeConBox .contentcomment{font-size:2.7rem;line-height: 3.2rem;margin:20px 8px;min-height:28px;color:#333;}
 #allThemeConBox .themeMainBox{width:100%;height:auto;margin:12px 0;}
 #allThemeConBox  .btngroupBox{margin-top:21px;position: relative;}
 #allThemeConBox  .btngroupBox a{display: inline-block;margin-right:82px;}

@@ -102,10 +102,9 @@
         $("#creatuser").val(userdatas.data.username);
         var date = new Date();
         $('#pushTime').datetimepicker({
-            minView : 2,
+            timeFormat: 'Y-m-d H:m', //格式化时间
             value:date,
             hours12:false,
-            format:'Y-m-d H:m:i',
             timepicker:true//关闭时间选项(true打开false关闭)
         });
     });

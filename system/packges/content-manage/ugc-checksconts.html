@@ -160,11 +160,16 @@
                         </td>
 
                     </tr>
+                    <tr>
+                        <td>
+                            点赞数： <input type="number" id="contentgoods" value="1" min="0"/>
+                        </td>
+                        <td class="playcountBox">
+                            视频播放次数: <input type="number" id="playcount" value="1" min="0"/>
+                        </td>
+                    </tr>
 
                     <tr>
-                      <!--  <td>
-                            点赞数 <input type="number" id="goodNum" value="1" min="0"/>
-                        </td>-->
                         <td colspan="2">
                             发布人：
                             <span id="checkpublisher" data-val="">
@@ -366,8 +371,10 @@
                         movielist=JSON.parse(movielist);
                         $("#movieImgBox").css("display","block");
                         $("#movieImgBox .movieshowimg img").attr("src",movielist[0]);
+                        $("td.playcountBox").css("display","table-cell");
                     }else{
                         $("#movieImgBox").css("display","none");
+                        $("td.playcountBox").css("display","none");
                     }
                     /*标签*/
                     let dataval="",searchid=0;
@@ -624,6 +631,8 @@
         }else{
             contenttype=$("#movieSelect").val();
         }
+        var contentgoods=$("#contentgoods").val();
+        var playcount=$("#playcount").val();
         var datapost={
             "checkuid":checkuid,
             "contentid":contentid,
@@ -631,6 +640,8 @@
             "contenttag":contenttag,
             "commenttext":commenttext,
             "contenttype":contenttype,
+            "contentgoods":contentgoods,
+            "playcount":playcount,
             "ispass":ispass
         };
 //        console.log("datapost:::");

@@ -8,13 +8,10 @@ const path="https://api.itoutu.com:8898/";//线上
 const path4="http://192.168.1.111:8091/";//老冯
 
 var result={
-    "grade":0,//分数
-    "dog":"",//狗名
+    "username":0,//姓名
+    "birthday":"",//生日
     "evaluate":"",//结果评论
-    "sex":1,//性别
-    "dogimg":"",//狗的图片
-    "username":"",//用户名
-    "mgc":0//是否有敏感词0没有1有
+    "sex":1//性别
 };
 /*随机字符串*/
 function randomString(len) {
@@ -213,6 +210,7 @@ function GetRequest(url) {
     }
     return theRequest;
 }
+
 
 
 

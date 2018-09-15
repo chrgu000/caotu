@@ -1,13 +1,13 @@
 
 
-const path4="http://192.168.1.111:8080";//老冯
-const path="http://192.168.1.114:8818";//测试服务器
-const path2="http://192.168.1.114:8818";//测试服务器
+//const path4="http://192.168.1.111:8080";//老冯
+//const path="http://192.168.1.114:8818";//测试服务器
+//const path2="http://192.168.1.114:8818";//测试服务器
 
 
 /*线上*/
-//const path="http://192.168.1.114:8828";
-//const path2="http://192.168.1.114:8828";
+const path="http://192.168.1.114:8828";
+const path2="http://192.168.1.114:8828";
 
 var userdatas=getload();
 /*console.log("用户信息userdatas：");
@@ -352,4 +352,5 @@ function downloadFile(url) {
         layer.msg("下载异常！");
     }
 }
+
 

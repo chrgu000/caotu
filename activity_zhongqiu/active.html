@@ -10,19 +10,22 @@
     <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
     <meta http-equiv="Cache-Control" content="no-cache">
     <META HTTP-EQUIV="Expires" CONTENT="0">
-    <title>中秋</title>
-    <link href="img/logo.png" rel="shortcut icon">
+    <!-- 分享显示的标题-->
+    <meta itemprop="name" content="头图中秋" />
+    <!-- 分享显示的缩略图-->
+    <meta itemprop="image" content="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/logo2.png" />
+    <!-- 分享显示的简介-->
+    <meta name="description" itemprop="description" content="没想到我竟然是这种月饼" />
+
+    <title>头图中秋</title>
+    <link href="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/logo2.png" rel="shortcut icon">
     <link rel="stylesheet" href="css/common.css"/>
-    <link rel="stylesheet" href="plugin/font/iconfont.css"/>
 
     <!-- 必须引入的文件-->
     <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
     <script type="application/javascript" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/jquery.min.js"></script>
     <script type="application/javascript" src="plugin/layer/layer.js"></script>
     <script type="application/javascript" src="js/canvas2image.js"></script>
-    <!-- 组装微信配置信息js文件-->
-<!--    <script src="js/wxShare_data.js"></script>-->
-
     <script type="application/javascript" src="js/index.js"></script>
     <script src="js/sha1.js"></script>
     <!-- 微信分享时调用对应的接口js文件-->
@@ -31,81 +34,65 @@
 
 <body>
     <div class="conntentsBox">
-        <img style="z-index:-10;" class="actpagebg" src="img/bg.png" alt=""/>
-        <!--首页-->
-        <div id="indexpage" data-page="s0" data-name="" class="actPages active">
-            <img class="actpagebg" src="img/home_paper.png" alt=""/>
-            <div class="fontcontents">
-                <img class="title" src="img/title.png" alt="title"/>
-                <img class="head" src="img/zhuazi.png" alt="title"/>
-            </div>
-            <div class="creatUsernameBox">
-                <input id="testParameter" type="date" value="" placeholder="请输入你的生日"/>
-                <p class="tips">*请输入你的生日</p>
-            </div>
-            <div class="sexChooseBox">
-                <button class="btn" id="beginTest" onclick="begintest()" style="">开始测试</button>
-            </div>
-            <div class="foot">
-                <img src="img/maotui.png" alt="" class="manfoot"/>
-                <img src="img/meitui.png" alt="" class="girlfoot"/>
+        <!--背景-->
+        <img style="z-index:-10;" class="actpagebg" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/home_Background.png" alt=""/>
+        <!--月亮-->
+        <img id="moonImg" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/moon.png" alt=""/>
+        <!--首页文字-->
+        <div id="indexIntroBox" >
+            <p class="intro">每个人都有属于自己的月相</p>
+            <p class="intro">现在的你</p>
+            <p class="intro">找到自己专属的月相了吗？</p>
+            <div class="intro playBtnBox">
+                <div id="playBtn" onclick=" playtab();"></div>
             </div>
         </div>
-        <!--结果页面-->
-        <div id="lastpage" data-page="end0" class="actPages">
-
-            <p class="lastheadtitle"><span class="logospan"><img src="img/logo.png" alt="logo"/></span>头图-超内涵的搞笑社区</p>
-            <!--引导图-->
-            <div id="flowImgBox">
-                <img src="" alt=""/>
-            </div>
-            <img class="lastpagebg" src="img/zhengshu.png" alt=""/>
-            <div class="lastallBox" style="width:100%;position: relative;padding:10px;">
-                <!--<img style="" src="" alt="" id="canimg"/>-->
-                <div class="dogHeadBox" style="margin-top:20px;">
-                    <!--<img class="dogHead" src="" alt="dog"/>-->
-                    <!--<img class="dogHeadsay" src="img/talk.png" alt="dog"/>-->
-                </div>
-                <div class="lastGetInfoBox">
-                    <div class="userinfobox">
-                        <span class="headImgBox">
-                            <img id="userInfoHead" src="img/logo.png" alt="头像"/>
-                        </span>
-                        <div class="userInfo">
-                            <p class="userName" id="userInfoName" data-id="">偷偷她她她她她她她她她</p>
-                            <p class="dogName">纯种哈士奇</p>
-                        </div>
+        <!--信息输入框-->
+        <div id="infoInputBox">
+            <input type="text" id="userName" placeholder="输入姓名"/>
+            <input style="margin-top:100px;" type="date" id="birthday" placeholder="输入生日    月    日"/>
+            <div class="btn" id="playBtn2"></div>
+        </div>
+        <!--过度视频-->
+        <video id="video" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/bjvideo2.mp4" muted  height="100%" width="100%"  preload="auto"  x5-video-player-type="h5" x5-video-player-fullscreen="true"  x5-playsinline="true"  webkit-playsinline="true" playsinline="true" x-webkit-airplay="allow" style="object-fit:fill">您的浏览器不支持。</video>
+        <video id="video2" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/bjvideo2.mp4" muted  height="100%" width="100%"  preload="auto" x5-video-player-fullscreen="true"  x5-playsinline="true"  webkit-playsinline="true" playsinline="true" x-webkit-airplay="allow" style="object-fit:fill">您的浏览器不支持。</video>
+        <canvas id="canvas" width="760" height="657" style="background:#333;z-index:999;"></canvas>
+        <!--结果页-->
+        <div id="endPage">
+            <div style="width:100%;height:100%;position: relative;">
+                <img id="moshuibg" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/moshui.png" alt=""/>
+                <div class="endContBox">
+                    <p class="title">— 你的过往标签 —</p>
+                    <div class="tagBoxs">
+                        <span class="userTag">最初</span>
                     </div>
-                    <p class="grade">110分</p>
-                    <div class="evaluate">你还是狗吗？按年龄算，叫单身鳖；按体型算，叫单身猪</div>
-                    <div class="smbox">
-                        <img class="ewmimg" src="img/actlink.png" alt=""/>
-                        <div class="info">
-                            <p class="">长按保存图片</p>
-                            <p class="">测一测单身狗属性</p>
-                        </div>
-                    </div>
-
-                    <!-- <a id="appshareBtn" style="visibility: hidden;" href="https://ctkj.share/card" download="头图app" >app分享</a>-->
+                    <img id="endUserMoon" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/Ball.png" alt=""/>
+                    <p id="userMoonStyle">炎月</p>
+                    <p id="userVersion">
+                        今夕何夕兮，搴舟中流。
+                        今日何日兮，得与王子同舟。
+                        蒙羞被好兮，不訾诟耻。
+                        心几烦而不绝兮，得知王子。
+                        山有木兮木有枝，心悦君兮君不知。
+                    </p>
                 </div>
-
             </div>
         </div>
     </div>
-    <img src="" alt="" id="canimg"/>
-    <div id="lastBtnListBox">
-        <a href="https://ctkj.share/card" id="shareActiveBtn" class="btn" onclick="sharefriend()"></a>
-        <a id="downAppBtn" href="http://sj.qq.com/myapp/detail.htm?apkName=com.caotu.toutu" class="btn" onclick="downApp()"></a>
-    </div>
+
     <!--音乐按钮-->
     <div id="music">
-        <img src="img/music_open.png"/>
+        <img src="img/musicopen.png"/>
+        <audio src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/bgmusic.mp3" id="bgm" autoplay  loop="loop"></audio><!--autoplay="autoplay"-->
     </div>
-    <audio src="audio/bgm.mp3" id="bgm"  loop="loop"></audio><!--autoplay="autoplay"-->
-    <audio src="audio/click.mp3" id="choosemusic"></audio>
+
+
 
 <!--友盟-->
-    <script src="https://s19.cnzz.com/z_stat.php?id=1274437800&web_id=1274437800" language="JavaScript"></script>
+    <div style="display: none;">
+        <script src="https://s19.cnzz.com/z_stat.php?id=1274437800&web_id=1274437800" language="JavaScript"></script>
+    </div>
+
     <script src="js/html2canvas.js"></script>
     <script type="text/javascript">
         var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1274437800'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1274437800' type='text/javascript'%3E%3C/script%3E"));

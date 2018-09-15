@@ -1,0 +1,134 @@
+
+<style>
+    /* Additional style to fix warning dialog position */
+
+    #alertmod_table_list_2 {
+        top: 900px !important;
+    }
+    .lookdetail{color:#0086b3;cursor: pointer;}
+</style>
+
+
+
+
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <h3 style="padding-left:9px;margin:0;height:30px;line-height: 30px;">已推荐队列列表</h3>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox-content">
+                <div class="jqGrid_wrapper" id="tablelist">
+                    <!--   <table id="table_list_2"></table>-->
+                    <table  class="table table-striped" id="tablelistbox">
+                        <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>推荐时间</th>
+                            <th>创建时间</th>
+                            <th>操作人</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tablelistTbody">
+                        <tr v-for="(item,index) in items">
+                            <td class="center">{{index +1 }}</td>
+                            <td class="center lookdetail" v-on:click="lookdetail(item)">{{item.pushtime | time}}</td>
+                            <td class="center">{{item.createtime | time}}</td>
+                            <td class="center">{{item.createuser}}</td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                    <div id="pagerlist">
+                        <div id="pagerbtnlist">
+                            <span class="glyphicon glyphicon-backward gbtn" id="prepagebtn" onclick="prepage()"></span>
+                                <span class="addpagebox">
+                                    <span id="jumppage" onclick="jumppage()">跳转到</span>
+                                    <input type="number" id="addpageinput" value="1" max="" min="1"/>
+                                    共 <span id="allpage">1</span>页
+                                </span>
+                            <span class="glyphicon glyphicon-forward gbtn" id="nextpagebtn" onclick="nextpage()"></span>
+                        </div>
+                        <div id="allcontbox">
+                            <p id="allconts"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Page-Level Scripts -->
+<script>
+
+    var pusblishtabledata = new Vue({
+        el: '#tablelistTbody',
+        data: {
+            items:""
+        },
+        // 在 `methods` 对象中定义方法
+        methods: {
+            lookdetail:function(event){//查看详情
+
+                event=JSON.parse(event.pushdata);
+                var nedata=[];
+                $.each(event.contentdetail,function(i,n){
+                    nedata.push(n.contentid);
+                });
+                layer.open({
+                    type: 2,
+                    title: '队列详情',
+                    shadeClose: true,
+                    maxmin: true, //开启最大化最小化按钮
+                    shade: 0.8,
+                    area: ['80%', '90%'],
+                    content: "detaillist.html", //iframe的url
+                    success: function (layero, index) {
+                        var body = layer.getChildFrame('body', index);
+                        var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                        iframeWin.getcheck(nedata);
+                    }
+                });
+
+            }
+        }
+    });
+
+
+    $(function(){
+        getcheck(1);
+    });
+
+    function getcheck(pageno){
+        var tjdatas={"pageno":pageno,"pagesize":20};
+        tjdatas=JSON.stringify(tjdatas);
+        $.ajax({
+            url : path+'/CTKJBUSINESS/content/queryIsPushQueen.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: tjdatas,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+                //console.log("获取失败：");
+                //console.log(data);
+            },
+            success:function(diskJson){
+//                console.log("发布列表：");
+//                console.log(diskJson);
+                /*翻页信息*/
+                pageinfo3(pageno,diskJson.data.totalCount,20);//翻页控件信息
+                pusblishtabledata.items=diskJson.data.pushlist;
+
+            }
+        });
+    }
+
+
+
+</script>
+
+    
+    
+

@@ -1,0 +1,187 @@
+
+    <style>
+        /* Additional style to fix warning dialog position */
+
+        #alertmod_table_list_2 {
+            top: 900px !important;
+        }
+        .lookdetail{color:#0086b3;cursor: pointer;}
+    </style>
+
+
+
+
+    <div class="wrapper wrapper-content  animated fadeInRight">
+        <h3 style="padding-left:9px;margin:0;height:30px;line-height: 30px;">推荐队列列表</h3>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox-content">
+                    <div class="jqGrid_wrapper" id="tablelist">
+                        <!--   <table id="table_list_2"></table>-->
+                        <table  class="table table-striped" id="tablelistbox">
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>推荐时间</th>
+                                <th>队列名称</th>
+                                <th>内容数</th>
+                                <th>操作人</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tablelistTbody">
+                                <tr v-for="(item,index) in items">
+                                    <td class="">{{index +1 }}</td>
+                                    <td class="center lookdetail" v-on:click="lookdetail(item)">{{item.pushtime | time}}</td>
+                                    <td class="center tabbig">{{item.queenname}}</td>
+                                    <td class="center tabbig">{{item.ctlist.length}}</td>
+                                    <td class="center">{{item.userid}}</td>
+                                    <td class="center">
+                                        <button type="button" class="btn deletebtn" v-on:click="delet(item.queenname,index)">删除</button>
+                                        <button type="button" class="btn deletebtn" v-on:click="effect(item.queenname,index)">立即生效</button>
+                                    </td>
+                                </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page-Level Scripts -->
+    <script>
+
+        var unpusblishtabledata = new Vue({
+            el: '#tablelistTbody',
+            data: {
+                items:""
+            },
+            // 在 `methods` 对象中定义方法
+            methods: {
+                delet: function (event,index) {//删除
+                    deletarry(event,index);
+                },
+                effect: function (event,index) {//立即生效
+                    effectarry(event,index);
+                },
+                lookdetail:function(event){//查看详情
+                    var nedata=event.ctlist;
+                    layer.open({
+                        type: 2,
+                        title: '队列详情',
+                        shadeClose: true,
+                        maxmin: true, //开启最大化最小化按钮
+                        shade: 0.8,
+                        area: ['80%', '90%'],
+                        content: "detaillist.html", //iframe的url
+                        success: function (layero, index) {
+                            var body = layer.getChildFrame('body', index);
+                            var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                            iframeWin.getcheck(nedata);
+                        }
+                    });
+                }
+            }
+        });
+
+//        删除推荐队列
+        function deletarry(event,index){
+            var tjdatas={"queenname":event,"Index":index};
+            tjdatas=JSON.stringify(tjdatas);
+            $.ajax({
+                url : path+'/CTKJBUSINESS/content/deleteQueen.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: tjdatas,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    //console.log("删除预发布列表失败：");
+                    //console.log(data);
+                },
+                success:function(diskJson){
+//                    console.log("删除预发布列表：");
+//                    console.log(diskJson);
+                    if(diskJson.code == 1000){
+                        layer.msg("删除成功！！");
+                        unpusblishtabledata.items.splice(index,1);
+                    }else{
+                        layer.msg("删除失败:"+diskJson.message);
+                    }
+                }
+            });
+        }
+
+        //        推荐队列立即生效
+        function effectarry(event,index){
+            var tjdatas={"queenname":event,"Index":index};
+            tjdatas=JSON.stringify(tjdatas);
+            $.ajax({
+                url : path+'/CTKJBUSINESS/content/immediateEffect.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: tjdatas,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    //console.log("推荐队列立即生效失败：");
+                    //console.log(data);
+                },
+                success:function(diskJson){
+//                    console.log("推荐队列立即生效：");
+//                    console.log(diskJson);
+                    if(diskJson.code == 1000){
+                        layer.msg("推荐队列立即生效！！");
+                        getcheck(1);
+                    }else{
+                        layer.msg("生效失败:"+diskJson.message);
+                    }
+                }
+            });
+        }
+
+
+
+        $(function(){
+            getcheck(1);
+        });
+
+        function getcheck(pageno){
+            var tjdatas={"pageno":pageno,"pagesize":20};
+            tjdatas=JSON.stringify(tjdatas);
+            $.ajax({
+                url : path+'/CTKJBUSINESS/content/queryPreQueen.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: tjdatas,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    //console.log("获取失败：");
+                    //console.log(data);
+                },
+                success:function(diskJson){
+//                    console.log("预发布列表：");
+//                    console.log(diskJson);
+
+                    unpusblishtabledata.items=diskJson.data;
+
+                }
+            });
+        }
+
+
+
+    </script>
+
+    
+    
+

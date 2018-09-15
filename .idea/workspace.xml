@@ -2,82 +2,90 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0315d66b-b225-49e7-8420-e53e82ccf05f" name="Default" comment="">
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\active.html" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\audio\bgm.mp3" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\audio\click.mp3" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\css\MiNiJianZhanBiHei-1.ttf" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\css\common.css" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\a.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\actlink.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\b.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\bg.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\c.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\d.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\dog\chai.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\dog\douniu.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\dog\douniudog.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\dog\hashiqi.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\dog\jinmao.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\dog\keji.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\dog\labuladuo.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\dog\samoye.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\doudou.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\downflow.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\final.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\girl.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\home_paper.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\icon.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\jiaobu.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\logo.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\man.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\maotui.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\meitui.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\music_colse.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\music_open.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\nan1.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\nan2.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\nan3.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\nan4.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\nan5.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\next.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\nv1.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\nv2.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\nv3.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\nv4.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\nv5.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\paperbg.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\seven_xi.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\seven_xi2.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\shareflow.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\suresub.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\talk.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\title.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\xuanzhong.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\zhengshu.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\img\zhuazi.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\js\active.js" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\js\html2canvas.js" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\js\index.js" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\js\jquery.min.js" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\js\jquery.mousewheel.min.js" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\js\server.js" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\js\sha1.js" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\js\share.js" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\activity_weixinces\js\wxShare.js" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\share\img\comments2x.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\share\img\praise2x.png" afterPath="" />
-      <change type="DELETED" beforePath="E:\workspace\share\img\titltbg.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\audio\bgm.mp3" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\audio\click.mp3" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\a.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\actlink.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\b.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\bg.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\c.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\d.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\dog\chai.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\dog\douniu.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\dog\douniudog.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\dog\hashiqi.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\dog\jinmao.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\dog\keji.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\dog\labuladuo.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\dog\samoye.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\doudou.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\downflow.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\final.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\girl.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\home_paper.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\icon.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\jiaobu.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\logo.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\man.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\maotui.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\meitui.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\music_colse.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\music_open.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\nan1.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\nan2.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\nan3.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\nan4.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\nan5.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\next.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\nv1.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\nv2.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\nv3.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\nv4.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\nv5.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\paperbg.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\seven_xi.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\seven_xi2.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\shareflow.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\suresub.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\talk.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\title.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\xuanzhong.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\zhengshu.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\img\zhuazi.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\plugin\font\demo.css" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\plugin\font\demo_fontclass.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\plugin\font\demo_symbol.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\plugin\font\demo_unicode.html" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\plugin\font\iconfont.css" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\plugin\font\iconfont.eot" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\plugin\font\iconfont.js" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\plugin\font\iconfont.svg" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\plugin\font\iconfont.ttf" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\activity_zhongqiu\plugin\font\iconfont.woff" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\appbanner\img\logo.png" afterPath="" />
+      <change type="DELETED" beforePath="E:\workspace\appbanner\img\publicity.png" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/share/img/logo.png" afterPath="$PROJECT_DIR$/share/img/logo.png" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_zhongqiu/active.html" afterPath="$PROJECT_DIR$/activity_zhongqiu/active.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_zhongqiu/js/active.js" afterPath="$PROJECT_DIR$/activity_zhongqiu/js/active.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/system/packges/content-manage/checksconts.html" afterPath="$PROJECT_DIR$/system/packges/content-manage/checksconts.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_zhongqiu/css/common.css" afterPath="$PROJECT_DIR$/activity_zhongqiu/css/common.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/share/css/common.css" afterPath="$PROJECT_DIR$/share/css/common.css" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/system/css/common.css" afterPath="$PROJECT_DIR$/system/css/common.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/share/js/index.js" afterPath="$PROJECT_DIR$/share/js/index.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/share/moviedetial.html" afterPath="$PROJECT_DIR$/share/moviedetial.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/system/packges/system-manage/feedbackinform.html" afterPath="$PROJECT_DIR$/system/packges/system-manage/feedbackinform.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/appbanner/packge/getoutDispose.html" afterPath="$PROJECT_DIR$/appbanner/packge/getoutDispose.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/system/index.html" afterPath="$PROJECT_DIR$/system/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_zhongqiu/js/index.js" afterPath="$PROJECT_DIR$/activity_zhongqiu/js/index.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/system/js/index.js" afterPath="$PROJECT_DIR$/system/js/index.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/appbanner/pact.html" afterPath="$PROJECT_DIR$/appbanner/pact.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/system/packges/system-manage/permissionform.html" afterPath="$PROJECT_DIR$/system/packges/system-manage/permissionform.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/system/packges/system-manage/performanceManagement.html" afterPath="$PROJECT_DIR$/system/packges/system-manage/performanceManagement.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/system/packges/content-manage/pushnew.html" afterPath="$PROJECT_DIR$/system/packges/content-manage/pushnew.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/system/packges/system-manage/reportmovie.html" afterPath="$PROJECT_DIR$/system/packges/system-manage/reportmovie.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/share/shareindex.html" afterPath="$PROJECT_DIR$/share/shareindex.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/share/sharelack.html" afterPath="$PROJECT_DIR$/share/sharelack.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/share/sharetheme.html" afterPath="$PROJECT_DIR$/share/sharetheme.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/system/packges/content-manage/ugc-checksconts.html" afterPath="$PROJECT_DIR$/system/packges/content-manage/ugc-checksconts.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/activity_zhongqiu/js/wxShare.js" afterPath="$PROJECT_DIR$/activity_zhongqiu/js/wxShare.js" />
     </list>
     <ignored path="workspace.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -98,28 +106,12 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="active.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/activity_zhongqiu/active.html">
+      <file leaf-file-name="common.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/activity_zhongqiu/css/common.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-9.619047">
-              <caret line="43" column="44" selection-start-line="43" selection-start-column="44" selection-end-line="43" selection-end-column="44" />
-              <folding>
-                <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="active.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/activity_zhongqiu/js/active.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="254" column="46" selection-start-line="254" selection-start-column="46" selection-end-line="254" selection-end-column="46" />
-              <folding>
-                <element signature="n#!!block;n#sharefriend#0" expanded="false" />
-                <marker date="1536311257450" expanded="true" signature="4453:4502" placeholder="..." />
-                <marker date="1536311257450" expanded="true" signature="4917:4966" placeholder="..." />
-              </folding>
+            <state vertical-scroll-proportion="-2.4931507">
+              <caret line="95" column="65" selection-start-line="95" selection-start-column="65" selection-end-line="95" selection-end-column="65" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -128,28 +120,52 @@
         <entry file="file://$PROJECT_DIR$/activity_zhongqiu/js/index.js">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="217" column="0" selection-start-line="217" selection-start-column="0" selection-end-line="217" selection-end-column="0" />
+              <caret line="78" column="40" selection-start-line="78" selection-start-column="40" selection-end-line="78" selection-end-column="40" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="share.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/activity_zhongqiu/js/share.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="57" column="22" selection-start-line="57" selection-start-column="22" selection-end-line="57" selection-end-column="22" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="wxShare.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="wxShare.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/activity_zhongqiu/js/wxShare.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.8277512">
-              <caret line="201" column="0" selection-start-line="201" selection-start-column="0" selection-end-line="201" selection-end-column="0" />
-              <folding />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="112" column="31" selection-start-line="112" selection-start-column="31" selection-end-line="112" selection-end-column="31" />
+              <folding>
+                <element signature="n#!!block;n#getweixininfo#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="active.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/activity_zhongqiu/js/active.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-3.9452055">
+              <caret line="115" column="55" selection-start-line="115" selection-start-column="55" selection-end-line="115" selection-end-column="55" />
+              <folding>
+                <element signature="n#!!block;n#magnitude#0" expanded="false" />
+                <element signature="n#!!block;n#getcanvasimg#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="active.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/activity_zhongqiu/active.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.60055476">
+              <caret line="56" column="194" selection-start-line="56" selection-start-column="194" selection-end-line="56" selection-end-column="194" />
+              <folding>
+                <element signature="n#style#0;n#img#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#input#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#video#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#video#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#canvas#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+                <element signature="n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+                <element signature="n#style#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -159,6 +175,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Html5" />
         <option value="CSS File" />
         <option value="JavaScript File" />
       </list>
@@ -170,57 +187,57 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/activity/css/common.css" />
-        <option value="$PROJECT_DIR$/activity/js/active.js" />
-        <option value="$PROJECT_DIR$/activity_weixinces/js/wxShare.js" />
-        <option value="$PROJECT_DIR$/activity_weixinces/js/active.js" />
-        <option value="$PROJECT_DIR$/activity_weixinces/js/node.js" />
-        <option value="$PROJECT_DIR$/home/packages/privacypolicy.html" />
-        <option value="$PROJECT_DIR$/appbanner/css/common.css" />
-        <option value="$USER_HOME$/Desktop/通用样式.css" />
-        <option value="$PROJECT_DIR$/appbanner/packge/getoutDispose.html" />
-        <option value="$PROJECT_DIR$/system/packges/system-manage/permissionalot.html" />
-        <option value="$PROJECT_DIR$/system/plugin/cos-js-sdl-v5/cos.js" />
-        <option value="$PROJECT_DIR$/system/packges/content-manage/ugc-moveicheck.html" />
-        <option value="$PROJECT_DIR$/system/packges/system-manage/performanceManagement.html" />
-        <option value="$PROJECT_DIR$/system/packges/system-manage/sensitivenew.html" />
-        <option value="$PROJECT_DIR$/system/packges/content-manage/pushnew.html" />
-        <option value="$PROJECT_DIR$/system/packges/content-manage/deletemanage.html" />
-        <option value="$PROJECT_DIR$/system/packges/content-manage/pushmana.html" />
-        <option value="$PROJECT_DIR$/system/packges/content-manage/unpublish.html" />
-        <option value="$PROJECT_DIR$/system/packges/content-manage/publish.html" />
-        <option value="$PROJECT_DIR$/system/packges/special-manage/content-special.html" />
         <option value="$PROJECT_DIR$/system/packges/special-manage/labelManage.html" />
         <option value="$PROJECT_DIR$/system/packges/special-manage/specialManage.html" />
         <option value="$PROJECT_DIR$/system/packges/content-manage/searchmanage.html" />
         <option value="$PROJECT_DIR$/system/packges/user-manage/majiausermanage.html" />
         <option value="$PROJECT_DIR$/system/packges/user-manage/melonusermanage.html" />
         <option value="$PROJECT_DIR$/system/packges/user-manage/melonuser.html" />
-        <option value="$PROJECT_DIR$/system/index.html" />
         <option value="$PROJECT_DIR$/system/packges/user-manage/majiauser.html" />
         <option value="$PROJECT_DIR$/system/packges/system-manage/sensitiveform.html" />
         <option value="$PROJECT_DIR$/system/packges/system-manage/operationlog.html" />
-        <option value="$PROJECT_DIR$/system/packges/system-manage/feedbackinform.html" />
         <option value="$PROJECT_DIR$/system/packges/system-manage/reportinform.html" />
-        <option value="$PROJECT_DIR$/appbanner/pact.html" />
         <option value="$PROJECT_DIR$/system/packges/data-analysis/user-riseanalysis.html" />
         <option value="$PROJECT_DIR$/share/moviedetial.html" />
-        <option value="$PROJECT_DIR$/system/css/common.css" />
         <option value="E:/参考/06/QQ iPad版-来斗在此·乐趣不停_files/7.3.css" />
-        <option value="$PROJECT_DIR$/activity_zhongqiu/js/index.js" />
-        <option value="$PROJECT_DIR$/activity_zhongqiu/active.html" />
-        <option value="$PROJECT_DIR$/share/css/common.css" />
-        <option value="$PROJECT_DIR$/activity_zhongqiu/js/active.js" />
-        <option value="$PROJECT_DIR$/activity_zhongqiu/css/common.css" />
-        <option value="$PROJECT_DIR$/activity_zhongqiu/js/wxShare.js" />
-        <option value="$PROJECT_DIR$/share/sharetheme.html" />
         <option value="$PROJECT_DIR$/share/js/index.js" />
-        <option value="$PROJECT_DIR$/system/packges/content-manage/checksconts.html" />
-        <option value="$PROJECT_DIR$/system/packges/content-manage/ugc-checksconts.html" />
         <option value="$PROJECT_DIR$/system/packges/system-manage/permissionform.html" />
-        <option value="$PROJECT_DIR$/system/js/index.js" />
         <option value="$PROJECT_DIR$/share/sharelack.html" />
+        <option value="$PROJECT_DIR$/system/packges/system-manage/reportmovie.html" />
+        <option value="$PROJECT_DIR$/system/packges/content-manage/ugc-checksconts.html" />
+        <option value="$PROJECT_DIR$/recruittoken/index.html" />
+        <option value="$PROJECT_DIR$/appbanner/packge/getoutDispose.html" />
+        <option value="$PROJECT_DIR$/appbanner/pact.html" />
+        <option value="$PROJECT_DIR$/system/packges/recommend-manage/recommendarry.html" />
+        <option value="$PROJECT_DIR$/system/packges/recommend-manage/recopicture.html" />
+        <option value="$PROJECT_DIR$/system/packges/recommend-manage/recomovie.html" />
+        <option value="$PROJECT_DIR$/system/packges/content-manage/deletemanage.html" />
+        <option value="$PROJECT_DIR$/system/css/common.css" />
+        <option value="$PROJECT_DIR$/system/packges/system-manage/feedbackinform.html" />
+        <option value="$PROJECT_DIR$/appbanner/recrut.html" />
+        <option value="$PROJECT_DIR$/system/packges/system-manage/performanceManagement.html" />
+        <option value="$PROJECT_DIR$/system/index.html" />
+        <option value="$PROJECT_DIR$/activity_zhongqiu22/index.html" />
+        <option value="$PROJECT_DIR$/system/packges/recommend-manage/recomend.html" />
+        <option value="$PROJECT_DIR$/system/packges/recommend-manage/detaillist.html" />
+        <option value="$PROJECT_DIR$/system/packges/recommend-manage/unrecomend.html" />
+        <option value="$PROJECT_DIR$/system/packges/content-manage/checksconts.html" />
         <option value="$PROJECT_DIR$/share/shareindex.html" />
+        <option value="$PROJECT_DIR$/share/sharetheme.html" />
+        <option value="$PROJECT_DIR$/share/css/common.css" />
+        <option value="$PROJECT_DIR$/activity_zhongqiu/js/wxShare.js" />
+        <option value="$PROJECT_DIR$/activity_zhongqiu/plugin/video/video-js.css" />
+        <option value="$PROJECT_DIR$/activity_zhongqiu/plugin/video/video.js" />
+        <option value="$PROJECT_DIR$/activity_zhongqiu/plugin/video/html5media.js" />
+        <option value="$PROJECT_DIR$/activity_zhongqiu/ceshi.html" />
+        <option value="$PROJECT_DIR$/system/packges/content-manage/pushnew.html" />
+        <option value="$PROJECT_DIR$/system/packges/recommend-manage/checkedlist.html" />
+        <option value="$PROJECT_DIR$/system/js/index.js" />
+        <option value="$PROJECT_DIR$/system/packges/recommend-manage/weightset.html" />
+        <option value="$PROJECT_DIR$/activity_zhongqiu/js/index.js" />
+        <option value="$PROJECT_DIR$/activity_zhongqiu/css/common.css" />
+        <option value="$PROJECT_DIR$/activity_zhongqiu/js/active.js" />
+        <option value="$PROJECT_DIR$/activity_zhongqiu/active.html" />
       </list>
     </option>
   </component>
@@ -260,8 +277,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -290,6 +305,78 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="system" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="workspace" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="workspace" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="system" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="packges" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="workspace" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="workspace" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="system" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="packges" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="recommend-manage" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="workspace" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="workspace" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="system" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="js" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="workspace" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="workspace" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="activity_zhongqiu" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -308,12 +395,14 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="js" />
+              <option name="myItemId" value="plugin" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -321,6 +410,7 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="FullScreen" value="false" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="DefaultHtmlFileTemplate" value="Html5" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
@@ -376,17 +466,17 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-11" y="-11" width="1942" height="1042" extended-state="0" />
+    <frame x="-11" y="-11" width="1942" height="1042" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19407721" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.13960867" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32983682" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32906976" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.069767445" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.50581396" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -408,7 +498,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32906976" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.069767445" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.19407721" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22157589" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32798165" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -433,7 +523,7 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/system/index.html</url>
-          <line>207</line>
+          <line>218</line>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="javascript">
@@ -446,375 +536,335 @@
           <line>224</line>
           <option name="timeStamp" value="8" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/system/packges/recommend-manage/recomend.html</url>
+          <line>45</line>
+          <option name="timeStamp" value="12" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="9" />
+      <option name="time" value="16" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/system/packges/user-manage/eatmelon.html">
+    <entry file="file://$PROJECT_DIR$/appbanner/packge/getoutDispose.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-2.078261">
-          <caret line="96" column="5" selection-start-line="65" selection-start-column="3" selection-end-line="96" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/packges/content-manage/pushnew.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.59193957">
-          <caret line="406" column="17" selection-start-line="406" selection-start-column="17" selection-end-line="406" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/packges/content-manage/pushmana.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3765743">
-          <caret line="40" column="74" selection-start-line="40" selection-start-column="74" selection-end-line="40" selection-end-column="74" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/packges/content-manage/unpublish.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.40302268">
-          <caret line="139" column="44" selection-start-line="138" selection-start-column="19" selection-end-line="139" selection-end-column="44" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/packges/content-manage/publish.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3047859">
-          <caret line="69" column="71" selection-start-line="69" selection-start-column="71" selection-end-line="69" selection-end-column="71" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/packges/content-manage/content-check.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.4962217">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/packges/special-manage/specialManage.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7254408">
-          <caret line="58" column="75" selection-start-line="58" selection-start-column="75" selection-end-line="58" selection-end-column="75" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/packges/content-manage/searchmanage.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.28589422">
-          <caret line="162" column="17" selection-start-line="162" selection-start-column="17" selection-end-line="163" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/packges/user-manage/melonuser.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2720403">
-          <caret line="51" column="48" selection-start-line="51" selection-start-column="48" selection-end-line="51" selection-end-column="48" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/packges/user-manage/melonusermanage.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.22670025">
-          <caret line="41" column="43" selection-start-line="41" selection-start-column="43" selection-end-line="41" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/packges/content-manage/uncheck.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.45717883">
-          <caret line="24" column="43" selection-start-line="24" selection-start-column="43" selection-end-line="24" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/packges/content-manage/deletemanage.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5302267">
-          <caret line="89" column="13" selection-start-line="89" selection-start-column="13" selection-end-line="89" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/packges/user-manage/majiauser.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.40428212">
-          <caret line="136" column="18" selection-start-line="136" selection-start-column="18" selection-end-line="136" selection-end-column="18" />
+        <state vertical-scroll-proportion="0.49874055">
+          <caret line="14" column="47" selection-start-line="14" selection-start-column="47" selection-end-line="14" selection-end-column="47" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/system/packges/system-manage/sensitive.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-11.690476">
-          <caret line="50" column="17" selection-start-line="50" selection-start-column="17" selection-end-line="50" selection-end-column="17" />
+        <state vertical-scroll-proportion="0.64483625">
+          <caret line="59" column="7" selection-start-line="59" selection-start-column="7" selection-end-line="59" selection-end-column="7" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/system/packges/system-manage/sensitiveform.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.31738034">
-          <caret line="43" column="54" selection-start-line="43" selection-start-column="54" selection-end-line="43" selection-end-column="54" />
+        <state vertical-scroll-proportion="0.49874055">
+          <caret line="224" column="13" selection-start-line="0" selection-start-column="0" selection-end-line="232" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/system/packges/system-manage/operationlog.html">
+    <entry file="file://$PROJECT_DIR$/system/packges/content-manage/uncheck.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4307305">
-          <caret line="57" column="71" selection-start-line="57" selection-start-column="64" selection-end-line="57" selection-end-column="71" />
+        <state vertical-scroll-proportion="0.47858942">
+          <caret line="58" column="123" selection-start-line="58" selection-start-column="55" selection-end-line="58" selection-end-column="123" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/system/packges/system-manage/feedbackinform.html">
+    <entry file="file://$PROJECT_DIR$/system/packges/system-manage/permissionsittng.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.68010074">
-          <caret line="87" column="75" selection-start-line="87" selection-start-column="75" selection-end-line="87" selection-end-column="75" />
+        <state vertical-scroll-proportion="0.47103274">
+          <caret line="44" column="21" selection-start-line="44" selection-start-column="21" selection-end-line="44" selection-end-column="21" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/system/packges/user-manage/majiausermanage.html">
+    <entry file="file://$PROJECT_DIR$/appbanner/css/common.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3274559">
-          <caret line="41" column="33" selection-start-line="41" selection-start-column="33" selection-end-line="41" selection-end-column="33" />
+        <state vertical-scroll-proportion="0.086124405">
+          <caret line="50" column="26" selection-start-line="50" selection-start-column="26" selection-end-line="50" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/packges/recommend-manage/recomovie.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-9.476191">
+          <caret line="32" column="179" selection-start-line="32" selection-start-column="179" selection-end-line="32" selection-end-column="179" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/packges/recommend-manage/recopicture.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8161209">
+          <caret line="81" column="49" selection-start-line="81" selection-start-column="49" selection-end-line="81" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/packges/system-manage/permissionform.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5088161">
+          <caret line="69" column="154" selection-start-line="69" selection-start-column="134" selection-end-line="69" selection-end-column="154" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/packges/content-manage/deletemanage.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.2720403">
+          <caret line="126" column="40" selection-start-line="126" selection-start-column="40" selection-end-line="126" selection-end-column="40" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/packges/system-manage/reportmovie.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.619047">
+          <caret line="58" column="72" selection-start-line="56" selection-start-column="7" selection-end-line="58" selection-end-column="72" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/packges/recommend-manage/recommendarry.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-8.095238">
+          <caret line="12" column="59" selection-start-line="7" selection-start-column="7" selection-end-line="12" selection-end-column="59" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/system/packges/system-manage/reportinform.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.49874055">
-          <caret line="92" column="58" selection-start-line="92" selection-start-column="58" selection-end-line="92" selection-end-column="58" />
+        <state vertical-scroll-proportion="0.6120907">
+          <caret line="88" column="75" selection-start-line="88" selection-start-column="75" selection-end-line="88" selection-end-column="75" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/system/packges/special-manage/content-special.html">
+    <entry file="file://$PROJECT_DIR$/system/packges/system-manage/feedbackinform.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.22921914">
-          <caret line="43" column="0" selection-start-line="43" selection-start-column="0" selection-end-line="43" selection-end-column="0" />
+        <state vertical-scroll-proportion="-9.428572">
+          <caret line="35" column="55" selection-start-line="35" selection-start-column="55" selection-end-line="35" selection-end-column="55" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/system/packges/special-manage/labelManage.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.70528966">
-          <caret line="75" column="73" selection-start-line="75" selection-start-column="73" selection-end-line="75" selection-end-column="73" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/appbanner/pact.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5906801">
-          <caret line="29" column="59" selection-start-line="29" selection-start-column="59" selection-end-line="29" selection-end-column="59" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/packges/data-analysis/user-attributeanalisis.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="109.71429">
-          <caret line="10" column="52" selection-start-line="10" selection-start-column="52" selection-end-line="10" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/packges/data-analysis/user-analiysis.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.14609572">
-          <caret line="48" column="56" selection-start-line="48" selection-start-column="44" selection-end-line="48" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/login.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3627204">
-          <caret line="59" column="49" selection-start-line="59" selection-start-column="49" selection-end-line="59" selection-end-column="49" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/packges/data-analysis/user-riseanalysis.html">
+    <entry file="file://$PROJECT_DIR$/appbanner/plugin/layer/layer.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="258" column="14" selection-start-line="258" selection-start-column="14" selection-end-line="258" selection-end-column="14" />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/share/moviedetial.html">
+    <entry file="file://$PROJECT_DIR$/appbanner/recrut.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.44937587">
-          <caret line="9" column="0" selection-start-line="9" selection-start-column="0" selection-end-line="9" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.45591938">
+          <caret line="78" column="0" selection-start-line="78" selection-start-column="0" selection-end-line="78" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/system/js/demo/bootstrap-table-demo.js">
+    <entry file="file://$PROJECT_DIR$/system/packges/system-manage/performanceManagement.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5945455">
-          <caret line="206" column="46" selection-start-line="206" selection-start-column="46" selection-end-line="206" selection-end-column="46" />
+        <state vertical-scroll-proportion="0.23300971">
+          <caret line="133" column="23" selection-start-line="133" selection-start-column="23" selection-end-line="133" selection-end-column="23" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/system/css/common.css">
+    <entry file="file://$PROJECT_DIR$/system/packges/recommend-manage/recomend.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7320574">
-          <caret line="30" column="17" selection-start-line="30" selection-start-column="17" selection-end-line="30" selection-end-column="17" />
+        <state vertical-scroll-proportion="-4.3333335">
+          <caret line="117" column="6" selection-start-line="117" selection-start-column="6" selection-end-line="118" selection-end-column="40" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://E:/参考/06/QQ iPad版-来斗在此·乐趣不停_files/7.3.css">
+    <entry file="file://$PROJECT_DIR$/system/packges/recommend-manage/unrecomend.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.17344497">
-          <caret line="1996" column="1" selection-start-line="1996" selection-start-column="1" selection-end-line="1996" selection-end-column="1" />
-          <folding />
+        <state vertical-scroll-proportion="0.39672545">
+          <caret line="165" column="38" selection-start-line="165" selection-start-column="38" selection-end-line="165" selection-end-column="38" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/activity/active.html">
+    <entry file="file://$PROJECT_DIR$/activity_zhongqiu22/默认值.hyperesources/blank.gif">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/activity_zhongqiu22/默认值.hyperesources/C19EE6-restorable.plist">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.201511">
-          <caret line="9" column="49" selection-start-line="9" selection-start-column="49" selection-end-line="9" selection-end-column="49" />
-          <folding />
+        <state vertical-scroll-proportion="0.13316892">
+          <caret line="4" column="252" selection-start-line="4" selection-start-column="252" selection-end-line="4" selection-end-column="252" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/activity/js/index.js">
+    <entry file="file://$PROJECT_DIR$/activity_zhongqiu22/默认值.hyperesources/home_Background.jpg">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/activity_zhongqiu22/默认值.hyperesources/默认值_hype_generated_script.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.47368422">
-          <caret line="11" column="20" selection-start-line="11" selection-start-column="20" selection-end-line="11" selection-end-column="20" />
-          <folding />
+        <state vertical-scroll-proportion="0.57706535">
+          <caret line="4" column="314" selection-start-line="4" selection-start-column="314" selection-end-line="4" selection-end-column="314" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/activity_zhongqiu22/默认值.hyperesources/HYPE-596.thin.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-0.3107275">
+          <caret line="2" column="159" selection-start-line="2" selection-start-column="159" selection-end-line="2" selection-end-column="159" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/activity_zhongqiu22/默认值.hyperesources/HYPE-596.full.min.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-4.8828607">
+          <caret line="2" column="289" selection-start-line="2" selection-start-column="289" selection-end-line="2" selection-end-column="289" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/activity_zhongqiu/js/share.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="8" column="10" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="10" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/activity/js/active.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.215311">
-          <caret line="5" column="2" selection-start-line="5" selection-start-column="2" selection-end-line="10" selection-end-column="5" />
-          <folding>
-            <marker date="1534414375304" expanded="true" signature="-1:-1" placeholder="..." />
-            <marker date="1534414375304" expanded="true" signature="-1:-1" placeholder="..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/share/css/common.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="108" column="58" selection-start-line="108" selection-start-column="58" selection-end-line="108" selection-end-column="58" />
+          <caret line="5" column="31" selection-start-line="5" selection-start-column="4" selection-end-line="5" selection-end-column="31" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/activity_zhongqiu/css/common.css">
+    <entry file="file://$PROJECT_DIR$/system/css/common.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.0821918">
-          <caret line="122" column="28" selection-start-line="122" selection-start-column="28" selection-end-line="122" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/packges/content-manage/ugc-checksconts.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.5238094">
-          <caret line="401" column="0" selection-start-line="401" selection-start-column="0" selection-end-line="401" selection-end-column="0" />
-          <folding />
+        <state vertical-scroll-proportion="1.5933014">
+          <caret line="37" column="0" selection-start-line="37" selection-start-column="0" selection-end-line="38" selection-end-column="16" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/system/packges/content-manage/checksconts.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.047619">
-          <caret line="540" column="29" selection-start-line="540" selection-start-column="29" selection-end-line="540" selection-end-column="29" />
-          <folding>
-            <element signature="e#8656#9496#0" expanded="false" />
-            <element signature="e#16319#17510#0" expanded="false" />
-          </folding>
+        <state vertical-scroll-proportion="0.45591938">
+          <caret line="914" column="77" selection-start-line="914" selection-start-column="77" selection-end-line="914" selection-end-column="77" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/system/packges/system-manage/permissionsittng.html">
+    <entry file="file://$PROJECT_DIR$/share/js/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.62846345">
-          <caret line="49" column="13" selection-start-line="49" selection-start-column="13" selection-end-line="49" selection-end-column="13" />
-          <folding />
+        <state vertical-scroll-proportion="0.47368422">
+          <caret line="13" column="0" selection-start-line="13" selection-start-column="0" selection-end-line="13" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/system/index.html">
+    <entry file="file://$PROJECT_DIR$/activity_zhongqiu22/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.142857">
-          <caret line="201" column="42" selection-start-line="201" selection-start-column="42" selection-end-line="201" selection-end-column="42" />
-          <folding />
+        <state vertical-scroll-proportion="0.2720403">
+          <caret line="6" column="61" selection-start-line="6" selection-start-column="61" selection-end-line="6" selection-end-column="61" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/system/packges/system-manage/permissionform.html">
+    <entry file="file://$PROJECT_DIR$/share/sharetheme.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.142857">
-          <caret line="162" column="41" selection-start-line="162" selection-start-column="41" selection-end-line="162" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/system/js/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.430622">
-          <caret line="13" column="26" selection-start-line="13" selection-start-column="26" selection-end-line="13" selection-end-column="26" />
+        <state vertical-scroll-proportion="-2.7130435">
+          <caret line="12" column="57" selection-start-line="12" selection-start-column="57" selection-end-line="12" selection-end-column="57" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/share/shareindex.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.055415615">
-          <caret line="149" column="27" selection-start-line="149" selection-start-column="27" selection-end-line="149" selection-end-column="27" />
+        <state vertical-scroll-proportion="0.20110957">
+          <caret line="34" column="46" selection-start-line="34" selection-start-column="46" selection-end-line="34" selection-end-column="46" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/share/sharelack.html">
+    <entry file="file://$PROJECT_DIR$/share/css/common.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.43954659">
-          <caret line="27" column="19" selection-start-line="27" selection-start-column="19" selection-end-line="27" selection-end-column="19" />
-          <folding>
-            <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/share/js/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="17" column="37" selection-start-line="17" selection-start-column="37" selection-end-line="17" selection-end-column="37" />
+        <state vertical-scroll-proportion="0.5047847">
+          <caret line="49" column="47" selection-start-line="49" selection-start-column="47" selection-end-line="49" selection-end-column="47" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/share/sharetheme.html">
+    <entry file="file://$PROJECT_DIR$/system/packges/content-manage/ugc-checksconts.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.61586905">
-          <caret line="257" column="43" selection-start-line="257" selection-start-column="43" selection-end-line="257" selection-end-column="43" />
-          <folding>
-            <element signature="n#style#0;n#img#0;n#a#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#1;n#div#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#div#4;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.34398976">
+          <caret line="635" column="22" selection-start-line="635" selection-start-column="22" selection-end-line="635" selection-end-column="22" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/activity_zhongqiu/active.html">
+    <entry file="file://$PROJECT_DIR$/system/packges/content-manage/moveicheck.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-9.619047">
-          <caret line="43" column="44" selection-start-line="43" selection-start-column="44" selection-end-line="43" selection-end-column="44" />
-          <folding>
-            <element signature="n#style#0;n#div#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="-7.714286">
+          <caret line="39" column="112" selection-start-line="39" selection-start-column="11" selection-end-line="39" selection-end-column="112" />
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/activity_zhongqiu/js/active.js">
+    <entry file="file://$PROJECT_DIR$/system/packges/recommend-manage/detaillist.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.7493606">
+          <caret line="126" column="0" selection-start-line="126" selection-start-column="0" selection-end-line="126" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/packges/content-manage/pushnew.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7595908">
+          <caret line="109" column="7" selection-start-line="109" selection-start-column="7" selection-end-line="109" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/packges/content-manage/ugc-moveicheck.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.142858">
+          <caret line="39" column="112" selection-start-line="39" selection-start-column="11" selection-end-line="39" selection-end-column="112" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/packges/recommend-manage/checkedlist.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.36828643">
+          <caret line="42" column="0" selection-start-line="42" selection-start-column="0" selection-end-line="42" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.41939548">
+          <caret line="213" column="23" selection-start-line="213" selection-start-column="23" selection-end-line="213" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/js/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3014354">
+          <caret line="7" column="6" selection-start-line="7" selection-start-column="6" selection-end-line="7" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/system/packges/recommend-manage/weightset.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.38280165">
+          <caret line="133" column="50" selection-start-line="133" selection-start-column="50" selection-end-line="133" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/activity_zhongqiu/js/wxShare.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="254" column="46" selection-start-line="254" selection-start-column="46" selection-end-line="254" selection-end-column="46" />
+          <caret line="112" column="31" selection-start-line="112" selection-start-column="31" selection-end-line="112" selection-end-column="31" />
           <folding>
-            <element signature="n#!!block;n#sharefriend#0" expanded="false" />
-            <marker date="1536311257450" expanded="true" signature="4453:4502" placeholder="..." />
-            <marker date="1536311257450" expanded="true" signature="4917:4966" placeholder="..." />
+            <element signature="n#!!block;n#getweixininfo#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -822,24 +872,44 @@
     <entry file="file://$PROJECT_DIR$/activity_zhongqiu/js/index.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="217" column="0" selection-start-line="217" selection-start-column="0" selection-end-line="217" selection-end-column="0" />
+          <caret line="78" column="40" selection-start-line="78" selection-start-column="40" selection-end-line="78" selection-end-column="40" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/activity_zhongqiu/js/share.js">
+    <entry file="file://$PROJECT_DIR$/activity_zhongqiu/css/common.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="57" column="22" selection-start-line="57" selection-start-column="22" selection-end-line="57" selection-end-column="22" />
+        <state vertical-scroll-proportion="-2.4931507">
+          <caret line="95" column="65" selection-start-line="95" selection-start-column="65" selection-end-line="95" selection-end-column="65" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/activity_zhongqiu/js/wxShare.js">
+    <entry file="file://$PROJECT_DIR$/activity_zhongqiu/js/active.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8277512">
-          <caret line="201" column="0" selection-start-line="201" selection-start-column="0" selection-end-line="201" selection-end-column="0" />
-          <folding />
+        <state vertical-scroll-proportion="-3.9452055">
+          <caret line="115" column="55" selection-start-line="115" selection-start-column="55" selection-end-line="115" selection-end-column="55" />
+          <folding>
+            <element signature="n#!!block;n#magnitude#0" expanded="false" />
+            <element signature="n#!!block;n#getcanvasimg#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/activity_zhongqiu/active.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.60055476">
+          <caret line="56" column="194" selection-start-line="56" selection-start-column="194" selection-end-line="56" selection-end-column="194" />
+          <folding>
+            <element signature="n#style#0;n#img#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#1;n#div#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#video#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#video#1;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#canvas#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#div#0;n#div#2;n#div#0;n#body#0;n#html#0;n#!!top" expanded="false" />
+            <element signature="n#style#0;n#div#2;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

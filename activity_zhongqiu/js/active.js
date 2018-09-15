@@ -3,38 +3,9 @@
  */
 
 $(function(){
-
-    var phonetype=phoneType();
-    if(phonetype == 1){
-//           微信分享
-       getweixininfo();
-
-    }
-    isllq();
-    magnitude("s0");
-
+    magnitude("s0");//统计进入的数量
+    moonfirst();/*1_初始动画——月球隐现上升*/
 });
-
-/*浏览器*/
-function isllq(){
-    var phonetype=phoneType();//浏览器判断
-    var phonetype2=phoneType2();//手机判断
-    if(phonetype =="qq" || phonetype =="Opera" || phonetype =="FF" || phonetype =="Chrome" ||  phonetype =="IE"){
-
-    }else{
-
-    }
-    if(phonetype2==2){
-//            安卓手机用户信息
-        $("#downAppBtn").attr("href","http://sj.qq.com/myapp/detail.htm?apkName=com.caotu.toutu");
-
-    }else if(phonetype2==3){
-//              苹果手机用户信息
-
-        $("#downAppBtn").attr("href","https://itunes.apple.com/cn/app/id1398165300?mt=8");
-    }
-
-}
 
 /*统计数量*/
 function magnitude(pagestr){
@@ -68,153 +39,178 @@ function magnitude(pagestr){
     });
 }
 
-
-
-
-
 //音乐开关
 var musicplay=true;//播放开关
-
 $("#music").click(function () {
     if (musicplay) {
-        $(this).html("<img src='img/music_colse.png'/>");
+        $(this).attr("src","img/musicclose.png");
         $("#bgm").get(0).pause();
         musicplay=false;
     }else{
-        $(this).html("<img src='img/music_open.png'/>");
+        $(this).attr("src","img/musicopen.png");
         $("#bgm").get(0).play();
         musicplay=true;
     }
 });
 
-/*开始测试的声音控制*/
-function shortmusic(){
-    $("#choosemusic").get(0).play();
-}
-
-/*开始测试*/
-var isimgload=0;
-    function begintest(){
-        shortmusic();
-        var birthdata=$("#testParameter").val();
-        console.log(birthdata);
-        if(birthdata == ""){
-            $(".creatUsernameBox .tips").addClass("show");
-            return false;
-        }else{
-            $("#indexpage").removeClass("active");
-            $("#lastpage").addClass("active");
-            layer.msg("测算中！！");
-            var getcanvas=setInterval(function(){
-                if(isimgload==1){
-                    getcanvasimg();//生成图片
-                    clearInterval(getcanvas);
+/*初始动画——月球隐现上升*/
+    function moonfirst(){
+        //月亮出现
+        $("#moonImg").animate({
+            opacity: 1
+        },3000);
+        /*月亮上升*/
+        setTimeout(function(){
+            $("#moonImg").animate({
+                top: "33%"
+            },2000,"swing");
+        },3000);
+        /*文字出现*/
+        var fontnum=0;
+        setTimeout(function(){
+            var fontshow= setInterval(function(){
+                fontnum= fontnum+1;
+                if(fontnum <=4){
+                    $("#indexIntroBox .intro:nth-child("+fontnum+")").animate({
+                        opacity: 1
+                    },1500);
+                }else{
+                    clearInterval(fontshow);
                 }
-            },250);
-
-        }
+            },1500);
+        },4000);
     }
 
-/*逗逗好友分享*/
-function sharefriend(){
-    var phonetype=phoneType();
-    _czc.push(['_trackEvent', '分享好友', '分享']);
-    if(phonetype == 1 || phonetype == "qq" ){
-//           微信分享
-        $("#shareActiveBtn").attr("href","javascript:void(0)");
-        $("#flowImgBox").addClass("show").css("background","rgba(0,0,0,.6)");
-        $("#flowImgBox img").attr("src","img/shareflow.png");
+/*点击播放按钮*/
+    $("#playBtn").on("touchstart",function(){
+        playtab();
+    });
+    function playtab(){
+        /*文字隐藏*/
+        $("#indexIntroBox").animate({
+            opacity:0
+        },2000);
+        /*月亮再上升*/
+        setTimeout(function(){
+            $("#moonImg").animate({
+                top: "22%"
+            },1500,"swing");
+        },1500);
+        /*输入框显示*/
+        setTimeout(function(){
+            $("#infoInputBox").css("display","block");
+            $("#infoInputBox").animate({
+                opacity: 1
+            },1500);
+        },3000);
     }
-}
+    /*测试结果——过度动画*/
 
-/*结束狗生下载APP*/
-function downApp(e){
-    _czc.push(['_trackEvent', '结束狗生', '下载']);
-
-}
-/*获取用户信息-1*/
-function getuserinfo(){
-//         var account= $.cookie('name');
-    var phonetype=phoneType();
-    if(phonetype == 1){
-//           微信信息
-
-    }else{
-
-        getuserinfo2();
-    }
-
-
-
-
-}
-
-/*app获取用户信息-2*/
-function getuserinfo2(){
-    // var loctionsrc="?eyJuYW1lIjoi5YK755m9IiwiaW1hZ2UiOiJodHRwOi8vY3Rrai0xMjU2Njc1MjcwLmNvcy5hcC1zaGFuZ2hhaS5teXFjbG91ZC5jb20vN0NGRUY3MzEtRUIzNS00NkUyLTk4ODItMTBDODYyNjg0MkNELnBuZyJ9";//假设得到的location.search; //获取url中"?"符后的字串
-    var loctionsrc= window.location.search;
-    //console.log(loctionsrc);
-    if(loctionsrc && loctionsrc!=""){
-        var result2 = utf8to16(base64decode(loctionsrc));
-        result2=JSON.parse( result2 );
-//             //console.log("result2::");
-//             //console.log(result2);
-        if(result2 && result2!=""){
-            $("#lastpage .userinfobox").removeClass("weixin");
-            $("#userInfoHead").attr("src",result2.image);
-            $("#userInfoName").html(result2.name);
+    $("#playBtn2").on("click",function(){
+        var movid="";//video播放还是canvas
+        var phone=phoneType2();
+        if(phone == 2){
+            movid="canvas";
+            $("#video").css("display","none");
+            $("#video2").get(0).play();
+            document.addEventListener("WeixinJSBridgeReady", function() {
+                document.getElementById("video2").get(0).play();
+            }, false);
+            getvideo();
         }else{
-            if(result.username !=""){
-                $("#userInfoName").html(result.username);
-                $("#lastpage .userinfobox").addClass("weixin");
-                $("#lastpage .userInfo .dogName").html(result.dog);
-            }else{
-                $("#lastpage .userinfobox").empty();
-                $("#lastpage .userinfobox").append('<p class="dogNameOnly" style="color: #333;font-size: 4.5rem;line-height: 145px;">'+result.dog+'</p>');
-            }
-
-
+            movid="video";
+            $("#video").get(0).play();
+            document.addEventListener("WeixinJSBridgeReady", function() {
+                document.getElementById("video").get(0).play();
+            }, false);
+           // getvideo();
         }
-    }else{
-        if(result.username !=""){
-            $("#userInfoName").html(result.username);
-            $("#lastpage .userinfobox").addClass("weixin");
-            $("#lastpage .userInfo .dogName").html(result.dog);
-        }else{
-            $("#lastpage .userinfobox").empty();
-            $("#lastpage .userinfobox").append('<p class="dogNameOnly" style="color: #333;font-size: 4.5rem;line-height: 145px;">'+result.dog+'</p>');
-        }
+        playtab2(movid);
+    });
+    function playtab2(movid){
+        /*月亮消失*/
+        $("#moonImg").animate({
+            opacity: 0,
+            width:"20%"
+        },1500);
+        /*信息表消失*/
+        $("#infoInputBox").animate({
+            opacity: 0,
+            height:"100px"
+        },1000);
+        console.log(movid);
+        $("#"+movid).css("display","block");
+        setTimeout(function(){
+            $("#infoInputBox").css("display","none");
+        },1500);
+        /*过度视频播放*/
+        setTimeout(function(){
+
+            $("#"+movid).animate({
+                opacity: 1
+            },2000);
+        },800);
+        setTimeout(function(){
+            $("#endPage").css("display","block");
+            /*过度视频消失*/
+            $("#"+movid).animate({
+                opacity: 0
+            },2000);
+            setTimeout(function(){
+                $("#"+movid).css("display","none");
+            },2200);
+            /*结果页显示*/
+            setTimeout(function(){
+                $("#endPage").animate({
+                    opacity: 1
+                },2000);
+                $("#moshuibg").animate({
+                    opacity: 1,
+                    width:"100%"
+                },3000);
+                setTimeout(function(){
+                    $("#endPage .endContBox").animate({
+                        opacity: 1
+                    },2000);
+                },2500);
+
+
+            },2000)
+
+        },6000)
     }
 
+/*以下是渲染CANVAS画布中的视频*/
+function getvideo(){
+    var videoW=$("body").width();
+    var videoH=$("body").height();
+    $("#canvas").css({"width":videoW+"px","height":videoH+"px"});
+    //获取video
+    var TestVideo=document.getElementById("video2");
+//获取canvas画布
+    var TestCanvas=document.getElementById("canvas");
+//设置画布
+    var TestCanvas2D=TestCanvas.getContext('2d');
+//设置setinterval定时器
+    var TestVideoTimer=null;
+//监听播放
 
+    TestVideo.addEventListener('play',function() {
+        TestVideoTimer=setInterval(function() {
+            TestCanvas2D.drawImage(TestVideo,0,0,videoW,videoH/2);
+        },20);
+    },false);
+//监听暂停
+    TestVideo.addEventListener('pause',function() {
+        clearInterval(TestVideoTimer);
+    },false);
+//监听结束
+    TestVideo.addEventListener('ended',function() {
+        clearInterval(TestVideoTimer);
+    },false);
 }
 
-/*点击引导页返回*/
-$("#flowImgBox").click(function(){
-    $("#flowImgBox").removeClass("show");
-});
-/*获取当前页是否是最后一页*/
-function getpage(){
-    var isy=$(".actPages.active").attr("data-page");
-    if(isy == "end0"){
-        return 1;
-    }else{
-        return 0;
-    }
-}
 
-
-/**
- * 根据window.devicePixelRatio获取像素比
- */
-function DPR() {
-    if (window.devicePixelRatio && window.devicePixelRatio > 1) {
-        return window.devicePixelRatio;
-    }else{
-        return 1;
-    }
-
-}
 function getcanvasimg(){
     var cntElem = $('.conntentsBox')[0];
 
