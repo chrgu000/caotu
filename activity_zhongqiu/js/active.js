@@ -4,8 +4,15 @@
 
 $(function(){
     magnitude("s0");//统计进入的数量
-    moonfirst();/*1_初始动画——月球隐现上升*/
+    setTimeout(function(){
+        $("#loading_hype_containerBox").css({"display":"none"});
+        moonfirst();
+    },5000);
 });
+/*window.onload=function() {
+
+    /!*1_初始动画——月球隐现上升*!/
+}*/
 
 /*统计数量*/
 function magnitude(pagestr){
@@ -70,7 +77,7 @@ $("#music").click(function () {
         setTimeout(function(){
             var fontshow= setInterval(function(){
                 fontnum= fontnum+1;
-                if(fontnum <=4){
+                if(fontnum <=5){
                     $("#indexIntroBox .intro:nth-child("+fontnum+")").animate({
                         opacity: 1
                     },1500);
@@ -82,7 +89,11 @@ $("#music").click(function () {
     }
 
 /*点击播放按钮*/
-    $("#playBtn").on("touchstart",function(){
+    $("#playBtn").on("click",function(){
+       /* $("#indexvideo").get(0).play();
+        document.addEventListener("WeixinJSBridgeReady", function() {
+            document.getElementById("indexvideo").get(0).play();
+        }, false);*/
         playtab();
     });
     function playtab(){
@@ -109,21 +120,20 @@ $("#music").click(function () {
     $("#playBtn2").on("click",function(){
         var movid="";//video播放还是canvas
         var phone=phoneType2();
+
         if(phone == 2){
-            movid="canvas";
-            $("#video").css("display","none");
-            $("#video2").get(0).play();
+            movid="video";
+            $("#video").get(0).play();
             document.addEventListener("WeixinJSBridgeReady", function() {
-                document.getElementById("video2").get(0).play();
+                document.getElementById("video").get(0).play();
             }, false);
-            getvideo();
         }else{
             movid="video";
             $("#video").get(0).play();
             document.addEventListener("WeixinJSBridgeReady", function() {
                 document.getElementById("video").get(0).play();
             }, false);
-           // getvideo();
+
         }
         playtab2(movid);
     });
@@ -138,7 +148,7 @@ $("#music").click(function () {
             opacity: 0,
             height:"100px"
         },1000);
-        console.log(movid);
+
         $("#"+movid).css("display","block");
         setTimeout(function(){
             $("#infoInputBox").css("display","none");
@@ -147,6 +157,7 @@ $("#music").click(function () {
         setTimeout(function(){
 
             $("#"+movid).animate({
+
                 opacity: 1
             },2000);
         },800);
@@ -177,7 +188,7 @@ $("#music").click(function () {
 
             },2000)
 
-        },6000)
+        },12000)
     }
 
 /*以下是渲染CANVAS画布中的视频*/
@@ -196,8 +207,10 @@ function getvideo(){
 //监听播放
 
     TestVideo.addEventListener('play',function() {
+
         TestVideoTimer=setInterval(function() {
-            TestCanvas2D.drawImage(TestVideo,0,0,videoW,videoH/2);
+            alert(11);
+            TestCanvas2D.drawImage(TestVideo,0,0,videoW,videoH);
         },20);
     },false);
 //监听暂停
