@@ -4,10 +4,10 @@
 /*var $wx_account = wxdata.wx_account, // 自定义数据，见wxShare_data.js
     $wx_share = wxdata.wx_share;   // 自定义数据  ，见wxShare_data.js*/
 var wxlist={"appId":"wx7209465a9ddef7e2","timestamp":"","nonceStr":"","signature":""};
-var wxfxxinfo={"imgUrl":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/seven_xi2.png",
-    "link" : "",
-    "desc" : "中秋活动了解一下～",   // 分享描述
-    "title" : "没想到我竟然是这种月饼...."   // 分享标题*/
+var wxfxxinfo={"imgUrl":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/sharicon.png",
+    "link" : "https://v3.toutushare.com/activity_zhongqiu/active.html",
+    "desc" : "",   // 分享描述
+    "title" : "解锁月相，发现未知的自己"   // 分享标题*/
 };
 
 $(function(){
@@ -86,83 +86,85 @@ function config(wxlist){
     });
 }
 
+wxpz(wxfxxinfo);
+
+function wxpz(wxfxxinfo){
+    wx.ready(function () {
+        // 分享到朋友圈
+        wx.onMenuShareTimeline({
+            title: wxfxxinfo.title,
+            link: wxfxxinfo.link,
+            imgUrl: wxfxxinfo.imgUrl,
+            success: function () {
+
+            },
+            cancel: function () {
+            }
+        });
+
+        // 分享给朋友
+        wx.onMenuShareAppMessage({
+            title: wxfxxinfo.title,
+            link: wxfxxinfo.link,
+            desc: wxfxxinfo.desc,
+            imgUrl: wxfxxinfo.imgUrl,
+            type: 'link', // 分享类型,music、video或link，不填默认为link
+            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+            success: function () {
 
 
+            },
+            cancel: function () {
+            }
+        });
 
+        // 分享到QQ
+        wx.onMenuShareQQ({
+            title: wxfxxinfo.title,
+            link: wxfxxinfo.link,
+            desc: wxfxxinfo.desc,
+            imgUrl: wxfxxinfo.imgUrl,
+            success: function () {
 
-wx.ready(function () {
-    // 分享到朋友圈
-    wx.onMenuShareTimeline({
-        title: wxfxxinfo.title,
-        link: wxfxxinfo.link,
-        imgUrl: wxfxxinfo.imgUrl,
-        success: function () {
+            },
+            cancel: function () {
+            }
+        });
 
-        },
-        cancel: function () {
-        }
+        // 微信到腾讯微博
+        wx.onMenuShareWeibo({
+            title: wxfxxinfo.title,
+            link: wxfxxinfo.link,
+            desc: wxfxxinfo.desc,
+            imgUrl: wxfxxinfo.imgUrl,
+            success: function () {
+
+            },
+            cancel: function () {
+            }
+        });
+
+        // 分享到QQ空间
+        wx.onMenuShareQZone({
+            title: wxfxxinfo.title,
+            link: wxfxxinfo.link,
+            desc: wxfxxinfo.desc,
+            imgUrl: wxfxxinfo.imgUrl,
+            success: function () {
+
+            },
+            cancel: function () {
+
+            }
+        });
     });
-
-    // 分享给朋友
-    wx.onMenuShareAppMessage({
-        title: wxfxxinfo.title,
-        link: wxfxxinfo.link,
-        desc: wxfxxinfo.desc,
-        imgUrl: wxfxxinfo.imgUrl,
-        type: 'link', // 分享类型,music、video或link，不填默认为link
-        dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
-        success: function () {
-
-
-        },
-        cancel: function () {
-        }
+    wx.error(function(res){
+        // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+        //console.log(res);
     });
+}
 
-    // 分享到QQ
-    wx.onMenuShareQQ({
-        title: wxfxxinfo.title,
-        link: wxfxxinfo.link,
-        desc: wxfxxinfo.desc,
-        imgUrl: wxfxxinfo.imgUrl,
-        success: function () {
 
-        },
-        cancel: function () {
-        }
-    });
-
-    // 微信到腾讯微博
-    wx.onMenuShareWeibo({
-        title: wxfxxinfo.title,
-        link: wxfxxinfo.link,
-        desc: wxfxxinfo.desc,
-        imgUrl: wxfxxinfo.imgUrl,
-        success: function () {
-
-        },
-        cancel: function () {
-        }
-    });
-
-    // 分享到QQ空间
-    wx.onMenuShareQZone({
-        title: wxfxxinfo.title,
-        link: wxfxxinfo.link,
-        desc: wxfxxinfo.desc,
-        imgUrl: wxfxxinfo.imgUrl,
-        success: function () {
-
-        },
-        cancel: function () {
-
-        }
-    });
-});
-wx.error(function(res){
-    // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
-   //console.log(res);
-});
 
 
 /*获取微信用户信息*/

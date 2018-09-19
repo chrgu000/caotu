@@ -5,13 +5,17 @@
 
 const path="https://api.itoutu.com:8898/";//线上
 //const path3="https://dev.api.toutushare.com/";//测试服
-const path4="http://192.168.1.111:8091/";//老冯
+//const path4="http://192.168.1.111:8091/";//老冯
 
 var result={
-    "username":0,//姓名
+    "username":"",//姓名
     "birthday":"",//生日
-    "evaluate":"",//结果评论
-    "sex":1//性别
+    "moon": "",
+    "moonid": "",
+    "sign": "",
+    "society":"",
+    "signnum":"",
+    "userNumber":""
 };
 /*随机字符串*/
 function randomString(len) {
@@ -212,8 +216,24 @@ function GetRequest(url) {
 }
 
 
+/*随机数*/
+function randomnum(minNum,maxNum){
+    var num=parseInt(Math.random()*(maxNum-minNum+1)+minNum,10);
+    return num;
+}
 
 
+//window.android.callAndroid(result.username+"的月相居然是【"+result.moon+"】？！");//安卓
+//getShareTitle(result.username+"的月相居然是【"+result.moon+"】？！");//ios
 
+
+function getShareTitle(){
+    if(result.username !="" && result.moon !=""){
+        return result.username+"的月相居然是【"+result.moon+"】？！";
+    }else{
+        return "解锁月相，发现未知的自己";
+    }
+
+}
 
 
