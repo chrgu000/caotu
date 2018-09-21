@@ -303,8 +303,9 @@
     $("#pushTime").change(function(){
         var pushtime= $.trim($(this).val());
         pushtime=pushtime.replace(/\s+/g,"");
-        pushtime=pushtime.replace(/-/g, "");
+        pushtime=pushtime.replace(/\//g, "");
         pushtime=parseInt(pushtime.replace(/:/g, ""));
+        pushtime=pushtime*100;
         var date = parseInt(getmytime());
         if(pushtime<(date+20000)){
             layer.msg("最早只能选当前两个小时之后！！");
@@ -344,9 +345,12 @@
                 layer.msg("请输入推送时间！！");
                 return false;
             }else{
+
                 choosetime=choosetime.replace(/\s+/g,"");
-                choosetime=choosetime.replace(/-/g, "");
+                choosetime=choosetime.replace(/\//g, "");
                 choosetime=parseInt(choosetime.replace(/:/g, ""));
+                choosetime=choosetime*100;
+
                 var date = parseInt(getmytime());
                 if(choosetime<(date+20000)){
                     layer.msg("最早只能选当前两个小时之后！！");
@@ -381,6 +385,7 @@
             "pushtype":pushtype,
             "pushuserid":pushuserid
         };
+        //console.log(datapost);
         datapost=JSON.stringify(datapost);
         $.ajax({
             url : path+'/CTKJBUSINESS/push/addpush.do',

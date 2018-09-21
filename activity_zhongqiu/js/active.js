@@ -2,42 +2,45 @@
  * Created by zhu on 2018/8/14.
  */
 
-$(function(){
+/*$(function(){
     startis();//初始进入页面统计
     setTimeout(function(){
         $("#loading_hype_containerBox").css({"display":"none"});
         moonfirst();
     },5000);
-     //getBase64Image("#endPage",1,"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/endbg.png");
-     //getBase64Image("#moshuibg",2,"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/moshui.png");
-     ////getBase64Image("#endUserMoon",2,"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/Ball.png");
-     //getBase64Image("#userTagImg",2,"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/tagsbox.png");
-     //getBase64Image("#ewmimg",2,"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/ewm.png");
+});*/
+window.onload=function() {
+    startis();//初始进入页面统计
+    $("#loading_hype_containerBox").css({"display":"none"});
+    moonfirst();
+};
 
-});
-/*window.onload=function() {
-
-    /!*1_初始动画——月球隐现上升*!/
-}*/
-
+//getBase64Image("#endPage",1,"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/endbg2.jpg");
+//getBase64Image("#moshuibg",2,"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/moshui2.png");
+//getBase64Image("#userTagImg",2,"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/tagsbox2.png");
+//getBase64Image("#ewmimg",2,"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/ewm2.png");
 /*进入页面判断*/
     function startis(){
          //var loctionsrc="?appevent=splash&apptype=ios";//假设得到的location.search; //获取url中"?"符后的字串
         var loctionsrc= window.location.search;
-        console.log(loctionsrc);
+        //console.log(loctionsrc);
         var pagestr="";
         if(loctionsrc ==""){
              pagestr="WEBALL";
-            magnitude(pagestr,"NO")
+            magnitude(pagestr,"NO");
+            _czc.push(['_trackEvent', '进入活动',"WEBALL"]);
         }else{
             var urlcs=GetRequest(loctionsrc);
             //console.log(urlcs);
             if(urlcs.appevent && urlcs.appevent !="" && urlcs.apptype && urlcs.apptype !=""){
-                 pagestr=urlcs.apptype+"ALL"+urlcs.appevent;
-                magnitude(pagestr,"NO")
+                 pagestr=urlcs.apptype+urlcs.appevent+"ALL";
+                pagestr=pagestr.toUpperCase();
+                magnitude(pagestr,"NO");
+                _czc.push(['_trackEvent', '进入活动',pagestr]);
             }else{
                  pagestr="WEBALL";
                 magnitude(pagestr,"NO");
+                _czc.push(['_trackEvent', '进入活动',"WEBALL"]);
             }
         }
 
@@ -45,8 +48,11 @@ $(function(){
     }
 /*统计数量*/
 function magnitude(pagestr,needcount){
+    if(pagestr == "" || pagestr == null || pagestr == undefined){
+        pagestr ="WEBALL";
+    };
     var tjdatas={"pagestr":pagestr,"needcount":needcount};
-    console.log(tjdatas);
+    //console.log(tjdatas);
     tjdatas=JSON.stringify(tjdatas);
 
     $.ajax({
@@ -55,7 +61,7 @@ function magnitude(pagestr,needcount){
         type:"POST",
         contentType: "application/json",
         dataType:"JSON",
-        async:true,
+        async:false,
         data: tjdatas,
         error: function(data){
             /*  layer.msg("服务器未响应,请稍后再试!");*/
@@ -63,8 +69,8 @@ function magnitude(pagestr,needcount){
             //console.log(data);
         },
         success:function(diskJson){
-                console.log("统计:");
-                console.log(diskJson);
+                //console.log("统计:");
+                //console.log(diskJson);
             if(diskJson.code =="1000"){
                 if(diskJson.data && diskJson.data !=""){
                     result.userNumber=diskJson.data;
@@ -80,6 +86,11 @@ function magnitude(pagestr,needcount){
 
 //音乐开关
 var musicplay=true;//播放开关
+var audio=document.querySelector("#bgm");
+document.addEventListener("WeixinJSBridgeReady",function(){
+    audio.play();
+},false);
+
 $("#music").click(function () {
     if (musicplay) {
         $("#music .musicimg").attr("src","https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/musicclose.png");
@@ -93,6 +104,7 @@ $("#music").click(function () {
 });
 
 /*初始动画——月球隐现上升*/
+var startover=1;
     function moonfirst(){
         //月亮出现
         $("#moonImg").animate({
@@ -115,8 +127,10 @@ $("#music").click(function () {
                     },1500);
                 }else{
                     clearInterval(fontshow);
+                    startover=2;
                 }
             },1500);
+
         },4000);
     }
 
@@ -127,7 +141,18 @@ $("#music").click(function () {
             document.getElementById("indexvideo").get(0).play();
         }, false);*/
         playtab();
+        $("#clickibg").get(0).play();
+        $("#startClickBox").css({"display":"none"});
     });
+    $("#startClickBox").on("click",function(){
+        if(startover == 2){
+            playtab();
+            $("#clickibg").get(0).play();
+            $("#startClickBox").css({"display":"none"});
+        }
+
+    });
+
     function playtab(){
         /*文字隐藏*/
         $("#indexIntroBox").animate({
@@ -148,11 +173,27 @@ $("#music").click(function () {
         },3000);
     }
     /*测试结果——过度动画*/
-
+    $("#userName").keyup(function(){
+        var username=$("#userName").val();
+        var usernamelen=username.length;
+        if(usernamelen >12){
+            $("#infoInputBox .tips").html("尊名过长，解锁败矣").addClass("show");
+            return false;
+        }else{
+            $("#infoInputBox .tips").removeClass("show");
+        }
+    });
     $("#playBtn2").on("click",function(){
         var username=$("#userName").val();
         var birth=$("#birthday").val();
         //console.log(birth);
+       var usernamelen=username.length;
+        if(usernamelen >12){
+            $("#infoInputBox .tips").html("尊名过长，解锁败矣").addClass("show");
+            return false;
+        }else{
+            $("#infoInputBox .tips").removeClass("show");
+        }
         if(username !="" && birth !=""){
             result.username=username;
             result.birthday=birth;
@@ -163,6 +204,7 @@ $("#music").click(function () {
         }else{
             return false;
         }
+        $("#clickibg").get(0).play();
 
         var movid="video";//video播放还是canvas
        // var phone=phoneType2();
@@ -171,20 +213,6 @@ $("#music").click(function () {
         document.addEventListener("WeixinJSBridgeReady", function() {
             document.getElementById("video").get(0).play();
         }, false);
-        /*if(phone == 2){
-            movid="video";
-            $("#video").get(0).play();
-            document.addEventListener("WeixinJSBridgeReady", function() {
-                document.getElementById("video").get(0).play();
-            }, false);
-        }else{
-            movid="video";
-            $("#video").get(0).play();
-            document.addEventListener("WeixinJSBridgeReady", function() {
-                document.getElementById("video").get(0).play();
-            }, false);
-
-        }*/
         playtab2(movid);
     });
     function playtab2(movid){
@@ -230,37 +258,18 @@ $("#music").click(function () {
                     opacity: 1,
                     width:"100%"
                 },3000);
-                //显示内容
+
                 setTimeout(function(){
+                    //显示内容
                     $("#endPage .endContBox").animate({
                         opacity: 1
-                    },2000);
-                    /*截图显示截图页*/
+                    },1500);
                     setTimeout(function(){
                         getcanvasimg();
-                        setTimeout(function(){
-                            $("#endPage").animate({
-                                opacity: 0,
-                                width:"80%",
-                                height:"80%",
-                                top:"10%",
-                                left:"10%"
-                            },1500);
-                            $("#endPageImg").css("display","block");
-
-                            $("#endPageImg").animate({
-                                opacity: 1
-                            },1500);
-                        },1000);
-
                     },2000);
-
                 },1500);
             },250);
-
-
-
-        },5000)
+        },6000)
     }
 
     /*测算1*/
@@ -293,6 +302,7 @@ $("#music").click(function () {
             result.society=mlist.society;
             result.signnum=mlist.signnum;
 
+
         }else{
             let c=randomnum(0,2);
             let mlist=othermoon[c];
@@ -300,25 +310,37 @@ $("#music").click(function () {
             result.moonid=mlist.moonid;
             result.sign=mlist.sign;
             result.society=mlist.society;
-            result.signnum=mlist.username;
+            result.signnum=mlist.signnum;
+            $("#endPage .endContBox").css("color","#fff");
+            $("#userMoonStyle").css("color","#fff");
+            $("#endPage .endContBox .ewmBox").css("color","#fff");
+            $("#userTagImg").attr("src","img/tagsbox3.png");
+            $("#moshuibg").attr("src","");
+            $("#endPage").css({"background":'url("img/endbg3.jpg") no-repeat',"background-size":"cover"});
+
         }
+        magnitude(result.signnum,"YES");//统计
+        _czc.push(['_trackEvent', '测算结果',result.signnum]);
         $("#endPage .tagBoxs .userTag .tag").html( result.society);
         $("#userMoonStyle").html( result.moon);
         $("#userVersion").html( result.sign);
         $("#getname").html( result.username);
-        //$("#endUserMoon").attr("src","https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/moon/moon"+result.moonid+".png");
-        magnitude(result.moonid,"YES");//统计
+        $("#endUserMoon").attr("src","img/moon/moon"+result.moonid+".png");
+       // getBase64Image("#endUserMoon",2,"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/moon2/moon"+result.moonid+".png");
 
+        //console.log(result.userNumber);
+        var desc ="他是第"+result.userNumber+"个找到自己专属月相的人……";
+        var title =result.username+"的月相居然是【"+result.moon+"】？！";
         var wxfxxinfo2={"imgUrl":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/sharicon.png",
             "link" : "https://v3.toutushare.com/activity_zhongqiu/active.html",
-            "desc" : "他是第"+result.userNumber+"个找到自己专属月相的人……",   // 分享描述
-            "title" : result.username+"的月相居然是【"+result.moon+"】？！"   // 分享标题*/
+            "desc" : desc,   // 分享描述
+            "title" : title   // 分享标题*/
         };
         wxpz(wxfxxinfo2);
-        $('meta[property="og:title"]').attr('content',result.username+"的月相居然是【"+result.moon+"】？！");
-        $('meta[itemprop="name"]').attr('content',result.username+"的月相居然是【"+result.moon+"】？！");
-        $('meta[name="description"]').attr('content',"他是第"+result.userNumber+"个找到自己专属月相的人……");
-
+        $('meta[property="og:title"]').attr('content',title);
+        $('meta[itemprop="name"]').attr('content',title);
+        $('meta[name="description"]').attr('content',desc);
+        $(document).attr("title",title);
     }
 
 /*/!*以下是渲染CANVAS画布中的视频*!/
@@ -377,9 +399,9 @@ function getBase64Image(tabs,style,imgurl) {
         var ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0, cw, ch);
         var dataURL = canvas.toDataURL("image/png");
-        console.log("dataURL");
-        console.log(tabs);
-        console.log(dataURL);
+        //console.log("dataURL");
+        //console.log(tabs);
+        //console.log(dataURL);
         if(style == 1){
             $(tabs).css("background",'url("'+dataURL+'") no-repeat');
         }else{
@@ -390,11 +412,21 @@ function getBase64Image(tabs,style,imgurl) {
     }
 }
 
+var canvasinfo = new Vue({
+    el: '#endPageImg',
+    data: {
+        "url":""
+
+    },
+    // 在 `methods` 对象中定义方法
+    methods: {
+
+    }
+});
 
 
 function getcanvasimg(){
     var cntElem = $('#endPage')[0];
-
     var shareContent = cntElem;//需要截图的包裹的（原生的）DOM 对象
     var width = shareContent.offsetWidth; //获取dom 宽度
     var height = shareContent.offsetHeight; //获取dom 高度
@@ -413,7 +445,6 @@ function getcanvasimg(){
     };
 
     html2canvas(shareContent, opts).then(function (canvas) {
-
         var context = canvas.getContext('2d');
         // 【重要】关闭抗锯齿
         context.mozImageSmoothingEnabled = false;
@@ -422,15 +453,26 @@ function getcanvasimg(){
         context.imageSmoothingEnabled = false;
 
         // 【重要】默认转化的格式为png,也可设置为其他格式
-        var dataUrl = canvas.toDataURL("image/png");
-        console.log(dataUrl);
-        $("#canvasImg").attr("src",dataUrl);
-       /* console.log(canvas);
-        var img = Canvas2Image.convertToJPEG(canvas, canvas.width, canvas.height);
-        $("#endPageImg .canvasImgBox").append(img);
-        document.body.appendChild(img);
-        $(img).attr("id","canvasImg");*/
 
+        var dataUrl = canvas.toDataURL("image/png");
+        //console.log(dataUrl);
+        canvasinfo.url=dataUrl;
+        //$("#canvasImg").attr("src",dataUrl);
+        setTimeout(function(){
+            $("#clickibg").get(0).play();
+            $("#endPage").animate({
+                opacity: 0,
+                width:"80%",
+                height:"80%",
+                top:"10%",
+                left:"10%"
+            },1500);
+            $("#endPageImg").css("display","block");
+
+            $("#endPageImg").animate({
+                opacity: 1
+            },1500);
+        },1500);
 
     });
 

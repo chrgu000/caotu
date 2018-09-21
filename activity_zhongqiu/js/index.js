@@ -8,13 +8,13 @@ const path="https://api.itoutu.com:8898/";//线上
 //const path4="http://192.168.1.111:8091/";//老冯
 
 var result={
-    "username":"",//姓名
+    "username":"草图",//姓名
     "birthday":"",//生日
-    "moon": "",
-    "moonid": "",
+    "moon": "柔月",
+    "moonid": "30",
     "sign": "",
-    "society":"",
-    "signnum":"",
+    "society":"温柔",
+    "signnum":"88",
     "userNumber":""
 };
 /*随机字符串*/

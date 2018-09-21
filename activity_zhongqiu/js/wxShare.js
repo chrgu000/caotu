@@ -96,7 +96,8 @@ function wxpz(wxfxxinfo){
             link: wxfxxinfo.link,
             imgUrl: wxfxxinfo.imgUrl,
             success: function () {
-
+                magnitude("WEBSHAREFRIENDCIRCLE"+result.signnum,"NO");//统计
+                _czc.push(['_trackEvent', '分享到朋友圈',result.signnum]);
             },
             cancel: function () {
             }
@@ -111,7 +112,8 @@ function wxpz(wxfxxinfo){
             type: 'link', // 分享类型,music、video或link，不填默认为link
             dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
             success: function () {
-
+                magnitude("WEBSHAREFRIEND"+result.signnum,"NO");//统计
+                _czc.push(['_trackEvent', '分享给朋友',result.signnum]);
 
             },
             cancel: function () {
@@ -125,7 +127,8 @@ function wxpz(wxfxxinfo){
             desc: wxfxxinfo.desc,
             imgUrl: wxfxxinfo.imgUrl,
             success: function () {
-
+                magnitude("WEBSHAREQQ"+result.signnum,"NO");//统计
+                _czc.push(['_trackEvent', '分享到QQ',result.signnum]);
             },
             cancel: function () {
             }
@@ -138,7 +141,8 @@ function wxpz(wxfxxinfo){
             desc: wxfxxinfo.desc,
             imgUrl: wxfxxinfo.imgUrl,
             success: function () {
-
+                magnitude("WEBSHAREWB"+result.signnum,"NO");//统计
+                _czc.push(['_trackEvent', '微信到腾讯微博',result.signnum]);
             },
             cancel: function () {
             }
@@ -151,7 +155,8 @@ function wxpz(wxfxxinfo){
             desc: wxfxxinfo.desc,
             imgUrl: wxfxxinfo.imgUrl,
             success: function () {
-
+                magnitude("WEBSHAREQQKJ"+result.signnum,"NO");//统计
+                _czc.push(['_trackEvent', '分享到QQ空间',result.signnum]);
             },
             cancel: function () {
 

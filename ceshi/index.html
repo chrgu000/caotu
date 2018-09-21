@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>测试</title>
+    <link rel="stylesheet" href="css/commons.css"/>
+    <!--日期插件-->
+    <link rel="stylesheet" type="text/css" href="plugin/LCalendar/css/LCalendar.css" />
+    <script type="application/javascript" src="js/moon.js"></script>
+    <style>
+    #birthday,#cs,#result,#numbercc{width:550px;height:200px;border:1px solid #333;text-align: center;margin-top:100px;margin-left:200px;font-size:3rem;}
+    .gearDate{font-size:23px !important;}
+        #cs{width:250px;height:100px;font-size:3rem;}
+    #result,#result2{width:80%;padding:20px;margin:30px auto;height:auto;}
+        .dbox{margin-top:3px;border-top:2px dotted #ff00ff;padding:10px;}
+        #result2{font-size:18px;}
+        #numbercc{}
+    </style>
+</head>
+<body>
+
+    <input type="text" name="birthday" id="birthday" placeholder="选择生日" readonly="readonly" />
+    <input type="text" value="" id="numbercc" placeholder="测试次数"/>
+    <button onclick="moontest()" id="cs" type="button">测试</button>
+    <div id="result2">
+
+
+    </div>
+    <div id="result">
+
+    </div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.mousewheel.min.js"></script>
+    <script src="plugin/LCalendar/js/LCalendar.js" type="text/javascript" charset="utf-8"></script>
+    <script>
+        var calendar = new LCalendar();
+        calendar.init({
+            'trigger': '#birthday', //标签id
+            'type': 'date', //date 调出日期选择 datetime 调出日期时间选择 time 调出时间选择 ym 调出年月选择,
+            'minDate': (new Date().getFullYear()-80) + '-' + 1 + '-' + 1, //最小日期
+            'maxDate': (new Date().getFullYear()+3) + '-' + 12 + '-' + 31 //最大日期
+        });
+    </script>
+    <script>
+        var result={
+            "username":"",//姓名
+            "birthday":"",//生日
+            "moon": "",
+            "moonid": "",
+            "sign": "",
+            "society":"",
+            "signnum":"",
+            "userNumber":""
+        };
+        $(function(){
+            for(var i=1;i<=96;i++){
+                if(i<=9){
+                    i="0"+i;
+                }
+                $("#result2").append('<p id="q'+i+'">签文ID：'+i+',抽中次数：<span>0</span></p>')
+            }
+        });
+
+        /*随机数*/
+        function randomnum(minNum,maxNum){
+            var num=parseInt(Math.random()*(maxNum-minNum+1)+minNum,10);
+            return num;
+        }
+        /*测算1*/
+        function moontest(){
+            var birth=$("#birthday").val();
+            result.birthday=birth;
+            birth=birth.split("-");
+            birth=Number(birth[1]+birth[2]);
+            $.each(moonlist,function(i,n){
+                if(birth >= n.minday && birth <= n.maxday){
+                    console.log(n);
+                    var len= n.moonarry.length;
+                    ceshi2(len,n);
+
+                }
+            });
+
+
+        }
+
+
+
+        function ceshi2(lenth,getdata){
+            var csnum=$("#numbercc").val();
+            for(var i=0;i<=csnum;i++){
+                var mu=randomnum(0,99);
+                if(mu !=99){
+                    let c=randomnum(0,lenth-1);
+                    let mlist=getdata.moonarry[c];
+//                    console.log(mlist.signnum);
+                    var nu= Number($("#q"+mlist.signnum +" span").html());
+                    console.log(nu);
+                    nu=nu+1;
+                    $("#q"+mlist.signnum).css({"background":"#333","color":"#fff"});
+                    $("#q"+mlist.signnum +" span").html(nu)
+
+                }else{
+                    let c=randomnum(0,2);
+                    let mlist=othermoon[c];
+//                    console.log(mlist.signnum)
+                    var nu= parseInt($("#q"+mlist.signnum +" span").html());
+                    $("#q"+mlist.signnum).css({"background":"#333","color":"#fff"});
+                    nu=nu+1;
+                    $("#q"+mlist.signnum +" span").html(nu)
+
+                }
+            }
+
+        }
+
+
+        /*    /!*测算2*!/
+         function moontest2(lenth,getdata){
+         ceshi2(lenth,getdata);
+         var mu=randomnum(0,99);
+         if(mu !=99){
+         let c=randomnum(0,lenth-1);
+         let mlist=getdata.moonarry[c];
+         result.moon=mlist.moon;
+         result.moonid=mlist.moonid;
+         result.sign=mlist.sign;
+         result.society=mlist.society;
+         result.signnum=mlist.signnum;
+
+         }else{
+         let c=randomnum(0,2);
+         let mlist=othermoon[c];
+         result.moon=mlist.moon;
+         result.moonid=mlist.moonid;
+         result.sign=mlist.sign;
+         result.society=mlist.society;
+         result.signnum=mlist.signnum;
+
+         }
+         /!*  $("#result").append('<div class="dbox"><p>生日：'+result.birthday+'</p> ' +
+         '<p>月相：'+result.moon+'</p> ' +
+         '<p>签文ID：'+result.signnum+'</p> ' +
+         '<p>societ：'+result.society+'</p> ' +
+         '<p>签文：'+result.sign+'</p></div>');
+         var desc ="他是第"+result.userNumber+"个找到自己专属月相的人……";
+         var title =result.username+"的月相居然是【"+result.moon+"】？！";*!/
+
+         }*/
+    </script>
+</body>
+</html>
