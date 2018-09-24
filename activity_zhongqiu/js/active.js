@@ -2,18 +2,37 @@
  * Created by zhu on 2018/8/14.
  */
 
-/*$(function(){
-    startis();//初始进入页面统计
+var isover=1;
+$(function(){
+    splaybgmusic();
     setTimeout(function(){
-        $("#loading_hype_containerBox").css({"display":"none"});
-        moonfirst();
-    },5000);
-});*/
+        isover=2;
+       /* if(isover ==2){
+            startis();//初始进入页面统计
+            $("#loading_hype_containerBox").css({"display":"none"});
+            moonfirst();
+            splaybgmusic();
+        }*/
+
+    },3000);
+});
 window.onload=function() {
+    var onl=setInterval(function(){
+        if(isover ==2){
+            isovers();
+            clearInterval(onl);
+            $("#drumpMoon").css({"display":"block"});
+           // isphone();
+        }
+    },500);
+};
+
+function isovers(){
     startis();//初始进入页面统计
     $("#loading_hype_containerBox").css({"display":"none"});
     moonfirst();
-};
+
+}
 
 //getBase64Image("#endPage",1,"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/endbg2.jpg");
 //getBase64Image("#moshuibg",2,"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/moshui2.png");
@@ -46,6 +65,18 @@ window.onload=function() {
 
 
     }
+
+/*判断机型*/
+    function isphone(){
+        var phone =phoneType2();
+        var ewmurl="ewm2.png";
+        switch(phone){
+            case 2:ewmurl ="ewmaz.png";break;
+            case 3:ewmurl ="ewnIOS.png";break;
+            default:ewmurl="ewm2.png";
+        }
+        $("#ewmimg").attr("src","img/"+ewmurl);
+    }
 /*统计数量*/
 function magnitude(pagestr,needcount){
     if(pagestr == "" || pagestr == null || pagestr == undefined){
@@ -54,7 +85,6 @@ function magnitude(pagestr,needcount){
     var tjdatas={"pagestr":pagestr,"needcount":needcount};
     //console.log(tjdatas);
     tjdatas=JSON.stringify(tjdatas);
-
     $.ajax({
         url : path+'/CTKJSEVER/activepage/countactive.do',
         cache:false,//false就不会从浏览器缓存中加载请求信息了
@@ -72,8 +102,10 @@ function magnitude(pagestr,needcount){
                 //console.log("统计:");
                 //console.log(diskJson);
             if(diskJson.code =="1000"){
-                if(diskJson.data && diskJson.data !=""){
+                if(diskJson.data && diskJson.data !="" && diskJson.data >0){
+                    //console.log(diskJson.data)
                     result.userNumber=diskJson.data;
+                    sharepzs(diskJson.data)
                 }
             }else{
 
@@ -86,10 +118,15 @@ function magnitude(pagestr,needcount){
 
 //音乐开关
 var musicplay=true;//播放开关
-var audio=document.querySelector("#bgm");
-document.addEventListener("WeixinJSBridgeReady",function(){
-    audio.play();
-},false);
+
+function splaybgmusic(){
+    var audio=document.querySelector("#bgm");
+    $("#bgm").get(0).play();
+    document.addEventListener("WeixinJSBridgeReady",function(){
+        audio.play();
+    },false);
+}
+
 
 $("#music").click(function () {
     if (musicplay) {
@@ -124,14 +161,15 @@ var startover=1;
                 if(fontnum <=5){
                     $("#indexIntroBox .intro:nth-child("+fontnum+")").animate({
                         opacity: 1
-                    },1500);
+                    },1200);
                 }else{
                     clearInterval(fontshow);
                     startover=2;
+                    $("#drumpMoon").css({"display":"none"});
                 }
-            },1500);
+            },1200);
 
-        },4000);
+        },3500);
     }
 
 /*点击播放按钮*/
@@ -143,12 +181,14 @@ var startover=1;
         playtab();
         $("#clickibg").get(0).play();
         $("#startClickBox").css({"display":"none"});
+        $("#drumpMoon").css({"display":"none"});
     });
     $("#startClickBox").on("click",function(){
         if(startover == 2){
             playtab();
             $("#clickibg").get(0).play();
             $("#startClickBox").css({"display":"none"});
+            $("#drumpMoon").css({"display":"none"});
         }
 
     });
@@ -157,20 +197,20 @@ var startover=1;
         /*文字隐藏*/
         $("#indexIntroBox").animate({
             opacity:0
-        },2000);
+        },1500);
         /*月亮再上升*/
         setTimeout(function(){
             $("#moonImg").animate({
                 top: "22%"
             },1500,"swing");
-        },1500);
+        },1000);
         /*输入框显示*/
         setTimeout(function(){
             $("#infoInputBox").css("display","block");
             $("#infoInputBox").animate({
                 opacity: 1
             },1500);
-        },3000);
+        },2000);
     }
     /*测试结果——过度动画*/
     $("#userName").keyup(function(){
@@ -185,8 +225,6 @@ var startover=1;
     });
     $("#playBtn2").on("click",function(){
         var username=$("#userName").val();
-        var birth=$("#birthday").val();
-        //console.log(birth);
        var usernamelen=username.length;
         if(usernamelen >12){
             $("#infoInputBox .tips").html("尊名过长，解锁败矣").addClass("show");
@@ -194,19 +232,15 @@ var startover=1;
         }else{
             $("#infoInputBox .tips").removeClass("show");
         }
-        if(username !="" && birth !=""){
+        if(username !=""){
             result.username=username;
-            result.birthday=birth;
-            birth=birth.split("-");
-            birth=Number(birth[1]+birth[2]);
-            //console.log(birth);
-            moontest(username,birth);
+            moontest(username);
         }else{
             return false;
         }
         $("#clickibg").get(0).play();
 
-        var movid="video";//video播放还是canvas
+        var movid="videosBox";//video播放还是canvas
        // var phone=phoneType2();
        // movid="video";
         $("#video").get(0).play();
@@ -215,6 +249,8 @@ var startover=1;
         }, false);
         playtab2(movid);
     });
+
+    var isdrumpvideo=1;//判断是否跳过动画
     function playtab2(movid){
         /*月亮消失*/
         $("#moonImg").animate({
@@ -233,49 +269,73 @@ var startover=1;
         },1500);
         /*过度视频播放*/
         setTimeout(function(){
-
+            $("#music").css("display","none");
             $("#"+movid).animate({
-
                 opacity: 1
             },2000);
-        },800);
+        },1000);
         setTimeout(function(){
-            $("#endPage").css("display","block");
             /*过度视频消失*/
-            $("#"+movid).animate({
-                opacity: 0
-            },2000);
-
-            setTimeout(function(){
-                $("#"+movid).css("display","none");
-            },2200);
-            /*结果页显示*/
-            setTimeout(function(){
-                $("#endPage").animate({
-                    opacity: 1
-                },1500);
-                $("#moshuibg").animate({
-                    opacity: 1,
-                    width:"100%"
-                },3000);
-
-                setTimeout(function(){
-                    //显示内容
-                    $("#endPage .endContBox").animate({
-                        opacity: 1
-                    },1500);
-                    setTimeout(function(){
-                        getcanvasimg();
-                    },2000);
-                },1500);
-            },250);
+            if(isdrumpvideo ==1){
+                videohiden(movid);
+            }
         },6000)
     }
 
+/*初始月亮升起时跳过动画*/
+function drumpMoon(){
+    playtab();
+    $("#clickibg").get(0).play();
+    $("#startClickBox").css({"display":"none"});
+    $("#drumpMoon").css({"display":"none"});
+}
+/*跳过动画*/
+function drumpVideo(){
+    isdrumpvideo=2;
+    var movid="videosBox";//video播放还是canvas
+    videohiden(movid);
+
+}
+
+    /*过度视频消失显示结果页*/
+    function videohiden(movid){
+        $("#endPage").css("display","block");
+        $("#"+movid).animate({
+            opacity: 0
+        },1500);
+        setTimeout(function(){
+            $("#"+movid).css("display","none");
+            $("#"+movid).remove();
+            $("#music").css("display","block");
+        },1700);
+        /*结果页显示*/
+        setTimeout(function(){
+            $("#playBtn2").css("display","none");
+            $("#endPage").animate({
+                opacity: 1
+            },1500);
+            $("#moshuibg").animate({
+                opacity: 1,
+                width:"100%"
+            },2500);
+
+            setTimeout(function(){
+                //显示内容
+                $("#endPage .endContBox").animate({
+                    opacity: 1
+                },1500);
+                setTimeout(function(){
+                    getcanvasimg();
+                },2000);
+            },1500);
+        },2000);
+    }
     /*测算1*/
-    function moontest(username,birth){
+    function moontest(username){
+        var birth=randomnum(0,12);
+        //console.log(birth);
         $.each(moonlist,function(i,n){
-            if(birth >= n.minday && birth <= n.maxday){
+            if(birth == i){
                 //console.log(n);
                 result.astro= n.astro;
                 var len= n.moonarry.length;
@@ -289,11 +349,11 @@ var startover=1;
 
     /*测算2*/
     function moontest2(lenth,getdata){
-        var mu=randomnum(0,99);
+        var mu=randomnum(0,299);
         //console.log(lenth);
         //console.log(getdata);
         //console.log(mu);
-        if(mu !=99){
+        if(mu !=299){
             let c=randomnum(0,lenth-1);
             let mlist=getdata.moonarry[c];
             result.moon=mlist.moon;
@@ -321,27 +381,9 @@ var startover=1;
         }
         magnitude(result.signnum,"YES");//统计
         _czc.push(['_trackEvent', '测算结果',result.signnum]);
-        $("#endPage .tagBoxs .userTag .tag").html( result.society);
-        $("#userMoonStyle").html( result.moon);
-        $("#userVersion").html( result.sign);
-        $("#getname").html( result.username);
-        $("#endUserMoon").attr("src","img/moon/moon"+result.moonid+".png");
-       // getBase64Image("#endUserMoon",2,"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/moon2/moon"+result.moonid+".png");
-
-        //console.log(result.userNumber);
-        var desc ="他是第"+result.userNumber+"个找到自己专属月相的人……";
-        var title =result.username+"的月相居然是【"+result.moon+"】？！";
-        var wxfxxinfo2={"imgUrl":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/sharicon.png",
-            "link" : "https://v3.toutushare.com/activity_zhongqiu/active.html",
-            "desc" : desc,   // 分享描述
-            "title" : title   // 分享标题*/
-        };
-        wxpz(wxfxxinfo2);
-        $('meta[property="og:title"]').attr('content',title);
-        $('meta[itemprop="name"]').attr('content',title);
-        $('meta[name="description"]').attr('content',desc);
-        $(document).attr("title",title);
     }
+
+
 
 /*/!*以下是渲染CANVAS画布中的视频*!/
 function getvideo(){
@@ -374,6 +416,32 @@ function getvideo(){
         clearInterval(TestVideoTimer);
     },false);
 }*/
+
+    /*分享配置*/
+    function sharepzs(getusername){
+        $("#endPage .tagBoxs .userTag .tag").html( result.society);
+        //console.log(result);
+        $("#userMoonStyle").html( result.moon);
+        $("#userVersion").html( result.sign);
+        $("#getname").html( result.username);
+        $("#endUserMoon").attr("src","img/moon/moon"+result.moonid+".png");
+        // getBase64Image("#endUserMoon",2,"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/moon2/moon"+result.moonid+".png");
+
+        //console.log(result.userNumber);
+        var desc ="他是第"+getusername+"个找到自己专属月相的人……";
+        var title =result.username+"的中秋专属月相居然是【"+result.moon+"】？！";
+        var wxfxxinfo2={"imgUrl":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/sharicon.png",
+            "link" : "https://cdn.toutushare.com/activity_zhongqiu/active.html",
+            "desc" : desc,   // 分享描述
+            "title" : title   // 分享标题*/
+        };
+        //console.log(wxfxxinfo2);
+        wxpz(wxfxxinfo2);
+        $('meta[property="og:title"]').attr('content',title);
+        $('meta[itemprop="name"]').attr('content',title);
+        $('meta[name="description"]').attr('content',desc);
+        $(document).attr("title",title);
+    }
 
 
 //     *转换图片为base64*/
@@ -426,6 +494,7 @@ var canvasinfo = new Vue({
 
 
 function getcanvasimg(){
+    //console.log("截图")
     var cntElem = $('#endPage')[0];
     var shareContent = cntElem;//需要截图的包裹的（原生的）DOM 对象
     var width = shareContent.offsetWidth; //获取dom 宽度
@@ -466,13 +535,13 @@ function getcanvasimg(){
                 height:"80%",
                 top:"10%",
                 left:"10%"
-            },1500);
+            },1100);
             $("#endPageImg").css("display","block");
 
             $("#endPageImg").animate({
                 opacity: 1
             },1500);
-        },1500);
+        },1000);
 
     });
 

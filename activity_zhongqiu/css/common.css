@@ -96,10 +96,10 @@ text-shadow: 0 0 15px #666; transition: text-shadow 2s cubic-bezier(0, 1, 0, 1);
 #indexIntroBox .intro img{height:42px;width:auto;}
 #playBtn{width:150px;height:auto;}
 #infoInputBox{width:100%;display:none;background:url("https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/srbj.png") no-repeat;height: 870px;padding:105px;background-size: cover;margin:0 auto;margin-top:40%;z-index:59;position: relative;text-align: center;opacity: 0;}
-#infoInputBox input{text-align: center;font-size:2.5rem;color:#333;width:100%;border:0;border-bottom:1px solid #b1adad;height:90px;margin-top:50px;background:none;font-weight:600;vertical-align:middle;}
+#infoInputBox input{text-align: center;font-size:2.5rem;color:#333;width:100%;border:0;border-bottom:1px solid #b1adad;height:90px;margin-top:165px;background:none;font-weight:600;vertical-align:middle;}
 #playBtn{background:url("https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/play.png") no-repeat;width:150px;height:150px;margin:0 auto;border:none;background-size: cover;cursor: pointer;-webkit-tap-highlight-color: rgba(0, 0, 0, 0);}
-#playBtn2{background:url("https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/tellme3.png") no-repeat;width:372px;height:90px;margin:0 auto;border:none;margin-top:34%;background-size: cover;cursor: pointer;display: inline-block; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);}
-#video{position: absolute;left:0;top:0;z-index:50;display: none;opacity: 0;object-fit: fill;}
+#playBtn2{background:url("https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/playbtn5.png") no-repeat;background-size:cover;width:290px;height:125px;margin:0 auto;border:none;margin-top:27%;cursor: pointer;display: inline-block; -webkit-tap-highlight-color: rgba(0, 0, 0, 0);}
+#video{width:100%;height:100%;object-fit: fill;}
 #video2Box{position: absolute;left:0;top:0;z-index:50;display: none;opacity: 1;background:#000;overflow: hidden;width:100%;height:100%;}
 #video2{width:100%;height:100%;position: absolute;left:0;bottom:-140px;}
 #video2Box .fox{width:100%;height:100%;position: fixed;left:0;top:0;z-index:99999;background:#000;}
@@ -108,18 +108,18 @@ text-shadow: 0 0 15px #666; transition: text-shadow 2s cubic-bezier(0, 1, 0, 1);
 
 #endPage{width:100%;height:100%;background: url("../img/endbg2.jpg") no-repeat;background-size: cover;position: absolute;left:0;top:0;z-index:80;display: none;opacity: 0;}
 #moshuibg{opacity:0;width:1%;height:auto;position: absolute;right:0;top:0;z-index:81;}
-#endPage .endContBox{opacity:0;width:100%;height:100%;position: absolute;left:0;top:0;z-index:82;padding-top:85px;text-align: center;color:#333;}
+#endPage .endContBox{opacity:0;width:100%;height:100%;position: absolute;left:0;top:0;z-index:82;padding-top:60px;text-align: center;color:#333;}
 #endPage .endContBox .title{font-size: 3.3rem;overflow: hidden;width:70%;margin:0 auto;}
 #endPage .endContBox .title .hg{width:14%;line-height: 100px;}
 #endPage .endContBox .title .con{width:70%;text-align: center;}
-#endPage .endContBox .tagBoxs{margin-top:25px;text-align: center;font-size: 2.4rem;}
+#endPage .endContBox .tagBoxs{margin-top:16px;text-align: center;font-size: 2.4rem;}
 #endPage .tagBoxs .userTag{display: inline-block;padding:7px 18px;margin:2px 3px;font-weight:600;position: relative;}
 #endPage .tagBoxs .userTag img{position: absolute;left:0;top:0;width:100%;height:100%;z-index:52;}
 #endPage .tagBoxs .userTag .tag{z-index:60;position: relative;}
-#endUserMoon{width:54%;height:auto;margin:10px auto;margin-right:-145px;}
+#endUserMoon{width:54%;height:auto;margin:10px auto;margin-right:-145px;max-width: 575px;}
 #userMoonStyle{font-size:5.8rem;letter-spacing: 25px;margin-top:-22px;color:#333;font-weight:600;}
-#userVersion{font-size:2.6rem;letter-spacing: 9px;width:72%;margin:0 auto;margin-top:45px;line-height: 65px;}
-#endPage .endContBox .ewmBox{width:250px;font-size:2.1rem;color:#333;position: absolute;left:35.5%;bottom:3.5%;}
+#userVersion{font-size:2.4rem;letter-spacing: 9px;width:72%;margin:0 auto;margin-top:21px;line-height: 52px;}
+#endPage .endContBox .ewmBox{width:240px;font-size:2.1rem;color:#333;position: absolute;left:35.5%;bottom:2.5%;}
 #endPage .ewmBox img{width:100%;height:auto;}
 #endPageImg{width:100%;height:100%;padding:30px 90px;color:#fff;font-size:2.4rem;position: absolute;left:0;top:0;z-index:999;opacity: 0;background:#333;display: none;}
 #endPageImg .canvasImgBox{width:100%;height:calc(100% - 245px);}
@@ -130,6 +130,9 @@ text-shadow: 0 0 15px #666; transition: text-shadow 2s cubic-bezier(0, 1, 0, 1);
 .gearDate{font-size:23px !important;}
 #getname{padding:2px 7px;}
 #startClickBox{width:100%;height:100%;position: absolute;left:0;top:0;z-index:95;}
+#drumpMoon{position: absolute;right:30px;top:100px;z-index:999;padding:8px 20px;font-size:2.1rem;background:none;border:none;cursor: pointer;color:#fff;display: none;}
+#videosBox{width:100%;position: absolute;left:0;top:0;z-index:50;display: none;opacity: 0;height:100%;}
+#drumpVideo{color:#fff;text-align: center;position: absolute;right:35px;top:82px;z-index:999;padding:8px 20px;font-size:2.1rem;background:none;border:none;cursor: pointer;}
 /*end2*/
 #endCanvas{width:100%;height:100%;background:#333;}
 

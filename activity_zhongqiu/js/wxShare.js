@@ -5,8 +5,8 @@
     $wx_share = wxdata.wx_share;   // 自定义数据  ，见wxShare_data.js*/
 var wxlist={"appId":"wx7209465a9ddef7e2","timestamp":"","nonceStr":"","signature":""};
 var wxfxxinfo={"imgUrl":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/sharicon.png",
-    "link" : "https://v3.toutushare.com/activity_zhongqiu/active.html",
-    "desc" : "",   // 分享描述
+    "link" : "https://cdn.toutushare.com/activity_zhongqiu/active.html",
+    "desc" : "中秋专属月相",   // 分享描述
     "title" : "解锁月相，发现未知的自己"   // 分享标题*/
 };
 

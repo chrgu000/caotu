@@ -16,7 +16,7 @@
     <!-- 分享显示的缩略图-->
     <meta itemprop="image" content="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/sharicon.png" />
     <!-- 分享显示的简介-->
-    <meta name="description" itemprop="description" content="" />
+    <meta name="description" itemprop="description" content="中秋专属月相" />
 
     <title>解锁月相，发现未知的自己</title>
     <link href="https://ctkj-1256675270.file.myqcloud.com/active/logo2.png" rel="shortcut icon">
@@ -43,7 +43,7 @@
     <!-- copy these lines to your document: -->
     <div id="loading_hype_containerBox">
         <div id="guodu2_hype_container" style="margin:auto;position:relative;width:750px;height:1334px;overflow:hidden;">
-            <script type="text/javascript" charset="utf-8" src="loading.hyperesources/guodu2_hype_generated_script.js?90282"></script>
+            <script type="text/javascript" charset="utf-8" src="loading.hyperesources/guodu2_hype_generated_script.js?62819"></script>
         </div>
     </div>
 
@@ -54,6 +54,7 @@
         <div id="startClickBox">
 
         </div>
+        <button type="button" id="drumpMoon" onclick="drumpMoon()">跳过动画》</button>
         <!--月亮-->
         <img id="moonImg" src="https://ctkj-1256675270.file.myqcloud.com/active/moon.png" alt=""/>
         <!--首页文字-->
@@ -69,13 +70,17 @@
         <!--信息输入框-->
         <div id="infoInputBox">
             <p class="tips">尊名过长，解锁败矣</p>
-            <input type="text" id="userName" placeholder="输入姓名"/>
-            <input type="text" name="birthday" id="birthday" placeholder="选择生日" readonly="readonly" />
+            <input type="text" id="userName" placeholder="输入昵称"/>
+          <!--  <input type="text" name="birthday" id="birthday" placeholder="选择生日" readonly="readonly" />-->
            <!-- <input style="margin-top:100px;" type="date" id="birthday" placeholder="输入生日    月    日"/>-->
             <div class="btn" id="playBtn2"></div>
         </div>
         <!--过度视频-->
-        <video id="video" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/gdvideo4.mp4" muted  height="100%" width="100%"  preload="auto"  x5-video-player-type="h5" x5-video-player-fullscreen="true"  x5-playsinline="true"  webkit-playsinline="true" playsinline="true" x-webkit-airplay="allow" style="object-fit:fill">您的浏览器不支持。</video>
+        <div id="videosBox">
+            <video id="video" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/gdvideo4.mp4" muted  height="100%" width="100%"  preload="auto"  x5-video-player-type="h5" x5-video-player-fullscreen="true"  x5-playsinline="true"  webkit-playsinline="true" playsinline="true" x-webkit-airplay="allow" style="object-fit:fill">您的浏览器不支持。</video>
+            <button type="button" id="drumpVideo" onclick="drumpVideo()">跳过动画 》</button>
+        </div>
+
       <!--  <video id="indexvideo" src="audio/index.mp4" muted  height="20px" width="20px"  preload="auto"  x5-video-player-type="h5" x5-video-player-fullscreen="true"  x5-playsinline="true"  webkit-playsinline="true" playsinline="true" x-webkit-airplay="allow" style="object-fit:fill">您的浏览器不支持。</video>-->
        <!-- <div id="video2Box">
             <span class="fox"></span>
@@ -112,8 +117,8 @@
                     </p>
                     <div class="ewmBox">
                         <!--截图-->
-                        <img id="ewmimg" src="img/ewm2.png" alt=""/>
-                        <p>扫一扫</p>
+                        <img id="ewmimg" src="img/ewm6.png" alt=""/>
+                        <p>下载头图APP</p>
                         <p>解锁你的月相</p>
                     </div>
                 </div>
@@ -126,7 +131,7 @@
             <div class="canvasImgBox" >
                 <img v-bind:src="url" alt="" id="canvasImg"/>
             </div>
-            <p class="tips">长按保存上图</p>
+            <p class="tips">长按保存上图发送到朋友圈</p>
 
         </div>
     </div>
@@ -150,16 +155,7 @@
   <!--  <script type="text/javascript">
         var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1274860046'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s13.cnzz.com/z_stat.php%3Fid%3D1274860046' type='text/javascript'%3E%3C/script%3E"));
     </script>-->
-    <script src="plugin/LCalendar/js/LCalendar.js" type="text/javascript" charset="utf-8"></script>
-    <script>
-        var calendar = new LCalendar();
-        calendar.init({
-            'trigger': '#birthday', //标签id
-            'type': 'date', //date 调出日期选择 datetime 调出日期时间选择 time 调出时间选择 ym 调出年月选择,
-            'minDate': (new Date().getFullYear()-80) + '-' + 1 + '-' + 1, //最小日期
-            'maxDate': (new Date().getFullYear()+3) + '-' + 12 + '-' + 31 //最大日期
-        });
-    </script>
+
     <script type="text/javascript" src="js/active.js"></script>
 
 </body>
