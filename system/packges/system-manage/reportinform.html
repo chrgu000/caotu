@@ -91,7 +91,7 @@
                                     <button type="button" class="btn" v-if="item.reporttype==1" v-on:click="lookconten(item)">详情</button>
                                 </td>
                                 <td class="center" v-else>
-                                    <button type="button" class="btn" v-if="item.reporttype==1" v-on:click="lookconten(item)">详情</button>
+                                    <button type="button" class="btn" v-on:click="lookconten(item)">详情</button>
                                     <button type="button" class="pass btn" v-on:click="pass(item)">通过</button>
                                     <button type="button" class="unpass btn" v-on:click="unpass(item)">不通过</button>
                                 </td>
@@ -140,6 +140,7 @@
                 ispass(event,2);
             },
             lookconten:function(event){
+                console.log(event);
                 reportdetail(event);
             }
 
@@ -190,9 +191,12 @@
 /*点击详情查看*/
     function reportdetail(nedata){
         var contentid=nedata.contentid;
+        if(nedata.cmtcontentid){
+            contentid=nedata.cmtcontentid;
+        }
         var datapost={"contentid":contentid};
-        console.log("datapost::");
-        console.log(datapost);
+//        console.log("datapost::");
+//        console.log(datapost);
         datapost=JSON.stringify(datapost);
         $.ajax({
             url : path+'/CTKJBUSINESS/report/reportdetail.do',
@@ -218,6 +222,7 @@
                     }else{
                         url="reportmovie.html";
                     }
+
                     layer.open({
                         type: 2,
                         title: '举报详情',
@@ -229,6 +234,7 @@
                         success: function (layero, index) {
                             var body = layer.getChildFrame('body', index);
                             var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+
                             iframeWin.geturl(diskJson.data);
                         }
                     });

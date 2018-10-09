@@ -48,6 +48,7 @@
                 <option value="2">B</option>
                 <option value="1">C</option>
             </select>
+                开始时间：<input type="text" placeholder="开始时间" value="" id="startTime"/>
                 结束时间：<input type="text" placeholder="结束时间" value="" id="endTime"/>
         </div>
 
@@ -176,16 +177,14 @@
         var date=new Date();
         $('#endTime').datetimepicker({
             value:date,
-            format:'Y-m-d',
-            timepicker:false,//关闭时间选项
+            timeFormat: 'Y-m-d H:m', //格式化时间
             maxDate:true
         });
-/*
-        $('#pushtime').datetimepicker({
-            value:"",
-            format:'Y-m-d H:m',
-            minDate:true
-        })*/
+        $('#startTime').datetimepicker({
+            value:date,
+            timeFormat: 'Y-m-d H:m', //格式化时间
+            maxDate:true
+        });
 
         $('#pushtime').datetimepicker({
             value:"",
@@ -401,15 +400,28 @@
 
     }
 
+    $("#contentTitle").focus(function(){
+        $("#checkTagSearch").val("").attr("data-val","");
+    });
 /*搜索*/
     function searchsens(pageno){
         var contenttitle=$("#contentTitle").val();
         var contentlevel=$("#checkConLevel").val();
         var contenttag=$("#checkTagSearch").attr("data-val");
         var contentshow=$("#checkTagSearch").val();
-        var createtime=$("#endTime").val();
-        createtime=createtime.replace(/-/g, "");
-        var datapost={"pageno":pageno,"pagesize":20,"contenttitle":contenttitle,"contentlevel":contentlevel,"contenttag":contenttag,"createtime":createtime};
+        var startTime=$("#startTime").val();
+        startTime=startTime.replace(/\s+/g,"");
+        startTime=startTime.replace(/\//g, "");
+        startTime=startTime.replace(/:/g, "");
+        startTime=startTime+"00";
+        startTime=parseInt(startTime);
+        var endTime=$("#endTime").val();
+        endTime=endTime.replace(/\s+/g,"");
+        endTime=endTime.replace(/\//g, "");
+        endTime=endTime.replace(/:/g, "");
+        endTime=endTime+"00";
+        endTime=parseInt(endTime);
+        var datapost={"pageno":pageno,"pagesize":20,"contenttitle":contenttitle,"contentlevel":contentlevel,"contenttag":contenttag,"endtime":endTime,"starttime":startTime};
 //         console.log("datapost::");
 //         console.log(datapost);
         datapost=JSON.stringify(datapost);
@@ -433,10 +445,12 @@
 //                 console.log(diskJson);
                 /*翻页信息*/
                 if(diskJson.code =="1000"){
-
                     pageinfo3(pageno,diskJson.data.totalCount,20);//翻页控件信息
                     tabledata.items=diskJson.data.contentList;
                     $.each(tabledata.items,function(i,n){
+                        if(contenttag == ""){
+                            contentshow=tabledata.items[i].contenttag
+                        }
                         tabledata.items[i].contenttag=contentshow;
                     })
 

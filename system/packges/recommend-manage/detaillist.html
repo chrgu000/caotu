@@ -55,6 +55,8 @@
                             <th>评论</th>
                             <th>点赞</th>
                             <th>发布时间</th>
+                            <th v-if="ispushed ==2">推送次数</th>
+                            <th v-if="ispushed ==2">查看次数</th>
                         </tr>
                         </thead>
                         <tbody id="tablelistTbody">
@@ -67,6 +69,8 @@
                             <td class="center">{{item.contentcomment }}</td>
                             <td class="center">{{item.contentgood }}</td>
                             <td class="center">{{item.createtime | time}}</td>
+                            <td class="center" v-if="ispushed ==2">{{item.allcount }}</td>
+                            <td class="center"  v-if="ispushed ==2">{{item.seecount }}</td>
                         </tr>
 
                         </tbody>
@@ -82,9 +86,10 @@
 <script>
 
     var pusblishtabledata = new Vue({
-        el: '#tablelistTbody',
+        el: '#tablelistbox',
         data: {
-            items:""
+            items:"",
+            ispushed:""
         },
         // 在 `methods` 对象中定义方法
         methods: {
@@ -96,9 +101,8 @@
         }
     });
 
-    function getcheck(needdata){
+    function getcheck(needdata,countlist){
         var tjdatas={"contentlist":needdata};
-//        console.log(tjdatas);
         tjdatas=JSON.stringify(tjdatas);
         $.ajax({
             url : path+'/CTKJBUSINESS/content/watchContentDetail.do',
@@ -116,9 +120,19 @@
             success:function(diskJson){
 //                console.log("查看详情：");
 //                console.log(diskJson);
-
+                if(pusblishtabledata.ispushed ==2){
+                    $.each(countlist,function(i,n){
+                        $.each(diskJson.data,function(i2,n2){
+                            if(n2.contentid == n.contentid){
+                                diskJson.data[i].seecount= n.seecount;
+                                diskJson.data[i].allcount= n.allcount;
+                            }
+                        });
+                    });
+                }
                 /*翻页信息*/
                 pusblishtabledata.items=diskJson.data;
+
 
             }
         });

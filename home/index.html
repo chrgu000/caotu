@@ -2,12 +2,28 @@
 <html>
 <head lang="en">
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
     <title>草图科技官网</title>
     <link rel="stylesheet" href="css/commons.css"/>
     <style>
 
-        .conbox{width:100%;margin:0 auto;position: relative;}
-        .conbox img{width:100%;height: auto;}
+        .conbox{width:100%;margin:0 auto;position: relative; overflow: hidden;}
+        .imgbox{position: relative;}
+        .conbox img.bjImg{width:100%;height: auto;}
+        #home1Info{width:40%;padding:9px;height:220px;position: absolute;top:20%;left:0%;right:0%;bottom:0%;margin:0 auto;text-align: center;font-size: 1.2rem;font-family: "PingFang SC";}
+        #home1Info h3{font-size:2.1rem;margin-bottom:6px;}
+        #home1Info .downBtnBox{width:70%;height:100px;margin:0 auto;margin-top:9px;}
+        #home1Info .downBtnBox .downBtns{width:45%;float:left;}
+        #home1Info .downBtns .btnimg{width:100%;height:auto;}
+        #home1Info .downBtns .btnEwm{width:100%;height:auto;margin-top:0;display: none;}
+        #home1Info .downBtns:hover .btnEwm{display: block;}
+        #img2 .showImg, #img3 .showImg{width:45%;height:auto;margin-top: 10%;}
+        .TabsBox{position: absolute;right:10%;top:40%;font-size:2rem;color:#202020;text-align: center;}
+        .TabsBox p{color:#888;margin-top:26px;font-size:1.2rem;}
+        .TabsBox h3{font-weight:500;}
+        #img3{text-align: right;}
+        #img3 .showImg{width:40%;margin-right:5%;}
+        #img3 .TabsBox{left:10%;right:auto;}
         #rightKzBox{width:15px;padding:10px;position: fixed;right:10px;top:30%;}
         #rightKzBox li{width:12px;height:12px;background:#e4e0e0;margin: 10px;
             -webkit-border-radius: 50%;
@@ -29,55 +45,96 @@
 
         #downerweimaBox .downbox .title{text-align: center;font-weight:500;font-size:25px;}
         #downerweimaBox .erm{width:92%;height:auto;}
-        #footdiv{text-align: center;height:55px;line-height: 55px;position: absolute;bottom:0;left:0;width:100%;font-size:13px;}
+        #footdiv{text-align: center;width:100%;font-size:13px;height:75px;color:#333;background:#FFE121;padding-top:20px;}
         #footdiv p span{display: inline-block;margin:0 6px;color:#666;}
         #accountLogout{cursor: pointer;margin-left:9px;}
+        #logosBox{position: fixed;left:4%;top:0;z-index:99;}
+        #logosBox .logo{height:48px;width:auto;margin-right:40px;vertical-align: middle;}
+        #logosBox .info{display: inline-block;width:45px;height:70px;line-height: 70px;text-align: center;color:#fff;background:#FF3D6F;}
+
+        @media (max-width: 768px){
+            #logosBox .logo{height:35px;margin-right:16px;}
+            #logosBox .info{height:50px;line-height: 50px;width:38px;}
+            #home1Info{width:56%;height:155px;}
+            #home1Info h3{font-size:1.6rem;}
+            #home1Info p{font-size:0.8rem;}
+            .TabsBox{font-size:1.2rem;right:3%;width:52%;}
+            .TabsBox h3{font-size:1rem;}
+            .TabsBox p{font-size:0.8rem;margin-top:12px;}
+            #img3 .TabsBox{left:3%;}
+            #rightKzBox{display: none;}
+        }
+        @media (min-width: 1400px){
+            .TabsBox{right:16%;}
+            #img3 .TabsBox{left:16%;}
+            #home1Info h3{font-size: 3rem;}
+            #home1Info p{font-size: 2rem;}
+        }
     </style>
 </head>
 <body>
-    <div class="conbox">
-        <div id="img1" class="imgbox"><img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/home1.png" alt=""/></div>
-        <div id="img2" class="imgbox" style="margin-top:-6px;"><img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/home2.png" alt=""/></div>
-        <div id="img3" class="imgbox"  style="margin-top:-6px;"><img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/home3.png" alt=""/>
+    <!--logo-->
+    <div id="logosBox">
+        <img class="logo" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/home2.0/logo2.png" alt=""/>
+        <span class="info">首页</span>
+    </div>
+    <!--主体-->
+    <div class="conbox" id="conboxIndex">
+        <div id="img1" class="imgbox">
+            <div id="home1Info">
+                <h3>头图</h3>
+                <p>这是一个超heigh的搞笑社区</p>
+                <div class="downBtnBox">
+                    <div class="downBtns">
+                        <a href="https://itunes.apple.com/cn/app/id1398165300?mt=8">
+                            <img class="btnimg" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/home2.0/ios.png" alt=""/>
+                        </a>
+                        <img class="btnEwm" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/home2.0/IOSewm.png" alt=""/>
+                    </div>
+                    <div class="downBtns" style="float: right;">
+                        <a href="http://sj.qq.com/myapp/detail.htm?apkName=com.caotu.toutu">
+                            <img class="btnimg" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/home2.0/android.png" alt=""/>
+                        </a>
+                        <img class="btnEwm" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/home2.0/androewm.png" alt=""/>
+                    </div>
+                </div>
+            </div>
+            <img class="bjImg" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/home2.0/home1.png" alt=""/>
+        </div>
+        <div id="img2" class="imgbox" style="margin-top:-6px;">
+            <img class="showImg" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/home2.0/home2.png" alt=""/>
+            <div class="TabsBox">
+                <h3>你关心的 头图都知道</h3>
+                <p>精选主题，为你追踪你想知道的任何信息</p>
+            </div>
+        </div>
+        <div id="img3" class="imgbox"  style="margin-top:-6px;">
+            <img class="showImg" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/home2.0/home3.png" alt=""/>
+            <div class="TabsBox">
+                <h3>聚焦伙伴的兴趣主题</h3>
+                <p>给你喜欢的圈子，还有一群小伙伴</p>
+            </div>
             <div id="footdiv">
-                <p>
-                    <span>鲁ICP备15027719号-1</span><span>杭州草图科技网络有限公司</span>
+                <p>杭州草图科技网络有限公司</p>
+                <p style="margin-top:7px;">
+                    <span>鲁ICP备15027719号-1</span>
                     <a href="packages/privacypolicy.html" target="_blank">用户隐私协议</a>
                     <a  href="packages/accountLogout.html" target="_blank" id="accountLogout">注销账号</a>
+                    <a  href="packages/callus.html" target="_blank" id="callUs">联系我们</a>
                 </p>
             </div>
         </div>
-    </div>
-    <!--下载区-->
-    <div id="downerweimaBox">
-            <div id="iosdown" class="downbox">
-                <div class="titleBox">
-                    <a class="downhref" href="https://itunes.apple.com/cn/app/id1398165300?mt=8">
-                        <img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/home-ios.png" alt="ios下载"/>iphone
-                    </a>
-                </div>
-                <img class="erm" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/home-ioserweima.png" alt="ios"/>
-            </div>
-            <div id="andrdown" class="downbox">
-                <div class="titleBox">
-                    <a class="downhref" href="http://sj.qq.com/myapp/detail.htm?apkName=com.caotu.toutu">
-                        <img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/home-andro.png" alt="Android下载"/>Android
-                    </a>
-                </div>
-                <img  class="erm" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/home-anderweima.png" alt="Android"/>
-            </div>
+
     </div>
     <ul id="rightKzBox">
-        <li data-id="img1" class="active"><a href="javascript:void(0)" class="jumpbtn active"></a></li>
-        <li data-id="img2"><a href="javascript:void(0)" class="jumpbtn"></a></li>
-        <li data-id="img3"><a href="javascript:void(0)" class="jumpbtn"></a></li>
+        <li id="page1" data-id="img1" class="active page"><a href="javascript:void(0)" class="jumpbtn active"></a></li>
+        <li id="page2" class="page" data-id="img2"><a href="javascript:void(0)" class="jumpbtn"></a></li>
+        <li id="page3" class="page" data-id="img3"><a href="javascript:void(0)" class="jumpbtn"></a></li>
     </ul>
-
 
     <script src="js/jquery.min.js"></script>
     <script src="js/jquery.mousewheel.min.js"></script>
     <script>
-
         $("#rightKzBox li").click(function () {
             $(this).addClass("active").siblings(".active").removeClass("active");
             var n = $(this).attr("data-id");
@@ -92,22 +149,68 @@
                     scrollTop: x
                 }, 250);
 
+        });
 
-        }); // 左侧快速导航滚动
-        $(window).scroll(function() {
-            //var yheight1=window.pageYOffset; //滚动条距顶端的距离
-            var yheight=$(document).scrollTop(); //滚动条距顶端的距离
-            var height=$(document).height();
-            if(yheight>(height/2)){
-                $("#rightKzBox li:nth-child(3)").addClass("active").siblings(".active").removeClass("active");
-            }else if(yheight>=(height/3)){
-                $("#rightKzBox li:nth-child(2)").addClass("active").siblings(".active").removeClass("active");
-            }else {
-                $("#rightKzBox li:nth-child(1)").addClass("active").siblings(".active").removeClass("active");
+        // 左侧快速导航滚动
+        var hei = $(document).height()/3;
+        //如果不加时间控制，滚动会过度灵敏，一次翻好几屏
+        var startTime = 0, //翻屏起始时间
+                endTime = 0,
+                now = 0;
+        //浏览器兼容
+        if ((navigator.userAgent.toLowerCase().indexOf("firefox")!=-1)){
+            document.addEventListener("DOMMouseScroll",scrollFun,false);
+        }
+        else if (document.addEventListener) {
+            document.addEventListener("mousewheel",scrollFun,false);
+        }
+        else if (document.attachEvent) {
+            document.attachEvent("onmousewheel",scrollFun);
+        }
+        else{
+            document.onmousewheel = scrollFun;
+        }
+
+        //滚动事件处理函数
+        function scrollFun(event){
+            startTime = new Date().getTime();
+            var delta = event.detail || (-event.wheelDelta);
+            var ai=$("#rightKzBox li.active").index()+1;
+            //mousewheel事件中的 “event.wheelDelta” 属性值：返回的如果是正值说明滚轮是向上滚动
+            //DOMMouseScroll事件中的 “event.detail” 属性值：返回的如果是负值说明滚轮是向上滚动
+
+            if ((endTime - startTime) < -500){
+                if(delta>0 && ai<3){
+                    //向下滚动
+                    ai=ai+1;
+                    $("#rightKzBox li:nth-child("+ai+")").addClass("active").siblings(".active").removeClass("active");
+                   toPage(ai);
+                }
+                if(delta<0 && ai>1){
+                    //向上滚动
+                    ai=ai-1;
+                    $("#rightKzBox li:nth-child("+ai+")").addClass("active").siblings(".active").removeClass("active");
+
+                    toPage(ai);
+                }
+                endTime = new Date().getTime();
             }
-        })
+            else{
+                event.preventDefault();
+            }
+        }
+        function toPage(now){
+            var x=0;
+            switch (now){
+                case 1: x = 0; break;
+                case 2: x = hei; break;
+                case 3: x = hei*2; break;
+            }
+            $('html, body').animate({
+                scrollTop: x
+            }, 500);
 
-
+        }
 
     </script>
 </body>

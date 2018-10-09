@@ -120,25 +120,26 @@ function genID(length){
     return x+date;
 }
 
+
 /*获取当前时间*/
 function getmytime(){
     var myDate = new Date();
     var year=myDate.getFullYear();    //获取完整的年份(4位,1970-????)
     var month=myDate.getMonth();       //获取当前月份(0-11,0代表1月)
-    if(month<10){
-        month="0"+(month+1)
-    }else{month=month+1;}
-    var day=myDate.getDate();        //获取当前日(1-31)
-    if(day<10){
-        day="0"+day
-    }
-   var h= myDate.getHours();       //获取当前小时数(0-23)
-    if(h<10){
-        h="0"+h
-    }
-   var m=myDate.getMinutes();     //获取当前分钟数(0-59)
-    if(m<10){
-        m="0"+m
+    if(month<9){
+            month="0"+(month+1)
+        }else{month=month+1;}
+        var day=myDate.getDate();        //获取当前日(1-31)
+        if(day<10){
+            day="0"+day
+        }
+        var h= myDate.getHours();       //获取当前小时数(0-23)
+        if(h<10){
+            h="0"+h
+        }
+        var m=myDate.getMinutes();     //获取当前分钟数(0-59)
+        if(m<10){
+            m="0"+m
     }
    var s=myDate.getSeconds();     //获取当前秒数(0-59)
     if(s<10){
@@ -331,13 +332,14 @@ function gettime(time){
     var year=date.getFullYear();    //获取完整的年份(4位,1970-????)
     var month=date.getMonth();       //获取当前月份(0-11,0代表1月)
     var day=date.getDate();        //获取当前日(1-31)
-    if(month<10){
+
+    if(month<9){
         month="0"+(month+1)
     }else{month=month+1;}
     if(day<10){
         day="0"+day
     }
-    var timedata=year+month+day;
+    var timedata=String(year)+String(month)+String(day);
     return timedata;
 }
 

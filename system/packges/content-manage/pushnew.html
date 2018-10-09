@@ -64,7 +64,7 @@
             </div>
             <!--内容/h5-->
             <div class="chooseDiv conTypeInput show">
-                <input type="search" value="" class="repead" data-val="" placeholder="请选择标签" id="conH5" />
+                <input type="search" value="" class="repead" data-val="" placeholder="请输入" id="conH5" />
             </div>
         </div>
     </div>
@@ -263,14 +263,14 @@
         $("#contentPageBox").load("pushmana.html");
     });
     //账号限制
-    $("#newsTitle").blur(function(){
+/*    $("#newsTitle").blur(function(){
         var dva=$(this).val();
         if(dva==""){
             layer.msg("标题不能为空！！")
         }else if(dva.length >40){
             layer.msg("标题在40字以内！！")
         }
-    });
+    });*/
     $("#contentText").blur(function(){
         var dva=$(this).val();
         if(dva==""){
@@ -324,6 +324,10 @@
         }else{
             pushextra=$("#conH5").val();
         }
+        if(pushextra ==""){
+            layer.msg("请输入详情！！");
+            return false;
+        }
         var pushuserid="";//指定推送用户id 群发不传此字段
         if($("#allUser").is(':checked')){
             pushuserid="";
@@ -361,13 +365,13 @@
             }
         }
 
-        if(pushtitle==""){
+       /* if(pushtitle==""){
             layer.msg("标题不能为空！！");
             return false;
         }else if(pushtitle.length >40){
             layer.msg("标题在40字以内！！");
             return false;
-        }
+        }*/
         if(pushcontent==""){
             layer.msg("消息内容不能为空！！");
             return false;
