@@ -145,13 +145,13 @@
             }
         });
         $(function(){
-            $("#labelPageCont").load("pages/accessTask.html");
+            $("#labelPageCont").load("pages/homeindex/accessTask.html");
         });
         /*标签页点击*/
         $("#labelPageTitleBox .labelTitleBtn").click(function(){
             var page=$(this).attr("data-page");
             $(this).addClass("active").siblings(".active").removeClass("active");
-            $("#labelPageCont").load("pages/"+page);
+            $("#labelPageCont").load("pages/homeindex/"+page);
         });
 
         /*点击我的收货信息*/
