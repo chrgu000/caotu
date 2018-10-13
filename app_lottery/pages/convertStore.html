@@ -1,0 +1,59 @@
+    <style>
+        .lt{float:left;}
+        #contentBox{width:100%;}
+        #contentBox .title{text-align: left;color:#7C7E86;font-size:0.9rem;}
+        .listBox{width:100%;}
+        .listBox li{position: relative;width:100%;height:55px;margin:30px 0;}
+        .listBox .listTitle{width:53px;height:53px;}
+        .listBox .listTitle img{width:100%;height:100%;}
+        .listBox .listInfo{width:calc(100% - 55px);height:100%;padding-left:16px;}
+        .listBox .listInfo .listInfoTitle{color:#2A2A30;font-size:1rem;font-weight:600;margin-top:6px;}
+        .listBox .listInfo .listInfoCon{color:#828393;font-size:0.8rem;margin-top:2px;}
+        .listBox .listBtnBox{position: absolute;right:-5px;top:14px;width:70px;}
+        .listBox .listBtnBox .btn{display: inline-block;width:100%;height:30px;text-align: center;color:#fff;background:#56B6FB;font-size:0.8rem;}
+        .listBox .listBtnBox .finished{background:#FFCF1E;}
+    </style>
+
+    <div id="contentBox">
+        <!--能量兑换-->
+        <div id="convert">
+            <ul class="listBox">
+                <li v-for="(item,index) in items" v-bind:data-integral="item.integral">
+                    <div class="listTitle lt">
+                        <img v-bind:src="item.prizeImg" alt=""/>
+                    </div>
+                    <div class="listInfo lt">
+                        <p class="listInfoTitle">{{item.prizeName}}</p>
+                        <p class="listInfoCon">{{item.info}}</p>
+                    </div>
+                    <div class="listBtnBox">
+                        <span class="convert btn" v-on:click="greet(item)">去兑换</span>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+
+
+    </div>
+
+    <script>
+        /*能量兑换*/
+        var everyDayTask = new Vue({
+            el: '#convert',
+            data: {
+                items: [
+                    {prizeImg:"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/qiandao.png",prizeName:"VIvio手机",info:"消耗4999吐槽能量",integral:4999},
+                    {prizeImg:"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/pinglun.png",prizeName:"小米手环",info:"消耗200吐槽能量",integral:200}
+                ]
+            },
+            // 在 `methods` 对象中定义方法
+            methods: {
+                greet: function (event) {
+                    console.log(event);
+                }
+            }
+        });
+
+
+    </script>

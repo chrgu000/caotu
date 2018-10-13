@@ -1,0 +1,181 @@
+    <style>
+        .lt{float:left;}
+        #contentBox{width:100%;}
+        #contentBox .title{text-align: left;color:#7C7E86;font-size:0.9rem;}
+        .listBox{width:100%;}
+        .listBox li{position: relative;width:100%;height:55px;margin:30px 0;}
+        .listBox .listTitle{width:53px;height:53px;}
+        .listBox .listTitle img{width:100%;height:100%;}
+        .listBox .listInfo{width:calc(100% - 55px);height:100%;padding-left:16px;}
+        .listBox .listInfo .listInfoTitle{color:#2A2A30;font-size:1rem;font-weight:600;margin-top:6px;}
+        .listBox .listInfo .listInfoCon{color:#828393;font-size:0.8rem;margin-top:2px;}
+        .listBox .listBtnBox{position: absolute;right:-5px;top:14px;width:70px;}
+        .listBox .listBtnBox .btn{display: inline-block;width:100%;height:30px;text-align: center;color:#fff;background:#46B751;font-size:0.8rem;padding:0;line-height: 30px;}
+        .listBox .listBtnBox .finished{background:#FFCF1E;}
+        #newUserTask{margin-top:25px;}
+
+        @media (max-width: 320px){
+            .listBox .listInfo{padding-left:6px;}
+            .listBox .listBtnBox{width:65px;}
+            .listBox .listInfo .listInfoTitle{font-size:0.9rem;}
+        }
+    </style>
+
+    <div id="contentBox">
+        <!--每日任务-->
+        <div id="everyDayTask">
+            <h4 class="title">每日任务</h4>
+            <ul class="listBox">
+                <li>
+                    <div class="listTitle lt">
+                        <img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/qiandao.png" alt=""/>
+                    </div>
+                    <div class="listInfo lt">
+                        <p class="listInfoTitle">每日签到 +1～30</p>
+                        <p class="listInfoCon">连续七天签到大量能量</p>
+                    </div>
+                    <div class="listBtnBox">
+                        <span v-if="info.signIn == 0" class="finishing btn" v-on:click="signin()">去完成</span>
+                        <span v-else class="finished btn">已完成</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="listTitle lt">
+                        <img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/liulan.png" alt=""/>
+                    </div>
+                    <div class="listInfo lt">
+                        <p class="listInfoTitle">浏览内容 +10</p>
+                        <p class="listInfoCon">分享内容给好友一次获10能量</p>
+                    </div>
+                    <div class="listBtnBox">
+                        <span v-if="info.browse == 0" class="finishing btn" v-on:click="jumpapp()">去完成</span>
+                        <span v-else class="finished btn">已完成</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="listTitle lt">
+                        <img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/shenping.png" alt=""/>
+                    </div>
+                    <div class="listInfo lt">
+                        <p class="listInfoTitle">每日分享 +10</p>
+                        <p class="listInfoCon">评论上神评获10能量</p>
+                    </div>
+                    <div class="listBtnBox">
+                        <span v-if="info.commentGod == 0" class="finishing btn" v-on:click="jumpapp()">去完成</span>
+                        <span v-else class="finished btn">已完成</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="listTitle lt">
+                        <img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/pinglun.png" alt=""/>
+                    </div>
+                    <div class="listInfo lt">
+                        <p class="listInfoTitle">发布内容 +10</p>
+                        <p class="listInfoCon">萝卜，每日8次</p>
+                    </div>
+                    <div class="listBtnBox">
+                        <span v-if="info.goComment == 0" class="finishing btn" v-on:click="jumpapp()">去完成</span>
+                        <span v-else class="finished btn">已完成</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="listTitle lt">
+                        <img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/dianzan.png" alt=""/>
+                    </div>
+                    <div class="listInfo lt">
+                        <p class="listInfoTitle">去评论</p>
+                        <p class="listInfoCon">点赞内容获10能量 每天100次</p>
+                    </div>
+                    <div class="listBtnBox">
+                        <span v-if="info.good == 0" class="finishing btn" v-on:click="jumpapp()">去完成</span>
+                        <span v-else class="finished btn">已完成</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <!--新手任务-->
+        <div id="newUserTask">
+            <h4 class="title">新手任务</h4>
+            <ul class="listBox">
+                <li>
+                    <div class="listTitle lt">
+                        <img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/qiandao.png" alt=""/>
+                    </div>
+                    <div class="listInfo lt">
+                        <p class="listInfoTitle">邀请好友</p>
+                        <p class="listInfoCon"></p>
+                    </div>
+                    <div class="listBtnBox">
+                        <span v-if="info.invitFriend == 0" class="finishing btn" v-on:click="invit()">去完成</span>
+                        <span v-else class="finished btn">已完成</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="listTitle lt">
+                        <img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/liulan.png" alt=""/>
+                    </div>
+                    <div class="listInfo lt">
+                        <p class="listInfoTitle">完善个人信息</p>
+                        <p class="listInfoCon"></p>
+                    </div>
+                    <div class="listBtnBox">
+                        <span v-if="info.userInfo == 0" class="finishing btn" v-on:click="jumpapp()">去完成</span>
+                        <span v-else class="finished btn">已完成</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="listTitle lt">
+                        <img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/shenping.png" alt=""/>
+                    </div>
+                    <div class="listInfo lt">
+                        <p class="listInfoTitle">绑定手机</p>
+                        <p class="listInfoCon">评论上神评获50能量</p>
+                    </div>
+                    <div class="listBtnBox">
+                        <span v-if="info.bindPhone == 0" class="finishing btn" v-on:click="jumpapp()">去完成</span>
+                        <span v-else class="finished btn">已完成</span>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+
+
+    </div>
+
+    <script>
+        /*每日任务*/
+        var everyDayTask = new Vue({
+            el: '#everyDayTask',
+            data: {
+                info: {signIn:1,browse:0,commentGod:1,goComment:0,good:0}
+            },
+            // 在 `methods` 对象中定义方法
+            methods: {
+                signin: function (event) {//签到
+                    console.log("签到");
+                },
+                jumpapp:function (event) {//跳转到APP
+                    console.log("跳转到APP");
+                }
+            }
+        });
+
+        /*新手任务*/
+        var newUserTask = new Vue({
+            el: '#newUserTask',
+            data: {
+                info: {invitFriend:1,userInfo:0,bindPhone:1}
+            },
+            // 在 `methods` 对象中定义方法
+            methods: {
+                invit: function (event) {//邀请好友
+                    console.log("邀请好友");
+                },
+                jumpapp:function (event) {//跳转到APP
+                    console.log("跳转到APP");
+                }
+            }
+        });
+
+    </script>

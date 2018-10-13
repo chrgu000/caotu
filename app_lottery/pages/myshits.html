@@ -1,0 +1,51 @@
+    <style>
+        .lt{float:left;}
+        #contentBox{width:100%;}
+        #contentBox .title{text-align: left;color:#7C7E86;font-size:0.9rem;}
+        .listBox{width:100%;}
+        .listBox li{position: relative;width:100%;height:55px;margin:15px 0;}
+        .listBox .listTitle{width:53px;height:53px;}
+        .listBox .listTitle img{width:100%;height:100%;}
+        .listBox .listInfo{width:100%;height:100%;padding-left:16px;}
+        .listBox .listInfo .listInfoTitle{color:#2A2A30;font-size:1rem;font-weight:600;margin-top:6px;}
+        .listBox .listInfo .listInfoCon{color:#828393;font-size:0.8rem;margin-top:2px;}
+        .listBox .listBtnBox{position: absolute;right:15px;top:12px;}
+        .listBox .listBtnBox .integral{color:#2A2A30;font-size:1.2rem;}
+    </style>
+
+    <div id="contentBox">
+        <!--我的吐槽-->
+        <div id="myShits">
+            <ul class="listBox">
+                <li v-for="(item,index) in items">
+                    <div class="listInfo lt">
+                        <p class="listInfoTitle">{{item.type}}</p>
+                        <p class="listInfoCon">{{item.time}}</p>
+                    </div>
+                    <div class="listBtnBox">
+                        <span class="integral">+{{item.integral}}</span>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+
+
+    </div>
+
+    <script>
+        /*我的吐槽*/
+        var myShits = new Vue({
+            el: '#myShits',
+            data: {
+                items: [
+                     {type:"签到奖励",time:"2018-11-12",integral:10},
+                     {type:"签到奖励",time:"2018-11-12",integral:10},
+                     {type:"签到奖励",time:"2018-11-12",integral:10},
+                        ]
+            }
+        });
+
+
+
+    </script>

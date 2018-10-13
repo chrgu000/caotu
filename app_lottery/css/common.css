@@ -1,0 +1,142 @@
+/* 通用样式*/
+/*@font-face {
+    font-family: 'MiNiJian';   /!*字体名称*!/
+    src: url('https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/RuiZiYunZiKuDaBiaoSongTiGBK-1.ttf');       /!*字体源文件*!/
+}*/
+html,body{width:100%;min-height: 100%;background:#fff;}
+body{
+    font:10px "微软雅黑","\5FAE\8F6F\96C5\9ED1","\6807\6977\4F53",Arial,Helvertica,sans-serif;
+    color:#666;
+    margin:0;
+    padding:0;
+    background:#eee;
+    -webkit-text-size-adjust : 100% ;
+    -moz-text-size-adjust : 100% ;
+    -ms-text-size-adjust : 100% ;
+    text-size-adjust : 100%;
+    -moz-user-select: none; /*火狐*/
+    -webkit-user-select: none; /*webkit浏览器*/
+    -ms-user-select: none; /*IE10*/
+    -khtml-user-select: none; /*早期浏览器*/
+    user-select: none;
+}
+
+ul,ol,p,h1,h2,h3,h4,h5,h6,dl,dt,dd{
+    margin:0;
+    padding:0;
+    list-style:none;
+}
+input{
+    border:none ;
+}
+input:active,
+input:focus{outline:none;}
+button:active,
+button:focus{outline:none;}
+a{
+    color:#666;
+    text-decoration:none;
+}
+a:hover{
+    color:#ff0700;
+    text-decoration:none;
+}
+.lf{
+    float:left;
+}
+.rt{
+    float:right;
+}
+.clear{
+    clear:both;
+}
+[v-cloak]{display: none;}
+
+*{box-sizing: border-box;}
+[v-cloak]{display: none;}
+.btn{display: inline-block;padding:6px 9px;background:#FF698F;color:#fff;text-align: center;cursor: pointer;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;}
+.btn img{width:100%;height:auto;}
+
+.conntentsBox{width:100%;background-size:cover;padding:80px;position: relative;overflow: hidden;min-height:100%;}
+.actPages{width:100%;height:100%;display: none;text-align: center;font-size:2.4rem;position: relative;margin-top:50px;}
+.actPages.active{display: block;}
+.actpagebg{width:100%;height:100%;position: absolute;top:0;left:0;z-index:-1;}
+
+
+#music{
+    width: 8%;
+    position: absolute;
+    padding: 5px;
+    top: 2%;
+    right: 4%;
+    z-index: 99;
+}
+
+#cnzz_stat_icon_1274437800{display: none;}
+#beginTest{width:250px;height:80px;font-size:2.2rem;}
+.lt{float:left;}
+.rt{float:right;}
+
+#pageAllBox{width:100%;}
+/*首页*/
+#myPowerBox{width:100%;background: url("https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/home_bg.png") no-repeat;background-size: cover;padding:15px;}
+#myPowerBox .topTitleBox{width:96%;height:25px;line-height: 25px;margin:0 auto;}
+#myLotterInfo{float:left;}
+#powerInfo{float:right;}
+#myPowerBox .topTitBtn{display: inline-block;width:90px;height:24px;cursor: pointer;}
+#myPowerBox .topTitBtn img{width:100%;height:auto;}
+#myPowerBox .imgBox{width:100%;text-align: center;margin-top:16px;margin-bottom:3px;}
+#myPowerBox .imgBox img{width:47%;height:auto;}
+#myPowerBox .infoBox{text-align: center;line-height: 25px;font-size:0.9rem;color:#FF9900;margin-bottom:12px;}
+#myPower{font-weight:600;font-size:2.6rem;padding-right:5px;}
+/*标签页*/
+#labelPageBox{width:100%;background:#fff;height:44px;border-bottom:1px solid #D8E1E9;}
+#labelPageTitleBox{width:100%;padding:2px 5px;height:100%;border-bottom:1px solid #D8E1E9;}
+#labelPageTitleBox .labelTitleBtn{display: inline-block;width:32%;color:#404040;font-size:0.9rem;text-align: center;height:100%;line-height: 38px;position: relative;font-weight: 700;}
+#labelPageTitleBox .labelTitleBtn:hover,
+#labelPageTitleBox .labelTitleBtn:hover{color:#FF3D6F;}
+#labelPageTitleBox .labelTitleBtn .tips{width:20px;height:3px;background:#FF3D6F;position: absolute;bottom:4px;left:0;right:0;margin:0 auto;display: none;;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;}
+#labelPageTitleBox .labelTitleBtn.active .tips{display: inline-block;}
+#labelPageCont{width:100%;padding:20px;background:#fff;}
+
+/*弹出层遮罩*/
+.shadeBox{width:100%;height:100%;position: fixed;left:0;top:0;background:rgba(0,0,0,0.6);display: none;}
+.shadeBox.active{display: block;}
+.shadeBox .shadeCont{width:90%;margin:0 auto;margin-top:45px;background:#fff;
+    -webkit-border-radius: 7px;
+    -moz-border-radius: 7px;
+    border-radius: 7px;}
+.shadeBox .headBox{width:100%;}
+.shadeBox .headBox img{width:100%;height:auto;}
+.shadeBox .gainContBox{width:100%;padding:15px;margin-top:-32px;}
+.gainContBox ul{width:100%;}
+#gainInfon .gainContBox ul li{width:100%;height:46px;margin:15px 0;background:#F2F2F2;overflow: hidden;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;}
+#gainInfon .gainContBox li input{width:100%;height:100%;border:0;padding-left:25px;font-size:0.9rem;color:#333;background:#F2F2F2;}
+.shadeBox .shadeBtn{width:100%;height:46px;background:#FFDF00;  -webkit-border-radius: 5px;color:#333;font-size:0.9rem;text-align: center;border:0;font-weight:600;
+    -moz-border-radius: 5px;
+    border-radius: 5px;}
+/*吐槽额能量有啥用*/
+#whatPower .gainContBox{margin-top: -25px;}
+#whatPower .gainContBox li{width:100%;height:30px;line-height:30px;margin:25px 0;padding-left:65px;font-size:0.9rem;color:#3F4557;font-weight: 600;}
+#whatPower .gainContBox li .icon{display: inline-block;width:9px;height:9px;margin-right:7px;background:#FF3D6F;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;}
+#whatPower .shadeBtn{margin-top:20px;}
+
+@media (max-width: 320px){
+    #labelPageCont{padding:10px;}
+    .shadeBox .shadeCont{margin-top:15px;}
+    #gainInfon .gainContBox ul li{height:40px;}
+    .shadeBox .shadeBtn{height:40px;}
+    #whatPower .gainContBox li{padding-left:39px;}
+}
