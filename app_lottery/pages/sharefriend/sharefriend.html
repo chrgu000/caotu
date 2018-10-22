@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0,minimum=1.0,user-scalable=no">
+    <!--强制页面横屏或竖屏显示 content：landscape|portrait-->
+    <meta name="screen-orientation" content="landscape">
+    <meta content=”telephone=no” name=”format-detection” />
+    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+    <META HTTP-EQUIV="Expires" CONTENT="0">
+    <!-- 分享显示的标题-->
+    <meta itemprop="name" content="邀请好友，免费领79元马克杯" />
+    <!-- 分享显示的缩略图-->
+    <meta itemprop="image" content="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/sharicon.png" />
+    <!-- 分享显示的简介-->
+    <meta name="description" itemprop="description" content="" />
+
+    <title>邀请好友，免费领79元马克杯</title>
+    <link href="https://ctkj-1256675270.file.myqcloud.com/active/logo2.png" rel="shortcut icon">
+    <link rel="stylesheet" href="../../css/common.css"/>
+    <style>
+        #ctru,#ctru2 {position: absolute;top: 0;left: 0;opacity: 0;z-index: -10;}
+
+
+    </style>
+
+    <!-- 必须引入的文件-->
+   <!-- <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>-->
+    <script type="application/javascript" src="https://ctkj-1256675270.file.myqcloud.com/jquery.min.js"></script>
+
+    <script type="application/javascript" src="../../plugin/layer/layer.js"></script>
+    <script type="application/javascript" src="../../js/index.js"></script>
+    <script src="../../js/sha1.js"></script>
+    <!-- 微信分享时调用对应的接口js文件-->
+  <!--  <script src="../../js/wxShare.js"></script>-->
+
+</head>
+<body>
+    <div id="shareBallBox" v-cloak>
+        <img class="shareHeadImg" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/invit/sharebg.png" alt=""/>
+        <!--点击邀请好友-->
+        <div id="myInviteBox">
+            <div id="invitBtn">
+                <img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/invit/invitBtn.png" alt=""/>
+            </div>
+            <div class="myInvitInfo">
+                 <!-- <input type="text" value="573872693" id="ctru" />-->
+                <span id="ctru2">{{invit}}</span>
+                我的邀请码：<span id="myInvit">{{invit}}</span><span id="cturle" onclick="ctrlc()"><img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/invit/cturle.png" alt=""/></span>
+            </div>
+        </div>
+        <!--我邀请的好友-->
+        <div id="myFriendsBox">
+            <div class="friendBg top"></div>
+            <div class="friendBg bottom"></div>
+            <div class="headTop">
+                <img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/invit/myfriends.png" alt=""/>
+            </div>
+            <div  id="myFriendsListBox" >
+                <ul>
+                    <li v-for="(item,index) in items">
+                        <span class="userName">{{item.username}}</span> <span class="finshed">{{item.isfinised == 1? "完成" : "未完成"}}</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="changejpBox" onclick="changejp()">
+                <img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/invit/changejpbtn.png" alt=""/>
+            </div>
+            <div id="sureChangeBox">
+                <div class="shareChangeCon">
+                    <div class="sureChageInfo">
+                        <h3>确认要兑换吗?</h3>
+                        <p>注：兑换成功后，我们将在5个工作日联系您</p>
+                    </div>
+                    <div class="btnListBox">
+                        <span id="cancelBtn">取消</span>
+                        <span id="changeBtn" style="color:#00B38A;border-left:1px solid #D5D5DB;">兑换</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--如何邀请好友-->
+        <div id="howShareBox">
+            <div class="headTop">
+                <img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/invit/howshare.png" alt=""/>
+            </div>
+            <div class="howShareCon">
+                <div class="conIcoBox">
+                    <div class="shareIcon">
+                        <div class="iconBox">
+                            <img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/invit/shareicon1.png" alt=""/>
+                        </div>
+                        <p>分享链接</p>
+                    </div>
+                    <div class="shareIcon">
+                        <div class="iconBox">
+                            <img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/invit/shareicon2.png" alt=""/>
+                        </div>
+                        <p>下载头图</p>
+                    </div>
+                    <div class="shareIcon">
+                        <div class="iconBox">
+                            <img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/invit/shareicon3.png" alt=""/>
+                        </div>
+                        <p>完成任务</p>
+                    </div>
+                </div>
+                <p class="tips">温馨提示：新用户下载头图，在手机注册环节填上邀请码</p>
+            </div>
+        </div>
+        <!--邀请小技巧-->
+        <div id="invitWayBox">
+            <div class="headTop">
+                <img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/invit/invitway.png" alt=""/>
+            </div>
+            <p class="tips">邀请成功率提升300%</p>
+            <div class="invitWayCon">
+                <img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/invit/tpsbg.png" alt=""/>
+            </div>
+        </div>
+        <!--分享按钮组-->
+        <div id="shareBtnList"><!--contenteditable="true"div获取焦点-->
+            <div class="shareBtnBox" data-type="QQ">
+                <div class="shareIconBox">
+                     <img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/invit/sharedsbicon1.png" alt=""/>
+                </div>
+                <p class="title">朋友圈邀请</p>
+            </div>
+            <div class="shareBtnBox" data-type="weixin">
+                <div class="shareIconBox">
+                        <img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/invit/sharedsbicon2.png" alt=""/>
+                </div>
+                <p class="title">微信邀请</p>
+            </div>
+            <div class="shareBtnBox" data-type="friends">
+                <div class="shareIconBox">
+                    <img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/invit/sharedsbicon3.png" alt=""/>
+                </div>
+                <p class="title">QQ邀请</p>
+            </div>
+            <div class="shareBtnBox" data-type="QQkongjian">
+                <div class="shareIconBox">
+                    <img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/invit/sharedsbicon4.png" alt=""/>
+                </div>
+                <p class="title">QQ空间邀请</p>
+            </div>
+        </div>
+        <div id="shareTipsBox">
+            <img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/invit/sharetips.png" alt=""/>
+        </div>
+
+
+
+    </div>
+
+
+
+
+    <script type="application/javascript" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/vue.js"></script>
+    <script type="text/javascript" src="../../js/active.js"></script>
+    <script>
+        /*邀请*/
+        var myPower = new Vue({
+            el: '#shareBallBox',
+            data: {
+                username:"zhuhaohua",
+                invit:"88991122",
+                items:[
+                    {"username":"yonghu1","isfinised":1},
+                    {"username":"yonghu2","isfinised":0},
+                    {"username":"yonghu3","isfinised":0},
+                    {"username":"yonghu4","isfinised":1}
+                ]
+            },
+            // 在 `methods` 对象中定义方法
+            methods: {
+
+            }
+        });
+
+
+        /*兑换*/
+        function changejp(){
+           $("#sureChangeBox").addClass("active");
+        }
+        $("#cancelBtn").click(function(){
+            $("#sureChangeBox").removeClass("active");
+        });
+        $("#changeBtn").click(function(){
+            changejp2()
+        });
+        function changejp2(){
+            layer.msg("兑换成功！！");
+              $("#sureChangeBox").removeClass("active");
+        }
+
+
+
+          /*点击分享邀请*/
+          $("#invitBtn").click(function(){
+            // $("#shareBtnList").addClass("active").focus();
+            $("#shareTipsBox").addClass("active");
+              sharelist();
+        });
+        $("#shareBtnList").click(function(){
+            $("#shareTipsBox").addClass("active");
+            sharelist();
+        });
+        $("#shareTipsBox").click(function(){
+            $("#shareTipsBox").removeClass("active");
+        });
+
+        /*分享好友*/
+        function sharelist(){
+            let ispho=phoneType2();
+            var postlist={"url":"https://v3.toutushare.com/help/help.html?username="+myPower.username+"&invitcode="+myPower.invit,
+                "title":"兄dei，我和小伙伴们都加入头图了，还不快来？",
+                "icon":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/sharicon.png"
+            };
+            if(ispho ==2){
+                alert("分享好友");
+                window.android.jstoapp_sharefriend(postlist);
+            }else{
+                try {
+                    alert("分享好友2");
+                    window.webkit.messageHandlers.jstoapp_sharefriend.postMessage(postlist)
+                } catch(error) {
+                    console.log(error)
+                }
+            }
+        }
+       /*   $("#shareBtnList").blur(function(){
+              $("#shareBtnList").removeClass("active");
+          })*/
+    </script>
+</body>
+</html>

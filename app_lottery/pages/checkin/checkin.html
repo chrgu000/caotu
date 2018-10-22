@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0,minimum=1.0,user-scalable=no">
+    <!--强制页面横屏或竖屏显示 content：landscape|portrait-->
+    <meta name="screen-orientation" content="landscape">
+    <meta content=”telephone=no” name=”format-detection” />
+    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+    <META HTTP-EQUIV="Expires" CONTENT="0">
+
+    <title>签到</title>
+    <link href="https://ctkj-1256675270.file.myqcloud.com/active/logo2.png" rel="shortcut icon">
+    <link rel="stylesheet" href="../../css/common.css"/>
+
+    <!-- 必须引入的文件-->
+    <script type="application/javascript" src="https://ctkj-1256675270.file.myqcloud.com/jquery.min.js"></script>
+
+    <script src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/turntable.js"></script>
+    <script type="application/javascript" src="../../plugin/layer/layer.js"></script>
+    <script type="application/javascript" src="../../js/index.js"></script>
+</head>
+<body>
+    <div id="checkBBox" v-cloak>
+        <!--head-->
+        <div id="checkHeadBox" >
+            <img class="headImg" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/checkin/databbg.png" alt=""/>
+            <h3 class="title">你已签到<span class="date">{{date}}</span>天</h3>
+        </div>
+        <!--签到框-->
+        <div id="checkDayBox">
+            <img class="checkboxbg" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/checkin/checkboxbg.png" alt=""/>
+            <ul id="checkConBox">
+                <li class="checkCon" v-bind:class="{ double: item.isdouble }" v-for="(item,index) in items">
+                    <img class="checkedShade" v-if="item.ischecked == 1" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/checkin/shadebg.png"/>
+                    <div class="checkConHead">第{{item.day}}天</div>
+                    <div class="checkConImgBox">
+                        <img v-bind:src="item.awardImg" alt=""/>
+                        <img v-if="item.isdouble == 1" v-bind:src="item.secondawardImg" alt=""/>
+                    </div>
+                    <div class="checkConFoot">
+                        <p>
+                            <span class="awardName">{{item.awardName}}</span>
+                            <span v-if="item.isdouble == 1" class="awardName">{{item.secondawardName}}</span>
+                        </p>
+
+                    </div>
+                </li>
+
+            </ul>
+            <!--公仔装饰图片-->
+            <div id="zsBox">
+                <img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/checkin/zs.png" alt=""/>
+            </div>
+        </div>
+        <!--签到按钮-->
+        <div id="checkBtn" v-on:click="docheck()">
+            <img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/checkin/checkbtn.png" alt=""/>
+        </div>
+        <!--签到规则-->
+        <div id="checkRule">
+            <img class="checkRulBtn" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/checkin/checkrul.png" alt=""/>
+            <ul class="checkRuleConBox">
+                <li>1.一个签到周期为7天，每完成7天签到或断签，自动开启新的周期；</li>
+                <li>2.每日签到后即可获得一次抽奖机会，限量神秘大奖等你来拿；</li>
+                <li>3.每日签到获得的萝卜，可在“我的”界面兑换实物奖品；</li>
+                <li>4.有任何疑问，请加头图小助手微信:CTCT0002。</li>
+            </ul>
+        </div>
+    </div>
+    <!--抽奖转盘-->
+    <div id="takeoutAwardBox">
+        <img class="toptips" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/checkin/tips.png" alt=""/>
+        <div id="takeoutAwardCon">
+
+        </div>
+        <div class="closeBox">
+            <img class="closeBtn" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/checkin/close.png" alt=""/>
+        </div>
+    </div>
+
+
+
+    <script type="application/javascript" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/vue.js"></script>
+
+    <script>
+
+        $("#takeoutAwardCon").load("../takeoutAward/takeoutAward.html");
+        /*签到*/
+        var myPower = new Vue({
+            el: '#checkBBox',
+            data: {
+                ischecked:0,//是否已签到
+                date: 2,//签到天数
+                items:[
+                    {"day":"1","awardImg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/checkin/zs.png",
+                        "awardName":"+10","isdouble":0,"ischecked":1,
+                        "secondawardImg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/checkin/zs.png",
+                        "secondawardName":"+10"},
+                    {"day":"2","awardImg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/checkin/zs.png",
+                        "awardName":"+10","isdouble":0,"ischecked":1,
+                        "secondawardImg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/checkin/zs.png",
+                        "secondawardName":"+10"},
+                    {"day":"3","awardImg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/checkin/zs.png",
+                        "awardName":"+10","isdouble":0,"ischecked":0,
+                        "secondawardImg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/checkin/zs.png",
+                        "secondawardName":"+10"},
+                    {"day":"4","awardImg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/checkin/zs.png",
+                        "awardName":"+10","isdouble":0,"ischecked":0,
+                        "secondawardImg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/checkin/zs.png",
+                        "secondawardName":"+10"},
+                    {"day":"5","awardImg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/checkin/zs.png",
+                        "awardName":"+10","isdouble":0,"ischecked":0,
+                        "secondawardImg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/checkin/zs.png",
+                        "secondawardName":"+10"},
+                    {"day":"6","awardImg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/checkin/zs.png",
+                        "awardName":"+10","isdouble":0,"ischecked":0,
+                        "secondawardImg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/checkin/zs.png",
+                        "secondawardName":"+10"},
+                    {"day":"7","awardImg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/checkin/zs.png",
+                        "awardName":"+10","isdouble":1,"ischecked":0,
+                        "secondawardImg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/checkin/zs.png",
+                        "secondawardName":"+10"}
+                ]
+            },
+            // 在 `methods` 对象中定义方法
+            methods: {
+                docheck: function (event){
+                    if(myPower.ischecked ==1){
+                        layer.msg("你已经签到过了！！")
+                    }else{
+                        checkpost();
+
+                    }
+                }
+            }
+        });
+
+        $(function(){
+            checklist();
+        });
+        /*获取签到状况*/
+        function checklist(){
+            var tjdatas={"UUID":result.userid};
+            //console.log(tjdatas);
+            tjdatas=JSON.stringify(tjdatas);
+            $.ajax({
+                url : path+'/CTKJSEVER/goldscorecontrol/everydaysign.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: tjdatas,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    //console.log("获取失败：");
+                    //console.log(data);
+                },
+                success:function(diskJson){
+                    console.log("签到信息：");
+                    console.log(diskJson);
+
+                }
+            });
+        }
+
+        /*签到请求*/
+        function checkpost(){
+            var tjdatas={"UUID":result.userid};
+            //console.log(tjdatas);
+            tjdatas=JSON.stringify(tjdatas);
+            $.ajax({
+                url : path+'/CTKJSEVER/goldscorecontrol/everydaysign.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: tjdatas,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    //console.log("获取失败：");
+                    //console.log(data);
+                },
+                success:function(diskJson){
+                    console.log("签到信息：");
+                    console.log(diskJson);
+                    let day=parseInt(myPower.date);
+                    myPower.items[day].ischecked=1;
+                    myPower.ischecked =1;
+                    myPower.date=myPower.date+1;
+                    layer.msg("签到成功！！");
+                    $("#takeoutAwardBox").addClass("active");
+                }
+            });
+        }
+
+        /*关闭转盘*/
+        $("#takeoutAwardBox .closeBox").click(function(){
+            $("#takeoutAwardBox").removeClass("active");
+        })
+    </script>
+
+</body>
+</html>

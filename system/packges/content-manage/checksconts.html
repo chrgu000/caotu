@@ -292,7 +292,7 @@
 
             </textarea>
             <span class="" style="position: relative;">
-                点赞数 <input type="number" id="mySetNum" value="1"/>
+                点赞数 <input type="number" id="mySetNum" value="0"/>
                 <button type="button" class="btn btn-sm btn-primary" id="myConmentsEnter" onclick="enterd()">发 送</button>
                 <!--<button type="button" class="btn btn-sm btn-primary" id="myConmentsSub" onclick="subd()">提交</button>-->
             </span>
@@ -910,9 +910,9 @@
         var level=$(this).val();
         var minnum="",maxnum="",minnum2="",maxnum2="";
         switch(level){
-            case "3":minnum=1000;maxnum=2000;minnum2=30000;maxnum2=60000;break;
-            case "2":minnum=500;maxnum=1000;minnum2=20000;maxnum2=40000;break;
-            case "1":minnum=100;maxnum=700;minnum2=10000;maxnum2=30000;break;
+            case "3":minnum=200;maxnum=400;minnum2=400;maxnum2=800;break;
+            case "2":minnum=100;maxnum=200;minnum2=200;maxnum2=500;break;
+            case "1":minnum=20;maxnum=100;minnum2=40;maxnum2=300;break;
         }
         var num=randomnum(minnum,maxnum);
         var num2=randomnum(minnum2,maxnum2);

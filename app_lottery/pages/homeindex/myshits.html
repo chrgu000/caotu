@@ -23,7 +23,7 @@
                         <p class="listInfoCon">{{item.time}}</p>
                     </div>
                     <div class="listBtnBox">
-                        <span class="integral">+{{item.integral}}</span>
+                        <span class="integral">{{item.integral}}</span>
                     </div>
                 </li>
 
@@ -34,18 +34,53 @@
     </div>
 
     <script>
+
         /*我的吐槽*/
         var myShits = new Vue({
             el: '#myShits',
             data: {
                 items: [
-                     {type:"签到奖励",time:"2018-11-12",integral:10},
-                     {type:"签到奖励",time:"2018-11-12",integral:10},
-                     {type:"签到奖励",time:"2018-11-12",integral:10},
+                     {type:"签到奖励",time:"2018-11-12",integral:"+10萝卜"},
+                     {type:"签到奖励",time:"2018-11-12",integral:"+10萝卜"},
+                     {type:"签到奖励",time:"2018-11-12",integral:"-10萝卜"},
                         ]
             }
         });
 
+        $(function(){
+            getscorelist();
+        });
+        /*萝卜明细*/
+        function getscorelist(){
+            var tjdatas={"UUID":result.userid};
+            //console.log(tjdatas);
+            tjdatas=JSON.stringify(tjdatas);
+            $.ajax({
+                url : path+'/CTKJSEVER/goldscorecontrol/getscorelist.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:false,
+                data: tjdatas,
+                error: function(data){
+                    /*  layer.msg("服务器未响应,请稍后再试!");*/
+                    //console.log("获取失败：");
+                    //console.log(data);
+                },
+                success:function(diskJson){
+                    console.log("完成任务列表:");
+                    console.log(diskJson);
+                    if(diskJson.code =="1000"){
+                        myShits.items=diskJson.scList;
+                    }else{
+
+                        /*  layer.msg("网络异常，请重试！！")*/
+                    }
+
+                }
+            });
+        }
 
 
     </script>

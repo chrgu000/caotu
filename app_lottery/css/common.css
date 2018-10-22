@@ -3,13 +3,13 @@
     font-family: 'MiNiJian';   /!*字体名称*!/
     src: url('https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/RuiZiYunZiKuDaBiaoSongTiGBK-1.ttf');       /!*字体源文件*!/
 }*/
-html,body{width:100%;min-height: 100%;background:#fff;}
+html,body{width:100%;height:100%;background:#fff;}
 body{
     font:10px "微软雅黑","\5FAE\8F6F\96C5\9ED1","\6807\6977\4F53",Arial,Helvertica,sans-serif;
     color:#666;
     margin:0;
     padding:0;
-    background:#eee;
+    background:#fff;
     -webkit-text-size-adjust : 100% ;
     -moz-text-size-adjust : 100% ;
     -ms-text-size-adjust : 100% ;
@@ -18,7 +18,8 @@ body{
     -webkit-user-select: none; /*webkit浏览器*/
     -ms-user-select: none; /*IE10*/
     -khtml-user-select: none; /*早期浏览器*/
-    user-select: none;
+    user-select: text;
+    -webkit-user-select: text;
 }
 
 ul,ol,p,h1,h2,h3,h4,h5,h6,dl,dt,dd{
@@ -79,6 +80,9 @@ a:hover{
 #beginTest{width:250px;height:80px;font-size:2.2rem;}
 .lt{float:left;}
 .rt{float:right;}
+.shadeBox{width:100%;height:100%;position: fixed;left:0;top:0;z-index:85;display: none;padding:10px;}
+.shadeBox.active{display: block;}
+
 
 #pageAllBox{width:100%;}
 /*首页*/
@@ -131,12 +135,196 @@ a:hover{
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
     border-radius: 50%;}
+
 #whatPower .shadeBtn{margin-top:20px;}
 
-@media (max-width: 320px){
+/*签到页面*/
+#checkBBox{width:100%;min-height: 100%;background:#FFE23F;padding:20px;}
+#checkHeadBox{width:85%;margin:0 auto;margin-bottom:25px;height:75px;text-align: center;position: relative;z-index:1;}
+#checkHeadBox .headImg{height:100%;width:100%;position: absolute;top:0;left:0;right:0;margin:0 auto;z-index:1;}
+#checkHeadBox .title{font-size:1.1rem;color:#3B3A3B;height:100%;line-height: 75px;position: relative;z-index:3;}
+#checkHeadBox .date{display: inline-block;width:28px;height:32px;background:url("https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/checkin/datebg.png") no-repeat;background-size: cover;vertical-align: middle;margin:0 5px;line-height:30px;}
+#checkDayBox{width:100%;height:330px;position: relative;z-index:1;padding:36px 30px;padding-bottom:75px;}
+#checkDayBox .checkboxbg{height:100%;width:100%;position: absolute;top:0;left:0;right:0;margin:0 auto;z-index:1;}
+#checkConBox{width:100%;height:100%;position: relative;z-index:10;padding:5px 5px;}
+#checkConBox .checkCon{width:20%;float:left;margin:11px 6px;background:#F0F0F0;height:82px;padding:3px;overflow: hidden;position: relative;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;}
+
+#checkConBox .checkCon .checkConHead{color:#A8A8A8;font-size:0.6rem;text-align: center;}
+#checkConBox .checkCon .checkConImgBox{text-align: center;width:82%;height:60%;margin:0 auto;overflow: hidden;padding:2px 0;}
+#checkConBox .checkConImgBox img{width:100%;height:auto;}
+#checkConBox .checkCon .checkConFoot{width:100%;color:#2A2A30;font-size:0.6rem;text-align: center;}
+#checkConBox .checkCon.double{width:42%;}
+#checkConBox .checkCon.double .checkConImgBox img{width:48%;}
+#checkConBox .checkCon.double .awardName{display: inline-block;width:48%;text-align: center;}
+#checkConBox .checkCon .checkedShade{width:100%;height:100%;position: absolute;left:0;top:0;}
+#checkBtn{width:155px;height:58px;margin:0 auto;position: relative;z-index:25;}
+#checkBtn img{width:100%;height:100%;}
+#zsBox{width:120px;height:113px;position: absolute;bottom:-114px;right:-2px;z-index:11;}
+#zsBox img{width:100%;height:auto;}
+#checkRule{width:100%;margin-top:90px;text-align: center;}
+#checkRule .checkRulBtn{width:130px;height:42px;}
+#checkRule .checkRuleConBox{margin-top:5px;width:100%;}
+#checkRule .checkRuleConBox li{line-height: 27px;color:#581E0A;font-size:0.9rem;text-align:left;}
+/*签到转盘*/
+#takeoutAwardBox{width:100%;height:100%;background:rgba(0,0,0,0.7);position: fixed;top:0;left:0;padding:45px 25px;z-index:85;display: none;}
+#takeoutAwardBox.active{display: block;}
+#takeoutAwardBox .toptips{margin-top:10%;width:100%;height:auto;margin-bottom:13px;}
+#takeoutAwardCon{width:100%;height:330px;margin-bottom:30px;}
+#takeoutAwardBox .closeBox{width:28px;height:28px;margin:0 auto;text-align: center;}
+#takeoutAwardBox .closeBox img{width:100%;height:auto;}
+
+
+/*分享好友*/
+#shareBallBox{width:100%;background:#4846A5;}
+#shareBallBox .shareHeadImg{width:100%;height:auto;}
+#myInviteBox{width:90%;height:210px;padding:46px 0;position: relative;z-index:3;margin:0 auto;}
+#myInviteBox .myInviteBoxImg{width:100%;height:auto;position: absolute;left:0;top:0;z-index:3;}
+#invitBtn{width:220px;height:46px;margin:0 auto;margin-bottom:30px;cursor: pointer;}
+#invitBtn img{width:100%;height:auto;}
+#shareBallBox .myInvitInfo{width:100%;text-align: center;color:#46D5B9;font-size:1.1rem;font-weight:600;line-height: 25px;}
+#cturle{width:67px;height:29px;display: inline-block;margin-left:6px;cursor: pointer;}
+#cturle img{width:100%;height:100%;vertical-align: middle;}
+#myFriendsBox{width:100%;height:330px;background:#5859C1;padding:20px 15px;position: relative;}
+.friendBg{position: absolute;width:100%;height:12px;left:0;z-index:5;background-repeat: repeat-x;}
+.friendBg.top{top:-9px;background:url("https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/invit/sanjiao.png");}
+.friendBg.bottom{bottom:-9px;background:url("https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/app_lottery/invit/sanjiao2.png");}
+#myFriendsListBox{width:100%;margin: 27px 0;height:126px;overflow: auto;}
+#myFriendsListBox li{width:100%;height:42px;line-height: 42px;color:#fff;font-size:0.8rem;background:#4B4BAA;font-weight:600;border-bottom:1px dashed #7272d0;}
+#myFriendsListBox li.sec{background:#3F3F8C;}
+#myFriendsListBox li span{display: inline-block;width:48%;height:100%;text-align: center;}
+#myFriendsBox .changejpBox{width:220px;height:46px;margin:0 auto;cursor: pointer;}
+#myFriendsBox .changejpBox img{width:100%;height:auto;}
+#shareBallBox .headTop{width:100%;height:26px;margin:0 auto;cursor: pointer;text-align: center;}
+#shareBallBox .headTop img{width:auto;height:100%;}
+#howShareBox{width:100%;margin-top:40px;padding:20px 15px;}
+#howShareBox .howShareCon{width:100%;height:190px;background:#393793;padding:25px;color:#fff;margin-top:18px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px
+    border-radius: 5px;}
+#howShareBox .howShareCon .conIcoBox{width:100%;height:80px;}
+#howShareBox .conIcoBox .shareIcon{width:33%;height:100%;text-align: center;float:left;}
+#howShareBox  .iconBox{width:45px;height:45px;margin:0 auto;}
+#howShareBox  .iconBox img{width:100%;height:100%;}
+#howShareBox  .shareIcon p{text-align: center;font-size:1rem;color:#fff;margin-top:14px;}
+#howShareBox  .howShareCon .tips{text-align: center;font-size:0.8rem;margin-top:36px;}
+#invitWayBox{width:100%;padding:35px 15px;}
+#invitWayBox .tips{color:#fff;font-size:0.8rem;text-align: center;margin:12px 0;}
+#invitWayBox .invitWayCon{width:100%;height:250px;padding:9px;background:#393793;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;}
+#invitWayBox .invitWayCon img{width:100%;height:auto;}
+#shareBtnList{width:100%;height:82px;background:#393793;}
+
+#shareBtnList .shareBtnBox{width:24%;height:100%;float:left;text-align: center;cursor: pointer;padding:9px;}
+#shareBtnList .shareIconBox{width:60%;text-align: center;margin:0 auto;}
+#shareBtnList .shareIconBox img{width:100%;height:auto;}
+#shareBtnList .title{color:#fff;}
+/*兑换遮罩*/
+#sureChangeBox{width:100%;height:100%;background:rgba(0,0,0,0.7);position: fixed;top:0;left:0;z-index:60;padding-top:190px;display: none;}
+#sureChangeBox.active{display: block;}
+#sureChangeBox .shareChangeCon{width:270px;height:156px;background:#fff; border-radius:6px;margin:0 auto;padding-top:25px;position: relative;}
+#sureChangeBox .sureChageInfo{width:80%;color:#333;font-size:0.9rem;text-align: center;margin:0 auto;}
+#sureChangeBox  .btnListBox{width:100%;height:44px;border-top:1px solid #D5D5DB;padding:0;position: absolute;left:0;bottom:0;}
+#sureChangeBox  .btnListBox span{display: inline-block;width:49%;height:100%;text-align: center;line-height: 44px;font-size:1rem;color:#999;cursor: pointer;}
+#shareTipsBox{width:100%;height:100%;background:rgba(0,0,0,0.7);position: fixed;top:0;left:0;z-index:60;padding:20px;display: none;}
+#shareTipsBox.active{display: block;}
+#shareTipsBox img{width:100%;height:auto;}
+
+/*抽奖页面*/
+#luckeyDrewBox{width:100%;background:#FA425A;padding-bottom:100px;}
+#luckeyDrewBox .headTopimg{width:100%;height:auto;}
+#luckyDrewZpBox{width:330px;height:330px;margin:0 auto;margin-top:38px;position: relative;}
+#luckeyDrewBox .luckyDrewInfo{text-align: center;color:#fff;font-size:0.9rem;}
+#lookRuleBtn{display: block;width:68px;height:24px;position: absolute;top:-310px;right:30px;}
+#lookRuleBtn img{width:100%;height:auto;}
+.winslistBox{width:93%;margin:55px auto;background:#fff;position: relative;padding:17px 0;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;}
+.winslistBox .winlisthead{width:121px;height:31px;margin:0 auto;position: absolute;left:0;right:0;top:-17px;}
+.winslistBox .winlisthead img{width:100%;height:auto;}
+.winslistBox .winlistBody{width:100%;}
+.winslistBox .winlistBody .headTop{width:95%;height:25px;background:#c62f35;color:#fff;margin:0 auto;margin-top:16px;margin-bottom:24px;
+    -webkit-box-shadow: 3px 3px 3px #f7989c;
+    -moz-box-shadow: 3px 3px 3px #f7989c;
+    box-shadow: 3px 3px 3px #f7989c;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;}
+.winslistBox .headTop span{display:inline-block;font-size:0.8rem;height:100%;text-align: center;line-height: 25px;width:32%;}
+.winListCon{width:100%;height:432px;overflow-y:auto;}
+.winListCon ul{width:100%;}
+.winListCon ul li{width:100%;height:42px;line-height: 42px;color:#6D5A4C;background:#FFF9EB;margin:0;padding:0;}
+.winListCon ul li.two{background:#fff;}
+.winListCon li span{display:inline-block;font-size:0.8rem;height:100%;text-align: center;width:32%;}
+.winListCon li span.title{width:26%;}
+#myWinListCon{margin-top:25px;}
+#luckyDrewRuleBox .luckyDrewRuleCon{width:100%;height:390px;margin-top:140px;position: relative;z-index:7;padding-top:95px;}
+#luckyDrewRuleBox .luckyDrewRuleCon .rulebg{width:100%;height:auto;position: absolute;left:0;top:0;z-index:8;}
+#luckyDrewRuleBox .luckyDrewRuleCon ul{width:72%;padding:10px;position: relative;z-index:10;margin:0 auto;}
+#luckyDrewRuleBox .luckyDrewRuleCon ul li{width:100%;line-height: 30px;color:#fff;font-size:0.9rem;}
+#luckyDrewRuleBox .closeBox{width:28px;height:28px;position: absolute;left:0;right:0;bottom:-40px;margin:0 auto;z-index:50;cursor: pointer;}
+#luckyDrewRuleBox .closeBox img{width:100%;height:auto;}
+#myWinListCon li span{width:46%;}
+/*分享好友微信打开的页面*/
+#frienShareOpenBox{width:100%;padding-bottom:100px;background:#FADF07;}
+#frienShareOpenBox .frieniopenheadbg{width:100%;height:auto;}
+#frienShareOpenBox .myInvitInfo{width:100%;text-align: center;color:#333;font-size:1.1rem;font-weight:600;line-height: 25px;}
+#frienShareOpenBox .frienShareFootBox{width:85%;margin:30px auto;}
+#frienShareOpenBox .frienShareFootBox img{width:100%;height:auto;}
+
+/*字幕*/
+#subTitleBox{width:100%;height:35px;position: fixed;top:0;left:0;z-index:85;background:rgba(0,0,0,.3);overflow: hidden;white-space:nowrap }
+#subTitleBox span{display: inline-block;height:100%;padding:0 20px;line-height: 35px;color:#fff;}
+#subTitleBox span:first-child{margin-left:400px;}
+
+
+
+
+@media (max-width: 360px){
     #labelPageCont{padding:10px;}
     .shadeBox .shadeCont{margin-top:15px;}
     #gainInfon .gainContBox ul li{height:40px;}
     .shadeBox .shadeBtn{height:40px;}
     #whatPower .gainContBox li{padding-left:39px;}
+
+    /*签到*/
+    #checkBBox{padding:10px;}
+    #checkDayBox{ padding: 35px 20px;}
+    #checkHeadBox{height:65px;}
+    #checkHeadBox .title{font-size:1rem;line-height: 65px;}
+    #checkHeadBox .date{width:25px;height:29px;line-height: 25px;}
+    #checkConBox .checkCon{margin:10px 4px;width:21%;}
+    #checkConBox .checkCon.double{width:43%;}
+    #checkBtn img{width:93%;}
+    #shareBtnList .shareBtnBox{padding:9px 3px;}
+    #shareBtnList .title{line-height: 18px;}
+    #luckyDrewZpBox{width:300px;height:300px;}
+    #takeoutAwardCon{height:280px;}
+    #takeoutAwardBox{padding:15px;}
+    #takeoutAwardBox .toptips{margin-top:6%;}
+}
+
+@media (min-width: 768px){
+    #checkHeadBox{height:95px;width:74%;}
+    #checkHeadBox .title{font-size:1.3rem;line-height: 95px;}
+    #checkHeadBox .date{width:30px;height:34px;line-height: 32px;}
+    #checkBBox{padding:30px;}
+    #checkDayBox{height:425px;}
+    #checkConBox{padding:5px 10px;}
+    #howShareBox .howShareCon .tips,
+    #invitWayBox .tips{font-size:1rem;}
+    #howShareBox .howShareCon{width:90%;margin:0 auto;}
+    #invitWayBox .invitWayCon{width:90%;margin:0 auto;height:453px;}
+    #shareBtnList{padding:4px 7px;height:145px;}
+    #shareBtnList .shareBtnBox{padding:12px;}
+    #shareBtnList .title{font-size:1rem;}
+    #luckyDrewZpBox{width:420px;height:420px;}
+    #lookRuleBtn{width:90px;top:-425px;}
+    .winslistBox .winlisthead{width:175px;height:50px;}
+    .winslistBox{padding:25px 0;}
 }

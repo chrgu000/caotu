@@ -3,20 +3,36 @@
  */
 
 
-const path="https://api.itoutu.com:8898/";//线上
-//const path3="https://dev.api.toutushare.com/";//测试服
-//const path4="http://192.168.1.111:8091/";//老冯
+//const path="https://api.itoutu.com:8898/";//线上
+const path="https://dev.api.toutushare.com/";//测试服
+const path3="http://192.168.1.111:8091/";//老冯
 
 var result={
-    "username":"草图",//姓名
-    "birthday":"",//生日
-    "moon": "柔月",
-    "moonid": "30",
-    "sign": "",
-    "society":"温柔",
-    "signnum":"88",
-    "userNumber":""
+    userid:""
 };
+
+$(function(){
+    //getuserinfo();
+});
+
+/*获取用户id(认证码)*/
+function getuserinfo(){
+    let ispho=phoneType2();
+    if(ispho ==2){
+        alert("获取用户id(认证码)");
+        result.userid= window.android.jstoapp_userticket();
+        alert(result.userid);
+    }else{
+        try {
+            alert("获取用户id2");
+            result.userid=window.webkit.messageHandlers.jstoapp_userticket.postMessage();
+            alert(result.userid);
+        } catch(error) {
+            console.log(error)
+        }
+    }
+}
+
 /*随机字符串*/
 function randomString(len) {
     len = len || 16;
