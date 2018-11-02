@@ -1,0 +1,301 @@
+    <style>
+        #attributeBox{width:100%;padding:15px;}
+        .ratioBox{width:100%;height:130px;border:1px solid #c3c4c5;padding:15px;}
+        .radiocon{width:100%;height:20px;}
+        .radiocon .radiotype{display: inline-block;position: relative;height:100%;float: left;margin:0;padding:0;}
+        .radiocon .man,
+        .radiocon .android{background:#f1a24e;}
+        .radiocon .woman,
+        .radiocon .ios{background:#25bf4f;}
+        .radiocon .unknow{background:#ddd;}
+        .radiocon .radiotype .infobox{position: absolute;left:45%;top:25px;}
+        .radiocon .infobox .ico{display: inline-block;width:25px;height:25px;vertical-align: middle;}
+        .radiocon .android .ico,
+        .radiocon .man .ico{background:#f1a24e;}
+        .radiocon .woman .ico,
+        .radiocon .ios .ico{background:#25bf4f;}
+        .radiocon .unknow .ico{background:#ddd;}
+        #ageDistribution{width:100%;height:100%;padding:5px;border:1px solid #ddd;}
+        #ageRadio{width:100%;font-size:15px;}
+        #ageRadio th,
+        #ageRadio td{width:50%;text-align: center;}
+        #ageRadio th{background:#cecccc;height:30px;}
+        #ageRadio tbody tr{border-bottom:1px solid #ddd;height:35px;}
+        .eachartstips{text-align: center;height:250px;line-height: 250px;}
+    </style>
+
+    <div id="attributeBox">
+        <div class="consbox">
+            <h3 class="dataTitle">性别比例</h3>
+            <div class="ratioBox">
+                <div id="sexRatio" class="radiocon">
+                    <div class="man radiotype" style="width:10%;">
+                        <span class="infobox">
+                            <b class="ico"></b>
+                            <b>男</b>
+                            <b class="ratio">无数据</b>
+                        </span>
+
+                    </div>
+                    <div class="woman radiotype" style="width:10%;">
+                        <span class="infobox">
+                            <b class="ico"></b>
+                            <b>女</b>
+                            <b class="ratio">无数据</b>
+                        </span>
+
+                    </div>
+                    <div class="unknow radiotype" style="width:10%;">
+                        <span class="infobox">
+                            <b class="ico"></b>
+                            <b>未知</b>
+                            <b class="ratio">无数据</b>
+                        </span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="consbox">
+            <div class="leftconsbox">
+                <div id="ageDistribution">
+
+                </div>
+            </div>
+            <div class="rightconsbox">
+                <table id="ageRadio">
+                    <thead>
+                        <tr>
+                            <th>年龄</th>
+                            <th>用户占比</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="consbox">
+            <h3 class="dataTitle">终端分布</h3>
+            <div class="ratioBox">
+                <div id="terminal" class="radiocon">
+                    <div class="android radiotype" style="width:10%;">
+                        <span class="infobox">
+                            <b class="ico"></b>
+                            <b>Android</b>
+                            <b class="ratio">无数据</b>
+                        </span>
+
+                    </div>
+                    <div class="ios radiotype" style="width:10%;">
+                        <span class="infobox">
+                            <b class="ico"></b>
+                            <b>Ios</b>
+                            <b class="ratio">无数据</b>
+                        </span>
+
+                    </div>
+                    <div class="unknow radiotype" style="width:10%;">
+                        <span class="infobox">
+                            <b class="ico"></b>
+                            <b>未知</b>
+                            <b class="ratio">无数据</b>
+                        </span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        $(function(){
+            var yesterday=gettime(-1);
+            getebutedata(yesterday,yesterday);
+
+        });
+
+        //获取数据男女终端年龄
+        function getebutedata(starttime,endtime){
+            var datapost={"starttime":starttime,"endtime":endtime,"pageno":1,"pagesize":100};
+//            //console.log(datapost);
+            datapost=JSON.stringify(datapost);
+            $.ajax({
+                url : path+'/CTKJBUSINESS/analysis/analysisuser.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: datapost,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    //console.log("用户分析：");
+                    //console.log(data);
+                },
+                success:function(diskJson){
+//                    console.log("属性分析：");
+//                    console.log(diskJson);
+                    if(diskJson.code=="1000"){
+                        if(diskJson.data.reportlist.length>0){
+                            console.log(1);
+                            echart5(diskJson.data.reportlist[0]);
+                            butefb(diskJson.data.reportlist[0]);
+                            terminalfb(diskJson.data.reportlist[0]);
+                        }else{
+                            console.log(2);
+                            layer.msg("暂无数据，请刷新重试！！");
+                            $("#ageDistribution").html("<h1 class='eachartstips'>暂无数据！！！</h1>")
+                        }
+
+                    }else{
+                        layer.msg("数据有误，请刷新重试！！")
+                    }
+                }
+            });
+        }
+
+        /*终端比例*/
+        function butefb(buedata){
+           let allusernum=Number(buedata.alluser);
+           let android=Number(buedata.aznum)/allusernum*100;
+            android=android.toFixed(2);
+           let ios=Number(buedata.iosnum)/allusernum*100;
+            ios=ios.toFixed(2);
+            let unkonw=100-android-ios;
+            unkonw=unkonw.toFixed(2);
+            $("#terminal .android").css("width",android-1+"%");
+            $("#terminal .android .ratio").html(android+"%");
+            $("#terminal .ios").css("width",ios-1+"%");
+            $("#terminal .ios .ratio").html(ios+"%");
+            if (unkonw <=0){ $("#terminal .unknow").css("display","none");}
+            $("#terminal .unknow").css("width",unkonw+"%");
+            $("#terminal .unknow .ratio").html(unkonw+"%");
+        }
+
+        /*男女比例*/
+        function terminalfb(buedata){
+            let allusernum=Number(buedata.alluser);
+            let manper=Number(buedata.mannum)/allusernum*100;
+            manper=manper.toFixed(2);
+            let womennumper=Number(buedata.womennum)/allusernum*100;
+            womennumper=womennumper.toFixed(2);
+            let sexunkonw=100-manper-womennumper;
+            sexunkonw=sexunkonw.toFixed(2);
+
+            $("#sexRatio .man").css("width",manper-1+"%");
+            $("#sexRatio .man .ratio").html(manper+"%");
+            $("#sexRatio .woman").css("width",womennumper-1+"%");
+            $("#sexRatio .woman .ratio").html(womennumper+"%");
+            if (sexunkonw <=0){ $("#sexRatio .unknow").css("display","none");}
+            $("#sexRatio .unknow").css("width",sexunkonw+"%");
+            $("#sexRatio .unknow .ratio").html(sexunkonw+"%");
+        }
+
+
+        /*表5年龄分布*/
+        function echart5(edatas){
+            $("#ageDistribution").empty();
+            $("#ageRadio tbody").empty();
+            if(edatas.agenum && edatas.agenum!=""){
+                var needdatas=JSON.parse(edatas.agenum);
+                var xlist=["0-18","19-23","24-30","31-40","41-50","50+","未知"],ylist=[0,0,0,0,0,0,needdatas.unknow];
+                var max=edatas.alluser;
+                for(var key in needdatas){
+                    if(Number(key)>=0 && Number(key)<=18){
+                        ylist[0]=ylist[0]+Number(needdatas[key]);
+                    }
+                    if(Number(key)>=19 && Number(key)<=23){
+                        ylist[1]=ylist[1]+Number(needdatas[key]);
+                    }
+                    if(Number(key)>=24 && Number(key)<=30){
+                        ylist[2]=ylist[2]+Number(needdatas[key]);
+                    }
+                    if(Number(key)>=31 && Number(key)<=40){
+                        ylist[3]=ylist[3]+Number(needdatas[key]);
+                    }
+                    if(Number(key)>=41 && Number(key)<=50){
+                        ylist[4]=ylist[4]+Number(needdatas[key]);
+                    }
+                    if(Number(key)>=50){
+                        ylist[5]=ylist[5]+Number(needdatas[key]);
+                    }
+                }
+                for(var i=0;i<xlist.length;i++){
+                    $("#ageRadio tbody").append(' <tr><td>'+xlist[i]+'</td><td>'+ylist[i]+'</td></tr>')
+                }
+//            //console.log(xlist);
+//            //console.log(ylist);
+
+                var eChart5 = echarts.init(document.getElementById("ageDistribution"));
+                var echartoption1 = {
+                    title : {
+                        text: '年龄分布'
+                    },
+                    tooltip : {
+                        trigger: 'axis'
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: xlist,
+                        axisLabel: {
+                            inside: true,
+                            textStyle: {
+                                color: '#999'
+                            }
+                        }
+                    },
+                    yAxis: {
+                        type: 'value',
+                        minInterval : 1,
+                        boundaryGap : [ 0, 0.1 ],
+                        min: 0,
+                        axisLabel: {
+                            textStyle: {
+                                color: '#999'
+                            }
+                        }
+                    },
+                    series: [{
+                        data: ylist,
+                        type: 'bar',
+                        itemStyle: {
+                            normal: {
+                                label: {
+                                    show: true//是否展示
+                                }
+                            }
+                        },
+                        barMaxWidth: '50',  //解决问题2：在柱子数量少的时候，剩下的柱子不要太粗，否则不好看；
+                        markPoint : {
+                            data : [
+                                {type : 'max', name: '最大值'},
+                                {type : 'min', name: '最小值'}
+                            ]
+                        },
+                        markLine : {
+                            data : [
+                                {type : 'average', name: '平均值'}
+                            ]
+                        },
+                        name:'人数'
+                    }]
+                };
+                eChart5.setOption(echartoption1);
+            }else{
+                $("#ageDistribution").html("<h1 class='eachartstips'>暂无数据！！！</h1>")
+            }
+
+        }
+
+    </script>

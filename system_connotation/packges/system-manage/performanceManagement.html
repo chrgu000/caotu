@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> 绩效管理</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link href="../../css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../css/common.css" rel="stylesheet">
+    <link href="../../plugin/layer/skin/layer.css" rel="stylesheet">
+
+    <link href="../../css/animate.css" rel="stylesheet">
+    <link href="../../css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="../../plugin/datepicker/jquery.datetimepicker.css" rel="stylesheet">
+    <style>
+        /* Additional style to fix warning dialog position */
+
+        .btitle{padding-left:20px;height:45px;border-bottom:1px solid #bbb; line-height: 37px;}
+        #exportBtn{float: right;margin-right:20px;background:#6cade3;color:#fff;}
+        #exportBtn:hover{background:#4688bf;}
+        #daychoose{padding-left:6px;}
+        .choosetime{padding-left:6px;width:100px;}
+        .choosetimeBox{margin-left:4px;}
+        .timebtnlist button.active{ background-color: #204d74;border-color: #122b40;}
+        #tablelistbox td,
+        #tablelistbox th{text-align: center;}
+    </style>
+
+</head>
+
+<body class="gray-bg">
+<h3 class="btitle">系统管理—绩效管理</h3>
+    <div style="padding-left:28px;padding-top:10px;" class="timebtnlist">
+        <p class="nowday" data-val="">截止至今天早上2：00</p>
+        <button type="button" class="btn btn-sm btn-primary" data-val="" id="yesterdayBtn" onclick="nowPerform(this)">当前</button>
+        <button type="button" class="btn btn-sm btn-primary active" data-val="" id="sevendayBtn" onclick="changetime(this)">7天</button>
+        <button type="button" class="btn btn-sm btn-primary" data-val="" id="monthdayBtn" onclick="changetime(this)">30天</button>
+        <span class="choosetimeBox">开始时间：<input type="text" id="daychooseBegain" class="choosetime" value="" onchange="changebegintime(this)"/></span>
+        <span class="choosetimeBox">结束时间：<input type="text" id="daychooseEnd" class="choosetime" value=""  onchange="changeendtime(this)"/></span>
+        <button type="button" class="btn " id="exportBtn" onclick="saveexcel()">导出excel</button>
+    </div>
+
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox-content">
+                <div class="jqGrid_wrapper" id="tablelist">
+                    <!--   <table id="table_list_2"></table>-->
+                    <table  class="table table-striped" id="tablelistbox">
+                        <thead>
+                        <tr>
+                            <th>内容运营</th>
+                            <th>审核信息数</th>
+                            <th>上传信息数</th>
+                            <th>发表评论数</th>
+                            <th>活跃马甲数</th>
+                            <th>举报处理数</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tablelistTbody">
+                        <tr v-for="(item,index) in items">
+                            <td class="center">{{item.userid}}</td>
+                            <td class="center">{{item.allcheck }}</td>
+                            <td class="center">{{item.allpush}}</td>
+                            <td class="center">{{item.allcomment}}</td>
+                            <td class="center">{{item.activeuser}}</td>
+                            <td class="center">{{item.allreport}}</td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                    <div id="pagerlist">
+                        <div id="pagerbtnlist">
+                            <span class="glyphicon glyphicon-backward gbtn" id="prepagebtn" onclick="prepage()"></span>
+                                <span class="addpagebox">
+                                    <span id="jumppage" onclick="jumppage()">跳转到</span>
+                                    <input type="number" id="addpageinput" value="1" max="" min="1"/>
+                                    共 <span id="allpage">1</span>页
+                                </span>
+                            <span class="glyphicon glyphicon-forward gbtn" id="nextpagebtn" onclick="nextpage()"></span>
+                        </div>
+                        <div id="allcontbox">
+                            <p id="allconts"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 全局js -->
+<script src="../../js/jquery.min.js?v=2.1.4"></script>
+<script src="../../plugin/layer/layer.js"></script>
+<script src="../../plugin/datepicker/jquery.datetimepicker.full.min.js"></script>
+<script src="../../js/vue.js"></script>
+<script type="text/javascript" src="../../js/index.js"></script>
+
+    <!-- Page-Level Scripts -->
+    <script>
+        var starttime="",endtime="";
+
+        $(function(){
+            var date = new Date();
+            var today=gettime(0);
+            var yesterday=gettime(-1);
+            var sevenday=gettime(-7);
+            var monthday=gettime(-31);
+
+            $(".nowday").attr("data-val",today);
+            $("#yesterdayBtn").attr("data-val",yesterday);
+            $("#sevendayBtn").attr("data-val",sevenday);
+            $("#monthdayBtn").attr("data-val",monthday);
+            starttime=$(".timebtnlist button.active").attr("data-val");
+            endtime=today;
+            $('#daychooseBegain').datetimepicker({
+                value:date,
+                format:'Y-m-d',
+                timepicker:false//关闭时间选项
+            });
+            $('#daychooseEnd').datetimepicker({
+                value:date,
+                format:'Y-m-d',
+                timepicker:false//关闭时间选项
+            });
+//            只有S级可查询当前业绩
+            var userInfoList=getload();
+           //console.log(userlever);
+            var userlever=userInfoList.data.userlevel;
+            if(userlever == "S" || userlever == "B"){
+                $("#yesterdayBtn").css({"display":"inline-block"});
+            }else{
+                $("#yesterdayBtn").css({"display":"none"});
+            }
+            getcheck(1);
+
+        });
+        var tabledata = new Vue({
+            el: '#tablelistTbody',
+            data: {
+                items:[]
+            },
+            // 在 `methods` 对象中定义方法
+            methods: {
+                greet: function (event) {
+
+                }
+            }
+        });
+
+
+        function getcheck(pageno){
+            layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000});
+            var postdata={"pageno":pageno,"starttime":starttime,"endtime":endtime};
+//            console.log(postdata);
+            postdata=JSON.stringify(postdata);
+            $.ajax({
+                url : path+'/CTKJBUSINESS/sysuser/getcheckuserper.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:false,
+                data: postdata,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+//                    console.log("获取失败：");
+//                    console.log(data);
+                },
+                success:function(diskJson){
+                    layer.closeAll();
+//                    console.log("绩效管理：");
+//                    console.log(diskJson);
+                    /*翻页信息*/
+                    pageinfo(diskJson.data,pageno);//翻页控件信息
+                    tabledata.items=diskJson.data.reportList;
+                    tabledata.pageno=pageno;
+                }
+            });
+        }
+
+
+        /*按钮选择时间*/
+        function changetime(e){
+            starttime=$(e).attr("data-val");
+            endtime=$(".nowday").attr("data-val");
+            $(e).addClass("active").siblings("button.active").removeClass("active");
+            getcheck(1);
+        }
+        /*自定义input框选择时间*/
+        function changebegintime(e){
+            starttime=$(e).val();
+            starttime=starttime.replace(/-/g, "");//
+            endtime=$("#daychooseEnd").val();
+            endtime=endtime.replace(/-/g, "");//
+            $(".timebtnlist button.active").removeClass("active");
+            getcheck(1);
+        }
+        function changeendtime(e){
+            starttime=$("#daychooseBegain").val();
+            starttime=starttime.replace(/-/g, "");//
+            endtime=$(e).val();
+            endtime=endtime.replace(/-/g, "");//
+            $(".timebtnlist button.active").removeClass("active");
+            getcheck(1);
+        }
+
+
+        /*当天当前审核状况*/
+        function nowPerform(e){
+            $(e).addClass("active").siblings("button.active").removeClass("active");
+            starttime=$(e).attr("data-val");
+            endtime=$(".nowday").attr("data-val");
+            var postdata={"pageno":1};
+            postdata=JSON.stringify(postdata);
+            $.ajax({
+                url : path+'/CTKJBUSINESS/sysuser/getcurcheckuserper.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:false,
+                data: postdata,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+//                    console.log("获取失败：");
+//                    console.log(data);
+                },
+                success:function(diskJson){
+                    layer.closeAll();
+//                    console.log("当天当前审核状况：");
+//                    console.log(diskJson);
+                    /*翻页信息*/
+                    pageinfo3(1,diskJson.data.length,diskJson.data.length);//翻页控件信息
+                   tabledata.items=diskJson.data;
+                }
+            });
+        }
+
+
+        /*导出excel*/
+        function saveexcel(){
+            layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000});
+            var postdata={"starttime":starttime,"endtime":endtime};
+            postdata=JSON.stringify(postdata);
+            $.ajax({
+                url : path+'/CTKJBUSINESS/sysuser/getcheckperexcel.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: postdata,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    console.log("获取失败：");
+                    console.log(data);
+                },
+                success:function(diskJson){
+                    layer.closeAll();
+//                    console.log("导出绩效管理：");
+//                    console.log(diskJson);
+                    if(diskJson.code==1000){
+                        var path3="/CTKJBUSINESS/file/downFileByName.do?filelocation=";
+                        var url=path+path3+diskJson.data;
+                        downloadFile(url)
+                    }else{
+                        layer.msg("数据有误请重试！！")
+                    }
+                }
+            });
+        }
+
+
+
+
+    </script>
+
+    
+    
+
+</body>
+
+</html>

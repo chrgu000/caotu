@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> movie</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="../../css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../css/animate.css" rel="stylesheet">
+    <link href="../../css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="../../plugin/datepicker/jquery.datetimepicker.css" rel="stylesheet">
+    <link href="../../css/common.css" rel="stylesheet">
+    <script src="../../js/jquery.min.js?v=2.1.4"></script>
+    <script src="../../plugin/layer/layer.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script type="text/javascript" src="../../js/index.js"></script>
+<style>
+    /* Additional style to fix warning dialog position */
+
+    #alertmod_table_list_2 {
+        top: 900px !important;
+    }
+    .imgbox img{ width: auto;  height: auto;max-width: 100px;max-height: 100px;}
+    #tablelistbox tr,
+    .tablelistbox tr{display: table-row;}
+   /* .lookdetail{color:#0086b3;cursor: pointer;}*/
+</style>
+
+
+
+</head>
+
+<body >
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <h3 style="padding-left:9px;margin:0;height:30px;line-height: 30px;">队列详情</h3>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox-content">
+                <div class="jqGrid_wrapper" id="tablelist">
+                    <!--   <table id="table_list_2"></table>-->
+                    <table  class="table table-striped" id="tablelistbox">
+                        <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>图片</th>
+                            <th>内容</th>
+                            <th>三级标签</th>
+                            <th>内容等级</th>
+                            <th>评论</th>
+                            <th>点赞</th>
+                            <th>发布时间</th>
+                            <th v-if="ispushed ==2">推送次数</th>
+                            <th v-if="ispushed ==2">查看次数</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tablelistTbody">
+                        <tr v-for="(item,index) in items">
+                            <td class="center">{{index +1 }}</td>
+                            <td class="center imgbox"><img :src="jsonz(item.contenturllist)" alt=""/></td>
+                            <td class="center">{{item.contenttitle }}</td>
+                            <td class="center">{{item.tagshow }}</td>
+                            <td class="center">{{item.contentlevel == "3" ? "A" :item.contentlevel == "2" ? "B" :item.contentlevel == "1" ? "C":"D" }}</td>
+                            <td class="center">{{item.contentcomment }}</td>
+                            <td class="center">{{item.contentgood }}</td>
+                            <td class="center">{{item.createtime | time}}</td>
+                            <td class="center" v-if="ispushed ==2">{{item.allcount }}</td>
+                            <td class="center"  v-if="ispushed ==2">{{item.seecount }}</td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Page-Level Scripts -->
+<script>
+
+    var pusblishtabledata = new Vue({
+        el: '#tablelistbox',
+        data: {
+            items:"",
+            ispushed:""
+        },
+        // 在 `methods` 对象中定义方法
+        methods: {
+            jsonz:function(event){//转换数组
+                let arr = JSON.parse('[' + event + ']');
+                return arr[0][0];
+
+            }
+        }
+    });
+
+    function getcheck(needdata,countlist){
+        var tjdatas={"contentlist":needdata};
+        tjdatas=JSON.stringify(tjdatas);
+        $.ajax({
+            url : path+'/content/watchContentDetail.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: tjdatas,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+                //console.log("获取失败：");
+                //console.log(data);
+            },
+            success:function(diskJson){
+//                console.log("查看详情：");
+//                console.log(diskJson);
+                if(pusblishtabledata.ispushed ==2){
+                    $.each(countlist,function(i,n){
+                        $.each(diskJson.data,function(i2,n2){
+                            if(n2.contentid == n.contentid){
+                                diskJson.data[i].seecount= n.seecount;
+                                diskJson.data[i].allcount= n.allcount;
+                            }
+                        });
+                    });
+                }
+                /*翻页信息*/
+                pusblishtabledata.items=diskJson.data;
+
+
+            }
+        });
+    }
+
+
+
+</script>
+</body>
+</html>
+    
+    
+

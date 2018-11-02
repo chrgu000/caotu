@@ -98,13 +98,17 @@
                     });
                     video.addEventListener('canplaythrough',function(){
                         layer.closeAll();
+                        //获取视频时长
+                        let length=parseInt($("#video").get(0).duration);
+                        console.log("length::");
+                        console.log(length);
                         var videoval= 1,videoname="横视频";
                         if(video.videoWidth>=video.videoHeight){
                             videoval= 1;videoname="横视频";
                         }else{
                             videoval= 2;videoname="竖视频";
                         }
-                        if(videoval2!=videoval){
+                        if(videoval2 != videoval){
                             $("#movieImgBox .tips").addClass("show");
                         }
                         $("#movieStyle").attr("data-val",videoval).html(videoname);

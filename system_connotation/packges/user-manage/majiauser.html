@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> 马甲用户</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link href="../../css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../plugin/layer/skin/layer.css" rel="stylesheet">
+    <link href="../../css/common.css" rel="stylesheet">
+    <link href="../../css/animate.css" rel="stylesheet">
+    <link href="../../css/style.css?v=4.1.0" rel="stylesheet">
+    <script src="../../plugin/layer/layer.js"></script>
+    <script src="../../js/vue.js"></script>
+    <style>
+        /* Additional style to fix warning dialog position */
+
+        #alertmod_table_list_2 {
+            top: 900px !important;
+        }
+        #createLabel{margin-top:10px;margin-left:30px;}
+        #chooseMajia{margin-top:10px;}
+        .btitle{padding-left:20px;height:45px;border-bottom:1px solid #bbb; line-height: 37px;}
+        #tablelistbox .btn{color:#5a656d;}
+        #tablelistbox .btn:hover{color:#fff;background:#0088cc;}
+        #tablelistbox  .lookmeitem{color:#0a6aa1;cursor: pointer;}
+
+        .popShadeBox{width:100%;margin:0 auto;height:100%;border:1px solid #ddd;background:#fff;padding:30px;display: none;}
+        .popShadeBox .popBox{width:100%;overflow-y: auto;padding:6px;border:1px solid #ddd;}
+        .popShadeBox .popBox label{cursor: pointer;margin:15px;}
+        .popShadeBox .popBox input{vertical-align: sub;margin-right:3px;cursor: pointer;}
+        .popShadeBox .suredbtn{float:right;margin-right:3px;background:#52b5dc;color:#fff;margin-bottom:10px;}
+        #tablelistTbody td img{width:auto;height:auto;max-height: 80px;max-width: 80px;}
+        #lookedMajia{padding:15px;border-bottom:1px dashed #ccc;}
+        #lookedMajia span{display: inline-block;padding:4px;margin:4px;}
+    </style>
+
+</head>
+
+<body>
+
+    <div id="contentPageBox">
+        <button type="button" class="btn btn-sm btn-primary" id="createLabel">新增马甲</button>
+        <button type="button" class="btn btn-sm btn-primary" id="chooseMajia">选择马甲</button>
+        <div class="wrapper wrapper-content  animated fadeInRight">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox-content">
+                        <div class="jqGrid_wrapper" id="tablelist">
+                            <!--   <table id="table_list_2"></table>-->
+                            <table  class="table table-striped" id="tablelistbox">
+                                <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>用户名</th>
+                                    <th>头像</th>
+                                    <th>性别</th>
+                                    <th>发布内容数</th>
+                                    <th>关注数</th>
+                                    <th>粉丝数</th>
+                                    <th>最新发布信息时间</th>
+                                    <th>创建时间</th>
+                                    <th>操作</th>
+                                    <th>消息</th>
+                                    <th>创建人</th>
+                                </tr>
+                                </thead>
+                                <tbody id="tablelistTbody">
+                                    <tr v-for="(item,index) in items">
+                                        <td class="center">{{index+1}}</td>
+                                        <td class="center">{{item.username}}</td>
+                                        <td class="center"><img v-bind:src="item.userheadphoto" alt="头像"></td>
+                                        <td class="center">{{item.usersex == "0" ? "男" :"女"}}</td>
+                                        <td class="center">{{item.contentcount}}</td>
+                                        <td class="center">{{item.followcount}}</td>
+                                        <td class="center">{{item.fanscount}}</td>
+                                        <td class="center">{{item.lastcontenttime | time}}</td>
+                                        <td class="center">{{item.createtime | time}}</td>
+                                        <td class="center lookmeitem" v-on:click="lookMe(item,index)">关注我</td>
+                                        <td class="center lookmeitem">{{item.notecount}}条</td>
+                                        <td class="center">{{item.createuser}}</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <div id="pagerlist">
+                                <div id="pagerbtnlist">
+                                    <span class="glyphicon glyphicon-backward gbtn" id="prepagebtn" onclick="prepage()"></span>
+                                <span class="addpagebox">
+                                    <span id="jumppage" onclick="jumppage()">跳转到</span>
+                                    <input type="number" id="addpageinput" value="1" max="" min="1"/>
+                                    共 <span id="allpage">1</span>页
+                                </span>
+                                    <span class="glyphicon glyphicon-forward gbtn" id="nextpagebtn" onclick="nextpage()"></span>
+                                </div>
+                                <div id="allcontbox">
+                                    <p id="allconts"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--选择马甲-->
+    <div id="allotMajaBox" class="popShadeBox">
+        <h4>账号：<span class="userid" style="color:#007fff;margin-right:25px;">{{userid}}</span>用户名：<span class="username" style="color:#007fff;">{{username}}</span><button type="button" class="btn suredbtn" id="sureAllortBtn" @click="sureallotmajia()">确认</button></h4>
+        <div class="majiaListBox popBox">
+            <label v-for="(item,index) in items" :for="'majia'+index"><input type="checkbox" :id="'majia'+index" :value="item.userid" v-model="checkeditems"/>{{item.username}}</label>
+
+        </div>
+    </div>
+    <!--关注我-->
+    <div id="lookMeBox" class="popShadeBox">
+        <h4>账号：<span class="userid" style="color:#007fff;margin-right:25px;">{{userid}}</span>
+            用户名：<span class="username" style="color:#007fff;">{{username}}</span>
+            <button type="button" class="btn suredbtn" id="sureLookBtn" @click="sureLook()">确认</button>
+        </h4>
+        <p>
+            马甲ID：<span class="username" style="color:#007fff;">{{majiaid}}</span>
+            马甲名：<span class="username" style="color:#007fff;">{{majianame}}</span>
+        </p>
+        <div class="majiaListBox popBox">
+            <div id="lookedMajia">
+                <h4>关注我的马甲：{{lookeditems.length}}</h4>
+                <span v-for="(item,index) in lookeditems" :data_value="item.userid">{{item.username}}</span>
+            </div>
+            <div id="canLookMajia">
+                <h4 style="margin-left:15px;">可选择的马甲：</h4>
+                <label v-for="(item,index) in items" :for="'gzmajia'+index"><input type="checkbox" :id="'gzmajia'+index" :value="item.userid" v-model="checkmajia"/>{{item.username}}</label>
+            </div>
+
+
+        </div>
+    </div>
+
+    <!-- 全局js -->
+    <script src="../../js/jquery.min.js?v=2.1.4"></script>
+    <script type="text/javascript" src="../../js/index.js"></script>
+    <!-- Page-Level Scripts -->
+    <script>
+        var majiadata = new Vue({
+            el: '#tablelistTbody',
+            data: {
+                items:""
+            },
+            // 在 `methods` 对象中定义方法
+            methods: {
+                lookMe: function (events) {
+                    layer.open({
+                        type: 1,
+                        title: '关注我',
+                        shadeClose: true,
+                        maxmin: true, //开启最大化最小化按钮
+                        shade: 0.6,
+                        area: ['70%', '65%'],
+                        content: $("#lookMeBox"), //iframe的url
+                        success: function (layero, index) {
+                           // console.log(events);
+                            lookmemajia.majiaid=events.userid;
+                            lookmemajia.majianame=events.username;
+                            lookmemajia.checkmajia=[];//已经选择的马甲放在这个数组里
+                            lookmajia(events.userid);
+                        }
+                    });
+                }
+            }
+        });
+
+        /*选择马甲初始*/
+        var allotmajia = new Vue({
+            el: '#allotMajaBox',
+            data: {
+                userid:"",
+                username:"",
+                items:[],
+                checkeditems:[]
+            },
+            // 在 `methods` 对象中定义方法
+            methods: {
+                sureallotmajia: function (event) {
+                    layer.confirm('确定选择该批马甲吗？', {
+                        btn: ['确定','取消'] //按钮
+                    }, function(index){
+                        var vestuserid="";
+                        if(allotmajia.checkeditems.length <=50){
+                            $.each(allotmajia.checkeditems,function(i,n){
+                                vestuserid=n+","+vestuserid;
+                            });
+                            //   console.log(vestuserid);
+                            choosemaja(vestuserid);
+                            layer.close(index);
+                        }else{
+                            layer.msg("最多选择50个使用马甲！！");
+                        }
+
+                    }, function(index){
+                        layer.close(index);
+                    });
+
+                }
+            }
+        });
+
+        /*关注我初始*/
+        var lookmemajia = new Vue({
+            el: '#lookMeBox',
+            data: {
+                userid:"",
+                username:"",
+                majiaid:"",
+                majianame:"",
+                items:[],//可关注的马甲
+                checkmajia:[],//选择关注的马甲
+                lookeditems:[]//已关注的马甲
+            },
+            // 在 `methods` 对象中定义方法
+            methods: {
+                sureLook: function (event) {
+                    layer.confirm('确定关注这些马甲吗？', {
+                        btn: ['确定','取消'] //按钮
+                    }, function(index){
+                        var vestuserid="";
+                        $.each(lookmemajia.checkmajia,function(i,n){
+                            vestuserid=n+","+vestuserid;
+                        });
+                        //  console.log(vestuserid);
+                        dolookmaja(vestuserid);
+                        layer.close(index);
+                    }, function(index){
+                        layer.close(index);
+                    });
+
+                }
+            }
+        });
+
+        $(function(){
+            getcheck(1);//马甲管理列表
+            allotmajia.userid=userdatas.data.userid;//选择马甲
+            allotmajia.username=userdatas.data.username;//选择马甲
+            lookmemajia.userid=userdatas.data.userid;//关注我
+            lookmemajia.username=userdatas.data.username;//关注我
+
+        });
+
+        //马甲管理列表
+        function getcheck(pageno){
+           var userid=userdatas.data.userid;
+            layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000}) ;
+            var postdata={"createuser":userid,"pageno":pageno,"pagesize":10};
+            postdata=JSON.stringify(postdata);
+            $.ajax({
+                url : path2+'/vest/vestlist.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: postdata,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    //console.log("获取失败：");
+                    //console.log(data);
+                },
+                success:function(diskJson){
+                    layer.closeAll();
+                   // console.log("马甲用户管理列表：");
+                   // console.log(diskJson);
+
+                    /*翻页信息*/
+                    pageinfo2(diskJson.data,pageno);//翻页控件信息
+                    majiadata.items=diskJson.data.rows;
+                   // allotmajia.items=diskJson.data.rows;
+                }
+            });
+        }
+
+        //新增马甲
+        $("#createLabel").click(function(){
+            $("#contentPageBox").load("newuser.html");
+
+        });
+
+        //选择马甲
+        $("#chooseMajia").click(function(){
+            layer.open({
+                type: 1,
+                title: '选择马甲',
+                shadeClose: true,
+                maxmin: true, //开启最大化最小化按钮
+                shade: 0.6,
+                area: ['70%', '65%'],
+                content: $("#allotMajaBox"), //iframe的url
+                success: function (layero, index) {
+                    majialist2();//选择马甲的数据
+                },
+                end: function () {
+
+                }
+
+            });
+
+        });
+
+        /*选择马甲数据*/
+        function majialist2(){
+            var createuser=userdatas.data.userid;
+            var tjdatas={"followid":"","type":1,"userid":createuser};
+            // console.log(tjdatas);
+            tjdatas=JSON.stringify(tjdatas);
+            $.ajax({
+                url : path2+'/vest/getAllVestuserList.do',
+                cache:true,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: tjdatas,
+                //data: {taglevel:3,pageno:1,pagesize:999},
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    //console.log("马甲用户列表失败：");
+                    //console.log(data);
+                },
+                success:function(diskJson){
+                   // console.log("选择马甲数据：");
+                   // console.log(diskJson);
+                    if(diskJson.code =="1000"){
+                        allotmajia.items=diskJson.data;
+                        let checkmajia=[];
+                        $.each(diskJson.data,function(i,n){
+                            if(n.isused == 1){
+                                checkmajia.push(n.userid);
+                            }
+                        });
+                        allotmajia.checkeditems=checkmajia;//已经选择的马甲放在这个数组里
+                    }else{
+                        layer.msg("马甲用户列表获取失败！！")
+                    }
+                }
+            });
+        }
+
+        /*分配马甲*/
+        function choosemaja(vestuserid){
+            let sysuserid=userdatas.data.userid;
+            var tjdatas={"userid":sysuserid,"userids":vestuserid};
+            //   console.log(tjdatas);
+            tjdatas=JSON.stringify(tjdatas);
+            $.ajax({
+                url : path2+'/vest/setUsed.do',
+                cache:true,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:false,
+                data: tjdatas,
+                //data: {taglevel:3,pageno:1,pagesize:999},
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    //console.log("马甲用户列表失败：");
+                    //console.log(data);
+                },
+                success:function(diskJson){
+                   // console.log("确定选择马甲：");
+                   // console.log(diskJson);
+                    if(diskJson.code =="1000"){
+                        //console.log(allotmajia.checkmajia.length);
+                        layer.msg("马甲分配成功！！");
+                    }else{
+                        layer.msg("马甲分配失败！！")
+                    }
+                }
+            });
+        }
+
+        /*关注马甲的数据*/
+        var lookmajia=(followid)=>{
+            var createuser=userdatas.data.userid;
+            var tjdatas={"followid":followid,"type":2,"userid":createuser};
+            // console.log(tjdatas);
+            tjdatas=JSON.stringify(tjdatas);
+            $.ajax({
+                url : path2+'/vest/getAllVestuserList.do',
+                cache:true,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:false,
+                data: tjdatas,
+                //data: {taglevel:3,pageno:1,pagesize:999},
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    //console.log("马甲用户列表失败：");
+                    //console.log(data);
+                },
+                success:function(diskJson){
+                    // console.log("关注的马甲：");
+                    // console.log(diskJson);
+                    if(diskJson.code =="1000"){
+                        lookmemajia.items=diskJson.data;
+                        let lookedmajia=[];//已关注的
+                        let itemsmaja=[];//可选择的
+                        $.each(diskJson.data,function(i,n){
+                            if(n.isfollow == 1){
+                                lookedmajia.push(n);
+                            }else{
+                                itemsmaja.push(n);
+                            }
+                        });
+                        lookmemajia.items=itemsmaja;//已经选择的马甲放在这个数组里
+                        lookmemajia.lookeditems=lookedmajia;//已经选择的马甲放在这个数组里
+                    }else{
+                        layer.msg("马甲用户列表获取失败！！")
+                    }
+                }
+            });
+        };
+
+        var dolookmaja=(createuser)=>{
+            var tjdatas={"followid":lookmemajia.majiaid,"userids":createuser};
+            // console.log(tjdatas);
+            tjdatas=JSON.stringify(tjdatas);
+            $.ajax({
+                url : path2+'/vest/setFollow.do',
+                cache:true,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:false,
+                data: tjdatas,
+                //data: {taglevel:3,pageno:1,pagesize:999},
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    //console.log("马甲用户列表失败：");
+                    //console.log(data);
+                },
+                success:function(diskJson){
+                    // console.log("关注马甲：");
+                    // console.log(diskJson);
+                    if(diskJson.code =="1000"){
+                        //console.log(allotmajia.checkmajia.length);
+                        layer.msg("马甲关注成功！！");
+                    }else{
+                        layer.msg("马甲关注失败！！")
+                    }
+                }
+            });
+        }
+
+    </script>
+
+    
+    
+
+</body>
+
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> 举报信息</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link href="../../css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../css/common.css" rel="stylesheet">
+    <link href="../../plugin/layer/skin/layer.css" rel="stylesheet">
+    <link href="../../css/animate.css" rel="stylesheet">
+    <link href="../../css/style.css?v=4.1.0" rel="stylesheet">
+
+    <style>
+        /* Additional style to fix warning dialog position */
+
+        #alertmod_table_list_2 {
+            top: 900px !important;
+        }
+        .btitle{padding-left:20px;height:45px;border-bottom:1px solid #bbb; line-height: 37px;}
+        #searchBox{border:1px solid #bbb;padding:25px;}
+        #searchBox .choose{width:120px;height:30px;font-size:13px;}
+        .formtitle{padding-left:9px;margin:0;height:30px;line-height: 30px;}
+        .formtitle .btn{float:right;margin-right:3px;margin-bottom:6px;}
+        #unpassBtn{background:#ff698f;}
+        #tablelistbox .btn{margin:2px;}
+    </style>
+
+</head>
+
+<body class="gray-bg">
+<h3 class="btitle">举报信息</h3>
+
+    <div style="padding:25px;font-size:16px;">
+        <p>筛选查询</p>
+        <div id="searchBox">
+            举报人：<input type="search" id="reportusername" class="secsitdc choose" value="" style="margin-right:12px;"/>
+            被举报人：<input type="search" id="reportObject" class="secsitbh choose" value="" style="margin-right:12px;"/>
+            处理状态：
+            <select name="" id="deleType" class="choose">
+                <option value="0">待处理</option>
+                <option value="1">已通过</option>
+                <option value="2">未通过</option>
+            </select>
+            <button type="button" class="btn btn-sm btn-primary" id="searchBtn" onclick="searchreport()">搜  索</button>
+        </div>
+    </div>
+    <div class="wrapper wrapper-content  animated fadeInRight">
+        <h3 class="formtitle">数据列表
+          <!--  <button type="button" class="btn btn-sm btn-primary" id="passBtn">通过</button>
+            <button type="button" class="btn btn-sm btn-primary" id="unpassBtn">未通过</button>-->
+        </h3>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox-content">
+                    <div class="jqGrid_wrapper" id="tablelist">
+                        <!--   <table id="table_list_2"></table>-->
+                        <table  class="table table-striped" id="tablelistbox">
+                            <thead>
+                            <tr>
+                                <th>编号</th>
+                                <th>举报原因</th>
+                                <th>举报内容</th>
+                                <th>举报内容属性</th>
+                                <th>被举报用户</th>
+                                <th>举报时间</th>
+                                <th>举报用户</th>
+                                <th>处理状态</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tablelistTbody">
+                            <tr v-for="(item,index) in items">
+                              <!--  <td class="center"><input type="radio" value=""/></td>-->
+                                <td class="center">{{index+1}}</td>
+                                <td class="center">{{item.reportdes }}</td>
+                                <td>{{item.reporttext}}</td>
+                                <td class="center">{{item.reporttype=="1"?"内容":"评论"}}</td>
+                                <td class="center">{{item.reportObject}}</td>
+                                <td class="center">{{item.createtime | time}}</td>
+                                <td class="center">{{item.reportusername}}</td>
+                                <td class="center">{{item.dealres=="0"?"待处理":(item.dealres=="1"?"通过":"未通过")}}</td>
+                                <td class="center" v-if="item.dealres==1">
+                                    <button type="button" class="btn" v-if="item.reporttype==1" v-on:click="lookconten(item)">详情</button>
+                                </td>
+                                <td class="center" v-else>
+                                    <button type="button" class="btn" v-on:click="lookconten(item)">详情</button>
+                                    <button type="button" class="pass btn" v-on:click="pass(item)">通过</button>
+                                    <button type="button" class="unpass btn" v-on:click="unpass(item)">不通过</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div id="pagerlist">
+                            <div id="pagerbtnlist">
+                                <span class="glyphicon glyphicon-backward gbtn" id="prepagebtn" onclick="prepage()"></span>
+                                <span class="addpagebox">
+                                    <span id="jumppage" onclick="jumppage()">跳转到</span>
+                                    <input type="number" id="addpageinput" value="1" max="" min="1"/>
+                                    共 <span id="allpage">1</span>页
+                                </span>
+                                <span class="glyphicon glyphicon-forward gbtn" id="nextpagebtn" onclick="nextpage()"></span>
+                            </div>
+                            <div id="allcontbox">
+                                <p id="allconts"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 全局js -->
+<script src="../../js/jquery.min.js?v=2.1.4"></script>
+<script src="../../plugin/layer/layer.js"></script>
+<script src="../../js/vue.js"></script>
+<script type="text/javascript" src="../../js/index.js"></script>
+
+<!-- Page-Level Scripts -->
+<script>
+    var tabledata = new Vue({
+        el: '#tablelistTbody',
+        data: {
+            items:[]
+        },
+        // 在 `methods` 对象中定义方法
+        methods: {
+            pass: function (event) {
+                ispass(event,1);
+            },
+            unpass: function (event) {
+                ispass(event,2);
+            },
+            lookconten:function(event){
+                console.log(event);
+                reportdetail(event);
+            }
+
+        }
+    });
+
+    getcheck(1);
+    function getcheck(pageno){
+        layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000}) ;
+        var dealres=$("#deleType").val();
+        var reportObject=$("#reportObject").val();
+        var reportusername=$("#reportusername").val();
+        var datapost={"pageno":pageno,"pagesize":10,dealres:dealres,"reportObject":reportObject,"reportusername":reportusername};
+//         console.log("datapost::");
+//         console.log(datapost);
+        datapost=JSON.stringify(datapost);
+        $.ajax({
+            url : path+'/CTKJBUSINESS/report/reportlist.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+                //console.log("获取失败：");
+                //console.log(data);
+            },
+            success:function(diskJson){
+                layer.closeAll();
+//                console.log("举报列表：");
+//                console.log(diskJson);
+                /*翻页信息*/
+                pageinfo2(diskJson.data,pageno);//翻页控件信息
+                tabledata.items=diskJson.data.rows;
+
+
+            }
+        });
+    }
+
+    /*搜索*/
+    function searchreport(){
+        getcheck(1);
+    }
+
+/*点击详情查看*/
+    function reportdetail(nedata){
+        var contentid=nedata.contentid;
+        if(nedata.cmtcontentid){
+            contentid=nedata.cmtcontentid;
+        }
+        var datapost={"contentid":contentid};
+//        console.log("datapost::");
+//        console.log(datapost);
+        datapost=JSON.stringify(datapost);
+        $.ajax({
+            url : path+'/CTKJBUSINESS/report/reportdetail.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+                //console.log("获取失败：");
+                //console.log(data);
+            },
+            success:function(diskJson){
+//                console.log("举报详情：");
+//                console.log(diskJson);
+                if(diskJson.code == "1000"){
+                    var type=diskJson.data.contenttype;
+                    var url="reportmovie.html";
+                    if(type=="3" || type=="4"){
+                        url="reportpicture.html";
+                    }else{
+                        url="reportmovie.html";
+                    }
+
+                    layer.open({
+                        type: 2,
+                        title: '举报详情',
+                        shadeClose: true,
+                        maxmin: true, //开启最大化最小化按钮
+                        shade: 0.8,
+                        area: ['80%', '90%'],
+                        content: url, //iframe的url
+                        success: function (layero, index) {
+                            var body = layer.getChildFrame('body', index);
+                            var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+
+                            iframeWin.geturl(diskJson.data);
+                        }
+                    });
+                }
+
+            }
+        });
+    }
+
+
+
+
+    /*是否通过*/
+    function ispass(redata,ispa){
+       // console.log(redata);
+        var reportid=redata.reportid;
+        var dealuser=userdatas.data.userid;
+        var datapost={"reportid":reportid,"dealuser":dealuser,dealres:ispa};
+//        console.log("datapost::");
+//        console.log(datapost);
+        datapost=JSON.stringify(datapost);
+        $.ajax({
+            url : path+'/CTKJBUSINESS/report/dealreport.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+                //console.log("获取失败：");
+                //console.log(data);
+            },
+            success:function(diskJson){
+                layer.closeAll();
+//                console.log("处理举报信息：");
+//                console.log(diskJson);
+                if(diskJson.code=="1000"){
+                    layer.msg("处理成功！");
+                    var pageno=$("#addpageinput").val();
+                    getcheck(pageno);
+                }
+
+
+            }
+        });
+    }
+
+</script>
+    
+    
+
+</body>
+
+</html>

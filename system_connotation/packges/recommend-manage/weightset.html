@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> 权重设置</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <link href="../../css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../plugin/layer/skin/layer.css" rel="stylesheet">
+
+    <link href="../../css/animate.css" rel="stylesheet">
+    <link href="../../css/style.css?v=4.1.0" rel="stylesheet">
+
+    <style>
+        /* Additional style to fix warning dialog position */
+
+        #alertmod_table_list_2 {
+            top: 900px !important;
+        }
+        #createLabel{margin-top:10px;margin-left:30px;}
+        .btitle{padding-left:20px;height:45px;border-bottom:1px solid #bbb; line-height: 37px;}
+        #contentPageBox{overflow: hidden;padding:10px 25px;}
+        .weightBox{width:31%;min-height: 600px;padding:9px;float:left;min-width: 196px;position: relative;}
+        .weightTitle{margin-bottom:65px;}
+        .allParameterBox{width:100%;}
+        .parameterBox{width:100%;height:75px;font-size:15px;}
+        .parameterBox .parameterTitle{width:86px;display: inline-block;text-align: right;}
+        .parameterBox input{width:calc(100% - 95px);height:30px;padding-left:7px;border:1px solid #ccc;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;}
+        .parameterBox .tips{padding-left:93px;font-size:12px;color:#de131d;}
+        .weightSureBtn{position: absolute;right:15px;top:15px;}
+        #contentWeight{border-left:1px solid #bbb;border-right:1px solid #bbb;}
+    </style>
+
+</head>
+
+<body class="gray-bg">
+    <h3 class="btitle">推荐管理——权重设置</h3>
+    <div id="contentPageBox">
+        <div class="weightBox" id="contentWeight">
+            <h4 class="weightTitle">内容权重</h4>
+            <button class="btn btn-info weightSureBtn" data-change="0" onclick="contentsure()">确定</button>
+            <div class="allParameterBox">
+                <div class="parameterBox">
+                    <span class="parameterTitle">赞同：</span>
+                    <input id="PPM_CONTENT_GOOD" type="number" placeholder="请输入" value="0"/>
+                    <p class="tips">参考数：10~100</p>
+                </div>
+                <div class="parameterBox">
+                    <span class="parameterTitle">反对：</span>
+                    <input id="PPM_CONTENT_BAD" type="number" placeholder="请输入"  value="0"/>
+                    <p class="tips">参考数：10~100</p>
+                </div>
+                <div class="parameterBox">
+                    <span class="parameterTitle">不感兴趣：</span>
+                    <input id="PPM_CONTENT_UNLIKE" type="number" placeholder="请输入"  value="0"/>
+                    <p class="tips">参考数：10~100</p>
+                </div>
+                <div class="parameterBox">
+                    <span class="parameterTitle">评论：</span>
+                    <input id="PPM_CONTENT_COMMENT" type="number"  placeholder="请输入"  value="0"/>
+                    <p class="tips">参考数：10~100</p>
+                </div>
+                <div class="parameterBox">
+                    <span class="parameterTitle">转发：</span>
+                    <input id="PPM_CONTENT_SHARE" type="number" placeholder="请输入" value="0"/>
+                    <p class="tips">参考数：10~100</p>
+                </div>
+                <div class="parameterBox">
+                    <span class="parameterTitle">浏览：</span>
+                    <input id="PPM_CONTENT_SEE" type="number" placeholder="请输入" value="0"/>
+                    <p class="tips">参考数：10~100</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="weightBox" >
+            <h4 class="weightTitle">用户标签权重</h4>
+            <button class="btn btn-info weightSureBtn"  data-change="0" onclick="contentsure()">确定</button>
+            <div class="allParameterBox">
+                <div class="parameterBox">
+                    <span class="parameterTitle">赞同：</span>
+                    <input id="PPM_USER_TAG_GOOD" type="number" placeholder="请输入" value="0"/>
+                    <p class="tips">参考数：10~100</p>
+                </div>
+                <div class="parameterBox">
+                    <span class="parameterTitle">反对：</span>
+                    <input id="PPM_USER_TAG_BAD" type="number" placeholder="请输入" value="0"/>
+                    <p class="tips">参考数：10~100</p>
+                </div>
+                <div class="parameterBox">
+                    <span class="parameterTitle">不感兴趣：</span>
+                    <input id="PPM_USER_TAG_UNLIKE" type="number" placeholder="请输入" value="0"/>
+                    <p class="tips">参考数：10~100</p>
+                </div>
+                <div class="parameterBox">
+                    <span class="parameterTitle">评论：</span>
+                    <input id="PPM_USER_TAG_COMMENT" type="number" placeholder="请输入" value="0"/>
+                    <p class="tips">参考数：10~100</p>
+                </div>
+                <div class="parameterBox">
+                    <span class="parameterTitle">转发：</span>
+                    <input id="PPM_USER_TAG_SHARE" type="number" placeholder="请输入" value="0"/>
+                    <p class="tips">参考数：10~100</p>
+                </div>
+                <div class="parameterBox">
+                    <span class="parameterTitle">浏览：</span>
+                    <input id="PPM_USER_TAG_SEE" type="number" placeholder="请输入" value="0"/>
+                    <p class="tips">参考数：10~100</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="weightBox" >
+            <h4 class="weightTitle">用户浏览权重</h4>
+            <button class="btn btn-info weightSureBtn"  data-change="0" onclick="contentsure()">确定</button>
+            <div class="allParameterBox">
+                <div class="parameterBox">
+                    <span class="parameterTitle">降权系数：</span>
+                    <input id="PPM_USER_FALL" type="number" placeholder="请输入" value="0"/>
+                    <p class="tips">参考数：1~5</p>
+                </div>
+                <div class="parameterBox">
+                    <span class="parameterTitle">赞同：</span>
+                    <input id="PPM_USER_GOOD" type="number" placeholder="请输入" value="0"/>
+                    <p class="tips">参考数：10~100</p>
+                </div>
+                <div class="parameterBox">
+                    <span class="parameterTitle">反对：</span>
+                    <input id="PPM_USER_BAD" type="number" placeholder="请输入" value="0"/>
+                    <p class="tips">参考数：10~100</p>
+                </div>
+                <div class="parameterBox">
+                    <span class="parameterTitle">不感兴趣：</span>
+                    <input id="PPM_USER_UNLIKE" type="number" placeholder="请输入" value="0"/>
+                    <p class="tips">参考数：10~100</p>
+                </div>
+                <div class="parameterBox">
+                    <span class="parameterTitle">评论：</span>
+                    <input id="PPM_USER_COMMENT" type="number" placeholder="请输入" value="0"/>
+                    <p class="tips">参考数：10~100</p>
+                </div>
+                <div class="parameterBox">
+                    <span class="parameterTitle">转发：</span>
+                    <input id="PPM_USER_SHARE" type="number" placeholder="请输入" value="0"/>
+                    <p class="tips">参考数：10~100</p>
+                </div>
+                <div class="parameterBox">
+                    <span class="parameterTitle">浏览：</span>
+                    <input id="PPM_USER_SEE" type="number" placeholder="请输入" value="0"/>
+                    <p class="tips">参考数：10~100</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- 全局js -->
+    <script src="../../js/jquery.min.js?v=2.1.4"></script>
+    <script src="../../plugin/layer/layer.js"></script>
+    <script src="../../js/vue.js"></script>
+    <script type="text/javascript" src="../../js/index.js"></script>
+
+
+    <!-- Page-Level Scripts -->
+    <script>
+
+        $(function(){
+            getweightinfo();
+        });
+
+        function getweightinfo(){
+            var tjdatas={"yes":""};
+            tjdatas=JSON.stringify(tjdatas);
+            $.ajax({
+                url : path+'/content/queryAllXparams.do',
+                cache:true,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: tjdatas,
+                error: function(data){
+                    console.log("获取权重失败：");
+                    //console.log(data);
+                },
+                success:function(diskJson){
+//                     console.log("获取权重：");
+//                     console.log(diskJson);
+                    if(diskJson.code =="1000"){
+                        var weightlist=diskJson.data;
+                        for(var i=0;i<weightlist.length;i++){
+                            var c=weightlist[i].name;
+                           $("#"+c).val(weightlist[i].value);
+                        }
+
+                    }else{
+                        layer.msg("权重获取失败，请检查网络重新进入！！")
+                    }
+
+                }
+            });
+
+
+        }
+
+
+        /*修改权重*/
+      var changeweightlist={};
+        /*----------内容权重改变-----------*/
+        $("#PPM_CONTENT_GOOD").change(function(){
+            let val=$(this).val();
+            changeweightlist.PPM_CONTENT_GOOD = val;
+            $("#contentWeight .weightSureBtn").attr("data-change",1);
+        });
+        $("#PPM_CONTENT_BAD").change(function(){
+            let val=$(this).val();
+            changeweightlist.PPM_CONTENT_BAD = val;
+
+            $("#contentWeight .weightSureBtn").attr("data-change",1);
+        });
+        $("#PPM_CONTENT_UNLIKE").change(function(){
+            let val=$(this).val();
+            changeweightlist.PPM_CONTENT_UNLIKE = val;
+
+            $("#contentWeight .weightSureBtn").attr("data-change",1);
+        });
+        $("#PPM_CONTENT_COMMENT").change(function(){
+            let val=$(this).val();
+            changeweightlist.PPM_CONTENT_COMMENT = val;
+            $("#contentWeight .weightSureBtn").attr("data-change",1);
+        });
+        $("#PPM_CONTENT_SHARE").change(function(){
+            let val=$(this).val();
+            changeweightlist.PPM_CONTENT_SHARE = val;
+            $("#contentWeight .weightSureBtn").attr("data-change",1);
+        });
+        $("#PPM_CONTENT_SEE").change(function(){
+            let val=$(this).val();
+            changeweightlist.PPM_CONTENT_SEE = val;
+            $("#contentWeight .weightSureBtn").attr("data-change",1);
+        });
+
+        /*----------用户标签权重改变-----------*/
+        $("#PPM_USER_TAG_GOOD").change(function(){
+            let val=$(this).val();
+            changeweightlist.PPM_USER_TAG_GOOD = val;
+            $("#contentWeight .weightSureBtn").attr("data-change",1);
+        });
+        $("#PPM_USER_TAG_BAD").change(function(){
+            let val=$(this).val();
+            changeweightlist.PPM_USER_TAG_BAD = val;
+            $("#contentWeight .weightSureBtn").attr("data-change",1);
+        });
+        $("#PPM_USER_TAG_UNLIKE").change(function(){
+            let val=$(this).val();
+            changeweightlist.PPM_USER_TAG_UNLIKE = val;
+            $("#contentWeight .weightSureBtn").attr("data-change",1);
+        });
+        $("#PPM_USER_TAG_COMMENT").change(function(){
+            let val=$(this).val();
+            changeweightlist.PPM_USER_TAG_COMMENT = val;
+            $("#contentWeight .weightSureBtn").attr("data-change",1);
+        });
+        $("#PPM_USER_TAG_SHARE").change(function(){
+            let val=$(this).val();
+            changeweightlist.PPM_USER_TAG_SHARE = val;
+            $("#contentWeight .weightSureBtn").attr("data-change",1);
+        });
+        $("#PPM_USER_TAG_SEE").change(function(){
+            let val=$(this).val();
+            changeweightlist.PPM_USER_TAG_SEE = val;
+            $("#contentWeight .weightSureBtn").attr("data-change",1);
+        });
+
+        /*----------用户浏览权重改变-----------*/
+        $("#PPM_USER_FALL").change(function(){
+            let val=$(this).val();
+            changeweightlist.PPM_USER_FALL = val;
+            $("#contentWeight .weightSureBtn").attr("data-change",1);
+        });
+        $("#PPM_USER_GOOD").change(function(){
+            let val=$(this).val();
+            changeweightlist.PPM_USER_GOOD = val;
+            $("#contentWeight .weightSureBtn").attr("data-change",1);
+        });
+        $("#PPM_USER_BAD").change(function(){
+            let val=$(this).val();
+            changeweightlist.PPM_USER_BAD = val;
+            $("#contentWeight .weightSureBtn").attr("data-change",1);
+        });
+        $("#PPM_USER_UNLIKE").change(function(){
+            let val=$(this).val();
+            changeweightlist.PPM_USER_UNLIKE = val;
+            $("#contentWeight .weightSureBtn").attr("data-change",1);
+        });
+        $("#PPM_USER_COMMENT").change(function(){
+            let val=$(this).val();
+
+            changeweightlist.PPM_USER_COMMENT = val;
+            $("#contentWeight .weightSureBtn").attr("data-change",1);
+        });
+        $("#PPM_USER_SHARE").change(function(){
+            let val=$(this).val();
+            changeweightlist.PPM_USER_SHARE = val;
+            $("#contentWeight .weightSureBtn").attr("data-change",1);
+        });
+        $("#PPM_USER_SEE").change(function(){
+            let val=$(this).val();
+            changeweightlist.PPM_USER_SEE = val;
+            $("#contentWeight .weightSureBtn").attr("data-change",1);
+        });
+
+        /*----------权重修改确定-----------*/
+        function contentsure(){
+            var ischange=$("#contentWeight .weightSureBtn").attr("data-change");
+            if(ischange == 1){
+                var arr = [];
+              // console.log(changeweightlist);
+                for (let i in changeweightlist) {
+                    let o = i+":"+changeweightlist[i];
+                    arr.push(o)
+                }
+               // console.log(arr);
+                postajax(arr);
+            }else{
+                layer.msg("内容权重无任何修改！！")
+            }
+
+        }
+
+
+        function postajax(postdata){
+
+            postdata={"xparams":postdata};
+        /*    console.log("postdata::");
+            console.log(postdata);*/
+            postdata=JSON.stringify(postdata);
+            $.ajax({
+                url : path+'/content/editXparam.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: postdata,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    //console.log("获取失败：");
+                    //console.log(data);
+                },
+                success:function(diskJson){
+//                    console.log("权重修改：");
+//                    console.log(diskJson);
+                    if(diskJson.code == 1000){
+                        layer.msg("权重修改成功!");
+
+                    }else{
+                        layer.msg("权重修改失败!");
+                    }
+
+
+                }
+            });
+        }
+
+
+    </script>
+
+    
+    
+
+</body>
+
+</html>

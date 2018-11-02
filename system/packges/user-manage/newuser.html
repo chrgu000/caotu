@@ -144,6 +144,7 @@
         var majiafilse="";
         /*创建标签*/
         function creatlabel(){
+            costdk="";
             var userid=userdatas.data.userid;
             var username=$("#userName").val();
             var usersex=$("#userSex").val();
@@ -152,6 +153,10 @@
              var location= province+ city;
             var userbirthday=$('#birthdayDate').val();
             userbirthday=userbirthday.replace(/-/g, "");//
+            if(majiafilse == ""){
+                layer.msg("请上传头像！！");
+                return false;
+            }
             if(username =="" || majiafilse==""){
                 layer.msg("有必填项为空，请检查后再创建！！");
             }else{
@@ -159,6 +164,10 @@
                 layer.msg('创建中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:2000}) ;
                 setTimeout(function(){
                     var userheadphoto=costdk;
+                    if(userheadphoto == ""){
+                        layer.msg("图片上传失败请重试！！");
+                        return false;
+                    }
                     var postdata={
                         "createuser":userid,"username":username,"usersex":usersex,"location":location,
                         "userbirthday":userbirthday,"userheadphoto":userheadphoto
@@ -183,13 +192,15 @@
                         success:function(diskJson){
                             layer.msg("创建成功!");
                             $("#userName").val("");
+                            $("#upfileshowbox .fontshow").removeClass("hide");
+                            $("#fileimg").attr("src","");
+                            majiafilse = "";
                             //console.log("创建马甲：");
                             //console.log(diskJson);
 
-
                         }
                     });
-                },2000)
+                },3000)
 
             }
 
@@ -200,7 +211,9 @@
         $("#replay").click(function(){
             $("#userName").val("");
             $("#upfileshowbox .fontshow").removeClass("hide");
-        })
+            $("#fileimg").attr("src","");
+            majiafilse = "";
+        });
 
 
         /*图片显示*/

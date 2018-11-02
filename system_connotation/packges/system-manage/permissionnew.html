@@ -1,0 +1,150 @@
+
+    <style>
+        /* Additional style to fix warning dialog position */
+        .labelBox{width:80%;min-width:370px;margin:0 auto;padding:40px 20px;border:1px solid #bbb;margin-top:15px;min-height: 450px;}
+        .lineBox{width:100%;margin:20px 0;}
+        .lineBox .lineTitle{display:inline-block;width:120px;margin-right:6px;text-align: right;}
+        .lineBox input,
+        .lineBox select{width:200px;height:30px;padding-left:7px;}
+        #backbtn{float:right;margin-top:-9px;}
+    </style>
+
+    <div style="width:80%;margin:0 auto;margin-top:25px;">
+        <h4>新增运营账号 <button type="button" class="btn btn-sm btn-primary" id="backbtn">返回》</button></h4>
+    </div>
+   <div class="labelBox">
+       <div class="lineBox">
+           <span class="lineTitle">运营账号：</span>
+           <input type="number" min="4000" max="9999" class="repead" id="labelId" value="" placeholder="请输入运营账号"/>
+           <b class="must">*在4000-9999范围内</b>
+       </div>
+        <div class="lineBox">
+            <span class="lineTitle">用户名：</span>
+            <input type="text" class="repead" id="labelName" value="" placeholder="请输入用户名"/>
+            <b class="must">*</b>
+        </div>
+       <div class="lineBox">
+           <span class="lineTitle">密码：</span>
+           <input type="password" class="repead" id="password" value="" placeholder="请输入密码"/>
+           <b class="must">*</b>
+       </div>
+       <div class="lineBox">
+           <span class="lineTitle">确认密码：</span>
+           <input type="password" class="repead" id="passwordsure" value="" placeholder="请核对密码"/>
+           <b class="must">*</b>
+       </div>
+       <div class="lineBox">
+           <span class="lineTitle">创建人：</span>
+           <input type="text" id="creatuser" value="" readonly/>
+       </div>
+       <div class="lineBox" style="padding-left:130px;margin-top:35px;">
+           <button type="button" class="btn btn-sm btn-primary" id="submit" onclick="creatlabel()">提 交</button>
+           <button type="button" class="btn btn-sm btn-primary" id="replay" onclick="replay()">重 置</button>
+       </div>
+   </div>
+
+
+   <script>
+       $(function(){
+           $("#creatuser").val(userdatas.data.username)
+       });
+       /*返回*/
+       $("#backbtn").click(function(){
+           $("#pageLoadBox").load("permissionform.html");
+       });
+       //账号限制
+       $("#labelId").blur(function(){
+           var dva=$(this).val();
+           if(dva==""){
+               layer.msg("账号不能为空！！")
+           }else if(dva<4000 || dva>9999){
+               layer.msg("请填写4000-9999范围内！！")
+           }
+       });
+       $("#labelName").blur(function(){
+           var dva=$(this).val();
+           if(dva==""){
+               layer.msg("用户名不能为空！！")
+           }
+       });
+       $("#password").blur(function(){
+           var dva=$(this).val();
+           if(dva==""){
+               layer.msg("密码不能为空！！")
+           }
+       });
+       $("#passwordsure").blur(function(){
+           var dva=$(this).val();
+           var psd=$("#password").val();
+           if(dva==""){
+               layer.msg("密码不能为空！！")
+           }else if(dva !=psd){
+               layer.msg("两次密码不一致，请确认！！")
+           }
+       });
+       /*创建运营账号*/
+       function creatlabel(){
+           var userid=$("#labelId").val();
+           var username=$("#labelName").val();
+           var password=$("#password").val();
+           var passwordsure=$("#passwordsure").val();
+           if(userid==""){
+               layer.msg("账号不能为空！！");
+               return false;
+           }else if(userid<4000 || userid>9999){
+               layer.msg("请填写4000-9999范围内！！")
+               return false;
+           }
+           if(username==""){
+               layer.msg("用户名不能为空！！");
+               return false;
+           }
+           if(password==""){
+               layer.msg("密码不能为空！！");
+               return false;
+           }else if(password !=passwordsure){
+               layer.msg("两次密码不一致，请确认！！");
+               return false;
+           }
+           var createuser=userdatas.data.userid;
+           var datapost={"username":username,"password":password,"createuser":createuser,"userid":userid};
+           datapost=JSON.stringify(datapost);
+           $.ajax({
+               url : path+'/sysuser/addsysuser.do',
+               cache:false,//false就不会从浏览器缓存中加载请求信息了
+               type:"POST",
+               contentType: "application/json",
+               dataType:"JSON",
+               async:true,
+               data: datapost,
+               error: function(data){
+                   layer.msg("服务器未响应,请稍后再试!");
+//                   console.log("新增内容运营失败：");
+//                   console.log(data);
+               },
+               success:function(diskJson){
+                   layer.closeAll();
+//                    console.log("新增内容运营：");
+//                    console.log(diskJson);
+                   if(diskJson.code =="1000"){
+                       layer.msg("创建成功！！")
+                       replay();
+                   }else{
+                       layer.msg("创建失败，请重试！！")
+                   }
+
+
+               }
+           });
+       }
+
+
+
+        /*重置*/
+        function replay(){
+            $("input.repead").val("")
+        }
+   </script>
+
+    
+    

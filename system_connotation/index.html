@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+
+    <title> 内含段子后台管理系统</title>
+
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <![endif]-->
+
+     <link href="css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+    <link href="css/animate.css" rel="stylesheet">
+    <link href="css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="plugin/datepicker/jquery.datetimepicker.css" rel="stylesheet">
+    <link href="css/common.css" rel="stylesheet">
+    <link href="plugin/font/iconfont.css" rel="stylesheet">
+    <script src="js/jquery.min.js?v=2.1.4"></script>
+    <script src="js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="plugin/font/iconfont.js"></script>
+    <script src="js/vue.js"></script>
+    <script>
+
+    </script>
+</head>
+
+<body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
+    <div id="wrapper">
+        <!--头部-->
+        <div class="row border-bottom">
+            <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-info " href="#"><i class="fa fa-bars"></i> </a>
+                    <h3 class="headerTitle"><img class="logo" src="img/logo.png" alt=""/>内含段子运营管理后台</h3>
+                </div>
+                <ul class="nav navbar-top-links navbar-right" id="userInfoTop" v-cloak>
+                    <li class="dropdown">
+                        <a v-if="info.iscode =='1000'" id="userHead" href="#"><span class="userHeadBox"><img v-bind:src="info.userheadimg" alt=""/></span><span class="userName">{{info.username}}</span></a>
+                        <a v-else  href="login.html">登陆</a>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+                            <i class="fa fa-bell"></i> <span class="label label-primary">{{info.newsNum}}</span>
+                        </a>
+                       <!-- <ul class="dropdown-menu dropdown-alerts navupstage">
+                            <li>
+                                <a href="news/mailbox.html">
+                                    <div>
+                                        <i class="fa fa-envelope fa-fw"></i> 您有16条未读消息
+                                        <span class="pull-right text-muted small">4分钟前</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <a href="news/profile.html">
+                                    <div>
+                                        <i class="fa fa-qq fa-fw"></i> 3条新回复
+                                        <span class="pull-right text-muted small">12分钟钱</span>
+                                    </div>
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li>
+                                <div class="text-center link-block">
+                                    <a class="J_menuItem" href="news/notifications.html">
+                                        <strong>查看所有 </strong>
+                                        <i class="fa fa-angle-right"></i>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>-->
+                    </li>
+                    <li class="dropdown">
+                        <a  href="login.html" id="quite"> <i class="iconfont">&#xe639;</i></a>
+                    </li>
+
+                </ul>
+            </nav>
+        </div>
+        <!--左侧导航开始-->
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="nav-close"><i class="fa fa-times-circle"></i>
+            </div>
+            <div id="leftNavsRebox">
+            </div>
+            <div class="sidebar-collapse">
+                <ul class="nav" id="side-menu">
+
+                    <li>
+                        <a class="J_menuItem"  id="homehre" href="index_v1.html">
+                            <i class="fa fa-home"></i>
+                            <span class="nav-label">主页</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">数据分析</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level navupstage" id="upstage1">
+                         <!--   <li><a class="J_menuItem" href="">用户分析</a>
+                            </li>
+                          -->
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#"><i class="fa fa-edit"></i> <span class="nav-label">内容管理</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level navupstage"  id="upstage2">
+                          <!--  <li><a class="J_menuItem" href="content-manage/content-check.html">内容审核</a>
+                            </li>
+                            <li><a class="J_menuItem" href="">内容管理</a>
+                            </li>
+                           -->
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            <i class="fa fa-picture-o"></i>
+                            <span class="nav-label">用户画像</span>
+                            <ul class="nav nav-second-level navupstage" id="upstage3">
+
+                            </ul>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#"><i class="fa fa-cutlery"></i> <span class="nav-label">用户管理</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level navupstage" id="upstage4">
+                          <!--  <li><a class="J_menuItem" href="">足迹用户</a>
+                            </li>
+                            <li><a class="J_menuItem" href="user-manage/majiausermanage.html">马甲管理</a>
+                            </li>-->
+
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#"><i class="fa fa-desktop"></i> <span class="nav-label">系统管理</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level navupstage" id="upstage5">
+                          <!--  <li><a class="J_menuItem" href="">权限管理</a>
+                            </li>
+                            <li><a class="J_menuItem" href="">修改密码</a>
+                            </li>
+                           -->
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#"><i class="fa fa-desktop"></i> <span class="nav-label">推荐管理</span><span class="fa arrow"></span></a>
+                        <ul class="nav nav-second-level navupstage" id="upstage6">
+                            <!--  <li><a class="J_menuItem" href="">权限管理</a>
+                              </li>
+                              <li><a class="J_menuItem" href="">修改密码</a>
+                              </li>
+                             -->
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!--左侧导航结束-->
+        <!--右侧部分开始-->
+        <div id="page-wrapper" class="gray-bg dashbard-1">
+            <div class="row J_mainContent" id="content-main">
+                <iframe id="J_iframe" width="100%" height="100%" src="packges/index_v1.html?v=4.0" frameborder="0" data-id="index_v1.html" seamless></iframe>
+               <!-- <div id="J_iframe" style="width:100%;height:100%;overflow: auto;" data-id="index_v1.html"></div>-->
+            </div>
+        </div>
+        <!--右侧部分结束-->
+    </div>
+
+    <!-- 全局js -->
+
+    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="js/plugins/layer/layer.min.js"></script>
+
+
+    <!-- 自定义js -->
+    <script src="js/hAdmin.js?v=4.1.0"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+
+    <!-- 第三方插件 -->
+    <script src="js/plugins/pace/pace.min.js"></script>
+
+
+    <script>
+       // $("#J_iframe").load("packges/index_v1.html");
+       var userinfotop = new Vue({
+           el: '#userInfoTop',
+           data: {
+               info: {username:"",userheadimg:"/*img/a1.jpg*/",newsNum:"",iscode:""}
+           }
+       });
+
+       $(function(){
+           sestop();
+           if(userdatas && userdatas.code && userdatas.code=="1000"){
+               var datas=userdatas.data.userrolelist;
+              // console.log(datas);
+               $.each(datas,function(i,n){
+                   $("#"+ n.rolepid).append(' <li><a data-id="'+ n.roleid+'" class="J_menuItem" href="'+ n.rolepath+'.html">'+ n.rolename+'</a> </li>')
+               });
+//               //举报信息
+//            $("#upstage5").append(' <li><a data-id="006" class="J_menuItem" href="system-manage/reportinform.html">举报信息</a> </li>');
+//               //删除管理
+//           $("#upstage2").append(' <li><a data-id="009" class="J_menuItem" href="content-manage/deletemanage.html">删除管理</a> </li>');
+//              // 搜索管理
+//               $("#upstage2").append(' <li><a data-id="010" class="J_menuItem" href="content-manage/searchmanage.html">搜索管理</a> </li>');
+//             //  吃瓜用户管理
+//               $("#upstage4").append(' <li><a data-id="011" class="J_menuItem" href="user-manage/melonusermanage.html">吃瓜管理</a> </li>');
+               //推送管理
+//               $("#upstage2").append(' <li><a data-id="013" class="J_menuItem" href="content-manage/pushmanagement.html">推送管理</a> </li>');
+               //推荐管理——临时队列
+               $("#upstage6").append(' <li><a data-id="017" class="J_menuItem" href="recommend-manage/temporaryQueue/recommendarry.html">临时队列</a> </li>');
+               //推荐管理——备选队列
+               $("#upstage6").append(' <li><a data-id="018" class="J_menuItem" href="recommend-manage/alternativeQueue/recommendarry.html">备选队列</a> </li>');
+               //推荐管理——推荐队列
+               $("#upstage6").append(' <li><a data-id="019" class="J_menuItem" href="recommend-manage/recomendQueue/recommendarry.html">推荐队列</a> </li>');
+//               //推荐管理——推荐权重
+ //             $("#upstage6").append(' <li><a data-id="016" class="J_menuItem" href="recommend-manage/weightset.html">权重设置</a> </li>');
+           }
+
+       });
+
+       function sestop(){
+           userdatas=getload();
+           if(userdatas && userdatas.code && userdatas.code=="1000"){
+               var headimg="img/logo.png";
+               if(userdatas.data.userheadimg){
+                   headimg=userdatas.data.userheadimg;
+               }else{
+                   headimg="img/logo.png";
+               }
+               var infos={username:userdatas.data.username,userheadimg:headimg,newsNum:"",iscode:userdatas.code};
+               userinfotop.info=infos;
+//               console.log(infos);
+//               console.log(userinfotop.info);
+               //$("#userInfoTop .userName").html(userdatas.data.username);
+               //$("#userHead .userHeadBox img").attr("src",headimg);
+           }
+       }
+
+       //菜单点击
+       $(".navupstage").delegate('li a','click',function(){
+           var url = $(this).attr('href');
+           //console.log(url);
+           $("#J_iframe").attr('src','packges/'+url);
+           if(url=="content-manage/ugc-checksconts.html"){
+               $("#leftNavsRebox").addClass("show");
+           }
+           sestop();
+           return false;
+       });
+       $("#homehre").click(function(){
+           var url = $(this).attr('href');
+           $("#J_iframe").attr('src','packges/'+url);
+           sestop();
+           return false;
+       });
+
+    </script>
+</body>
+
+</html>

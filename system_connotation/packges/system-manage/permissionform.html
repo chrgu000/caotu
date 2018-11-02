@@ -1,0 +1,139 @@
+<style>
+    #tablelistbox .repecePsd{margin-right:5px;}
+    #tablelistbox .state{color:#6674ba;}
+    #allotMajaBox{width:100%;margin:0 auto;height:100%;border:1px solid #ddd;background:#fff;padding:30px;display: none;}
+    #allotMajaBox .majiaListBox{width:100%;height:440px;overflow-y: auto;padding:6px;border:1px solid #ddd;}
+    #allotMajaBox .majiaListBox label{cursor: pointer;margin:15px;}
+    #allotMajaBox .majiaListBox input{vertical-align: sub;margin-right:3px;cursor: pointer;}
+    #sureAllortBtn{float:right;margin-right:3px;background:#52b5dc;color:#fff;margin-bottom:10px;}
+</style>
+    <div style="padding-left:28px;padding-top:10px;" class="pagebtnlist">
+        <button type="button" class="btn btn-sm btn-primary" id="newOperateBtn" data-val="permissionnew.html">新增内容运营</button>
+      <!--  <button type="button" class="btn btn-sm btn-primary" id="contentAllotBtn" data-val="permissionalot.html">内容分配</button>-->
+    </div>
+    <div class="wrapper wrapper-content  animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox-content">
+                    <div class="jqGrid_wrapper" id="tablelist">
+                        <!--   <table id="table_list_2"></table>-->
+                        <table  class="table table-striped" id="tablelistbox">
+                            <thead>
+                            <tr>
+                                <th>账号</th>
+                                <th>用户名</th>
+                                <th>创建时间</th>
+                                <th>最新登陆时间</th>
+                                <th>马甲数</th>
+                                <th>创建人</th>
+                              <!--  <th>状态</th>
+                                <th>操作</th>-->
+                            </tr>
+                            </thead>
+                            <tbody id="tablelistTbody">
+                            <tr v-for="(item,index) in items" :data-id="item.userid">
+                                <td class="center">{{item.userid}}</td>
+                                <td class="center">{{item.username}}</td>
+                                <td class="center">{{item.createtime | time}}</td>
+                                <td class="center">{{item.lastlogin | time}}</td>
+                                <td class="center">{{item.tusercount}}</td>
+                                <td class="center">{{item.createusername}}</td>
+                               <!-- <td class="center state"><button v-on:click="resetpsd(item.userid)" type="button" class="repecePsd btn btn-danger">重置密码</button>{{item.userstatus == "1" ? "使用中":"停用"}}</td>
+                                <td class="center"><button type="button" class="btn" v-on:click="allot(item,index)">分配马甲</button></td>-->
+                            </tr>
+
+                            </tbody>
+                        </table>
+                        <div id="pagerlist">
+                            <div id="pagerbtnlist">
+                                <span class="glyphicon glyphicon-backward gbtn" id="prepagebtn" onclick="prepage()"></span>
+                                    <span class="addpagebox">
+                                        <span id="jumppage" onclick="jumppage()">跳转到</span>
+                                        <input type="number" id="addpageinput" value="1" max="" min="1"/>
+                                        共 <span id="allpage">1</span>页
+                                    </span>
+                                <span class="glyphicon glyphicon-forward gbtn" id="nextpagebtn" onclick="nextpage()"></span>
+                            </div>
+                            <div id="allcontbox">
+                                <p id="allconts"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Page-Level Scripts -->
+    <script>
+        $(".pagebtnlist .btn").click(function(){
+            var url=$(this).attr("data-val");
+            $("#pageLoadBox").load(url);
+        });
+
+        var tabledata = new Vue({
+            el: '#tablelistTbody',
+            data: {
+                items:[]
+            },
+            // 在 `methods` 对象中定义方法
+            methods: {
+                resetpsd: function (event) {
+                    layer.confirm('确定重置该账号的密码吗？', {
+                        btn: ['确定','取消'] //按钮
+                    }, function(index){
+                        respedpsd(event);
+                        layer.close(index);
+                    }, function(index){
+                        layer.close(index);
+                    });
+
+                },
+                allot:function(events,indexcc){
+
+
+                }
+            }
+        });
+
+
+        $(function(){
+            getcheck(1);
+        });
+
+        function getcheck(pageno){
+            var datapost={"pageno":pageno,"pagesize":10};
+            datapost=JSON.stringify(datapost);
+            layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000}) ;
+            $.ajax({
+                url : path+'/sysuser/workerlist.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:false,
+                data: datapost,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    console.log("内容运营列表失败：");
+                    console.log(data);
+                },
+                success:function(diskJson){
+                    layer.closeAll();
+                        // console.log("内容运营列表：");
+                        // console.log(diskJson);
+                    /*翻页信息*/
+                    pageinfo2(diskJson.data,pageno);//翻页控件信息
+                    tabledata.items=diskJson.data.rows;
+
+
+                }
+            });
+        }
+
+    </script>
+
+    
+    
+

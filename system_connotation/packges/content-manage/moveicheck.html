@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> movie</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+
+    <style>
+        /* Additional style to fix warning dialog position */
+        html,body{width:100%;height:100%;background:#333;}
+        video {
+            width:100% !important;
+            height: 100% !important;
+        }
+#quklod{position: absolute;bottom:34px;left:1px;display: none;}
+        #videobox:hover #quklod{display: block;}
+        #imgyulookBox{position: absolute;right:0;bottom:33px;border:1px solid #fff;overflow: hidden;width:80px;height:80px;z-index:95;line-height: 80px;text-align: center;background:rgba(255,255,255,.4);cursor: pointer;}
+        #imgyulookBox img{width:auto;height:auto;max-width: 80px;max-height: 80px;}
+        #imgEditBox{position: fixed;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,.7);z-index:999;display: none;}
+        #imgEditBox.show{display: block;}
+        #imgEditBox .close{display: inline-block;position: absolute;top:5px;right:9px;font-size:30px;cursor: pointer;line-height: 30px;  color: #fff;  text-shadow: 0 0 2px #000;opacity: .6;}
+        #imgEditBox .close:hover{opacity:.9;}
+        #imgEditBox .imgshowBox{width:75%;height:75%;margin:0 auto;margin-top:10%;text-align: center;position: relative;}
+        #imgEditBox .imgshowBox img{position: absolute;left:0;right:0;top:0;bottom:0;margin:0 auto;width:auto;height:auto;max-width:100%;max-height:100%;}
+    </style>
+
+</head>
+
+<body class="gray-bg">
+
+        <div id="videobox" style="width:100%;height:100%;background:#333; position: relative">
+
+             <video id="video" src=""  controls="controls" autoplay height="100%" width="100%">您的浏览器不支持。</video>
+            <!--<button type="button" style="text-align: center;" onclick="launchFullScreen(document.getElementById('video'))">全屏</button>-->
+
+            <div id="quklod">
+                <input type="button" id="btnSpeedUp" onclick="speedUp()" value="快放" />
+                <input type="button" id="btnSpeedUpDown" onclick="speedDown()" value="慢放" />
+             </div>
+
+            <!--缩略图查看编辑-->
+            <div id="imgEditBox">
+                <b class="close ">x</b>
+                <div class="imgshowBox">
+                    <img src="" alt=""/>
+                </div>
+            </div>
+        </div>
+
+    <!-- Page-Level Scripts -->
+    <script>
+        $(document).ready(function () {
+            geturl();
+
+            /*获取下载地址*/
+            function geturl(){
+                let ifinfo = window.location.search;
+                ifinfo=ifinfo.substring(4);
+                ifinfo=ifinfo.split(",");
+               /* //console.log("movie:");
+                //console.log(ifinfo);*/
+                if(localStorage.uncheckdata){
+                    var localindodata=JSON.parse(localStorage.uncheckdata);
+                    var index=ifinfo[0];
+                    var nedurl=localindodata.ContentList[index].daqurllist;
+                    //console.log("nedurl:");
+                    nedurl=JSON.parse(nedurl);
+                    //console.log(nedurl);
+                    var path3="/CTKJBUSINESS/file/downFileByName.do?filelocation=";
+                    //console.log("视频预览地址");
+                    var img = new Image();
+                    var videoval2= 1;
+                    img.onload = function(){
+                        $("#imgEditBox .imgshowBox img").attr("src",this.src);
+                        $("#movieImgBox .movieshowimg img").attr("src",this.src);
+                        $("#movieImgBox .movieshowimg img").attr("data-width",this.width);
+                        $("#movieImgBox .movieshowimg img").attr("data-height",this.height);
+                        this.onload = null;
+                        if(this.width>=this.height){
+                            videoval2= 1;
+                        }else{
+                            videoval2= 2;
+                        }
+                    };
+                    img.src =path2+path3+nedurl[0];
+                    $("#video").attr("src",path2+path3+nedurl[1]);
+                    var video;
+                    video = document.getElementById("video");
+                    layer.load(1, {
+                        shade: [0.1,'#fff'] //0.1透明度的白色背景
+                    });
+                    video.addEventListener('canplaythrough',function(){
+                        layer.closeAll();
+                        //获取视频时长
+                        let length=parseInt($("#video").get(0).duration);
+                     /*   console.log("length::");
+                        console.log(length);*/
+                        $("#movieTime").html(length+"s");
+                        var videoval= 1,videoname="横视频";
+                        if(video.videoWidth>=video.videoHeight){
+                            videoval= 1;videoname="横视频";
+                        }else{
+                            videoval= 2;videoname="竖视频";
+                        }
+                        if(videoval2 != videoval){
+                            $("#movieImgBox .tips").addClass("show");
+                        }
+                        $("#movieStyle").attr("data-val",videoval).html(videoname);
+                    });
+                }
+            }
+
+        });
+
+
+        var speed=1; //播放速度
+        var volume=1; //播放音量
+        var video=document.getElementById("video");
+        var btnSpeedUp=document.getElementById("btnSpeedUp");
+        var btnSpeedUpDown=document.getElementById("btnSpeedUpDown");
+
+        //提高播放速度
+        function speedUp()
+        {
+            video.playbackRate+=1;
+            speed=video.playbackRate;
+        }
+        //降低播放速度
+        function speedDown()
+        {
+
+            if(video.playbackRate>1)
+            {
+                video.playbackRate--;
+            }
+            speed=video.playbackRate;
+        }
+
+
+
+        /*图片编辑关闭*/
+        $("#imgEditBox .close").click(function(){
+            $("#imgEditBox").removeClass("show");
+        })
+
+
+    </script>
+
+    
+    
+
+</body>
+
+</html>

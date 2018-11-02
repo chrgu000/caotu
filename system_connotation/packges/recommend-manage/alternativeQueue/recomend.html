@@ -1,0 +1,350 @@
+
+<style>
+    #arryName,#pushtime{height:32px;text-align: center;}
+    .surebtn{float:right;margin-right:7px;}
+    table input{cursor: pointer;}
+    /*编辑弹框*/
+    #editPopBox{width:100%;height:100%;padding:10px;background:#fff;text-align: center;padding-bottom:25px;display: none;}
+    #editPopBox .editBox{height:55px;margin-top:25px;font-size:14px;}
+    #editPopBox .editBox select{margin-right:6px;}
+    #editPopBox .btn{margin:1px 3px;}
+</style>
+
+
+
+
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div style="padding-left:9px;margin:0;height:30px;line-height: 30px;margin-bottom:9px;">
+        页码：
+        <select name="" id="temporaryPageChoose">
+            <option value="1">第一页</option>
+            <option value="2">第二页</option>
+        </select>
+        <h3 style="margin-bottom:7px;height:30px;line-height: 30px;">推荐列表
+            <button type="button" class="btn btn-sm btn-primary surebtn" onclick="arrysure()">刷新</button>
+        </h3>
+
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox-content">
+                <div class="jqGrid_wrapper" id="tablelist2">
+                    <!--   <table id="table_list_2"></table>-->
+                    <table  class="table table-striped tablelistbox" id="tablelistbox2">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>条码</th>
+                            <th>类型</th>
+                            <th>文字描述</th>
+                            <th>标签名</th>
+                            <th>内容等级</th>
+                            <th>评论</th>
+                            <th>点赞</th>
+                            <th>发布时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tablelistTbody2">
+                        <tr v-for="(item,index) in items" :data-id="item.contentid">
+                            <td><input type="radio" :value="item"  v-model="chooselist" @change="chooseRadio(item,index)"/></td>
+                            <td class="center">{{index+1}}</td>
+                            <td class="center">{{item.contenttype == "3" ? "图片":item.contenttype == "4" ? "图文":item.contenttype == "1" ? "横视频":"竖视频"  }}</td>
+                            <td class="center">{{item.contenttitle}}</td>
+                            <td class="center">{{item.contenttag}}</td>
+                            <td class="center">{{item.contentlevel == "3" ? "A" :item.contentlevel == "2" ? "B" :item.contentlevel == "1" ? "C":"D"}}</td>
+                            <td class="center">{{item.contentcomment}}</td>
+                            <td class="center">{{item.contentgood}}</td>
+                            <td class="center">{{item.createtime | time}}</td>
+                            <td class="center">
+                                <button type="button" class="btn deletebtn" v-on:click="detail(item)">详情</button>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <h3 style="padding-left:9px;margin:0;height:30px;line-height: 30px;">备选内容列表</h3>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox-content">
+                <div class="jqGrid_wrapper" id="tablelist">
+                    <!--   <table id="table_list_2"></table>-->
+                    <table  class="table table-striped tablelistbox" id="tablelistbox">
+                        <thead>
+                        <tr>
+                            <th>条码</th>
+                            <th>类型</th>
+                            <th>文字描述</th>
+                            <th>标签名</th>
+                            <th>内容等级</th>
+                            <th>评论</th>
+                            <th>点赞</th>
+                            <th>发布时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tablelistTbody">
+                        <tr v-for="(item,index) in items" :data-id="item.contentid">
+                            <td class="center">{{index+1}}</td>
+                            <td class="center">{{item.contenttype == "3" ? "图片":item.contenttype == "4" ? "图文":item.contenttype == "1" ? "横视频":"竖视频"  }}</td>
+                            <td class="center">{{item.contenttitle}}</td>
+                            <td class="center">{{item.contenttag}}</td>
+                            <td class="center">{{item.contentlevel == "3" ? "A" :item.contentlevel == "2" ? "B" :item.contentlevel == "1" ? "C":"D"}}</td>
+                            <td class="center">{{item.contentcomment}}</td>
+                            <td class="center">{{item.contentgood}}</td>
+                            <td class="center">{{item.createtime | time}}</td>
+                            <td class="center">
+                                <button type="button" class="btn deletebtn" v-on:click="detail(item)">详情</button>
+                                <button type="button" class="btn deletebtn" v-on:click="redact(item)">编辑</button>
+                                <button type="button" class="btn deletebtn" v-on:click="changeRecond(item,index)">替换</button>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                    <div id="pagerlist">
+                        <div id="pagerbtnlist">
+                            <span class="glyphicon glyphicon-backward gbtn" id="prepagebtn" onclick="prepage(getalterlist)"></span>
+                            <span class="addpagebox">
+                                    <span id="jumppage" onclick="jumppage(getalterlist)">跳转到</span>
+                                    <input type="number" id="addpageinput" value="1" max="" min="1"/>
+                                    共 <span id="allpage">1</span>页
+                                </span>
+                            <span class="glyphicon glyphicon-forward gbtn" id="nextpagebtn" onclick="nextpage(getalterlist)"></span>
+                        </div>
+                        <div id="allcontbox">
+                            <p id="allconts"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--编辑弹框-->
+<div id="editPopBox" class="shadePopBox">
+    <div class="editBox">
+        页码：
+        <select name="" id="editPageSelect">
+            <option value="0">第一页</option>
+        </select>
+        第几条：
+        <select name="" id="editNumberSelect">
+            <option value="0">第一条</option>
+        </select>
+    </div>
+    <div>
+        <button type="button" class="btn editSureBtn btn-primary">确定</button>
+        <button type="button" class="btn editCancelBtn">取消</button>
+    </div>
+</div>
+
+
+<!-- Page-Level Scripts -->
+<script>
+
+    /*推荐列表*/
+    var recondlist = new Vue({
+        el: '#tablelistTbody2',
+        data: {
+            chooselist:[],//input框选择的
+            chooselistnum:"",//nput框选择的条码
+            postlist:[],//提交改变的条例
+            items:[]
+        },
+        // 在 `methods` 对象中定义方法
+        methods: {
+            detail:function(event){
+                reportdetail(event)
+            },
+            sure: function (event) {//刷新
+                layer.confirm('确定刷新吗？', {
+                    btn: ['确定','取消'] //按钮
+                }, function(index){
+                    layer.close(index);
+                }, function(index){
+                    layer.close(index);
+                });
+            },
+            chooseRadio:function(event,ei){
+                this.chooselistnum=ei+1;
+
+
+            }
+        }
+    });
+
+    /*备选内容列表*/
+    var tabledata = new Vue({
+        el: '#tablelistTbody',
+        data: {
+            items:[]
+        },
+        // 在 `methods` 对象中定义方法
+        methods: {
+            detail:function(event){//详情
+                reportdetail(event)
+            },
+            changeRecond:function (event,ev) {//替换
+                layer.confirm('确定替换吗？', {
+                    btn: ['确定','取消'] //按钮
+                }, function(index){
+                    console.log(recondlist.chooselistnum);
+                    if(recondlist.chooselistnum){
+                        recondlist.items.splice(recondlist.chooselistnum-1,1,event);
+                        recondlist.postlist.splice(recondlist.chooselistnum-1,1,event);
+                        tabledata.items.splice(ev,1);
+                    }else{
+                        layer.msg("请先选择需要替换的内容！！！")
+                    }
+
+                    layer.close(index);
+                }, function(index){
+                    layer.close(index);
+                });
+            },
+            redact:function (event) {//编辑
+                layer.open({
+                    type: 1,
+                    title: '备选队列页码选择',
+                    maxmin: false, //开启最大化最小化按钮
+                    area: ['500px', "220px"],
+                    content: $("#editPopBox"),
+                    success: function (layero, index) {
+
+                    }
+                });
+            }
+        }
+    });
+
+    /*页面初始化*/
+    $(function(){
+        getRecondList(1);
+        getalterlist(1)
+    });
+
+    /*推荐页码选择*/
+    $("#temporaryPageChoose").change(function(){
+        var page=$(this).val();
+        getRecondList(page);
+        getalterlist(page)
+    });
+
+    /*获取推荐列表*/
+    function getRecondList(pageno){
+        var datapost={"pageno":pageno,"pagesize":6,"endtime":20181101110200,"starttime":20180905130000,"contenttitle":"","contentlevel":3,"contenttag":"",};
+//         console.log("datapost::");
+//         console.log(datapost);
+        datapost=JSON.stringify(datapost);
+        // tabledata.tagshow=contentshow;
+        $.ajax({
+            url : path+'/CTKJBUSINESS/content/queryContentForQueen.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+//                console.log("获取失败：");
+//                console.log(data);
+            },
+            success:function(diskJson){
+                layer.closeAll();
+               // console.log("获取推荐列表：");
+               //  console.log(diskJson);
+                /*翻页信息*/
+                if(diskJson.code =="1000"){
+                    pageinfo3(pageno,diskJson.data.totalCount,20);//翻页控件信息
+                    recondlist.items=diskJson.data.contentList;
+
+                }else{
+                    layer.msg("数据有误请重试!");
+                }
+
+
+            }
+        });
+    }
+
+
+    /*获取备选内容列表*/
+    function getalterlist(pageno){
+        var datapost={"pageno":pageno,"pagesize":10,"endtime":20181101110200,"starttime":20180905130000,"contenttitle":"","contentlevel":3,"contenttag":"",};
+//         console.log("datapost::");
+//         console.log(datapost);
+        datapost=JSON.stringify(datapost);
+        // tabledata.tagshow=contentshow;
+        $.ajax({
+            url : path+'/CTKJBUSINESS/content/queryContentForQueen.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+//                console.log("获取失败：");
+//                console.log(data);
+            },
+            success:function(diskJson){
+                layer.closeAll();
+//                console.log("内容搜索所：");
+//                 console.log(diskJson);
+                /*翻页信息*/
+                if(diskJson.code =="1000"){
+                    pageinfo3(pageno,diskJson.data.totalCount,20);//翻页控件信息
+                    tabledata.items=diskJson.data.contentList;
+
+                }else{
+                    layer.msg("数据有误请重试!");
+                }
+
+
+            }
+        });
+    }
+
+    /*点击详情查看*/
+    function reportdetail(nedata){
+//        console.log("nedata::");
+//        console.log(nedata);
+        var type=nedata.contenttype;
+        var url="recomovie.html";
+        if(type=="3" || type=="4"){
+            url="../recopicture.html";
+        }else{
+            url="../recomovie.html";
+        }
+        layer.open({
+            type: 2,
+            title: '内容详情',
+            shadeClose: true,
+            maxmin: true, //开启最大化最小化按钮
+            shade: 0.8,
+            area: ['80%', '90%'],
+            content: url, //iframe的url
+            success: function (layero, index) {
+                var body = layer.getChildFrame('body', index);
+                var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                iframeWin.geturl(nedata);
+            }
+        });
+
+
+    }
+</script>
+
+    
+    
+

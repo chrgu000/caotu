@@ -1,0 +1,125 @@
+
+    <style>
+        /* Additional style to fix warning dialog position */
+
+        #alertmod_table_list_2 {
+            top: 900px !important;
+        }
+        #createLabel{margin-top:10px;margin-left:30px;}
+        .btitle{padding-left:20px;height:45px;border-bottom:1px solid #bbb; line-height: 37px;}
+        #tablelistbox .btn{color:#5a656d;}
+        #tablelistbox .btn:hover{color:#fff;background:#0088cc;}
+    </style>
+
+
+    <div id="contentPageBox">
+        <button type="button" class="btn btn-sm btn-primary" id="createLabel">创建消息</button>
+        <div class="wrapper wrapper-content  animated fadeInRight">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox-content">
+                        <div class="jqGrid_wrapper" id="tablelist">
+                            <!--   <table id="table_list_2"></table>-->
+                            <table  class="table table-striped" id="tablelistbox">
+                                <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>类型</th>
+                                    <th>标题</th>
+                                    <th>推送时间</th>
+                                    <th>推送状态</th>
+                                    <th>推送查看次数</th>
+                                </tr>
+                                </thead>
+                                <tbody id="tablelistTbody">
+                                    <tr v-for="(item,index) in items" :data-id="item.pushid">
+                                        <td class="center">{{index+1}}</td>
+                                        <td class="center">{{item.pushtype == "1" ? "内容":item.pushtype == "2" ? "关注消息":item.pushtype == "3" ? "banner":item.pushtype == "4" ? "H5":item.pushtype == "5" ? "评论消息":item.pushtype == "6" ? "点赞消息":"专栏"}}</td>
+                                        <td class="center">{{item.pushtitle}}</td>
+                                        <td class="center">{{item.pushtime|time}}</td>
+                                        <td class="center">{{item.pushflag == "1" ? "已推送":"未推送"}}</td>
+                                        <td class="center">{{item.opentimes}}</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <div id="pagerlist">
+                                <div id="pagerbtnlist">
+                                    <span class="glyphicon glyphicon-backward gbtn" id="prepagebtn" onclick="prepage()"></span>
+                                <span class="addpagebox">
+                                    <span id="jumppage" onclick="jumppage()">跳转到</span>
+                                    <input type="number" id="addpageinput" value="1" max="" min="1"/>
+                                    共 <span id="allpage">1</span>页
+                                </span>
+                                    <span class="glyphicon glyphicon-forward gbtn" id="nextpagebtn" onclick="nextpage()"></span>
+                                </div>
+                                <div id="allcontbox">
+                                    <p id="allconts"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Page-Level Scripts -->
+    <script>
+        var majiadata = new Vue({
+            el: '#tablelistTbody',
+            data: {
+                items:""
+            },
+            // 在 `methods` 对象中定义方法
+            methods: {
+                greet: function (event) {
+
+                }
+            }
+        });
+
+        getcheck(1);
+        function getcheck(pageno){
+//            var userid=userdatas.data.userid;
+            layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000}) ;
+            var postdata={"pageno":pageno,"pagesize":10};
+            postdata=JSON.stringify(postdata);
+            $.ajax({
+                url : path2+'/CTKJBUSINESS/push/pushlist.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:false,
+                data: postdata,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    //console.log("获取失败：");
+                    //console.log(data);
+                },
+                success:function(diskJson){
+                    layer.closeAll();
+//                    console.log("推送信息：");
+//                    console.log(diskJson);
+
+                    /*翻页信息*/
+                    pageinfo3(pageno,diskJson.data.count,diskJson.data.pagesize);//翻页控件信息
+                    majiadata.items=diskJson.data.rows;
+                }
+            });
+        }
+
+
+
+        //新增推送消息
+        $("#createLabel").click(function(){
+            $("#contentPageBox").load("pushnew.html");
+
+        })
+    </script>
+
+    
+

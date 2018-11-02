@@ -1,0 +1,813 @@
+
+    <style>
+        .btitle{padding-left:20px;height:45px;border-bottom:1px solid #bbb; line-height: 37px;}
+        .userLogoInfoBox{padding:25px;}
+        .userLogoInfoBox p{line-height: 35px;font-size:17px;}
+        .dataTitle{line-height: 45px;margin:0;}
+        .dataConBox{border:1px solid #bbb;height:170px;padding-top:22px;}
+        .usershownum{font-size:30px;text-align: center;font-weight:700;}
+        #userInfoDat .lower{color:#006621;font-size:18px;}
+        #userInfoDat .height{color:#FF2B00;font-size:18px;}
+        .dataConBox .title{display: inline-block;width:25%;text-align: right;}
+        .dataConBox .changeNum{display: inline-block;width:30%;text-align: center;}
+        .labelpagesbox{width:100%;border:1px solid #ddd;margin-top:-1px;padding:9px;}
+        .labelpagetitle .labelpagebtn{cursor: pointer;display: inline-block;height:35px;line-height: 35px;text-align: center;padding:0 13px;background:#7266ba;
+           color: #fff;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;}
+        .labelpagetitle .labelpagebtn:hover,
+        .labelpagetitle .labelpagebtn.active{background:#9b14bb;}
+        .labelpageechart{width:100%;height:420px;display: none;}
+        .labelpageechart.show{display: block;}
+        .datechooseBox{text-align: right;padding:5px;}
+        .datechooseBox .echartDateBtn{display: inline-block;padding:5px 14px;border:1px solid #ddd;margin:0 3px;cursor: pointer;background: #ccc;;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;}
+        .datechooseBox .echartDateBtn:hover,
+        .datechooseBox .echartDateBtn.active{background:#6ca2d8;color:#fff;}
+        .echarttime input{width:125px;padding-left:6px;margin:5px;}
+        .echartspagebox{width:100%;overflow-x: auto;}
+        .timebtnlist button.active{ background-color: #204d74;border-color: #122b40;}
+        #tablelistbox td,
+        #tablelistbox th{text-align: center;}
+        #tablelist .tabletitle{margin:0;padding:5px 10px;background:#ddd;font-weight: 600;}
+        .eachartstips{text-align: center;height:250px;line-height: 250px;}
+    </style>
+
+
+    <div class="wrapper wrapper-content">
+        <h3 class="dataTitle">增长关键数据</h3>
+        <div class="row" id="userInfoDat">
+            <div class="col-md-3 col-xs-6 col-sm-3 dataConBox">
+                <p>新增注册人数(日)</p>
+                <p class="usershownum ">{{newuswer.dayadd}}</p>
+                <div>
+                    <span class="title">周</span>
+                    <span class="changeNum">{{newuswer.weekchange}}</span>
+                    <i class="icon iconfont">{{newuswer.weekbl ==0 ? "--" :(newuswer.weekbl >0)?"&#xe8fa;" : "&#xe8f9;"}}</i>
+                    <span class="changeNum">{{newuswer.weekbl== "NaN" ? "--" :newuswer.weekbl  }}%</span>
+                </div>
+                <div>
+                    <span class="title">月</span>
+                    <span class="changeNum">{{newuswer.monthchange}}</span>
+                    <i class="icon iconfont">{{newuswer.monthbl ==0 ? "--" :(newuswer.monthbl >0)?"&#xe8fa;" : "&#xe8f9;"}}</i>
+                    <span class="changeNum">{{newuswer.monthbl == "NaN" ? "--" :newuswer.monthbl }}%</span>
+                </div>
+            </div>
+            <div class="col-md-3 col-xs-6 col-sm-3 dataConBox">
+                <p>活跃用户数(日)</p>
+                <p class="usershownum">{{activeuser.dayadd}}</p>
+                <div>
+                    <span class="title">周</span>
+                    <span class="changeNum">{{activeuser.weekchange}}</span>
+                    <i class="icon iconfont">{{activeuser.weekbl ==0 ? "--" :(activeuser.weekbl >0)?"&#xe8fa;" : "&#xe8f9;"}}</i>
+                    <span class="changeNum">{{activeuser.weekbl == "NaN" ? "--" : activeuser.weekbl}}%</span>
+                </div>
+                <div>
+                    <span class="title">月</span>
+                    <span class="changeNum">{{activeuser.monthchange}}</span>
+                    <i class="icon iconfont">{{activeuser.monthbl ==0 ? "--" :(activeuser.monthbl >0)?"&#xe8fa;" : "&#xe8f9;"}}</i>
+                    <span class="changeNum">{{activeuser.monthbl == "NaN" ?  "--" : activeuser.monthbl}}%</span>
+                </div>
+            </div>
+            <div class="col-md-3 col-xs-6 col-sm-3 dataConBox">
+                <p>累计用户数</p>
+                <p class="usershownum">{{alluser.dayadd}}</p>
+                    <div>
+                    <span class="title">周</span>
+                    <span class="changeNum">{{alluser.weekchange}}</span>
+                    <i class="icon iconfont">{{alluser.weekbl ==0 ? "--" :(alluser.weekbl >0)?"&#xe8fa;" : "&#xe8f9;"}}</i>
+                    <span class="changeNum">{{alluser.weekbl == "NaN" ? "--" :  alluser.weekbl }}%</span>
+                </div>
+                <div>
+                    <span class="title">月</span>
+                    <span class="changeNum">{{alluser.monthchange}}</span>
+                    <i class="icon iconfont">{{alluser.monthbl ==0 ? "--" :(alluser.monthbl >0)?"&#xe8fa;" : "&#xe8f9;"}}</i>
+                    <span class="changeNum">{{alluser.monthbl == "NaN" ? "--" : alluser.monthbl}}%</span>
+                </div>
+
+            </div>
+            <div class="col-md-3 col-xs-6 col-sm-3 dataConBox" >
+                <p>活跃时段最大用户数(日)</p>
+                <p class="usershownum maxusernum">{{maxuser.dayadd}}</p>
+                <div>
+                    <span class="title">周</span>
+                    <span class="changeNum">{{maxuser.weekchange}}</span>
+                    <i class="icon iconfont">{{maxuser.weekbl ==0 ? "--" :(maxuser.weekbl >0)?"&#xe8fa;" : "&#xe8f9;"}}</i>
+                    <span class="changeNum">{{maxuser.weekbl== "NaN" ? "--" : maxuser.weekbl }}%</span>
+                </div>
+                <div>
+                    <span class="title">月</span>
+                    <span class="changeNum">{{maxuser.monthchange}}</span>
+                    <i class="icon iconfont">{{maxuser.monthbl ==0 ? "--" :(maxuser.monthbl >0)?"&#xe8fa;" : "&#xe8f9;"}}</i>
+                    <span class="changeNum">{{ maxuser.monthbl == "NaN" ? "--" : maxuser.monthbl}}%</span>
+                </div>
+
+            </div>
+        </div>
+
+        <!--折线图-->
+        <div class="consbox">
+            <div class="labelpagetitle">
+                <span class="labelpagebtn active" data-page="labelpage1">新增注册人数</span>
+                <span class="labelpagebtn" data-page="labelpage2">活跃用户数</span>
+                <span class="labelpagebtn" data-page="labelpage3">累计用户数</span>
+                <span class="labelpagebtn" data-page="labelpage4">用户活跃时间段分布</span>
+            </div>
+            <div class="labelpagesbox">
+                <div class="datechooseBox" data-val="">
+                    <span class="echartDateBtn active" id="yesterdayBtn" data-val="" onclick="yesterday(this)">昨天</span>
+                    <span class="echartDateBtn" id="sevendayBtn" data-val="" onclick="changetime(this)">7天</span>
+                    <span class="echartDateBtn" id="fourteendayBtn" data-val="" onclick="changetime(this)">14天</span>
+                    <span class="echartDateBtn" id="monthdayBtn" data-val="" onclick="changetime(this)">30天</span>
+                    <span class="echarttime">开始时间：<input type="text" id="begintime" value=""/></span>
+                    <span class="echarttime">结束时间：<input type="text" id="endtime" value=""/></span>
+                </div>
+                <div class="echartspagebox">
+                    <div id="labelpage1" class="labelpageechart show">
+
+                    </div>
+                    <div id="labelpage2" class="labelpageechart">
+
+                    </div>
+                    <div id="labelpage3" class="labelpageechart">
+
+                    </div>
+                    <div id="labelpage4" class="labelpageechart">
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!--表格-->
+        <div class="consbox">
+            <div class="jqGrid_wrapper" id="tablelist">
+                <!--   <table id="table_list_2"></table>-->
+                <p class="tabletitle"><span class="tablebegintime">2017-12-01</span> 至 <span class="tableendtime">2017-12-01</span></p>
+                <table  class="table table-striped" id="tablelistbox">
+                    <thead>
+                    <tr>
+                        <th>时间</th>
+                        <th>新增注册人数</th>
+                        <th>活跃用户数</th>
+                        <th>累计用户数</th>
+                        <th>活跃时段最大用户数</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tablelistTbody">
+                    <tr v-for="(item,index) in items">
+                        <td class="center">{{item.recorddate}}</td>
+                        <td class="center">{{item.registeruser }}</td>
+                        <td class="center">{{item.activeuser}}</td>
+                        <td class="center">{{item.alluser}}</td>
+                        <td class="center">{{item.activeusermax}} ({{item.activeusermaxtime =="all" ? "— —" : item.activeusermaxtime}})</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+                <div id="pagerlist">
+                    <div id="pagerbtnlist">
+                        <span class="glyphicon glyphicon-backward gbtn" id="prepagebtn" onclick="prepage(getetabledata)"></span>
+                                <span class="addpagebox">
+                                    <span id="jumppage" onclick="jumppage(getetabledata)">跳转到</span>
+                                    <input type="number" id="addpageinput" value="1" max="" min="1"/>
+                                    共 <span id="allpage">1</span>页
+                                </span>
+                        <span class="glyphicon glyphicon-forward gbtn" id="nextpagebtn" onclick="nextpage(getetabledata)"></span>
+                    </div>
+                    <div id="allcontbox">
+                        <p id="allconts"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--flotdemo-->
+    <script type="text/javascript">
+        /*头部信息*/
+        var userinfotdatas = new Vue({
+            el: '#userInfoDat',
+            data: {
+                newuswer: {"dayadd":"","weekchange":"","weekbl":"","monthchange":"","monthbl":""},
+                activeuser: {"dayadd":"","weekchange":"","weekbl":"","monthchange":"","monthbl":""},
+                alluser: {"dayadd":"","weekchange":"","weekbl":"","monthchange":"","monthbl":""},
+                maxuser: {"dayadd":"","weekchange":"","weekbl":"","monthchange":"","monthbl":""}
+            }
+        });
+
+        /*表格信息*/
+        var tabledata = new Vue({
+            el: '#tablelistTbody',
+            data: {
+                items:[]
+            },
+            // 在 `methods` 对象中定义方法
+            methods: {
+                greet: function (event) {
+
+                }
+            }
+        });
+
+        var echartsdata="",yeasrday= 1,echartsdata4="";
+        $(function(){
+            var date = new Date();
+            var preDate = new Date(date.getTime() - 24*60*60*1000); //前一天
+            var today=gettime(0);
+            var yesterday=gettime(-1);
+            var sevenday=gettime(-7);
+            var fourteenday=gettime(-14);
+            var monthday=gettime(-31);
+            console.log(today);
+            console.log(yesterday);
+            console.log(fourteenday);
+            console.log(monthday);
+            $(".datechooseBox").attr("data-val",today);
+            $("#yesterdayBtn").attr("data-val",yesterday);
+            $("#sevendayBtn").attr("data-val",sevenday);
+            $("#fourteendayBtn").attr("data-val",fourteenday);
+            $("#monthdayBtn").attr("data-val",monthday);
+            $('#begintime').datetimepicker({
+                value:preDate,
+                format:'Y-m-d',
+                timepicker:false//关闭时间选项
+            });
+            $('#endtime').datetimepicker({
+                value:preDate,
+                format:'Y-m-d',
+                timepicker:false//关闭时间选项
+            });
+
+            getechatdatatop(yesterday,yesterday);
+            getechatdata(yesterday,yesterday);
+            getechatyerdata();//图4活跃
+            tablestarttime=yesterday;
+            tableendtime=yesterday;
+            getetabledata(1);
+        });
+
+
+        //获取数据top4
+        function getechatdatatop(starttime,endtime){
+            var datapost={"starttime":starttime,"endtime":endtime,"pageno":1,"pagesize":100};
+//            //console.log(datapost);
+            datapost=JSON.stringify(datapost);
+            $.ajax({
+                url : path+'/CTKJBUSINESS/analysis/analysisuser.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: datapost,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    //console.log("用户分析top4：");
+                    //console.log(data);
+                },
+                success:function(diskJson){
+//                    console.log("用户分析top4：");
+//                    console.log(diskJson);
+                    if(diskJson.code=="1000"){
+                        if(diskJson.data.reportlist.length>=1){
+                            topdata(diskJson.data.reportlist[0]);
+                        }else{
+                            layer.msg("暂无数据，请刷新重试！！")
+                        }
+                    }else{
+                        layer.msg("数据有误，请刷新重试！！")
+                    }
+                }
+            });
+        }
+
+        //获取数据活跃时间昨天
+        function getechatyerdata(){
+            var datapost={"YES":"yes"};
+//            //console.log(datapost);
+            datapost=JSON.stringify(datapost);
+            $.ajax({
+                url : path+'/CTKJBUSINESS/analysis/analysisactive.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: datapost,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    //console.log("用户分析：");
+                    //console.log(data);
+                },
+                success:function(diskJson){
+//                    console.log("用户分析昨天：");
+//                    console.log(diskJson);
+                    if(diskJson.code=="1000"){
+                        if(diskJson.data.reportlist.length>=1){
+                            echartsdata4=diskJson.data.reportlist;
+                            yeasrday=1;
+                            echart4();
+                        }else{
+                            layer.msg("暂无数据，请刷新重试！！");
+                            $("#labelpage4").html("<h1 class='eachartstips'>暂无数据！！！</h1>")
+                        }
+
+                    }else{
+                        layer.msg("数据有误，请刷新重试！！")
+                    }
+                }
+            });
+        }
+
+        //获取数据
+        function getechatdata(starttime,endtime){
+            var datapost={"starttime":starttime,"endtime":endtime,"pageno":1,"pagesize":100};
+//            //console.log(datapost);
+            datapost=JSON.stringify(datapost);
+            $.ajax({
+                url : path+'/CTKJBUSINESS/analysis/analysisuser.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:false,
+                data: datapost,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    //console.log("用户分析：");
+                    //console.log(data);
+                },
+                success:function(diskJson){
+                    //console.log("用户分析：");
+                    //console.log(diskJson);
+                    if(diskJson.code=="1000"){
+                        if(diskJson.data.reportlist.length>0){
+                            echartsdata=diskJson.data.reportlist;
+                            yeasrday=2;
+                            var showdiv=$(".labelpagebtn.active").attr("data-page");
+                            switch(showdiv){
+                                case "labelpage1":echart1();break;
+                                case "labelpage2":echart2();break;
+                                case "labelpage3":echart3();break;
+                                case "labelpage4":echart4();break;
+                            }
+                        }else{
+                            echartsdata="";
+                            $("#labelpage1").html("<h1 class='eachartstips'>暂无数据！！！</h1>");
+                           // layer.msg("暂无数据，请刷新重试！！")
+                        }
+
+                    }else{
+                        $("#labelpage1").html("<h1 class='eachartstips'>数据有误，请刷新重试！！！</h1>");
+                        layer.msg("数据有误，请刷新重试！！")
+                    }
+                }
+            });
+        }
+
+        //获取数据表格
+        var tablestarttime="",tableendtime="";
+        function getetabledata(pageno){
+            var datapost={"starttime":tablestarttime,"endtime":tableendtime,"pageno":pageno,"pagesize":10};
+//            console.log(datapost);
+            datapost=JSON.stringify(datapost);
+            $.ajax({
+                url : path+'/CTKJBUSINESS/analysis/analysisuser.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: datapost,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    //console.log("用户分析表格：");
+                    //console.log(data);
+                },
+                success:function(diskJson){
+//                    console.log("用户分析表格：");
+//                    console.log(diskJson);
+                    if(diskJson.code=="1000"){
+                        $("#tablelist .tablebegintime").html(tablestarttime);
+                        $("#tablelist .tableendtime").html(tableendtime);
+                        if(diskJson.data.reportlist.length>=1){
+                            pageinfo(diskJson.data,pageno);//翻页控件信息
+                            tabledata.items=diskJson.data.reportlist;
+                        }else{
+                            layer.msg("暂无数据，请刷新重试！！")
+                        }
+
+                    }else{
+                        layer.msg("数据有误，请刷新重试！！")
+                    }
+                }
+            });
+        }
+
+
+        /*top4*/
+        function topdata(topdata){
+            let newweekbl=Number(topdata.registeruserwper).toFixed(2);
+            let newmonthbl=Number(topdata.registerusermper).toFixed(2);
+            let actweekbl=Number(topdata.activeuserwper).toFixed(2);
+            let actmonthbl=Number(topdata.activeusermper).toFixed(2);
+            let allweekbl=Number(topdata.alluserwper).toFixed(2);
+            let allmonthbl=Number(topdata.allusermper).toFixed(2);
+            let maxweekbl=Number(topdata.activeusermaxwper).toFixed(2);
+            let maxmonthbl=Number(topdata.activeusermaxmper).toFixed(2);
+
+            var newuswerlist={"dayadd":topdata.registeruser,"weekchange":topdata.registeruserw,"weekbl":newweekbl,"monthchange":topdata.registeruserm,"monthbl":newmonthbl};
+            var activeuserlist={"dayadd":topdata.activeuser,"weekchange":topdata.activeuserw,"weekbl":actweekbl,"monthchange":topdata.activeuserm,"monthbl":actmonthbl};
+            var alluserlist={"dayadd":topdata.alluser,"weekchange":topdata.alluserw,"weekbl":allweekbl,"monthchange":topdata.alluserm,"monthbl":allmonthbl};
+            var maxuserlist={"dayadd":topdata.activeusermax,"weekchange":topdata.activeusermaxw,"weekbl":maxweekbl,"monthchange":topdata.activeusermaxm,"monthbl":maxmonthbl};
+            userinfotdatas.newuswer=newuswerlist;
+            userinfotdatas.activeuser=activeuserlist;
+            userinfotdatas.alluser=alluserlist;
+            userinfotdatas.maxuser=maxuserlist;
+        }
+
+        /*标签切换*/
+        $(".labelpagetitle .labelpagebtn").click(function(){
+            $(this).addClass("active").siblings(".active").removeClass("active");
+            var showdiv=$(this).attr("data-page");
+            $(".labelpageechart.show").removeClass("show");
+            $("#"+showdiv).addClass("show");
+            switch(showdiv){
+                case "labelpage1":echart1();break;
+                case "labelpage2":echart2();break;
+                case "labelpage3":echart3();break;
+                case "labelpage4":echart4();break;
+            }
+        });
+
+        /*按钮选择时间*/
+        function changetime(e){
+            var starttime=$(e).attr("data-val");
+            var endtime=$(".datechooseBox").attr("data-val");
+            tablestarttime=starttime;
+            tableendtime=endtime;
+            $(e).addClass("active").siblings(".active").removeClass("active");
+            getechatdata(starttime,endtime);
+            getetabledata(1);
+        }
+        /*昨天*/
+        function yesterday(e){
+            var yearsday=$(e).attr("data-val");
+            $(e).addClass("active").siblings(".active").removeClass("active");
+            getechatdata(yearsday,yearsday);
+            getechatyerdata();
+            tablestarttime=yearsday;
+            tableendtime=yearsday;
+            getetabledata(1);
+        }
+        /*自定义input框选择时间*/
+        $(".echarttime input").change(function(){
+            var starttime=$("#begintime").val();
+            starttime=starttime.replace(/-/g, "");//
+            var endtime=$("#endtime").val();
+            endtime=endtime.replace(/-/g, "");//
+            var minView=gettime(-90);//最小时间
+            var today=gettime(-1);//最大时间
+            var date = new Date();
+            var preDate = new Date(date.getTime() - 24*60*60*1000); //前一天
+            if(Number(starttime)<Number(minView)){
+                layer.msg("开始时间不能在3个月前，请重新选择！！");
+                $('#begintime').datetimepicker({
+                    value:preDate,
+                    format:'Y-m-d',
+                    timepicker:false//关闭时间选项
+                });
+                return false;
+            }else if(Number(starttime)>Number(today)){
+                layer.msg("开始时间不能超过前一天日期！！");
+                $('#begintime').datetimepicker({
+                    value:preDate,
+                    format:'Y-m-d',
+                    timepicker:false//关闭时间选项
+                });
+                return false;
+            }else if(Number(endtime)>Number(today)){
+                layer.msg("结束时间不能超过前一日，请重新选择！！");
+                $('#endtime').datetimepicker({
+                    value:preDate,
+                    format:'Y-m-d',
+                    timepicker:false//关闭时间选项
+                });
+                return false;
+            }else if(Number(endtime)<Number(starttime)){
+                layer.msg("结束时间不能小于开始时间，请重新选择！！");
+                $('#endtime').datetimepicker({
+                    value:preDate,
+                    format:'Y-m-d',
+                    timepicker:false//关闭时间选项
+                });
+                return false;
+            }else{
+                getechatdata(starttime,endtime);
+                tablestarttime=starttime;
+                tableendtime=endtime;
+                getetabledata(1);
+                if(starttime == today ){
+                    getechatyerdata();
+                }
+                $(".datechooseBox .echartDateBtn.active").removeClass("active");
+            }
+
+        });
+
+
+
+
+        /*表1新增注册人数*/
+        function echart1(){
+            var xlist=[],ylist=[];
+            $("#labelpage1").empty();
+            if(echartsdata.length>0){
+                var max=Number(echartsdata[echartsdata.length-1].alluser);
+                $.each(echartsdata,function(i,n){
+                    xlist.push(n.recorddate);
+                    ylist.push(parseInt(n.registeruser));
+                });
+                var eChart1 = echarts.init(document.getElementById("labelpage1"));
+                var echartoption1 = {
+                    title : {
+                        text: '新增注册人数'
+                    },
+                    tooltip : {
+                        trigger: 'axis'
+                    },
+                    xAxis : [
+                        {
+                            type : 'category',
+                            boundaryGap : false,
+                            data : xlist
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value',
+                            minInterval : 1,
+                            boundaryGap : [ 0, 0.1 ],
+                            min: 0,
+                            axisLabel : {
+                                formatter: '{value} 人'
+                            }
+                        }
+                    ],
+                    series : [
+                        {
+                            name:'新增注册人数',
+                            type:'line',
+                            itemStyle: {
+                                normal: {
+                                    label: {
+                                        show: true//是否展示
+                                    }
+                                }
+                            },
+                            data:ylist,
+                            markPoint : {
+                                data : [
+                                    {type : 'max', name: '最大值'},
+                                    {type : 'min', name: '最小值'}
+                                ]
+                            },
+                            markLine : {
+                                data : [
+                                    {type : 'average', name: '平均值'}
+                                ]
+                            }
+                        }
+                    ]
+                };
+                eChart1.setOption(echartoption1);
+            }else{
+                $("#labelpage1").html("<h1 class='eachartstips'>暂无数据！！！</h1>")
+            }
+
+        }
+
+        /*表2活跃用户数*/
+        function echart2(){
+            var xlist=[],ylist=[];
+            $("#labelpage2").empty();
+            if(echartsdata.length>0){
+                var max=Number(echartsdata[echartsdata.length-1].alluser);
+                $.each(echartsdata,function(i,n){
+                    xlist.push(n.recorddate);
+                    ylist.push(parseInt(n.activeuser));
+                });
+                var eChart2 = echarts.init(document.getElementById("labelpage2"));
+                var echartoption1 = {
+                    title : {
+                        text: '活跃用户数'
+                    },
+                    tooltip : {
+                        trigger: 'axis'
+                    },
+                    xAxis : [
+                        {
+                            type : 'category',
+                            boundaryGap : false,
+                            data : xlist
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value',
+                            minInterval : 1,
+                            boundaryGap : [ 0, 0.1 ],
+                            min: 0,
+                            axisLabel : {
+                                formatter: '{value} 人'
+                            }
+                        }
+                    ],
+                    series : [
+                        {
+                            name:'活跃用户数',
+                            type:'line',
+                            itemStyle: {
+                                normal: {
+                                    label: {
+                                        show: true//是否展示
+                                    }
+                                }
+                            },
+                            data:ylist,
+                            markPoint : {
+                                data : [
+                                    {type : 'max', name: '最大值'},
+                                    {type : 'min', name: '最小值'}
+                                ]
+                            },
+                            markLine : {
+                                data : [
+                                    {type : 'average', name: '平均值'}
+                                ]
+                            }
+                        }
+                    ]
+                };
+                eChart2.setOption(echartoption1);
+            }else{
+                $("#labelpage2").html("<h1 class='eachartstips'>暂无数据！！！</h1>")
+            }
+
+
+        }
+
+        /*表3累计用户数*/
+        function echart3(){
+            var xlist=[],ylist=[];
+            $("#labelpage3").empty();
+            if(echartsdata.length>0){
+                var max=Number(echartsdata[echartsdata.length-1].alluser);
+                $.each(echartsdata,function(i,n){
+                    xlist.push(n.recorddate);
+                    ylist.push(parseInt(n.alluser));
+                });
+                var eChart3 = echarts.init(document.getElementById("labelpage3"));
+                var echartoption1 = {
+                    title : {
+                        text: '累计用户数'
+                    },
+                    tooltip : {
+                        trigger: 'axis'
+                    },
+                    xAxis : [
+                        {
+                            type : 'category',
+                            boundaryGap : false,
+                            data : xlist
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value',
+                            minInterval : 1,
+                            boundaryGap : [ 0, 0.1 ],
+                            min: 0,
+                            axisLabel : {
+                                formatter: '{value} 人'
+                            }
+                        }
+                    ],
+                    series : [
+                        {
+                            name:'累计用户数',
+                            type:'line',
+                            itemStyle: {
+                                normal: {
+                                    label: {
+                                        show: true//是否展示
+                                    }
+                                }
+                            },
+                            data:ylist,
+                            markPoint : {
+                                data : [
+                                    {type : 'max', name: '最大值'},
+                                    {type : 'min', name: '最小值'}
+                                ]
+                            },
+                            markLine : {
+                                data : [
+                                    {type : 'average', name: '平均值'}
+                                ]
+                            }
+                        }
+                    ]
+                };
+                eChart3.setOption(echartoption1);
+            }else{
+                $("#labelpage3").html("<h1 class='eachartstips'>暂无数据！！！</h1>")
+            }
+
+
+        }
+
+        /*表4用户活跃时间段分布*/
+        function echart4(){
+            var xlist=[],ylist=[];
+            var titletime="",max="";
+            $("#labelpage4").empty();
+            if(yeasrday==1){
+                titletime=echartsdata4[0].time+"—"+echartsdata4[echartsdata4.length-1].time;
+                if(echartsdata4.length>0){
+                    max=Number($("#userInfoDat .maxusernum").html());
+                    $.each(echartsdata4,function(i,n){
+                        xlist.push(n.time.substring(8)+"点");
+                        ylist.push(parseInt(n.useractive));
+                    });
+                    ec4();
+                }else{
+                    $("#labelpage4").html("<h1 class='eachartstips'>暂无数据！！！</h1>")
+                }
+
+            }else{
+                if(echartsdata.length>0){
+                    max=Number(echartsdata[echartsdata.length-1].alluser);
+                    $.each(echartsdata,function(i,n){
+                        xlist.push(n.recorddate);
+                        ylist.push(parseInt(n.activeusermax));
+                    });
+                    ec4();
+                }else{
+                    $("#labelpage4").html("<h1 class='eachartstips'>暂无数据！！！</h1>")
+                }
+            }
+
+            function ec4(){
+                var eChart4 = echarts.init(document.getElementById("labelpage4"));
+                var echartoption1 = {
+                    title : {
+                        text: '用户活跃时间段分布('+titletime+')'
+                    },
+                    tooltip : {
+                        trigger: 'axis'
+                    },
+                    grid: {
+                        left: '1%',
+                        right: '1%',
+                        bottom: '1%',
+                        containLabel: true
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: xlist
+                    },
+                    yAxis: {
+                        type: 'value',
+                        minInterval : 1,
+                        boundaryGap : [ 0, 0.1 ],
+                        min: 0
+                    },
+                    series: [{
+                        data: ylist,
+                        itemStyle: {
+                            normal: {
+                                label: {
+                                    show: true//是否展示
+                                }
+                            }
+                        },
+                        barMaxWidth: '50',  //解决问题2：在柱子数量少的时候，剩下的柱子不要太粗，否则不好看；
+                        type: 'bar',
+                        name:'人数'
+                    }]
+
+                };
+                eChart4.setOption(echartoption1);
+            }
+
+        }
+
+//        $(window).resize(eChart.resize);
+    </script>
+

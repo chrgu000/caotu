@@ -1,0 +1,232 @@
+
+
+    <style>
+        /* Additional style to fix warning dialog position */
+
+        #alertmod_table_list_2 {
+            top: 900px !important;
+        }
+        .btitle{padding-left:20px;height:45px;border-bottom:1px solid #bbb; line-height: 37px;}
+        #searchBox{border:1px solid #bbb;padding:25px;}
+        .titlebtn{float:right;margin-right:6px;margin-bottom:6px;}
+        #refreshNow{background:#f05151;}
+    </style>
+
+    <div style="padding:25px;font-size:16px;">
+        <p>筛选查询</p>
+        <div id="searchBox">
+            敏感词：<input type="search" class="secsitdc" value="" id="secsitdc"/>
+            <button type="button" class="btn btn-sm btn-primary" id="searchBtn" onclick="searchsens()">搜  索</button>
+        </div>
+    </div>
+    <div class="wrapper wrapper-content  animated fadeInRight">
+        <h3 style="padding-left:9px;margin:0;height:30px;line-height: 30px;">数据列表
+            <button type="button" class="btn titlebtn btn-sm btn-primary" id="addNewBtn" onclick="addsents()">新  增</button>
+            <button type="button" class="btn titlebtn btn-sm btn-primary" id="refreshNow" onclick="refreshall()">刷 新</button>
+        </h3>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox-content">
+                    <div class="jqGrid_wrapper" id="tablelist">
+                        <!--   <table id="table_list_2"></table>-->
+                        <table  class="table table-striped" id="tablelistbox">
+                            <thead>
+                            <tr>
+                                <th>敏感词编号</th>
+                                <th>敏感词</th>
+                                <th>敏感类型</th>
+                                <th>添加时间</th>
+                                <th>操作管理员</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tablelistTbody">
+                            <tr v-for="(item,index) in items">
+                                <td>{{item.senid}}</td>
+                                <td class="center">{{item.senvalue }}</td>
+                                <td class="center">{{item.sentype}}</td>
+                                <td class="center">{{item.createtime | time}}</td>
+                                <td class="center">{{item.createuser}}</td>
+                                <td class="center"><button type="button" class="btn btn-danger deletebtn" v-on:click="greet(item.senid)">删除</button></td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                        <div id="pagerlist">
+                            <div id="pagerbtnlist">
+                                <span class="glyphicon glyphicon-backward gbtn" id="prepagebtn" onclick="prepage()"></span>
+                                <span class="addpagebox">
+                                    <span id="jumppage" onclick="jumppage()">跳转到</span>
+                                    <input type="number" id="addpageinput" value="1" max="" min="1"/>
+                                    共 <span id="allpage">1</span>页
+                                </span>
+                                <span class="glyphicon glyphicon-forward gbtn" id="nextpagebtn" onclick="nextpage()"></span>
+                            </div>
+                            <div id="allcontbox">
+                                <p id="allconts"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+<!-- Page-Level Scripts -->
+<script>
+    var querystr=$("#secsitdc").val();//敏感词
+    var tabledata = new Vue({
+        el: '#tablelistTbody',
+        data: {
+            items:[]
+        },
+        // 在 `methods` 对象中定义方法
+        methods: {
+            greet: function (event) {
+                layer.confirm('确定删除该铭感词吗？', {
+                    btn: ['确定','取消'] //按钮
+                }, function(index){
+                    deletesens(event);
+                    layer.close(index);
+                }, function(index){
+                    layer.close(index);
+                });
+
+            }
+        }
+    });
+
+    getcheck(1);
+    function getcheck(pageno){
+        layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000}) ;
+        var datapost={"pageno":pageno,"querystr":querystr};
+       /* console.log("datapost::");
+        console.log(datapost);*/
+        datapost=JSON.stringify(datapost);
+        $.ajax({
+            url : path+'/CTKJBUSINESS/sencontrol/querysensitive.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+                console.log("获取失败：");
+                console.log(data);
+            },
+            success:function(diskJson){
+                layer.closeAll();
+//                console.log("敏感词：");
+//                 console.log(diskJson);
+                /*翻页信息*/
+                if(diskJson.code =="1000"){
+                    pageinfo(diskJson.data,pageno);//翻页控件信息
+                    tabledata.items=diskJson.data.SensitiveList;
+                }else{
+                    layer.msg("数据有误请重试!");
+                }
+
+
+            }
+        });
+    }
+
+    /*搜索敏感词*/
+    function searchsens(){
+        querystr=$("#secsitdc").val();//敏感词
+        getcheck(1);
+    }
+    /*删除敏感词*/
+    function deletesens(sensid){
+        var datapost={"senid":sensid};
+        /* console.log("datapost::");
+         console.log(datapost);*/
+        datapost=JSON.stringify(datapost);
+        $.ajax({
+            url : path+'/CTKJBUSINESS/sencontrol/delsensitive.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+//                console.log("删除敏感词失败：");
+//                console.log(data);
+            },
+            success:function(diskJson){
+                layer.closeAll();
+//                console.log("删除敏感词：");
+//                console.log(diskJson);
+                /*翻页信息*/
+                if(diskJson.code =="1000"){
+                    layer.msg("删除成功!");
+                    var pageno=$("#addpageinput").val();
+                    getcheck(pageno)
+                }else{
+                    layer.msg("操作有误请重试!");
+                }
+
+
+            }
+        });
+    }
+    /*新增按钮*/
+    function addsents(){
+        $("#pageLoadBox").load("sensitivenew.html");
+    }
+/*刷新提示*/
+    function refreshall(){
+        layer.confirm('刷新将同步所有数据，请谨慎操作，确定要刷新提交新增的敏感词吗？', {
+            btn: ['确定','取消'] //按钮
+        }, function(index){
+            refreshAjax();
+            layer.close(index);
+        }, function(index){
+            layer.close(index);
+        });
+    }
+    /*刷新提交*/
+    function refreshAjax(){
+        var datapost={};
+        /* console.log("datapost::");
+         console.log(datapost);*/
+        datapost=JSON.stringify(datapost);
+        $.ajax({
+            url : path+'/CTKJBUSINESS/sencontrol/refushsensitive.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+//                console.log("刷新敏感词失败：");
+//                console.log(data);
+            },
+            success:function(diskJson){
+                layer.closeAll();
+//                console.log("刷新敏感词：");
+//                console.log(diskJson);
+                /*翻页信息*/
+                if(diskJson.code =="1000"){
+                    layer.msg("刷新成功!");
+                }else{
+                    layer.msg("操作有误请重试!");
+                }
+
+
+            }
+        });
+    }
+
+
+</script>
+
+    

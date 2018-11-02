@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>一级标签</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link href="../../css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../plugin/layer/skin/layer.css" rel="stylesheet">
+
+    <link href="../../css/animate.css" rel="stylesheet">
+    <link href="../../css/style.css?v=4.1.0" rel="stylesheet">
+
+    <style>
+        /* Additional style to fix warning dialog position */
+        .labelBox{width:80%;min-width:370px;margin:0 auto;padding:40px 20px;border:1px solid #bbb;margin-top:50px;min-height: 450px;}
+        .lineBox{width:100%;margin:20px 0;}
+        .lineBox .lineTitle{display:inline-block;width:120px;margin-right:6px;text-align: right;}
+        .lineBox input,
+        .lineBox select{width:200px;height:30px;padding-left:7px;}
+        .must{color:red;font-size:14px;}
+    </style>
+
+</head>
+
+<body class="gray-bg">
+   <div class="labelBox">
+        <div class="lineBox">
+            <span class="lineTitle">标签名：</span>
+            <input type="text" id="labelName" value="" placeholder="请输入标签名"/>
+            <b class="must">*</b>
+        </div>
+       <div class="lineBox">
+           <span class="lineTitle">标签等级：</span>
+           <select name="" id="labelLevel">
+               <option value="1">一级</option>
+           </select>
+       </div>
+       <div class="lineBox" style="padding-left:130px;margin-top:35px;">
+           <button type="button" class="btn btn-sm btn-primary" id="submit" onclick="creatlabel()">提 交</button>
+           <button type="button" class="btn btn-sm btn-primary" id="replay" onclick="replay()">重 置</button>
+       </div>
+   </div>
+
+    <!-- 全局js -->
+    <script src="../../js/jquery.min.js?v=2.1.4"></script>
+   <script src="../../plugin/layer/layer.js"></script>
+   <script type="text/javascript" src="../../js/index.js"></script>
+    <!-- Page-Level Scripts -->
+    <script>
+
+
+        /*创建标签*/
+        function creatlabel(){
+            //layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000}) ;
+            var userid=userdatas.data.userid;
+            var taglevel=1;
+            var tagname=$("#labelName").val();
+            var postdata={"createuser":userid,"taglevel":taglevel,"tagname":tagname};
+            postdata=JSON.stringify(postdata);
+            if(tagname ==""){
+                layer.msg("请输入标签名！");
+            }else{
+                creatAjax(postdata)
+            }
+        }
+
+        function creatAjax(postdata){
+            $.ajax({
+                url : path2+'/tag/updatetag.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: postdata,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    //console.log("创建标签失败：");
+                    //console.log(data);
+                },
+                success:function(diskJson){
+                    layer.msg("新增成功！");
+                    replay();
+                    //console.log("创建标签1：");
+                    //console.log(diskJson);
+
+
+                }
+            });
+        }
+
+        /*重置*/
+        function replay(){
+            $("#labelName").val("")
+        }
+
+
+    </script>
+
+    
+    
+
+</body>
+
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> 反馈信息</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link href="../../css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../css/common.css" rel="stylesheet">
+    <link href="../../plugin/layer/skin/layer.css" rel="stylesheet">
+    <link href="../../css/animate.css" rel="stylesheet">
+    <link href="../../css/style.css?v=4.1.0" rel="stylesheet">
+
+    <style>
+        /* Additional style to fix warning dialog position */
+
+        #alertmod_table_list_2 {
+            top: 900px !important;
+        }
+        .btitle{padding-left:20px;height:45px;border-bottom:1px solid #bbb; line-height: 37px;}
+        #searchBox{border:1px solid #bbb;padding:25px;}
+        #addNewBtn{float:right;margin-right:20px;margin-bottom:6px;}
+        #questiontype{width:120px;height:30px;font-size:13px;}
+        #tablelistbox .feedurllist img{width:auto;height:auto;max-width: 100px;max-height: 100px;cursor: pointer;}
+        #tablelistbox .isdeal{cursor: pointer;color:#2653bb;}
+        #bigImgBox{display: none;position: fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);z-index:99;text-align: center;padding:20px;padding-top:80px;overflow-y: auto;}
+        #bigImgBox img{width:auto;height:auto;max-width: 75%;min-width: 35%;min-height: 35%;}
+        #bigImgBox.show{display: block;}
+        #bigImgBox .close{position: absolute;right:16px;top:7px;font-size:22px;cursor: pointer;color: #eee;z-index:333;}
+        #bigImgBox .close:hover{color:#fff;}
+        #tablelistbox tr,
+        .tablelistbox tr{display: table-row;}
+    </style>
+
+</head>
+
+<body class="gray-bg">
+
+    <div id="bigImgBox" class="layer-photos-demo">
+        <b class="close">x</b>
+        <img src="" alt=""/>
+    </div>
+<h3 class="btitle">反馈信息</h3>
+    <div style="padding:25px;font-size:16px;">
+        <p>筛选查询</p>
+        <div id="searchBox">
+            问题类型：
+            <select name="" id="questiontype" class="">
+                <option value="">所有</option>
+                <option value="1">功能问题</option>
+                <option value="2">其他反馈</option>
+            </select>
+            <button type="button" class="btn btn-sm btn-primary" id="searchBtn" onclick="searchfeed()">搜  索</button>
+        </div>
+    </div>
+    <div class="wrapper wrapper-content  animated fadeInRight">
+        <h3 style="padding-left:9px;margin:0;height:30px;line-height: 30px;">数据列表  </h3>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox-content">
+                    <div class="jqGrid_wrapper" id="tablelist">
+                        <!--   <table id="table_list_2"></table>-->
+                        <table  class="table table-striped" id="tablelistbox">
+                            <thead>
+                            <tr>
+                                <th>编号</th>
+                                <th>问题类型</th>
+                                <th>问题内容</th>
+                                <th>图片</th>
+                                <th>联系方式</th>
+                                <th>反馈时间</th>
+                                <th>反馈用户</th>
+                                <th>处理状态</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tablelistTbody">
+                            <tr v-for="(item,index) in items">
+                                <td>{{item.feedid}}</td>
+                                <td class="center">{{item.feedtype=="1"?"功能异常":"其他反馈" }}</td>
+                                <td class="center">{{item.feedtext}}</td>
+                                <td class="feedurllist center" v-on:click="bigimg(item)"><img v-bind:src="item.feedurllist" alt=""/></td>
+                                <td class="center">{{item.contactway}}</td>
+                                <td class="center">{{item.createtime | time}}</td>+
+
+                                <td class="center">{{item.feedusername}}</td>
+                                <td class="center isdeal" v-if="item.isdeal ==0" :data-id="item.isdeal" v-on:click="greet(item,index)">未处理</td>
+                                <td class="center isdeal" v-else :data-id="item.isdeal" style="color:#333;">已处理</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div id="pagerlist">
+                            <div id="pagerbtnlist">
+                                <span class="glyphicon glyphicon-backward gbtn" id="prepagebtn" onclick="prepage()"></span>
+                                <span class="addpagebox">
+                                    <span id="jumppage" onclick="jumppage()">跳转到</span>
+                                    <input type="number" id="addpageinput" value="1" max="" min="1"/>
+                                    共 <span id="allpage">1</span>页
+                                </span>
+                                <span class="glyphicon glyphicon-forward gbtn" id="nextpagebtn" onclick="nextpage()"></span>
+                            </div>
+                            <div id="allcontbox">
+                                <p id="allconts"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script src="../../js/jquery.min.js?v=2.1.4"></script>
+<script src="../../plugin/layer/layer.js"></script>
+<script src="../../js/vue.js"></script>
+<script type="text/javascript" src="../../js/index.js"></script>
+
+    <!-- Page-Level Scripts -->
+    <script>
+        var tabledata = new Vue({
+            el: '#tablelistTbody',
+            data: {
+                items:[]
+            },
+            // 在 `methods` 对象中定义方法
+            methods: {
+                greet: function (event,ti) {
+                    layer.confirm('是否修改该处理状态？', {
+                        btn: ['确定','取消'] //按钮
+                    }, function(index){
+                        changedeal(event,ti);
+                        layer.close(index);
+                    }, function(index){
+                        layer.close(index);
+                    });
+
+                },
+                bigimg:function(event){
+                    $("#bigImgBox img").attr("src",event.feedurllist);
+                    $("#bigImgBox").addClass("show");
+
+                }
+            }
+        });
+
+        getcheck(1);
+        /*反馈列表*/
+        function getcheck(pageno){
+            var feedtype=$("#questiontype").val();
+            var datapost={"pageno":pageno,"pagesize":20,"feedtype":feedtype};
+            //console.log(datapost);
+            datapost=JSON.stringify(datapost);
+            layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000}) ;
+            $.ajax({
+                url : path+'/CTKJBUSINESS/feedback/feedbacklist.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: datapost,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+//                    console.log("反馈列表：");
+//                    console.log(data);
+                },
+                success:function(diskJson){
+                    layer.closeAll();
+//                        console.log("反馈列表：");
+//                        console.log(diskJson);
+                    /*翻页信息*/
+                    if(diskJson.code=="1000"){
+                        pageinfo2(diskJson.data,pageno);//翻页控件信息
+                        tabledata.items=diskJson.data.rows;
+                    }
+
+
+
+                }
+            });
+        }
+
+/*搜索*/
+        function searchfeed(){
+            getcheck(1);
+        }
+
+/*修改处理状态*/
+        function changedeal(datas,ti){
+            var isdeal=datas.isdeal;
+            if(isdeal=="0"){
+                isdeal=1;
+            }else{
+                isdeal=0;
+            }
+            var feedid=datas.feedid;
+            var userid=userdatas.data.userid;
+            var datapost={"dealuser":userid,"feedid":feedid,"isdeal":isdeal};
+            datapost=JSON.stringify(datapost);
+            layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000}) ;
+            $.ajax({
+                url : path+'/CTKJBUSINESS/feedback/dealfeedback.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: datapost,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+//                    console.log("修改处理状态失败：");
+//                    console.log(data);
+                },
+                success:function(diskJson){
+                    layer.closeAll();
+//                    console.log("修改处理状态：");
+//                    console.log(diskJson);
+                    /*翻页信息*/
+                    if(diskJson.code=="1000"){
+                        layer.msg("修改成功!");
+                       tabledata.items[ti].isdeal=isdeal;
+                    }else{
+                        layer.msg("修改失败，请重试!");
+                    }
+
+
+
+                }
+            });
+        }
+
+        /*关闭*/
+        $("#bigImgBox .close").click(function(){
+            $("#bigImgBox").removeClass("show");
+        })
+
+
+
+    </script>
+
+    
+    
+
+</body>
+
+</html>

@@ -1,0 +1,347 @@
+
+
+<style>
+    /* Additional style to fix warning dialog position */
+
+    #searchBox{border:1px solid #bbb;padding:25px;background:#eee;}
+    #contentTitle{width:300px;vertical-align: middle;height:28px;font-size:13px;}
+    .left{float:left;margin-right:3px;}
+    #searchBox input{width:150px;font-size:13px;height:28px;}
+    #searchBox select{width:50px;font-size:13px;height:28px;}
+    .searchMenu{position: relative;}
+   .searchMenu .searchTag{width:76px;height:30px;}
+    .searchMenu .searchSecondMenu{position: absolute;width:100%;left:0;top:28px;background:#eee;color:#bbb;list-style: none;padding:0;z-index: 98;border:1px solid #bbb;border-top:none;display: none;max-height: 420px;overflow-y: auto;}
+    .searchMenu .searchSecondMenu.show{display: block;}
+    .searchSecondMenu li{width:100%;text-align: left;padding-left:3px;cursor: pointer;line-height: 23px;}
+    .searchSecondMenu li:hover{background:#fff;color:#333;border-top:1px solid #bbb;}
+    #searchBtn{margin-bottom:12px;padding:5px 9px;}
+    #arryName,#pushtime{height:32px;text-align: center;}
+    .surebtn{float:right;margin-right:7px;}
+    table input{cursor: pointer;}
+    /*编辑弹框*/
+    #editPopBox{width:100%;height:100%;padding:10px;background:#fff;text-align: center;padding-bottom:25px;display: none;}
+    #editPopBox .editBox{height:55px;margin-top:25px;font-size:14px;}
+    #editPopBox .editBox select{margin-right:6px;}
+    #editPopBox .btn{margin:1px 3px;}
+</style>
+
+<div style="padding:25px;font-size:16px;">
+    <p>筛选查询</p>
+    <div id="searchBox">
+        <button type="button" class="btn btn-sm btn-primary" id="searchBtn" onclick="searchsens(1)">搜  索</button>
+        <div style="border-bottom:1px dashed #ccc;padding-bottom:3px;">
+            文字描述：
+            <textarea id="contentTitle" maxlength="20" placeholder="标题搜索"></textarea>
+        </div>
+        <div class="" style="margin-top:9px;position: relative;">
+            <div class="left">
+                <span class="left">
+                     三级标签：
+                </span>
+
+                <div  class="left searchMenu">
+                    <input type="search" value="" data-val="" placeholder="请选择标签" id="checkTagSearch" class="searchTag"/>
+                    <ul class="searchSecondMenu" id="checkTagul1">
+
+                    </ul>
+                </div>
+
+            </div>
+            内容等级：
+            <select name="" id="checkConLevel">
+                <option value="3">A</option>
+                <option value="2">B</option>
+                <option value="1">C</option>
+            </select>
+                开始时间：<input type="text" placeholder="开始时间" value="" id="startTime"/>
+                结束时间：<input type="text" placeholder="结束时间" value="" id="endTime"/>
+        </div>
+
+    </div>
+</div>
+
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <h3 style="padding-left:9px;margin:0;height:30px;line-height: 30px;">数据列表</h3>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox-content">
+                <div class="jqGrid_wrapper" id="tablelist">
+                    <!--   <table id="table_list_2"></table>-->
+                    <table  class="table table-striped tablelistbox" id="tablelistbox">
+                        <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>类型</th>
+                            <th>文字描述</th>
+                            <th>标签名</th>
+                            <th>内容等级</th>
+                            <th>评论</th>
+                            <th>点赞</th>
+                            <th>发布时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tablelistTbody">
+                        <tr v-for="(item,index) in items" :data-id="item.contentid">
+                            <td class="center">{{index+1}}</td>
+                            <td class="center">{{item.contenttype == "3" ? "图片":item.contenttype == "4" ? "图文":item.contenttype == "1" ? "横视频":"竖视频"  }}</td>
+                            <td class="center">{{item.contenttitle}}</td>
+                            <td class="center">{{item.contenttag}}</td>
+                            <td class="center">{{item.contentlevel == "3" ? "A" :item.contentlevel == "2" ? "B" :item.contentlevel == "1" ? "C":"D"}}</td>
+                            <td class="center">{{item.contentcomment}}</td>
+                            <td class="center">{{item.contentgood}}</td>
+                            <td class="center">{{item.createtime | time}}</td>
+                            <td class="center">
+                                <button type="button" class="btn deletebtn" v-on:click="detail(item)">详情</button>
+                                <button type="button" class="btn deletebtn" v-on:click="redact(item)">编辑</button>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                    <div id="pagerlist">
+                        <div id="pagerbtnlist">
+                            <span class="glyphicon glyphicon-backward gbtn" id="prepagebtn" onclick="prepage(searchsens)"></span>
+                                <span class="addpagebox">
+                                    <span id="jumppage" onclick="jumppage(searchsens)">跳转到</span>
+                                    <input type="number" id="addpageinput" value="1" max="" min="1"/>
+                                    共 <span id="allpage">1</span>页
+                                </span>
+                            <span class="glyphicon glyphicon-forward gbtn" id="nextpagebtn" onclick="nextpage(searchsens)"></span>
+                        </div>
+                        <div id="allcontbox">
+                            <p id="allconts"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--编辑弹框-->
+<div id="editPopBox" class="shadePopBox">
+    <div class="editBox">
+        页码：
+        <select name="" id="editPageSelect">
+            <option value="0">第一页</option>
+        </select>
+        第几条：
+        <select name="" id="editNumberSelect">
+            <option value="0">第一条</option>
+        </select>
+    </div>
+    <div>
+        <button type="button" class="btn editSureBtn btn-primary">确定</button>
+        <button type="button" class="btn editCancelBtn">取消</button>
+    </div>
+</div>
+
+
+<!-- Page-Level Scripts -->
+<script>
+    $(function(){
+        var date=new Date();
+        $('#endTime').datetimepicker({
+            value:date,
+            timeFormat: 'Y-m-d H:m', //格式化时间
+            maxDate:true
+        });
+        $('#startTime').datetimepicker({
+            value:date,
+            timeFormat: 'Y-m-d H:m', //格式化时间
+            maxDate:true
+        });
+
+    });
+
+
+    /*标签搜索框焦点事件*/
+    $("#checkTagSearch").focus(function(){
+        $(".searchSecondMenu").addClass("show");
+    });
+    $("#checkTagSearch").blur(function(){
+        setTimeout(function(){
+            $(".searchSecondMenu").removeClass("show");
+        },500);
+
+    });
+    /*标签选择*/
+    $(".searchMenu .searchSecondMenu").delegate("li","click",function(){
+        let txt=$(this).html();
+        let dataval=$(this).attr("data-val");
+        $("#checkTagSearch").val(txt).attr("data-val",dataval);
+    });
+
+    /*搜索框键盘输入*/
+    $("#checkTagSearch").keyup(function(){
+        $(this).attr("data-val","");
+        var dataval=$(this).val();
+        getlabellist(dataval)
+
+    });
+    $("#checkTagSearch").keydown(function(event) {
+        if (event.keyCode == 13) {
+            $(this).attr("data-val","");
+            var dataval=$(this).val();
+            getlabellist(dataval);
+        }
+    });
+
+    /*标签列表获取*/
+    function getlabellist(dataval){
+        var datapost={"taglevel":3,"pageno":1,"pagesize":999,"tagname":dataval};
+        datapost=JSON.stringify(datapost);
+        $.ajax({
+            url : path2+'/tag/taglist.do',
+            cache:true,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:false,
+            data: datapost,
+            //data: {taglevel:3,pageno:1,pagesize:999},
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+                //console.log("标签列表获取失败：");
+                //console.log(data);
+            },
+            success:function(diskJson){
+//                console.log("标签列表获取：");
+//                console.log(diskJson);
+                $(".searchSecondMenu").empty();
+                $.each(diskJson.data.rows,function(i,n){
+                    if(n.tagid&&n.tagid !=null && n.tagname && n.tagname!=null){
+                        $(".searchSecondMenu").append(' <li data-val="'+ n.tagid+'">'+ n.tagname+'</li>');
+                    }
+                });
+            }
+        });
+    }
+
+
+    /*初始化数据表格*/
+    var tabledata = new Vue({
+        el: '#tablelistTbody',
+        data: {
+            items:[],
+            tagshow:[]
+        },
+        // 在 `methods` 对象中定义方法
+        methods: {
+            detail:function(event){//详情
+                reportdetail(event)
+            },
+            sure:function (event) {
+
+            },
+            redact:function (event) {
+                layer.open({
+                    type: 1,
+                    title: '备选队列页码选择',
+                    maxmin: false, //开启最大化最小化按钮
+                    area: ['500px', "220px"],
+                    content: $("#editPopBox"),
+                    success: function (layero, index) {
+
+                    }
+                });
+            }
+        }
+    });
+
+
+
+    $("#contentTitle").focus(function(){
+        $("#checkTagSearch").val("").attr("data-val","");
+    });
+/*搜索*/
+    function searchsens(pageno){
+        var contenttitle=$("#contentTitle").val();
+        var contentlevel=$("#checkConLevel").val();
+        var contenttag=$("#checkTagSearch").attr("data-val");
+        var contentshow=$("#checkTagSearch").val();
+        var startTime=$("#startTime").val();
+        startTime=startTime.replace(/\s+/g,"");
+        startTime=startTime.replace(/\//g, "");
+        startTime=startTime.replace(/:/g, "");
+        startTime=startTime+"00";
+        startTime=parseInt(startTime);
+        var endTime=$("#endTime").val();
+        endTime=endTime.replace(/\s+/g,"");
+        endTime=endTime.replace(/\//g, "");
+        endTime=endTime.replace(/:/g, "");
+        endTime=endTime+"00";
+        endTime=parseInt(endTime);
+        var datapost={"pageno":pageno,"pagesize":20,"contenttitle":contenttitle,"contentlevel":contentlevel,"contenttag":contenttag,"endtime":endTime,"starttime":startTime};
+//         console.log("datapost::");
+//         console.log(datapost);
+        datapost=JSON.stringify(datapost);
+       // tabledata.tagshow=contentshow;
+        $.ajax({
+            url : path+'/content/queryContentForQueen.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+//                console.log("获取失败：");
+//                console.log(data);
+            },
+            success:function(diskJson){
+                layer.closeAll();
+//                console.log("内容搜索所：");
+//                 console.log(diskJson);
+                /*翻页信息*/
+                if(diskJson.code =="1000"){
+                    pageinfo3(pageno,diskJson.data.totalCount,20);//翻页控件信息
+                    tabledata.items=diskJson.data.contentList;
+                    $.each(tabledata.items,function(i,n){
+                        if(contenttag == ""){
+                            contentshow=tabledata.items[i].contenttag
+                        }
+                        tabledata.items[i].contenttag=contentshow;
+                    })
+
+                }else{
+                    layer.msg("数据有误请重试!");
+                }
+
+
+            }
+        });
+    }
+
+    /*点击详情查看*/
+    function reportdetail(nedata){
+//        console.log("nedata::");
+//        console.log(nedata);
+            var type=nedata.contenttype;
+            var url="recomovie.html";
+            if(type=="3" || type=="4"){
+                url="../recopicture.html";
+            }else{
+                url="../recomovie.html";
+            }
+            layer.open({
+                type: 2,
+                title: '内容详情',
+                shadeClose: true,
+                maxmin: true, //开启最大化最小化按钮
+                shade: 0.8,
+                area: ['80%', '90%'],
+                content: url, //iframe的url
+                success: function (layero, index) {
+                    var body = layer.getChildFrame('body', index);
+                    var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                    iframeWin.geturl(nedata);
+                }
+            });
+
+
+    }
+</script>
+
+    
