@@ -29,17 +29,30 @@
         #imgEditBox .close:hover{opacity:.9;}
         #imgEditBox .imgshowBox{width:75%;height:75%;margin:0 auto;margin-top:10%;text-align: center;position: relative;}
         #imgEditBox .imgshowBox img{position: absolute;left:0;right:0;top:0;bottom:0;margin:0 auto;width:auto;height:auto;max-width:100%;max-height:100%;}
-        .contentdescribeBox{width:100%;border-bottom:1px solid #ddd;height:75px;padding:20px 15px;font-size:14px;margin-bottom:9px;}
-        #contentdescribe{display: inline-block;width:60%;height:60px;border:1px solid #ddd;padding:12px;text-align: left;overflow-y: auto;vertical-align: middle;overflow-y: auto;}
-
+        .contentdescribeBox{width:100%;border-bottom:1px solid #ddd;padding:20px 15px;font-size:14px;margin-bottom:9px;}
+        #contentdescribe{display: inline-block;width:60%;height:60px;border:1px solid #ddd;padding:12px;text-align: left;overflow-y: auto;vertical-align: middle;}
+        .otherDetailBox{width:100%;padding:10px;padding-left:80px;}
+        .otherDetailBox p{margin:2px 0;}
+        .otherDetailBox span{display: inline-block;margin-right:5px;}
     </style>
 
 </head>
 
 <body class="gray-bg">
-        <div class="contentdescribeBox">
-            文字描述：<span id="contentdescribe"></span>
+        <div class="contentdescribeBox" id="contentdescribeBox">
+            文字描述：<span id="contentdescribe">{{list.contenttitle}}</span>
+            <div class="otherDetailBox">
+                <p> 顶：<span>{{list.contentgood}}</span>  踩：<span>{{list.contentbad}}</span></p>
+                <p>  标签分类：<span>{{list.tagshow}}</span>
+                  发布人0：<span>{{list.username}}</span>
+                </p>
+                <p>
+                    播放次数：<span>{{list.playcount}}</span>
+                </p>
+
+            </div>
         </div>
+
         <div id="videobox" style="width:100%;height:400px;background:#333; position: relative">
 
              <video id="video" src=""  controls="controls" autoplay height="100%" width="100%">您的浏览器不支持。</video>
@@ -59,13 +72,26 @@
         <script type="text/javascript" src="../../js/index.js"></script>
     <script>
 
+        var contentdetail = new Vue({
+            el: '#contentdescribeBox',
+            data: {
+                list:[]
+            },
+            // 在 `methods` 对象中定义方法
+            methods: {
+
+            }
+        });
            // geturl();
 
             /*获取下载地址*/
             function geturl(urldatas){
-                $("#contentdescribe").html(urldatas.contenttitle);
+                console.log("urldatas::");
+                console.log(urldatas);
+                contentdetail.list=urldatas;
                 var url=JSON.parse(urldatas.contenturllist);
                 $("#video").attr("src",url[1]);
+
             }
 
 

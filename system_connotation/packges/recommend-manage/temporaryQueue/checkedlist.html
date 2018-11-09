@@ -27,6 +27,11 @@
         <div style="border-bottom:1px dashed #ccc;padding-bottom:3px;">
             文字描述：
             <textarea id="contentTitle" maxlength="20" placeholder="标题搜索"></textarea>
+            <div style="margin-top:3px;">
+                开始时间：<input style="margin-left:4px;" type="text" placeholder="开始时间" value="" id="startTime"/>
+                结束时间：<input type="text" placeholder="结束时间" value="" id="endTime"/>
+            </div>
+
         </div>
 
 
@@ -164,78 +169,8 @@
             maxDate:true
         });
 
-       /* $('#pushtime').datetimepicker({
-            value:"",
-            minDate:true,
-            timeFormat: 'Y-m-d H:m' //格式化时间
-        });*/
 
     });
-
-
-    /*标签搜索框焦点事件*/
-    $("#checkTagSearch").focus(function(){
-        $(".searchSecondMenu").addClass("show");
-    });
-    $("#checkTagSearch").blur(function(){
-        setTimeout(function(){
-            $(".searchSecondMenu").removeClass("show");
-        },500);
-
-    });
-    /*标签选择*/
-    $(".searchMenu .searchSecondMenu").delegate("li","click",function(){
-        let txt=$(this).html();
-        let dataval=$(this).attr("data-val");
-        $("#checkTagSearch").val(txt).attr("data-val",dataval);
-    });
-
-    /*搜索框键盘输入*/
-    $("#checkTagSearch").keyup(function(){
-        $(this).attr("data-val","");
-        var dataval=$(this).val();
-        getlabellist(dataval)
-
-    });
-    $("#checkTagSearch").keydown(function(event) {
-        if (event.keyCode == 13) {
-            $(this).attr("data-val","");
-            var dataval=$(this).val();
-            getlabellist(dataval);
-        }
-    });
-
-    /*标签列表获取*/
-    function getlabellist(dataval){
-        var datapost={"taglevel":3,"pageno":1,"pagesize":999,"tagname":dataval};
-        datapost=JSON.stringify(datapost);
-        $.ajax({
-            url : path2+'/tag/taglist.do',
-            cache:true,//false就不会从浏览器缓存中加载请求信息了
-            type:"POST",
-            contentType: "application/json",
-            dataType:"JSON",
-            async:false,
-            data: datapost,
-            //data: {taglevel:3,pageno:1,pagesize:999},
-            error: function(data){
-                layer.msg("服务器未响应,请稍后再试!");
-                //console.log("标签列表获取失败：");
-                //console.log(data);
-            },
-            success:function(diskJson){
-//                console.log("标签列表获取：");
-//                console.log(diskJson);
-                $(".searchSecondMenu").empty();
-                $.each(diskJson.data.rows,function(i,n){
-                    if(n.tagid&&n.tagid !=null && n.tagname && n.tagname!=null){
-                        $(".searchSecondMenu").append(' <li data-val="'+ n.tagid+'">'+ n.tagname+'</li>');
-                    }
-                });
-            }
-        });
-    }
-
 
     /*初始化数据表格*/
     var tabledata = new Vue({
@@ -260,20 +195,6 @@
             }
         }
     });
-
-//    选择列表内容
-    function choosesure(){
-        layer.confirm('确定选择吗？', {
-            btn: ['确定','取消'] //按钮
-        }, function(index){
-        //    console.log(tabledata.chooselist) ;
-            choosecont.chooselist=tabledata.chooselist;
-
-            layer.close(index);
-        }, function(index){
-            layer.close(index);
-        });
-    }
 
     /*选择数据列*/
     var choosecont = new Vue({
@@ -300,6 +221,70 @@
         }
     });
 
+    /*搜索*/
+    function searchsens(pageno){
+        var contenttitle=$("#contentTitle").val();
+        var startTime=$("#startTime").val();
+        startTime=startTime.replace(/\s+/g,"");
+        startTime=startTime.replace(/\//g, "");
+        startTime=startTime.replace(/:/g, "");
+        startTime=startTime+"00";
+        startTime=parseInt(startTime);
+        var endTime=$("#endTime").val();
+        endTime=endTime.replace(/\s+/g,"");
+        endTime=endTime.replace(/\//g, "");
+        endTime=endTime.replace(/:/g, "");
+        endTime=endTime+"00";
+        endTime=parseInt(endTime);
+        var datapost={"pageno":pageno,"pagesize":10,"contenttitle":contenttitle,"endtime":endTime,"starttime":startTime};
+//         console.log("datapost::");
+//         console.log(datapost);
+        datapost=JSON.stringify(datapost);
+        // tabledata.tagshow=contentshow;
+        $.ajax({
+            url : path+'/content/queryContentForQueen.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+//                console.log("获取失败：");
+//                console.log(data);
+            },
+            success:function(diskJson){
+                layer.closeAll();
+//                console.log("内容搜索所：");
+//                 console.log(diskJson);
+                /*翻页信息*/
+                if(diskJson.code =="1000"){
+                    pageinfo3(pageno,diskJson.data.totalCount,10);//翻页控件信息
+                    tabledata.items=diskJson.data.contentList;
+                }else{
+                    layer.msg("数据有误请重试!");
+                }
+
+
+            }
+        });
+    }
+
+    //    选择列表内容
+    function choosesure(){
+        layer.confirm('确定选择吗？', {
+            btn: ['确定','取消'] //按钮
+        }, function(index){
+            //    console.log(tabledata.chooselist) ;
+            choosecont.chooselist=tabledata.chooselist;
+
+            layer.close(index);
+        }, function(index){
+            layer.close(index);
+        });
+    }
+
 //    队列确定
     function arrysure(){
         layer.confirm('确定该队列选择吗？', {
@@ -313,43 +298,28 @@
     }
 //    队列确定提交
     function arrypost(){
-        //choosecont.chooselist
         var queenname=$("#arryName").val();
-     /*   var createtime=$("#pushtime").val();
-        if(createtime == ""){
-            layer.msg("请输入时间！！");
-            return false;
-        }
-        createtime=createtime.replace(/\s+/g,"");
-        createtime=createtime.replace(/\//g, "");
-        createtime=parseInt(createtime.replace(/:/g, ""));
-        var now=parseInt(getmytime());
-        now=parseInt(now/100);
-        if(createtime < now){
-            layer.msg("请输入当前之后的时间！！");
-            return false;
-        }*/
-
         var userid=userdatas.data.userid;//创建人id
         if(queenname == ""){
             layer.msg("请输入队列名称！！");
             return false;
         }
 
-        var pushqueen=[];
-        $.each(choosecont.chooselist,function(i,n){
-            pushqueen.push(n.contentid);
-        });
-        if(pushqueen.length<=0){
+        var datapost={"replace":[]};
+        if(choosecont.chooselist.length<=0){
             layer.msg("请选择内容！！");
             return false;
+        }else{
+            $.each(choosecont.chooselist,function(i,n){
+                datapost.replace.push({"contentid":n.contentid,"pushid":queenname,"userid":userid,"contenttitle":n.contenttitle});
+            });
         }
-        var datapost={"pushqueen":pushqueen,"queenname":queenname,"userid":userid};
+
 //         console.log("datapost::");
 //         console.log(datapost);
         datapost=JSON.stringify(datapost);
         $.ajax({
-            url : path+'/content/addQueen.do',
+            url : path+'/content/immediateEffect.do',
             cache:false,//false就不会从浏览器缓存中加载请求信息了
             type:"POST",
             contentType: "application/json",
@@ -382,53 +352,7 @@
 
     }
 
-    $("#contentTitle").focus(function(){
-        $("#checkTagSearch").val("").attr("data-val","");
-    });
-/*搜索*/
-    function searchsens(pageno){
-        var contenttitle=$("#contentTitle").val();
-        var datapost={"pageno":pageno,"pagesize":20,"contenttitle":contenttitle};
-//         console.log("datapost::");
-//         console.log(datapost);
-        datapost=JSON.stringify(datapost);
-       // tabledata.tagshow=contentshow;
-        $.ajax({
-            url : path+'/content/queryContentForQueen.do',
-            cache:false,//false就不会从浏览器缓存中加载请求信息了
-            type:"POST",
-            contentType: "application/json",
-            dataType:"JSON",
-            async:true,
-            data: datapost,
-            error: function(data){
-                layer.msg("服务器未响应,请稍后再试!");
-//                console.log("获取失败：");
-//                console.log(data);
-            },
-            success:function(diskJson){
-                layer.closeAll();
-//                console.log("内容搜索所：");
-//                 console.log(diskJson);
-                /*翻页信息*/
-                if(diskJson.code =="1000"){
-                    pageinfo3(pageno,diskJson.data.totalCount,20);//翻页控件信息
-                    tabledata.items=diskJson.data.contentList;
-                    $.each(tabledata.items,function(i,n){
-                        if(contenttag == ""){
-                            contentshow=tabledata.items[i].contenttag
-                        }
-                        tabledata.items[i].contenttag=contentshow;
-                    })
 
-                }else{
-                    layer.msg("数据有误请重试!");
-                }
-
-
-            }
-        });
-    }
 
     /*点击详情查看*/
     function reportdetail(nedata){

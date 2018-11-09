@@ -1,15 +1,14 @@
 
 
-const path4="http://192.168.1.111:8080";//老冯
-// const path="http://192.168.1.114:8818";//测试服务器
-// const path2="http://192.168.1.114:8818";//测试服务器
+// const path="http://192.168.1.111:8080/NHDZBUSINESS";//老冯
+// const path2="http://192.168.1.111:8080/NHDZBUSINESS";//老冯
 const path="http://192.168.1.114:8868/NHDZBUSINESS";//测试服务器
 const path2="http://192.168.1.114:8868/NHDZBUSINESS";//测试服务器
 
 
 /*线上*/
-//const path="http://192.168.1.114:8828";
-//const path2="http://192.168.1.114:8828";
+// const path="http://192.168.1.114:8878/NHDZBUSINESS";
+// const path2="http://192.168.1.114:8878/NHDZBUSINESS";
 
 var userdatas=getload();
 /*console.log("用户信息userdatas：");
@@ -120,6 +119,18 @@ function genID(length){
     var x= Math.random(length).toString(36).substr(3,length);
     var date= Date.now().toString(36);
     return x+date;
+}
+
+/*获取指定位数的数字*/
+function getNum(length){
+    var chars = ['0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+    var nums="";
+    for(var i=0;i<(length-13);i++){
+        var id = parseInt(Math.random()*61);
+        nums+=chars[id];
+    }
+    var d=String(Date.now());
+    return nums+d;
 }
 
 

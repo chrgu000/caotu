@@ -65,7 +65,7 @@
                                 <td class="center">{{item.contentcount}}</td>
                                 <td class="center">{{item.followcount}}</td>
                                 <td class="center">{{item.createuser}}</td>
-                                <td class="center"><button type="button" class="btn-default">隐藏</button></td>
+                                <td class="center"><button type="button" class="btn-default" @click="showhide(item,index)">{{item.isshow==1 ? "隐藏":"显示"}}</button></td>
                             </tr>
 
                             </tbody>
@@ -103,7 +103,24 @@
             },
             // 在 `methods` 对象中定义方法
             methods: {
-                greet: function (event) {
+                showhide: function (event,ind) {//显示隐藏话题
+                    var tit="确定要隐藏该话题吗？";
+                    var isshow=0;
+                    if(event.isshow ==1){
+                        tit="确定要隐藏该话题吗？";
+                        isshow=0;
+                    }else{
+                        tit="确定要显示该话题吗？";
+                        isshow=1;
+                    }
+                    layer.confirm(tit, {
+                        btn: ['确定','取消'] //按钮
+                    }, function(index){
+                        showhidefun(event.tagid,isshow,ind);
+                        layer.close(index);
+                    }, function(index){
+                        layer.close(index);
+                    });
 
                 }
             }
@@ -131,9 +148,8 @@
                 },
                 success:function(diskJson){
                     layer.closeAll();
-                    console.log("标签表：");
-                    console.log(diskJson);
-
+                    // console.log("标签表：");
+                    // console.log(diskJson);
                     /*翻页信息*/
                     pageinfo2(diskJson.data,pageno);//翻页控件信息
                     labeldata.items=diskJson.data.rows;
@@ -144,8 +160,32 @@
             });
         }
 
+        /*显示隐藏话题*/
+        var showhidefun=(tagid,isshow,ind)=>{
+            var postdata={"tagid":tagid,"isshow":isshow};
+            postdata=JSON.stringify(postdata);
+            $.ajax({
+                url : path2+'/tag/updatetag.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: postdata,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    //console.log("获取失败：");
+                    //console.log(data);
+                },
+                success:function(diskJson){
+                    // console.log("NH修改是否可见：");
+                    // console.log(diskJson);
+                    labeldata.items[ind].isshow=isshow;
 
 
+                }
+            });
+        };
         //新增专栏
         $("#createLabel").click(function(){
             $("#contentPageBox").load("labelsetpage2.html");

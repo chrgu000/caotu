@@ -17,8 +17,7 @@
     <div style="padding-left:9px;margin:0;height:30px;line-height: 30px;margin-bottom:9px;">
         页码：
         <select name="" id="temporaryPageChoose">
-            <option value="1">第一页</option>
-            <option value="2">第二页</option>
+
         </select>
 
     </div>
@@ -31,12 +30,11 @@
                         <thead>
                         <tr>
                             <th>条码</th>
-                            <th>类型</th>
-                            <th>文字描述</th>
-                            <th>标签名</th>
-                            <th>内容等级</th>
-                            <th>评论</th>
-                            <th>点赞</th>
+                            <th>内容</th>
+                            <th>查看次数</th>
+                            <th>点赞量</th>
+                            <th>评论量</th>
+                            <th>分享量</th>
                             <th>发布时间</th>
                             <th>操作</th>
                         </tr>
@@ -44,12 +42,11 @@
                         <tbody id="tablelistTbody2">
                         <tr v-for="(item,index) in items" :data-id="item.contentid">
                             <td class="center">{{index+1}}</td>
-                            <td class="center">{{item.contenttype == "3" ? "图片":item.contenttype == "4" ? "图文":item.contenttype == "1" ? "横视频":"竖视频"  }}</td>
                             <td class="center">{{item.contenttitle}}</td>
-                            <td class="center">{{item.contenttag}}</td>
-                            <td class="center">{{item.contentlevel == "3" ? "A" :item.contentlevel == "2" ? "B" :item.contentlevel == "1" ? "C":"D"}}</td>
-                            <td class="center">{{item.contentcomment}}</td>
-                            <td class="center">{{item.contentgood}}</td>
+                            <td class="center">{{item.watchnum}}</td>
+                            <td class="center">{{item.goodnum}}</td>
+                            <td class="center">{{item.commentnum}}</td>
+                            <td class="center">{{item.sharenum}}</td>
                             <td class="center">{{item.createtime | time}}</td>
                             <td class="center">
                                 <button type="button" class="btn deletebtn" v-on:click="detail(item)">详情</button>
@@ -89,6 +86,7 @@
     /*页面初始化*/
     $(function(){
         getRecondList(1);
+        getrubbigsetpige();
     });
 
     /*推荐页码选择*/
@@ -98,15 +96,84 @@
 
     });
 
+    /*推荐队列最大页码*/
+    function getrubbigsetpige(){
+        var tjdatas={"YES":1,};
+        tjdatas=JSON.stringify(tjdatas);
+        $.ajax({
+            url : path2+'/pushbakcontrol/queryAllPageSize.do',
+            cache:true,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:false,
+            data: tjdatas,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+                //console.log("马甲用户列表失败：");
+                //console.log(data);
+            },
+            success:function(diskJson){
+                // console.log("推荐队列最大页码：");
+                // console.log(diskJson);
+                $("#temporaryPageChoose").empty();
+                let pagenum=parseInt(diskJson.data);
+                for(var i=0;i<=pagenum;i++){
+                    $("#temporaryPageChoose").append(' <option value="'+(i+1)+'">第'+(i+1)+'页</option>');
+                }
+
+            }
+        });
+    }
     /*获取推荐列表*/
     function getRecondList(pageno){
-        var datapost={"pageno":pageno,"pagesize":6,"endtime":20181101110200,"starttime":20180905130000,"contenttitle":"","contentlevel":3,"contenttag":"",};
+        var datapost={"pagenum":pageno};
+//         console.log("datapost::");
+//         console.log(datapost);
+        datapost=JSON.stringify(datapost);
+        $.ajax({
+            url : path+'/content/getContentInfoByPage.do',
+            cache:true,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:false,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+//                console.log("获取失败：");
+//                console.log(data);
+            },
+            success:function(diskJson){
+                layer.closeAll();
+                // console.log("获取推荐列表：");
+                // console.log(diskJson);
+                /*翻页信息*/
+                if(diskJson.code =="1000"){
+                    recondlist.items=diskJson.data;
+
+                }else{
+                    layer.msg("数据有误请重试!");
+                }
+
+
+            }
+        });
+    }
+
+
+    /*点击详情查看*/
+    function reportdetail(nedata){
+//        console.log("nedata::");
+//        console.log(nedata);
+        var contentlist=[nedata.contentid];
+        var datapost={"contentlist":contentlist};
 //         console.log("datapost::");
 //         console.log(datapost);
         datapost=JSON.stringify(datapost);
         // tabledata.tagshow=contentshow;
         $.ajax({
-            url : path+'/content/queryContentForQueen.do',
+            url : path+'/content/watchContentDetail.do',
             cache:false,//false就不会从浏览器缓存中加载请求信息了
             type:"POST",
             contentType: "application/json",
@@ -119,13 +186,10 @@
 //                console.log(data);
             },
             success:function(diskJson){
-                layer.closeAll();
-               // console.log("获取推荐列表：");
-               //  console.log(diskJson);
-                /*翻页信息*/
+                // console.log("查看内容详情接口：");
+                // console.log(diskJson);
                 if(diskJson.code =="1000"){
-                    pageinfo3(pageno,diskJson.data.totalCount,20);//翻页控件信息
-                    recondlist.items=diskJson.data.contentList;
+                    repoterdetail2(diskJson.data[0]);
 
                 }else{
                     layer.msg("数据有误请重试!");
@@ -136,13 +200,9 @@
         });
     }
 
-
-
-    /*点击详情查看*/
-    function reportdetail(nedata){
-//        console.log("nedata::");
-//        console.log(nedata);
-        var type=nedata.contenttype;
+    /*查看详情2*/
+    function repoterdetail2(urldata){
+        var type=urldata.contenttype;
         var url="recomovie.html";
         if(type=="3" || type=="4"){
             url="../recopicture.html";
@@ -160,11 +220,9 @@
             success: function (layero, index) {
                 var body = layer.getChildFrame('body', index);
                 var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
-                iframeWin.geturl(nedata);
+                iframeWin.geturl(urldata);
             }
         });
-
-
     }
 </script>
 

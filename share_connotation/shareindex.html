@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0,minimum=1.0,user-scalable=no">
+    <!--强制页面横屏或竖屏显示 content：landscape|portrait-->
+    <meta name="screen-orientation" content="landscape">
+    <meta content=”telephone=no” name=”format-detection” />
+    <META HTTP-EQUIV="pragma" CONTENT="no-cache">
+    <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+    <META HTTP-EQUIV="expires" CONTENT="0">
+    <title>头图</title>
+    <link href="img/logo.png" rel="shortcut icon">
+    <link rel="stylesheet" href="css/common.css"/>
+    <link rel="stylesheet" href="plugin/font/iconfont.css"/>
+
+    <script type="application/javascript" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/jquery.min.js"></script>
+    <script type="application/javascript" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/vue.js"></script>
+    <script type="application/javascript" src="plugin/layer/layer.js"></script>
+</head>
+<body>
+    <div class="conntentsBox">
+        <a id="shareHeader" class="downhrefbtn"  href="#">
+            <img class="shareHeaderImg" style="width:100%;height:auto;"  src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/appshareneihan/shareTitle.png" alt=""/>
+           <!-- <div class="logobox">
+                <img class="logo" src="img/logo.png" alt="logo"/>
+                <span>
+                    头图
+                </span>
+            </div>
+            <a class="downhrefbtn"  href="#"  id="downappbtn">下 载</a>-->
+        </a>
+        <div id="mainContenBigBox">
+            <div class="conntentsBox" id="mainContentBox" v-cloak>
+                <p id="contentTittle">{{commendTitle}}</p>
+                <div id="mainContntShowbox">
+
+
+                </div>
+
+            </div>
+            <div style="text-align: center;margin-top:25px;">
+                <a class="downhrefbtn btn"  href="#" id="seeDetails">
+                    <div id="userheadbox">
+                        <div class="titleBox">
+                            <div class="headTitleBox">
+                                <img class="caidan"  v-if="guajianurl !=0" v-bind:src="guajianurl" alt=""/>
+                                <span class="imgbox">
+                            <img class="logo" v-bind:src="userheadphoto" alt="logo"/>
+                        </span>
+                            </div>
+                            <div class="userNameBox">
+                                <h4 class="title">{{userhead}}</h4>
+                                <p>我在 <span style="color:#FF698F">内涵段子</span>邀请你加入</p>
+                            </div>
+                        </div>
+                        <img class="joinImg" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/appshareneihan/join.png" alt="">
+                        <!-- <a class="downhrefbtn btn"  href="downhref"  id="attentBtn"> <img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/sharefocus.png" alt=""/></a>-->
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <!--更多推荐-->
+        <div id="moreRecommendBox" v-cloak>
+            <h3 class="title">更多精彩内容</h3>
+            <div class="allrecommendBox" style="overflow: hidden;">
+                <div class="rcommendBox" v-for="(item,index) in items" v-bind:data-id="item.tagid">
+                    <a class="downhrefbtn concernBtn" v-bind:href="downhref" >
+                         <span class="rcommendTitleBox">
+                            <img v-bind:src="item.tagimg" alt=""/>
+                          </span>
+                          <p class="rcommendTitle">{{item.tagalias}}</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--分享按钮组-->
+<!--    <div class="bdsharebuttonbox" data-tag="share_1">
+        <a class="bds_mshare" data-cmd="mshare"></a>
+        <a class="bds_qzone" data-cmd="qzone" href="#"></a>
+        <a class="bds_tsina" data-cmd="tsina"></a>
+        <a class="bds_baidu" data-cmd="baidu"></a>
+        <a class="bds_renren" data-cmd="renren"></a>
+        <a class="bds_tqq" data-cmd="tqq"></a>
+        <a class="bds_more" data-cmd="more">更多</a>
+        <a class="bds_count" data-cmd="count"></a>
+    </div>-->
+
+
+<script type="application/javascript" src="js/index.js"></script>
+<script type="text/javascript">
+
+    var commendinfo = new Vue({
+        el: '#mainContenBigBox',
+        data: {
+            "items": [],
+            "userhead":"",
+            "guajianurl":"",
+            "commendTitle":"",
+            "userheadphoto":""
+
+        },
+        // 在 `methods` 对象中定义方法
+        methods: {
+            goods: function (event,i) {
+
+            }
+        }
+    });
+
+
+    /*更多推荐*/
+    var commendmore = new Vue({
+        el: '#moreRecommendBox',
+        data: {
+            downhref:"",
+            items: ""
+        },
+        // 在 `methods` 对象中定义方法
+        methods: {
+            goods: function (event,i) {
+
+            }
+        }
+    });
+
+
+
+
+    $(function(){
+        iscontendtype();
+        phoneType();
+    });
+
+    /*手机类型判断*/
+    function phoneType() {
+        var u = navigator.userAgent;
+        if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {//安卓手机
+            //alert("安卓手机");
+            $(".downhrefbtn").attr("href","http://sj.qq.com/myapp/detail.htm?apkName=com.caotu.toutu");
+            commendmore.downhref="http://sj.qq.com/myapp/detail.htm?apkName=com.caotu.toutu";//内容分享页的更多
+        } else if (u.indexOf('iPhone') > -1) {//苹果手机
+            $(".downhrefbtn").attr("href","https://itunes.apple.com/cn/app/id1398165300?mt=8");
+            commendmore.downhref="https://itunes.apple.com/cn/app/id1398165300?mt=8";
+            //alert("苹果手机");
+        } else if (u.indexOf('Windows Phone') > -1) {//winphone手机
+            //alert("winphone手机");
+            $(".downhrefbtn").attr("href","http://sj.qq.com/myapp/detail.htm?apkName=com.caotu.toutu");
+            commendmore.downhref="http://sj.qq.com/myapp/detail.htm?apkName=com.caotu.toutu";
+        }
+    }
+
+
+    /*获取url判断类型*/
+    function iscontendtype(){
+       var loctionsrc="?contendid=965a418e6e0511e8b56d309c23a27303";//假设得到的location.search; //获取url中"?"符后的字串
+//       var loctionsrc= window.location.search;
+        var urldatas=GetRequest(loctionsrc);
+//        console.log(urldatas);
+        getcommonddatas(urldatas.contendid);
+    }
+
+    function getcommonddatas(postdata){
+        var tjdatas={"contentid":postdata};
+//        console.log("tjdatas:");
+//        console.log(tjdatas);
+//        tjdatas=JSON.stringify(tjdatas);
+
+        $.ajax({
+            url : path2+'/CTKJSEVER/content/sharecontent.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+//            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: tjdatas,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+                console.log("获取失败：");
+                console.log(data);
+            },
+            success:function(diskJson){
+//                console.log("gettijiao2:");
+//                console.log(diskJson);
+                if(diskJson.code =="1000"){
+                    if(diskJson.data.contenttitle && diskJson.data.contenttitle!=""){
+                        condataqf(diskJson.data);
+                    }else{
+                       window.location.href="sharelack.html"
+                    }
+
+                }else{
+
+                    layer.msg("网络异常，请重试！！")
+                }
+
+            }
+        });
+    }
+
+    function condataqf(condatas){
+        if(condatas.userheadphoto && condatas.userheadphoto !=""){
+            commendinfo.userheadphoto=condatas.userheadphoto;
+        }
+        if(condatas.username && condatas.username !=""){
+            commendinfo.userhead=condatas.username;
+        }else{
+            commendinfo.userhead=condatas.contentuid;
+        }
+        if(condatas.contenttitle && condatas.contenttitle !=""){
+            commendinfo.commendTitle=condatas.contenttitle;
+        }
+
+        if(condatas.guajianurl && condatas.guajianurl !=""){
+            commendinfo.guajianurl=condatas.guajianurl;
+        }else{
+            commendinfo.guajianurl=0;
+        }
+
+        if(condatas.contenttype == "1" || condatas.contenttype == "2"){
+
+            $("#mainContntShowbox").css({"height":"auto"});
+            $("#mainContntShowbox").load("moviedetial.html",function(){
+                var movieurl=JSON.parse(condatas.contenturllist);
+//               console.log(movieurl);
+                $("#video").attr("src",movieurl[1]);
+                $("#video").attr("poster",movieurl[0]);
+
+            })
+        }else if(condatas.contenttype == "3" || condatas.contenttype == "4"){
+
+            $("#mainContntShowbox").css({"height":"auto"});
+            var picturelist=JSON.parse(condatas.contenturllist);
+            $("#mainContntShowbox").load("picturedetial.html",function(){
+                if(picturelist.length==1){
+                    $("#pictureList").addClass("along");
+                }
+                picdata(picturelist);
+            })
+        }
+
+        /*获取更多推荐*/
+        var conttendtag=condatas.contenttag.split(";")[0];
+        getmoretj(conttendtag)
+    }
+
+
+    /*获取更多推荐*/
+    function getmoretj(conttendtag){
+       var tjdatas={"tagid":conttendtag};
+        tjdatas=JSON.stringify(tjdatas);
+       // console.log(tjdatas);
+        $.ajax({
+            url :path2+'/CTKJSEVER/bannertag/sharesmalltag.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType:"application/json",
+            dataType:"JSON",
+            async:true,
+            data: tjdatas,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+                console.log("获取失败：");
+                console.log(data);
+            },
+            success:function(diskJson){
+                console.log("更多推荐:");
+                console.log(diskJson);
+                if(diskJson.code =="1000"){
+                    commendmore.items=diskJson.data.rows;
+                }else{
+                    layer.msg("网络异常，请重试！！")
+                }
+
+            }
+        });
+    }
+
+
+</script>
+</body>
+</html>

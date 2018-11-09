@@ -96,7 +96,6 @@
             jsonz:function(event){//转换数组
                 let arr = JSON.parse('[' + event + ']');
                 return arr[0][0];
-
             }
         }
     });
@@ -118,8 +117,8 @@
                 //console.log(data);
             },
             success:function(diskJson){
-//                console.log("查看详情：");
-//                console.log(diskJson);
+               console.log("查看详情：");
+               console.log(diskJson);
                 if(pusblishtabledata.ispushed ==2){
                     $.each(countlist,function(i,n){
                         $.each(diskJson.data,function(i2,n2){

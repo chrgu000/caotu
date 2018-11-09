@@ -25,8 +25,11 @@
 
         #blueimp-gallery .slide canvas{position: absolute;left: 0;  right: 0;  top: 0;  bottom: 0;margin:auto;}
 
-        .contentdescribeBox{width:100%;border-bottom:1px solid #ddd;height:75px;padding:20px 15px;font-size:14px;margin-bottom:9px;}
+        .contentdescribeBox{width:100%;border-bottom:1px solid #ddd;padding:20px 15px;font-size:14px;margin-bottom:9px;}
         #contentdescribe{display: inline-block;width:60%;height:60px;border:1px solid #ddd;padding:12px;text-align: left; vertical-align: middle;overflow-y: auto;}
+        .otherDetailBox{width:100%;padding:10px;padding-left:80px;}
+        .otherDetailBox p{margin:2px 0;}
+        .otherDetailBox span{display: inline-block;margin-right:5px;}
     </style>
 
 </head>
@@ -38,8 +41,17 @@
                 <div class="ibox float-e-margins">
 
                     <div class="ibox-content">
-                        <div class="contentdescribeBox">
-                            文字描述：<span id="contentdescribe"></span>
+                        <div class="contentdescribeBox"  id="contentdescribeBox">
+                            文字描述：<span id="contentdescribe">{{list.contenttitle}}</span>
+                            <div class="otherDetailBox">
+                                <p> 顶：<span>{{list.contentgood}}</span>  踩：<span>{{list.contentbad}}</span></p>
+                                <p>  标签分类：<span>{{list.tagshow}}</span>
+                                    发布人：<span>{{list.username}}</span>
+                                </p>
+                                <p>
+                                    播放次数：<span>{{list.playcount}}</span>
+                                </p>
+                            </div>
                         </div>
                         <div class="lightBoxGallery" >
                             <div id="imgconbox">
@@ -65,24 +77,64 @@
     <script type="text/javascript" src="../../js/index.js"></script>
 
     <script>
+        var contentdetail = new Vue({
+            el: '#contentdescribeBox',
+            data: {
+                list:[]
+            },
+            // 在 `methods` 对象中定义方法
+            methods: {
+
+            }
+        });
         /*获取下载地址*/
         function geturl(urldatas){
-            $("#imgconbox").empty();
-            $("#contentdescribe").html(urldatas.contenttitle);
+            console.log("urldatas::");
+            console.log(urldatas);
+            contentdetail.list=urldatas;
             var nedurl=JSON.parse(urldatas.contenturllist);
             $.each(nedurl,function(i,n){
                 $("#imgconbox").append('<img src="'+n+'">');
-            })
-
+            });
+           // getcommentlistdatas(urldatas.contentid)
 
         }
 
         /*图片编辑关闭*/
         $("#imgEditBox .close").click(function(){
             $("#imgEditBox").removeClass("show");
-        })
+        });
 
-
+        /*NH通过内容id获取评论*/
+        function getcommentlistdatas(contentid){
+            var datapost={"contentid":contentid};
+            datapost=JSON.stringify(datapost);
+            $.ajax({
+                url : path2+'/content/commentList.do',
+                cache:true,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:false,
+                data: datapost,
+                //data: {taglevel:3,pageno:1,pagesize:999},
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    //console.log("标签列表获取失败：");
+                    //console.log(data);
+                },
+                success:function(diskJson){
+                    console.log("NH通过内容id获取评论：");
+                    console.log(diskJson);
+                    // $("#commentlistBox ul").empty();
+                    // if(diskJson.data && diskJson.data.rows.length >0){
+                    //     $.each(diskJson.data.rows,function(i,n){
+                    //         $("#commentlistBox ul").append("<li>"+n.commenttext+"</li>")
+                    //     })
+                    // }
+                }
+            });
+        }
 
 
 

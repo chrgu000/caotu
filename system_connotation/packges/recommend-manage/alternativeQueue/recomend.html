@@ -11,15 +11,14 @@
 </style>
 
 
+<div style="padding-left:21px;margin:0;height:30px;line-height: 30px;margin-bottom:-10px;">
+    页码：
+    <select name="" data-page="1" id="temporaryPageChoose">
 
-
-<div class="wrapper wrapper-content  animated fadeInRight">
+    </select>
+</div>
+<div class="wrapper wrapper-content  animated fadeInRight" id="alterTableList">
     <div style="padding-left:9px;margin:0;height:30px;line-height: 30px;margin-bottom:9px;">
-        页码：
-        <select name="" id="temporaryPageChoose">
-            <option value="1">第一页</option>
-            <option value="2">第二页</option>
-        </select>
         <h3 style="margin-bottom:7px;height:30px;line-height: 30px;">推荐列表
             <button type="button" class="btn btn-sm btn-primary surebtn" onclick="arrysure()">刷新</button>
         </h3>
@@ -35,12 +34,11 @@
                         <tr>
                             <th></th>
                             <th>条码</th>
-                            <th>类型</th>
-                            <th>文字描述</th>
-                            <th>标签名</th>
-                            <th>内容等级</th>
-                            <th>评论</th>
-                            <th>点赞</th>
+                            <th>内容</th>
+                            <th>查看次数</th>
+                            <th>点赞量</th>
+                            <th>评论量</th>
+                            <th>分享量</th>
                             <th>发布时间</th>
                             <th>操作</th>
                         </tr>
@@ -49,16 +47,18 @@
                         <tr v-for="(item,index) in items" :data-id="item.contentid">
                             <td><input type="radio" :value="item"  v-model="chooselist" @change="chooseRadio(item,index)"/></td>
                             <td class="center">{{index+1}}</td>
-                            <td class="center">{{item.contenttype == "3" ? "图片":item.contenttype == "4" ? "图文":item.contenttype == "1" ? "横视频":"竖视频"  }}</td>
                             <td class="center">{{item.contenttitle}}</td>
-                            <td class="center">{{item.contenttag}}</td>
-                            <td class="center">{{item.contentlevel == "3" ? "A" :item.contentlevel == "2" ? "B" :item.contentlevel == "1" ? "C":"D"}}</td>
-                            <td class="center">{{item.contentcomment}}</td>
-                            <td class="center">{{item.contentgood}}</td>
+                            <td class="center">{{item.watchnum}}</td>
+                            <td class="center">{{item.goodnum}}</td>
+                            <td class="center">{{item.commentnum}}</td>
+                            <td class="center">{{item.sharenum}}</td>
                             <td class="center">{{item.createtime | time}}</td>
                             <td class="center">
                                 <button type="button" class="btn deletebtn" v-on:click="detail(item)">详情</button>
                             </td>
+                        </tr>
+                        <tr v-if="items.length <6" style="cursor: pointer;font-size:22px;">
+                            <td  class="center"  colspan="10" v-on:click="add()">添加+</td>
                         </tr>
 
                         </tbody>
@@ -80,49 +80,27 @@
                         <thead>
                         <tr>
                             <th>条码</th>
-                            <th>类型</th>
-                            <th>文字描述</th>
-                            <th>标签名</th>
-                            <th>内容等级</th>
-                            <th>评论</th>
-                            <th>点赞</th>
+                            <th>内容</th>
                             <th>发布时间</th>
                             <th>操作</th>
                         </tr>
                         </thead>
                         <tbody id="tablelistTbody">
                         <tr v-for="(item,index) in items" :data-id="item.contentid">
-                            <td class="center">{{index+1}}</td>
-                            <td class="center">{{item.contenttype == "3" ? "图片":item.contenttype == "4" ? "图文":item.contenttype == "1" ? "横视频":"竖视频"  }}</td>
+                            <td class="center">{{item.pagenum}}页{{Number(item.indexno)+1}}条</td>
                             <td class="center">{{item.contenttitle}}</td>
-                            <td class="center">{{item.contenttag}}</td>
-                            <td class="center">{{item.contentlevel == "3" ? "A" :item.contentlevel == "2" ? "B" :item.contentlevel == "1" ? "C":"D"}}</td>
-                            <td class="center">{{item.contentcomment}}</td>
-                            <td class="center">{{item.contentgood}}</td>
                             <td class="center">{{item.createtime | time}}</td>
                             <td class="center">
                                 <button type="button" class="btn deletebtn" v-on:click="detail(item)">详情</button>
                                 <button type="button" class="btn deletebtn" v-on:click="redact(item)">编辑</button>
-                                <button type="button" class="btn deletebtn" v-on:click="changeRecond(item,index)">替换</button>
+                                <button v-if="suser==1" type="button" class="btn deletebtn" v-on:click="changeRecond(item,index)">替换</button>
+                                <button v-else type="button" class="btn deletebtn" v-on:click="deletecon(item,index)" >删除</button>
                             </td>
                         </tr>
 
                         </tbody>
                     </table>
-                    <div id="pagerlist">
-                        <div id="pagerbtnlist">
-                            <span class="glyphicon glyphicon-backward gbtn" id="prepagebtn" onclick="prepage(getalterlist)"></span>
-                            <span class="addpagebox">
-                                    <span id="jumppage" onclick="jumppage(getalterlist)">跳转到</span>
-                                    <input type="number" id="addpageinput" value="1" max="" min="1"/>
-                                    共 <span id="allpage">1</span>页
-                                </span>
-                            <span class="glyphicon glyphicon-forward gbtn" id="nextpagebtn" onclick="nextpage(getalterlist)"></span>
-                        </div>
-                        <div id="allcontbox">
-                            <p id="allconts"></p>
-                        </div>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -138,10 +116,15 @@
         第几条：
         <select name="" id="editNumberSelect">
             <option value="0">第一条</option>
+            <option value="1">第二条</option>
+            <option value="2">第三条</option>
+            <option value="3">第四条</option>
+            <option value="4">第五条</option>
+            <option value="5">第六条</option>
         </select>
     </div>
     <div>
-        <button type="button" class="btn editSureBtn btn-primary">确定</button>
+        <button type="button" onclick="editcontpage()" class="btn editSureBtn btn-primary">确定</button>
         <button type="button" class="btn editCancelBtn">取消</button>
     </div>
 </div>
@@ -175,8 +158,13 @@
             },
             chooseRadio:function(event,ei){
                 this.chooselistnum=ei+1;
-
-
+            },
+            add:function(){
+                var ic=this.items.length;
+                let postdata={"contentid":tabledata.items[0].contentid,"contenttitle":tabledata.items[0].contenttitle,"indexno":ic,"oldcontentid":"","pushid":tabledata.items[0].pushid,"userid":tabledata.items[0].userid};
+                this.items.push(postdata);
+                this.postlist.push(postdata);
+                tabledata.items.splice(0,1);
             }
         }
     });
@@ -185,7 +173,8 @@
     var tabledata = new Vue({
         el: '#tablelistTbody',
         data: {
-            items:[]
+            items:[],
+            suser:1
         },
         // 在 `methods` 对象中定义方法
         methods: {
@@ -197,11 +186,16 @@
                     btn: ['确定','取消'] //按钮
                 }, function(index){
                     console.log(recondlist.chooselistnum);
-                    if(recondlist.chooselistnum){
-                        recondlist.items.splice(recondlist.chooselistnum-1,1,event);
-                        recondlist.postlist.splice(recondlist.chooselistnum-1,1,event);
+                    if(recondlist.chooselistnum && recondlist.chooselistnum !=""){
+                        console.log(1);
+                        let ind=recondlist.chooselistnum-1;
+                        let postdata={"contentid":event.contentid,"contenttitle":event.contenttitle,"indexno":ind,"oldcontentid":recondlist.items[ind].contentid,"pushid":event.pushid,"userid":event.userid};
+                        recondlist.items.splice(ind,1,postdata);
+                        recondlist.postlist.splice(ind,1,postdata);
                         tabledata.items.splice(ev,1);
+                        recondlist.chooselistnum="";
                     }else{
+                        console.log(2);
                         layer.msg("请先选择需要替换的内容！！！")
                     }
 
@@ -218,17 +212,30 @@
                     area: ['500px', "220px"],
                     content: $("#editPopBox"),
                     success: function (layero, index) {
-
+                        $("#editPopBox").attr("data-id",event.pushid);
                     }
                 });
+            },
+            deletecon:function(event,ei){//删除
+                console.log(event);
+                deleteRecon(event,ei)
             }
         }
     });
 
     /*页面初始化*/
     $(function(){
-        getRecondList(1);
-        getalterlist(1)
+        var userlevel=userdatas.data.userlevel;
+        if(userlevel =="S"){
+            $("#alterTableList").css("display","block");
+            getRecondList(1);
+            tabledata.suser=1;
+        }else{
+            $("#alterTableList").css("display","none");
+            tabledata.suser=0;
+        }
+        getalterlist(1);//获取备选内容列表
+        getrubbigsetpige();
     });
 
     /*推荐页码选择*/
@@ -238,20 +245,57 @@
         getalterlist(page)
     });
 
-    /*获取推荐列表*/
-    function getRecondList(pageno){
-        var datapost={"pageno":pageno,"pagesize":6,"endtime":20181101110200,"starttime":20180905130000,"contenttitle":"","contentlevel":3,"contenttag":"",};
-//         console.log("datapost::");
-//         console.log(datapost);
-        datapost=JSON.stringify(datapost);
-        // tabledata.tagshow=contentshow;
+    /*推荐队列最大页码*/
+    function getrubbigsetpige(){
+        $("#temporaryPageChoose").empty();
+        for(var i=0;i<100;i++){
+            $("#temporaryPageChoose").append(' <option value="'+(i+1)+'">第'+(i+1)+'页</option>');
+        }
+      /*  var tjdatas={"YES":1,};
+        tjdatas=JSON.stringify(tjdatas);
         $.ajax({
-            url : path+'/CTKJBUSINESS/content/queryContentForQueen.do',
-            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            url : path2+'/pushbakcontrol/queryAllPageSize.do',
+            cache:true,//false就不会从浏览器缓存中加载请求信息了
             type:"POST",
             contentType: "application/json",
             dataType:"JSON",
-            async:true,
+            async:false,
+            data: tjdatas,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+                //console.log("马甲用户列表失败：");
+                //console.log(data);
+            },
+            success:function(diskJson){
+                // console.log("推荐队列最大页码：");
+                // console.log(diskJson);
+                $("#temporaryPageChoose").empty();
+                $("#editPageSelect").empty();
+                var checkpage=$("#temporaryPageChoose").attr("data-page");
+                let pagenum=parseInt(diskJson.data);
+                for(var i=0;i<=pagenum;i++){
+                    $("#temporaryPageChoose").append(' <option value="'+(i+1)+'">第'+(i+1)+'页</option>');
+                    $("#editPageSelect").append(' <option value="'+(i+1)+'">第'+(i+1)+'页</option>');
+                }
+                $("#temporaryPageChoose").val(checkpage);
+
+            }
+        });*/
+    }
+
+    /*获取推荐列表*/
+    function getRecondList(pageno){
+        var datapost={"pagenum":pageno};
+//         console.log("datapost::");
+//         console.log(datapost);
+        datapost=JSON.stringify(datapost);
+        $.ajax({
+            url : path+'/content/getContentInfoByPage.do',
+            cache:true,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:false,
             data: datapost,
             error: function(data){
                 layer.msg("服务器未响应,请稍后再试!");
@@ -260,12 +304,14 @@
             },
             success:function(diskJson){
                 layer.closeAll();
-               // console.log("获取推荐列表：");
-               //  console.log(diskJson);
+               console.log("获取推荐列表：");
+                console.log(diskJson);
                 /*翻页信息*/
                 if(diskJson.code =="1000"){
-                    pageinfo3(pageno,diskJson.data.totalCount,20);//翻页控件信息
-                    recondlist.items=diskJson.data.contentList;
+                    recondlist.items=diskJson.data;
+                    recondlist.chooselist=[];
+                    recondlist.chooselistnum=[];
+                    recondlist.postlist=[];
 
                 }else{
                     layer.msg("数据有误请重试!");
@@ -276,16 +322,22 @@
         });
     }
 
-
     /*获取备选内容列表*/
     function getalterlist(pageno){
-        var datapost={"pageno":pageno,"pagesize":10,"endtime":20181101110200,"starttime":20180905130000,"contenttitle":"","contentlevel":3,"contenttag":"",};
+        var userid="";
+        var userlevel=userdatas.data.userlevel;
+        if(userlevel =="S"){
+            userid=""
+        }else{
+            userid=userdatas.data.userid
+        }
+        var datapost={"pagenum":"","userid":userid};
 //         console.log("datapost::");
 //         console.log(datapost);
         datapost=JSON.stringify(datapost);
         // tabledata.tagshow=contentshow;
         $.ajax({
-            url : path+'/CTKJBUSINESS/content/queryContentForQueen.do',
+            url : path+'/pushbakcontrol/queryPushBak.do',
             cache:false,//false就不会从浏览器缓存中加载请求信息了
             type:"POST",
             contentType: "application/json",
@@ -299,12 +351,93 @@
             },
             success:function(diskJson){
                 layer.closeAll();
-//                console.log("内容搜索所：");
-//                 console.log(diskJson);
-                /*翻页信息*/
+               console.log("获取备选内容列表：");
+                console.log(diskJson);
                 if(diskJson.code =="1000"){
-                    pageinfo3(pageno,diskJson.data.totalCount,20);//翻页控件信息
-                    tabledata.items=diskJson.data.contentList;
+                   // pageinfo3(pageno,diskJson.data,10);//翻页控件信息
+                    tabledata.items=diskJson.data;
+
+                }else{
+                    layer.msg("数据有误请重试!");
+                }
+
+
+            }
+        });
+    }
+
+    /*刷新推荐列表*/
+    function arrysure(){
+        if(recondlist.items.length<6){
+            layer.msg("该页面列表少于6条！！")
+            return false;
+        }
+        let pagenum=$("#temporaryPageChoose").val();
+        var datapost={"pagenum":pagenum,"replace":recondlist.postlist};
+//         console.log("datapost::");
+//         console.log(datapost);
+        datapost=JSON.stringify(datapost);
+        // tabledata.tagshow=contentshow;
+        $.ajax({
+            url : path+'/pushbakcontrol/effectPushBak.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+//                console.log("获取失败：");
+//                console.log(data);
+            },
+            success:function(diskJson){
+                console.log("刷新推荐列表：");
+                console.log(diskJson);
+                if(diskJson.code =="1000"){
+                  /*  var page=$("#temporaryPageChoose").val();
+                    $("#temporaryPageChoose").attr("data-page",page);
+                    getRecondList(page);
+                    getalterlist();
+                    getrubbigsetpige();*/
+                    layer.msg("推荐队列刷新成功！！!");
+                }else{
+                    layer.msg("数据有误请重试!");
+                }
+
+
+            }
+        });
+    }
+
+    /*删除该条*/
+    function deleteRecon(event,ev){
+        console.log(event);
+        console.log(ev);
+        var datapost={"pushid":event.pushid};
+//         console.log("datapost::");
+//         console.log(datapost);
+        datapost=JSON.stringify(datapost);
+        // tabledata.tagshow=contentshow;
+        $.ajax({
+            url : path+'/pushbakcontrol/deletePushBak.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+//                console.log("获取失败：");
+//                console.log(data);
+            },
+            success:function(diskJson){
+                console.log("删除该条：");
+                console.log(diskJson);
+                if(diskJson.code =="1000"){
+                    layer.msg("删除成功！！!");
+                    tabledata.items.splice(ev,1);
 
                 }else{
                     layer.msg("数据有误请重试!");
@@ -319,7 +452,43 @@
     function reportdetail(nedata){
 //        console.log("nedata::");
 //        console.log(nedata);
-        var type=nedata.contenttype;
+        var contentlist=[nedata.contentid];
+        var datapost={"contentlist":contentlist};
+//         console.log("datapost::");
+//         console.log(datapost);
+        datapost=JSON.stringify(datapost);
+        // tabledata.tagshow=contentshow;
+        $.ajax({
+            url : path+'/content/watchContentDetail.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+//                console.log("获取失败：");
+//                console.log(data);
+            },
+            success:function(diskJson){
+                console.log("查看内容详情接口：");
+                console.log(diskJson);
+                if(diskJson.code =="1000"){
+                    repoterdetail2(diskJson.data[0]);
+
+                }else{
+                    layer.msg("数据有误请重试!");
+                }
+
+
+            }
+        });
+    }
+
+    /*查看详情2*/
+    function repoterdetail2(urldata){
+        var type=urldata.contenttype;
         var url="recomovie.html";
         if(type=="3" || type=="4"){
             url="../recopicture.html";
@@ -337,12 +506,56 @@
             success: function (layero, index) {
                 var body = layer.getChildFrame('body', index);
                 var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
-                iframeWin.geturl(nedata);
+                iframeWin.geturl(urldata);
             }
         });
-
-
     }
+
+    /*NH编辑备选页码*/
+    function editcontpage(){
+        let pushid=$("#editPopBox").attr("data-id");
+        let edituser=userdatas.data.userid;
+        let pagenum=$("#editPageSelect").val();
+        let indexno=$("#editNumberSelect").val();
+        var datapost={"pagenum":pagenum,"pushid":pushid,"edituser":edituser,"indexno":indexno};
+//         console.log("datapost::");
+//         console.log(datapost);
+        datapost=JSON.stringify(datapost);
+        // tabledata.tagshow=contentshow;
+        $.ajax({
+            url : path+'/pushbakcontrol/editPushBakPageInfo.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+//                console.log("获取失败：");
+//                console.log(data);
+            },
+            success:function(diskJson){
+                console.log("NH编辑备选页码：");
+                console.log(diskJson);
+                if(diskJson.code =="1000"){
+                    layer.msg("替换成功！!");
+                    var page=$("#temporaryPageChoose").val();
+                    getalterlist(page);
+
+                }else{
+                    layer.msg("数据有误请重试!");
+                }
+
+
+            }
+        });
+    }
+
+    /*关闭编辑备选页码*/
+    $("#editPopBox .editCancelBtn").click(function(){
+        layer.closeAll();
+    })
 </script>
 
     

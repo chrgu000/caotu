@@ -14,14 +14,6 @@
 
 
 <div class="wrapper wrapper-content  animated fadeInRight">
-    <div style="padding-left:9px;margin:0;height:30px;line-height: 30px;margin-bottom:9px;">
-        页码：
-        <select name="" id="temporaryPageChoose">
-            <option value="1">第一页</option>
-            <option value="2">第二页</option>
-        </select>
-
-    </div>
     <div class="row">
         <div class="col-sm-12">
             <div class="ibox-content">
@@ -30,13 +22,12 @@
                     <table  class="table table-striped tablelistbox" id="tablelistbox2">
                         <thead>
                         <tr>
-                            <th>条码</th>
-                            <th>类型</th>
-                            <th>文字描述</th>
-                            <th>标签名</th>
-                            <th>内容等级</th>
-                            <th>评论</th>
-                            <th>点赞</th>
+                            <th>序号</th>
+                            <!--<th>内容</th>-->
+                            <th>查看次数</th>
+                            <th>点赞量</th>
+                            <th>评论量</th>
+                            <th>分享量</th>
                             <th>发布时间</th>
                             <th>操作</th>
                         </tr>
@@ -44,12 +35,11 @@
                         <tbody id="tablelistTbody2">
                         <tr v-for="(item,index) in items" :data-id="item.contentid">
                             <td class="center">{{index+1}}</td>
-                            <td class="center">{{item.contenttype == "3" ? "图片":item.contenttype == "4" ? "图文":item.contenttype == "1" ? "横视频":"竖视频"  }}</td>
-                            <td class="center">{{item.contenttitle}}</td>
-                            <td class="center">{{item.contenttag}}</td>
-                            <td class="center">{{item.contentlevel == "3" ? "A" :item.contentlevel == "2" ? "B" :item.contentlevel == "1" ? "C":"D"}}</td>
-                            <td class="center">{{item.contentcomment}}</td>
-                            <td class="center">{{item.contentgood}}</td>
+                          <!--  <td class="center">{{item.contenttitle}}</td>-->
+                            <td class="center">{{item.watchnum}}</td>
+                            <td class="center">{{item.goodnum}}</td>
+                            <td class="center">{{item.commentnum}}</td>
+                            <td class="center">{{item.sharenum}}</td>
                             <td class="center">{{item.createtime | time}}</td>
                             <td class="center">
                                 <button type="button" class="btn deletebtn" v-on:click="detail(item)">详情</button>
@@ -58,6 +48,20 @@
 
                         </tbody>
                     </table>
+                    <div id="pagerlist">
+                        <div id="pagerbtnlist">
+                            <span class="glyphicon glyphicon-backward gbtn" id="prepagebtn" onclick="prepage(getRecondList)"></span>
+                            <span class="addpagebox">
+                                    <span id="jumppage" onclick="jumppage(getRecondList)">跳转到</span>
+                                    <input type="number" id="addpageinput" value="1" max="" min="1"/>
+                                    共 <span id="allpage">1</span>页
+                                </span>
+                            <span class="glyphicon glyphicon-forward gbtn" id="nextpagebtn" onclick="nextpage(getRecondList)"></span>
+                        </div>
+                        <div id="allcontbox">
+                            <p id="allconts"></p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -91,22 +95,18 @@
         getRecondList(1);
     });
 
-    /*推荐页码选择*/
-    $("#temporaryPageChoose").change(function(){
-        var page=$(this).val();
-        getRecondList(page);
 
-    });
 
-    /*获取推荐列表*/
+    /*NH查询推送历史记录*/
     function getRecondList(pageno){
-        var datapost={"pageno":pageno,"pagesize":6,"endtime":20181101110200,"starttime":20180905130000,"contenttitle":"","contentlevel":3,"contenttag":"",};
+        let userid=userdatas.data.userid;
+        var datapost={"pageno":pageno,"pagesize":10,"flag":1,"userid":userid};
 //         console.log("datapost::");
 //         console.log(datapost);
         datapost=JSON.stringify(datapost);
         // tabledata.tagshow=contentshow;
         $.ajax({
-            url : path+'/content/queryContentForQueen.do',
+            url : path+'/pushbakcontrol/queryPushHistory.do',
             cache:false,//false就不会从浏览器缓存中加载请求信息了
             type:"POST",
             contentType: "application/json",
@@ -120,12 +120,12 @@
             },
             success:function(diskJson){
                 layer.closeAll();
-               // console.log("获取推荐列表：");
+               // console.log("NH查询推送历史记录：");
                //  console.log(diskJson);
                 /*翻页信息*/
                 if(diskJson.code =="1000"){
-                    pageinfo3(pageno,diskJson.data.totalCount,20);//翻页控件信息
-                    recondlist.items=diskJson.data.contentList;
+                    pageinfo3(pageno,diskJson.data.totalCount,10);//翻页控件信息
+                    recondlist.items=diskJson.data.resultlist;
 
                 }else{
                     layer.msg("数据有误请重试!");
@@ -142,7 +142,43 @@
     function reportdetail(nedata){
 //        console.log("nedata::");
 //        console.log(nedata);
-        var type=nedata.contenttype;
+        var contentlist=[nedata.contentid];
+        var datapost={"contentlist":contentlist};
+//         console.log("datapost::");
+//         console.log(datapost);
+        datapost=JSON.stringify(datapost);
+        // tabledata.tagshow=contentshow;
+        $.ajax({
+            url : path+'/content/watchContentDetail.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+//                console.log("获取失败：");
+//                console.log(data);
+            },
+            success:function(diskJson){
+                // console.log("查看内容详情接口：");
+                // console.log(diskJson);
+                if(diskJson.code =="1000"){
+                    repoterdetail2(diskJson.data[0]);
+
+                }else{
+                    layer.msg("数据有误请重试!");
+                }
+
+
+            }
+        });
+    }
+
+    /*查看详情2*/
+    function repoterdetail2(urldata){
+        var type=urldata.contenttype;
         var url="recomovie.html";
         if(type=="3" || type=="4"){
             url="../recopicture.html";
@@ -160,11 +196,9 @@
             success: function (layero, index) {
                 var body = layer.getChildFrame('body', index);
                 var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
-                iframeWin.geturl(nedata);
+                iframeWin.geturl(urldata);
             }
         });
-
-
     }
 </script>
 

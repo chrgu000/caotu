@@ -22,23 +22,30 @@
                         <thead>
                         <tr>
                             <th>序号</th>
-                            <th>推荐时间</th>
+                            <th>类型</th>
+                            <th>队列名称</th>
+                            <th>内容</th>
+                            <th>查看次数</th>
+                            <th>点赞量</th>
+                            <th>评论量</th>
+                            <th>分享量</th>
                             <th>推荐时间</th>
                             <th>操作人</th>
-                            <th>推送次数</th>
-                            <th>查看次数</th>
                         </tr>
                         </thead>
                         <tbody id="tablelistTbody">
                         <tr v-for="(item,index) in items">
-                            <td class="center">{{index +1 }}</td>
-                            <td class="center lookdetail" v-on:click="lookdetail(item)">{{item.pushtime | time}}</td>
-                            <td class="center">{{item.createtime | time}}</td>
-                            <td class="center">{{item.createuser}}</td>
-                            <td class="center">推送次数</td>
-                            <td class="center">查看次数</td>
+                            <td class="center">{{index+1}}</td>
+                            <td class="center">{{item.contenttype == "3" ? "图片":item.contenttype == "4" ? "图文":item.contenttype == "1" ? "横视频":"竖视频"  }}</td>
+                            <td class="center">{{item.pushid}}</td>
+                            <td class="center">{{item.contenttitle}}</td>
+                            <td class="center">{{item.watchCount}}</td>
+                            <td class="center">{{item.goodCount}}</td>
+                            <td class="center">{{item.commentCount}}</td>
+                            <td class="center">{{item.shareCount}}</td>
+                            <td class="center">{{item.updatetime | time}}</td>
+                            <td class="center">{{item.userid}}</td>
                         </tr>
-
                         </tbody>
                     </table>
                     <div id="pagerlist">
@@ -73,7 +80,7 @@
         methods: {
             lookdetail:function(event){//查看详情
 
-                event=JSON.parse(event.pushdata);
+               /* event=JSON.parse(event.pushdata);
                 var nedata=[],countlist=[];
                 $.each(event.contentdetail,function(i,n){
                     nedata.push(n.contentid);
@@ -93,7 +100,7 @@
                         iframeWin.getcheck(nedata,countlist);
                         iframeWin.pusblishtabledata.ispushed=2;
                     }
-                });
+                });*/
 
             }
         }
@@ -105,10 +112,10 @@
     });
 
     function getcheck(pageno){
-        var tjdatas={"pageno":pageno,"pagesize":20};
+        var tjdatas={"pageno":pageno,"pagesize":20,"flag":2};
         tjdatas=JSON.stringify(tjdatas);
         $.ajax({
-            url : path+'/CTKJBUSINESS/content/queryIsPushQueen.do',
+            url : path+'/pushbakcontrol/queryPushHistory.do',
             cache:false,//false就不会从浏览器缓存中加载请求信息了
             type:"POST",
             contentType: "application/json",
@@ -121,11 +128,11 @@
                 //console.log(data);
             },
             success:function(diskJson){
-//                console.log("发布列表：");
-//                console.log(diskJson);
+               console.log("以推荐列表：");
+               console.log(diskJson);
                 /*翻页信息*/
                 pageinfo3(pageno,diskJson.data.totalCount,20);//翻页控件信息
-                pusblishtabledata.items=diskJson.data.pushlist;
+                pusblishtabledata.items=diskJson.data.resultlist;
 
             }
         });
