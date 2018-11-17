@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> movie</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <script src="../../js/vue.js"></script>
+
+    <style>
+        /* Additional style to fix warning dialog position */
+        html,body{width:100%;height:100%;background:#fff;}
+        video {
+            width:100% !important;
+            height: 100% !important;
+        }
+        #quklod{position: absolute;bottom:34px;left:1px;display: none;}
+        #videobox:hover #quklod{display: block;}
+        #imgyulookBox{position: absolute;right:0;bottom:33px;border:1px solid #fff;overflow: hidden;width:80px;height:80px;z-index:95;line-height: 80px;text-align: center;background:rgba(255,255,255,.4);cursor: pointer;}
+        #imgyulookBox img{width:auto;height:auto;max-width: 80px;max-height: 80px;}
+        #imgEditBox{position: fixed;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,.7);z-index:999;display: none;}
+        #imgEditBox.show{display: block;}
+        #imgEditBox .close{display: inline-block;position: absolute;top:5px;right:9px;font-size:30px;cursor: pointer;line-height: 30px;  color: #fff;  text-shadow: 0 0 2px #000;opacity: .6;}
+        #imgEditBox .close:hover{opacity:.9;}
+        #imgEditBox .imgshowBox{width:75%;height:75%;margin:0 auto;margin-top:10%;text-align: center;position: relative;}
+        #imgEditBox .imgshowBox img{position: absolute;left:0;right:0;top:0;bottom:0;margin:0 auto;width:auto;height:auto;max-width:100%;max-height:100%;}
+        .contentdescribeBox{width:100%;border-bottom:1px solid #ddd;height:75px;padding:20px 15px;font-size:14px;margin-bottom:9px;}
+        #contentdescribe{display: inline-block;width:60%;height:60px;border:1px solid #ddd;padding:12px;text-align: left;overflow-y: auto;vertical-align: middle;overflow-y: auto;}
+
+    </style>
+
+</head>
+
+<body class="gray-bg">
+        <div class="contentdescribeBox">
+            文字描述：<span id="contentdescribe"></span>
+        </div>
+        <div id="videobox" style="width:100%;height:400px;background:#333; position: relative">
+
+             <video id="video" src=""  controls="controls" autoplay height="100%" width="100%">您的浏览器不支持。</video>
+            <!--<button type="button" style="text-align: center;" onclick="launchFullScreen(document.getElementById('video'))">全屏</button>-->
+
+            <div id="quklod">
+                <input type="button" id="btnSpeedUp" onclick="speedUp()" value="快放" />
+                <input type="button" id="btnSpeedUpDown" onclick="speedDown()" value="慢放" />
+             </div>
+
+
+        </div>
+
+    <!-- Page-Level Scripts -->
+        <script src="../../js/jquery.min.js?v=2.1.4"></script>
+        <script src="../../plugin/layer/layer.js"></script>
+        <script type="text/javascript" src="../../js/index.js"></script>
+    <script>
+
+           // geturl();
+
+            /*获取下载地址*/
+            function geturl(urldatas){
+                $("#contentdescribe").html(urldatas.contenttitle);
+                var url=JSON.parse(urldatas.contenturllist);
+                $("#video").attr("src",url[1]);
+            }
+
+
+
+
+        var speed=1; //播放速度
+        var volume=1; //播放音量
+        var video=document.getElementById("video");
+        var btnSpeedUp=document.getElementById("btnSpeedUp");
+        var btnSpeedUpDown=document.getElementById("btnSpeedUpDown");
+
+        //提高播放速度
+        function speedUp()
+        {
+            video.playbackRate+=1;
+            speed=video.playbackRate;
+        }
+        //降低播放速度
+        function speedDown()
+        {
+
+            if(video.playbackRate>1)
+            {
+                video.playbackRate--;
+            }
+            speed=video.playbackRate;
+        }
+
+
+
+
+
+
+    </script>
+
+    
+    
+
+</body>
+
+</html>

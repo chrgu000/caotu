@@ -294,8 +294,8 @@
             },
             success:function(diskJson){
                 layer.closeAll();
-                console.log("内容搜索所：");
-                console.log(diskJson);
+                //console.log("内容搜索所：");
+                //console.log(diskJson);
                 /*翻页信息*/
                 if(diskJson.code =="1000"){
                     pageinfo3(pageno,diskJson.data.totalCount,20);//翻页控件信息
@@ -320,48 +320,12 @@
     function reportdetail(nedata){
 //        console.log("nedata::");
 //        console.log(nedata);
-        var contentlist=[nedata.contentid];
-        var datapost={"contentlist":contentlist};
-//         console.log("datapost::");
-//         console.log(datapost);
-        datapost=JSON.stringify(datapost);
-        // tabledata.tagshow=contentshow;
-        $.ajax({
-            url : path+'/content/watchContentDetail.do',
-            cache:false,//false就不会从浏览器缓存中加载请求信息了
-            type:"POST",
-            contentType: "application/json",
-            dataType:"JSON",
-            async:true,
-            data: datapost,
-            error: function(data){
-                layer.msg("服务器未响应,请稍后再试!");
-//                console.log("获取失败：");
-//                console.log(data);
-            },
-            success:function(diskJson){
-                console.log("查看内容详情接口：");
-                console.log(diskJson);
-                if(diskJson.code =="1000"){
-                    repoterdetail2(diskJson.data[0]);
-
-                }else{
-                    layer.msg("数据有误请重试!");
-                }
-
-
-            }
-        });
-    }
-
-    /*查看详情2*/
-    function repoterdetail2(urldata){
-        var type=urldata.contenttype;
-        var url="recomovie.html";
-        if(type=="3" || type=="4"){
-            url="../recopicture.html";
+        var type=nedata.contenttype;
+        var url="../recomovie2.html";
+        if(type=="3" || type=="4"|| type=="5"){
+            url="../recopicture2.html";
         }else{
-            url="../recomovie.html";
+            url="../recomovie2.html";
         }
         layer.open({
             type: 2,
@@ -374,9 +338,11 @@
             success: function (layero, index) {
                 var body = layer.getChildFrame('body', index);
                 var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
-                iframeWin.geturl(urldata);
+                iframeWin.geturl(nedata);
             }
         });
+
+
     }
 </script>
 

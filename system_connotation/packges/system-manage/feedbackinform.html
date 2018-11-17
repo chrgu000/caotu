@@ -87,7 +87,7 @@
                                 <td class="center">{{item.feedtext}}</td>
                                 <td class="feedurllist center" v-on:click="bigimg(item)"><img v-bind:src="item.feedurllist" alt=""/></td>
                                 <td class="center">{{item.contactway}}</td>
-                                <td class="center">{{item.createtime | time}}</td>+
+                                <td class="center">{{item.createtime | time}}</td>
 
                                 <td class="center">{{item.feedusername}}</td>
                                 <td class="center isdeal" v-if="item.isdeal ==0" :data-id="item.isdeal" v-on:click="greet(item,index)">未处理</td>
@@ -157,7 +157,7 @@
             datapost=JSON.stringify(datapost);
             layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000}) ;
             $.ajax({
-                url : path+'/CTKJBUSINESS/feedback/feedbacklist.do',
+                url : path+'/feedback/feedbacklist.do',
                 cache:false,//false就不会从浏览器缓存中加载请求信息了
                 type:"POST",
                 contentType: "application/json",
@@ -204,7 +204,7 @@
             datapost=JSON.stringify(datapost);
             layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000}) ;
             $.ajax({
-                url : path+'/CTKJBUSINESS/feedback/dealfeedback.do',
+                url : path+'/feedback/dealfeedback.do',
                 cache:false,//false就不会从浏览器缓存中加载请求信息了
                 type:"POST",
                 contentType: "application/json",

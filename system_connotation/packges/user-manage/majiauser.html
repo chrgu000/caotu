@@ -11,14 +11,7 @@
     <meta name="keywords" content="">
     <meta name="description" content="">
 
-    <link href="../../css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
-    <link href="../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
-    <link href="../../plugin/layer/skin/layer.css" rel="stylesheet">
-    <link href="../../css/common.css" rel="stylesheet">
-    <link href="../../css/animate.css" rel="stylesheet">
-    <link href="../../css/style.css?v=4.1.0" rel="stylesheet">
-    <script src="../../plugin/layer/layer.js"></script>
-    <script src="../../js/vue.js"></script>
+
     <style>
         /* Additional style to fix warning dialog position */
 
@@ -84,7 +77,7 @@
                                         <td class="center">{{item.lastcontenttime | time}}</td>
                                         <td class="center">{{item.createtime | time}}</td>
                                         <td class="center lookmeitem" v-on:click="lookMe(item,index)">关注我</td>
-                                        <td class="center lookmeitem">{{item.notecount}}条</td>
+                                        <td class="center lookmeitem" @click="messageinfo(item)">{{item.notecount}}条</td>
                                         <td class="center">{{item.createuser}}</td>
                                     </tr>
 
@@ -143,8 +136,6 @@
     </div>
 
     <!-- 全局js -->
-    <script src="../../js/jquery.min.js?v=2.1.4"></script>
-    <script type="text/javascript" src="../../js/index.js"></script>
     <!-- Page-Level Scripts -->
     <script>
         var majiadata = new Vue({
@@ -171,7 +162,18 @@
                             lookmajia(events.userid);
                         }
                     });
+                },//关注我
+                messageinfo:function(events){//消息
+                    let datapage=$("#addpageinput").val();
+                    $("#contentPageBox").load("commentmanage/commenttablelist.html",function(){
+                        $("#backmajiauser").attr("data-id",datapage);
+                        $("#tablelistbox").attr("data-id",events.userid).attr("data-name",events.username);
+
+                        getcheck(1);
+                    });
+
                 }
+
             }
         });
 
@@ -244,7 +246,7 @@
         });
 
         $(function(){
-            getcheck(1);//马甲管理列表
+
             allotmajia.userid=userdatas.data.userid;//选择马甲
             allotmajia.username=userdatas.data.username;//选择马甲
             lookmemajia.userid=userdatas.data.userid;//关注我
@@ -456,6 +458,8 @@
                 }
             });
         }
+
+
 
     </script>
 

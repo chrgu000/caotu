@@ -1,7 +1,7 @@
 
 /*----------上传多张图片-------------*/
 var input = document.getElementById("commentInputFile");
-let typefile=1;
+var typefile=1;
 var result;
 var dataArr = []; // 储存所选图片的结果(文件名和base64数据)
 var fd;  //FormData方式发送请求
@@ -11,6 +11,7 @@ var oSubmit = document.getElementById("myConmentsEnter");
 var oInput = document.getElementById("commentInputFile");
 var moviefilecover="";//视频封面
 var picfilecover=[];//图片封面
+var commentimgisize=[];//图片宽高
 
 if(typeof FileReader==='undefined'){
     layer.msg("抱歉，你的浏览器不支持 FileReader");
@@ -45,8 +46,21 @@ function readFile(){
                 base64 : this.result   //reader.readAsDataURL方法执行完后，base64数据储存在reader.result里
             };
             dataArr.push(imgMsg);
-            console.log("dataArr::");
-            console.log(dataArr);
+
+            /*获取宽高*/
+            var imageinfo = new Image();
+            imageinfo.onload=function(){
+                let width = imageinfo.width;
+                let height = imageinfo.height;
+                commentimgisize.push(width+","+height);
+               // console.log(commentimgisize);
+            };
+            imageinfo.src= this.result;
+
+
+
+            //console.log("dataArr::");
+            //console.log(dataArr);
             result = '<div class="delete">delete</div><div class="result"><img src="'+this.result+'" alt=""/></div>';
             var div = document.createElement('div');
             div.innerHTML = result;
@@ -58,6 +72,7 @@ function readFile(){
                 var nowHeight = ReSizePic(this); //设置图片大小
                 this.parentNode.style.display = 'block';
                 var oParent = this.parentNode;
+
                 if(nowHeight){
                     oParent.style.paddingTop = (oParent.offsetHeight - nowHeight)/2 + 'px';
                 }
@@ -70,12 +85,13 @@ function readFile(){
             if(dataArr.length>0){
                 $("#chooseMovieBtn").attr('disabled','disabled').css("color","#eee");
             }
-            console.log("picfilecover::");
-            console.log(picfilecover);
+            //console.log("picfilecover::");
+            //console.log(picfilecover);
             div.onclick = function(){
                 var ind=$(this).index();
                 dataArr.splice(ind,1);// 删除dataArr对应的数据
                 picfilecover.splice(ind,1);// 删除dataArr对应的数据
+                commentimgisize.splice(ind,1);// 删除commentimgisize对应的数据
                 if(dataArr.length<=0){
                     $("#chooseMovieBtn").removeAttr("disabled").css("color","#333");
                 }
@@ -105,14 +121,14 @@ function gifCoverimg(gift) {
         "file": new Blob( [ab] , {type : 'image/png'},{"name":"giffengmian.png"}),
         "name":"giffengmian.png"
     };
-    // console.log("fbloblist::");
-    // console.log(fbloblist);
+    // //console.log("fbloblist::");
+    // //console.log(fbloblist);
     runAsync(fbloblist).then(function(data){
-        var onetdk=data.Url.substring(0, data.Url.indexOf('?'));
-        console.log("onetdk::");
-        console.log(onetdk);
+        let onetdk=data.Url.substring(0, data.Url.indexOf('?'));
+        //console.log("onetdk::");
+        //console.log(onetdk);
         var ind=$("#imgmovieShowConts .inputFileShow:last-child").index();
-        console.log(ind);
+        //console.log(ind);
         picfilecover[ind]={"typefile":4,"cover":onetdk};
 
 
@@ -206,8 +222,13 @@ function readFile2(){
             div.innerHTML = resultdiv;
             div['className'] = 'inputFileShow2';
             div['index'] = index;
+            $("#imgmovieShowConts").empty();                  // 在页面中删除该图片元素
             $("#imgmovieShowConts").append(div);  　　//插入dom树
             $("#imgmovieShowConts .result video")[0].addEventListener('play',function () {
+                let videoH =  $("#imgmovieShowConts .result video")[0].offsetHeight;
+                let videoW =  $("#imgmovieShowConts .result video")[0].offsetWidth;
+                commentimgisize.push(videoW+","+videoH);
+               // console.log(commentimgisize);
                 videofile=document.getElementById("videofiles");
                captureImage(videofile);
 
@@ -247,7 +268,7 @@ function captureImage(videofile) {
     // console.log("fbloblist::");
     // console.log(fbloblist);
     runAsync(fbloblist).then(function(data){
-        var onetdk=data.Url.substring(0, data.Url.indexOf('?'));
+        let onetdk=data.Url.substring(0, data.Url.indexOf('?'));
         moviefilecover=onetdk;
 
     }).then(function(onetdk) {
@@ -261,6 +282,7 @@ function captureImage(videofile) {
 /*删除视频*/
 $("#imgmovieShowConts").delegate(".delete2","click",function(){
     dataArr=[];
+    commentimgisize=[];
     $("#choosePictureBtn").removeAttr("disabled").css("color","#333");
     $("#imgmovieShowConts").empty();                  // 在页面中删除该图片元素
 });
@@ -291,6 +313,9 @@ function getFileURL(file) {
 oAdd2.onclick=function(){
     oInput2.value = "";   // 先将oInput值清空，否则选择图片与上次相同时change事件不会触发
     oInput2.click();
+    commentimgisize=[];
+    dataArr=[];
+
 };
 
 
@@ -300,24 +325,30 @@ oAdd2.onclick=function(){
 function send(){
     var filelist=[];
     let picfilelist=picfilecover;
+    let size=commentimgisize;
     $.each(dataArr,function(i,n){
         runAsync(n).then(function(data){
-            var onetdk=data.Url.substring(0, data.Url.indexOf('?'));
+            let onetdk=data.Url.substring(0, data.Url.indexOf('?'));
             return onetdk;
         }).then(function(onetdk) {
+            //console.log(commentimgisize);
             if(typefile == 3 || typefile ==4){
-                filelist.push({"type":picfilelist[i].typefile,"cover":picfilelist[i].cover,"info":onetdk});
+                filelist.push({"type":picfilelist[i].typefile,"cover":picfilelist[i].cover,"info":onetdk,"size":size[i]});
             }else{
-                filelist.push({"type":typefile,"cover":moviefilecover,"info":onetdk});
+                filelist.push({"type":typefile,"cover":moviefilecover,"info":onetdk,"size":size[0]});
             }
             moviefilecover="";//视频封面
             picfilecover=[];//图片封面
+
+
+
         });
     });
     oInput.value = "";   // 先将oInput值清空，否则选择图片与上次相同时change事件不会触发
     //清空已选图片
     $('#imgmovieShowConts').empty();
     dataArr = [];
+    commentimgisize = [];
     index = 0;
     $("#chooseMovieBtn").removeAttr("disabled").css("color","#333");
     $("#choosePictureBtn").removeAttr("disabled").css("color","#333");

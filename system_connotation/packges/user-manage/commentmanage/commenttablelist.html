@@ -1,0 +1,222 @@
+
+
+    <style>
+        /* Additional style to fix warning dialog position */
+
+        #alertmod_table_list_2 {
+            top: 900px !important;
+        }
+        #createLabel{margin-top:10px;margin-left:30px;}
+        #chooseMajia{margin-top:10px;}
+        .btitle{padding-left:20px;height:45px;border-bottom:1px solid #bbb; line-height: 37px;}
+        #tablelistbox .btn{color:#5a656d;}
+        #tablelistbox .btn:hover{color:#fff;background:#0088cc;}
+        #tablelistbox  .lookmeitem{color:#0a6aa1;cursor: pointer;}
+
+        .popShadeBox{width:100%;margin:0 auto;height:100%;border:1px solid #ddd;background:#fff;padding:30px;display: none;}
+        .popShadeBox .popBox{width:100%;overflow-y: auto;padding:6px;border:1px solid #ddd;}
+        .popShadeBox .popBox label{cursor: pointer;margin:15px;}
+        .popShadeBox .popBox input{vertical-align: sub;margin-right:3px;cursor: pointer;}
+        .popShadeBox .suredbtn{float:right;margin-right:3px;background:#52b5dc;color:#fff;margin-bottom:10px;}
+        #tablelistTbody td img{width:auto;height:auto;max-height: 80px;max-width: 80px;}
+        #lookedMajia{padding:15px;border-bottom:1px dashed #ccc;}
+        #lookedMajia span{display: inline-block;padding:4px;margin:4px;}
+    </style>
+
+
+    <div id="contentPageBox">
+        <h4 style="margin-left:30px;margin-bottom:-12px;margin-top:22px;">消息管理》》
+            <button id="backmajiauser" type="button" class="btn btn-warning">返回</button>
+        </h4>
+        <div class="wrapper wrapper-content  animated fadeInRight" >
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox-content">
+                        <div class="jqGrid_wrapper" id="tablelist">
+                            <!--   <table id="table_list_2"></table>-->
+                            <table  class="table table-striped" id="tablelistbox">
+                                <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>评论者</th>
+                                    <th>评论内容</th>
+                                    <th>评论时间</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody id="tablelistTbody">
+                                    <tr v-for="(item,index) in items" v-bind:data-id="item.commentid">
+                                        <td class="center">{{index+1}}</td>
+                                        <td class="center">{{item.username}}</td>
+                                        <td class="center">{{item.commenttext}}</td>
+                                        <td class="center">{{item.createtime | time}}</td>
+                                        <td class="center">
+                                            <button type="button" class="btn btn-default" v-on:click="detail(item)">详情</button>
+                                            <button type="button" class="btn btn-default" @click="replay(item)">回复</button>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <div id="pagerlist">
+                                <div id="pagerbtnlist">
+                                    <span class="glyphicon glyphicon-backward gbtn" id="prepagebtn" onclick="prepage(getcheck)"></span>
+                                <span class="addpagebox">
+                                    <span id="jumppage" onclick="jumppage(getcheck)">跳转到</span>
+                                    <input type="number" id="addpageinput" value="1" max="" min="1"/>
+                                    共 <span id="allpage">1</span>页
+                                </span>
+                                    <span class="glyphicon glyphicon-forward gbtn" id="nextpagebtn" onclick="nextpage(getcheck)"></span>
+                                </div>
+                                <div id="allcontbox">
+                                    <p id="allconts"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Page-Level Scripts -->
+    <script>
+        var majiadata = new Vue({
+            el: '#tablelistTbody',
+            data: {
+                items:""
+            },
+            // 在 `methods` 对象中定义方法
+            methods: {
+                detail:function(event){//详情
+                    reportdetail(event)
+                },
+                replay: function (events) {
+                    layer.open({
+                        type: 2,
+                        title: '回复评论',
+                        shadeClose: true,
+                        maxmin: true, //开启最大化最小化按钮
+                        shade: 0.8,
+                        area: ['80%', '90%'],
+                        content: "replaycomment.html", //iframe的url
+                        success: function (layero, index) {
+                            let body = layer.getChildFrame('body', index);
+                            let iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                            let userid=$("#tablelistbox").attr("data-id");
+                            let username=$("#tablelistbox").attr("data-name");
+                            iframeWin.geturl(events,userid,username);
+                        }
+                    });
+                }
+            }
+        });
+
+
+        //马甲管理列表
+        function getcheck(pageno){
+            var userid= $("#tablelistbox").attr("data-id");
+            var postdata={"userid":userid,"pageno":pageno,"pagesize":10};
+            postdata=JSON.stringify(postdata);
+            $.ajax({
+                url : path2+'/note/cmtNoteList.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: postdata,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    //console.log("获取失败：");
+                    //console.log(data);
+                },
+                success:function(diskJson){
+                    layer.closeAll();
+                    console.log("马甲用户消息列表：");
+                    console.log(diskJson);
+
+                    /*翻页信息*/
+                    pageinfo3(pageno,diskJson.data.count,10);//翻页控件信息
+                    majiadata.items=diskJson.data.rows;
+                    // allotmajia.items=diskJson.data.rows;
+                }
+            });
+        }
+
+
+        /*点击详情查看*/
+        function reportdetail(nedata){
+//        console.log("nedata::");
+//        console.log(nedata);
+            var contentlist=[nedata.contentid];
+            var datapost={"contentlist":contentlist};
+//         console.log("datapost::");
+//         console.log(datapost);
+            datapost=JSON.stringify(datapost);
+            // tabledata.tagshow=contentshow;
+            $.ajax({
+                url : path+'/content/watchContentDetail.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: datapost,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+//                console.log("获取失败：");
+//                console.log(data);
+                },
+                success:function(diskJson){
+                    //console.log("查看内容详情接口：");
+                    //console.log(diskJson);
+                    if(diskJson.code =="1000"){
+                        repoterdetail2(diskJson.data[0]);
+
+                    }else{
+                        layer.msg("数据有误请重试!");
+                    }
+
+
+                }
+            });
+        }
+
+        /*查看详情2*/
+        function repoterdetail2(urldata){
+            var type=urldata.contenttype;
+            var url="recomovie.html";
+            if(type=="3" || type=="4" || type=="5"){
+                url="recopicture.html";
+            }else{
+                url="recomovie.html";
+            }
+            layer.open({
+                type: 2,
+                title: '内容详情',
+                shadeClose: true,
+                maxmin: true, //开启最大化最小化按钮
+                shade: 0.8,
+                area: ['80%', '90%'],
+                content: url, //iframe的url
+                success: function (layero, index) {
+                    var body = layer.getChildFrame('body', index);
+                    var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                    iframeWin.geturl(urldata);
+                }
+            });
+        }
+
+
+        /*返回*/
+        $("#backmajiauser").click(function(){
+            let datapage=$(this).attr("data-id");
+            $("#contentPageBox").load("majiauser.html",function(){
+                getcheck(datapage);//马甲管理列表
+            });
+        })
+
+    </script>
+
+    

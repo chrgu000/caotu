@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> </title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+
+    <link href="../../../css/plugins/blueimp/css/blueimp-gallery.min.css" rel="stylesheet">
+
+
+    <style>
+        .lightBoxGallery img {
+            margin: 5px;
+            width: 30%;
+        }
+        .gohome{display: none;}
+        .blueimp-gallery>.slides>.slide>.slide-content{max-height: none;max-width: 60%;margin: 10% auto; min-width: 50%;}
+        .blueimp-gallery>.slides>.slide{overflow-y: auto;}
+        #imgEditBox{position: fixed;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,.7);z-index:999;display: none;}
+        #imgEditBox.show{display: block;}
+        #imgEditBox .close{display: inline-block;position: absolute;top:5px;right:9px;font-size:30px;cursor: pointer;line-height: 30px;  color: #fff;  text-shadow: 0 0 2px #000;opacity: .6;}
+        #imgEditBox .close:hover{opacity:.9;}
+        #blueimp-gallery .rotate{position: absolute;top:19px;right:43px;color:#d1d1d1;cursor: pointer;font-size:18px;}
+        #blueimp-gallery .rotate:hover{color:#fff;}
+        #blueimp-gallery .rightRotate{right:100px;}
+        #blueimp-gallery .leftRotate{right:125px;}
+        #blueimp-gallery .rotateBtn{background:#d1d1d1;font-size:8px;width:29px;height:20px;line-height: 22px;text-align: center;color:#a7a6a6;
+            position: absolute;top:20px;right:43px;cursor:context-menu;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;}
+        #blueimp-gallery .rotateBtn.can{color:#333;cursor: pointer;}
+        #blueimp-gallery .rotateBtn.can:hover{color:#fff;}
+        #blueimp-gallery .deletebtn{position: absolute;top:19px;right:75px;color:#d1d1d1;cursor: pointer;font-size:18px;}
+        #blueimp-gallery .deletebtn:hover{color:#ff698f;}
+        #blueimp-gallery .slide canvas{position: absolute;left: 0;  right: 0;  top: 0;  bottom: 0;margin:auto;}
+        /*#blueimp-gallery .slides .slide{width:100%;height:100%;}*/
+    </style>
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+
+                    <div class="ibox-content">
+                       <!-- <p>
+                            真理惟一可靠的标准就是永远自相符合。 —— 欧文
+                        </p>-->
+
+                        <div class="lightBoxGallery" >
+                            <div id="imgconbox">
+                                <!--<a id="img1box" href="../../../img/p_big1.jpg" title="图片" data-gallery=""><img src="../../../img/p1.jpg"></a>-->
+                            </div>
+                            <div id="blueimp-gallery" class="blueimp-gallery">
+                                <div class="slides"></div>
+                                <h3 class="title"></h3>
+                                <a class="prev">‹</a>
+                                <a class="next">›</a>
+                                <a class="close">×</a>
+                                <a class="play-pause"></a>
+                                <ol class="indicator"></ol>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="imgEditBox">
+        <b class="close ">x</b>
+    </div>
+
+
+
+    <!-- 自定义js -->
+    <script src="../../../js/content.js?v=1.0.0"></script>
+
+    <!-- blueimp gallery -->
+<!--    <script src="../../../js/pictureshow.js"></script>-->
+    <script src="../../../js/plugins/blueimp/jquery.blueimp-gallery.min.js"></script>
+
+
+    <script>
+
+        /*获取下载地址*/
+        function geturl(pictureurl){
+
+            if(pictureurl && pictureurl !="" ){
+                var nedurl=JSON.parse(pictureurl);
+                // console.log("nedurl:");
+                // console.log(nedurl);
+                var path3="/file/downFileByName.do?filelocation=";
+                $("#imgconbox").empty();
+                $.each(nedurl,function(i,n){
+                    $("#imgconbox").append('<a data-width="" data-height="" href="'+n+'" title="图片" data-gallery=""><img src="'+n+'"></a>');
+                })
+                //console.log("视频预览地址");
+                var img = new Image();
+                img.onload = function(){
+                    $("#imgconbox a:first-child").attr("data-width",this.width);
+                    $("#imgconbox a:first-child").attr("data-height",this.height);
+                    this.onload = null;
+                };
+                //console.log(path2+path3+nedurl[0]);
+                img.src = nedurl[0];
+
+             }
+
+        }
+
+        /*图片编辑关闭*/
+        $("#imgEditBox .close").click(function(){
+            $("#imgEditBox").removeClass("show");
+        });
+
+
+    </script>
+
+    
+    
+
+</body>
+
+</html>

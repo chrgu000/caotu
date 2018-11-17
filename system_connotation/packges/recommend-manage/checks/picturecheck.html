@@ -66,10 +66,10 @@
                                 <h3 class="title"></h3>
                                 <a class="prev">‹</a>
                                 <a class="next">›</a>
-                                <a class="iconfont rotate leftRotate" data-id="-1">&#xe62a;</a>
-                                <a class="iconfont rotate rightRotate" data-id="1">&#xe622;</a>
+                            <!--    <a class="iconfont rotate leftRotate" data-id="-1">&#xe62a;</a>
+                                <a class="iconfont rotate rightRotate" data-id="1">&#xe622;</a>-->
                                 <a class="iconfont deletebtn" onclick="deleteimg()">&#xe65b;</a>
-                                <a class=" rotateBtn">确定</a>
+                              <!--  <a class=" rotateBtn">确定</a>-->
                                 <a class="close">×</a>
                                 <a class="play-pause"></a>
                                 <ol class="indicator"></ol>
@@ -164,15 +164,11 @@
             var img=new Image();
             img.crossOrigin="anonymous"; //关键
             img.src=imgsrc;
-            alert(1);
             img.onload = function (){
-                alert(2);
                 ctx.save();//保存状态
-                alert(6);
                 ctx.translate(cw/2,cw/2);//设置画布上的(0,0)位置，也就是旋转的中心点
                 ctx.rotate(rotate*Math.PI/180);
                 ctx.drawImage(img,-w/2,-h/2,w,h);//把图片绘制在旋转的中心点，
-                alert(7);
                 ctx.restore();//恢复状态
             };
         });
@@ -300,52 +296,14 @@ function getcc(){
         }
 
         /*删除图片-2*/
-
-
         function deleteimg2(){
             var imgact=Number($(".blueimp-gallery>.indicator li.active").index());
             var imglist=$("#blueimp-gallery .slides .slide");
-         /*   var indicatorlist= $(".blueimp-gallery>.indicator li");
-            var indictlength=indicatorlist.length;
-            console.log(indicatorlist);
-            console.log(indictlength);
-            var slidew=$("#blueimp-gallery .slides .slide").width();
-            var slidesw=$("#blueimp-gallery .slides").width();
-            $("#blueimp-gallery .slides").css({"width":slidesw-slidew+"px"});
-            //blueimp.Gallery.splice(imgact,1);
-            if((imgact+1)>=indictlength){
-                $(".blueimp-gallery>.indicator li.active").removeClass("active");
-                $("#imgconbox a:nth-child("+(imgact+1)+")").remove();
-                $("#blueimp-gallery .slides .slide:nth-child("+(imgact+1)+")").remove();
-                $(".blueimp-gallery>.indicator li:nth-child("+(imgact+1)+"").remove();
-                $("#blueimp-gallery .slides .slide:first-child").css({"transform":"translate(0px, 0px) translateZ(0px)","transition-duration":"400ms"});
-                $(".blueimp-gallery>.indicator li:first-child").addClass("active");
-            }else{
-                $.each(imglist,function(i,n){
-                    var imgindex=Number($(n).attr("data-index"));
-                    if(imgindex>imgact){
-                        var slidew2=parseInt($("#blueimp-gallery .slides .slide:nth-child("+(imgindex+1)+")").css("left"));
-                        $("#blueimp-gallery .slides .slide:nth-child("+(imgindex+1)+")").attr("data-index",imgindex-1).css({"left":slidew+slidew2+"px"});
-                    }
-                });
-                $.each(indicatorlist,function(i,n){
-                    var indicator=Number($(n).attr("data-index"));
-                    if(indicator>imgact){
-                        $(".blueimp-gallery>.indicator li:nth-child("+(indicator+1)+"").attr("data-index",indicator-1);
-                    }
-                });
-                $(".blueimp-gallery>.indicator li.active").removeClass("active");
-                $("#imgconbox a:nth-child("+(imgact+1)+")").remove();
-                $("#blueimp-gallery .slides .slide:nth-child("+(imgact+1)+")").remove();
-                $(".blueimp-gallery>.indicator li:nth-child("+(imgact+1)+"").remove();
-                $("#blueimp-gallery .slides .slide:nth-child("+(imgact+1)+")").css({"transform":"translate(0px, 0px) translateZ(0px)","transition-duration":"400ms"});
-                $(".blueimp-gallery>.indicator li:nth-child("+(imgact+1)+"").addClass("active");
-            }*/
             $("#imgconbox a:nth-child("+(imgact+1)+")").remove();
             $("#blueimp-gallery .slides .slide:nth-child("+(imgact+1)+")").remove();
             $(".blueimp-gallery>.indicator li:nth-child("+(imgact+1)+"").remove();
-            fielchangelist.splice(imgact,1);
-            fileslist.splice(imgact,1);
+            contentDatasurllist=JSON.parse(contentDatasurllist);
+            contentDatasurllist.splice(imgact,1);
             layer.msg("删除成功！！");
             $(".blueimp-gallery>.close").click();
 

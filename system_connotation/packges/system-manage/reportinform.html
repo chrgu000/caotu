@@ -134,10 +134,26 @@
         // 在 `methods` 对象中定义方法
         methods: {
             pass: function (event) {
-                ispass(event,1);
+                layer.confirm('确定通过该内容吗？', {
+                    btn: ['确定','取消'] //按钮
+                }, function(index){
+                    ispass(event,1);
+                    layer.close(index);
+                }, function(index){
+                    layer.close(index);
+                });
+
             },
             unpass: function (event) {
-                ispass(event,2);
+                layer.confirm('确定不通过该内容吗？', {
+                    btn: ['确定','取消'] //按钮
+                }, function(index){
+                    ispass(event,2);
+                    layer.close(index);
+                }, function(index){
+                    layer.close(index);
+                });
+
             },
             lookconten:function(event){
                 console.log(event);
@@ -158,7 +174,7 @@
 //         console.log(datapost);
         datapost=JSON.stringify(datapost);
         $.ajax({
-            url : path+'/CTKJBUSINESS/report/reportlist.do',
+            url : path+'/report/reportlist.do',
             cache:false,//false就不会从浏览器缓存中加载请求信息了
             type:"POST",
             contentType: "application/json",
@@ -199,7 +215,7 @@
 //        console.log(datapost);
         datapost=JSON.stringify(datapost);
         $.ajax({
-            url : path+'/CTKJBUSINESS/report/reportdetail.do',
+            url : path+'/report/reportdetail.do',
             cache:false,//false就不会从浏览器缓存中加载请求信息了
             type:"POST",
             contentType: "application/json",
@@ -257,7 +273,7 @@
 //        console.log(datapost);
         datapost=JSON.stringify(datapost);
         $.ajax({
-            url : path+'/CTKJBUSINESS/report/dealreport.do',
+            url : path+'/report/dealreport.do',
             cache:false,//false就不会从浏览器缓存中加载请求信息了
             type:"POST",
             contentType: "application/json",

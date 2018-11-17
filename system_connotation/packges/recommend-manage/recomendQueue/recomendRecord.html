@@ -28,7 +28,7 @@
                             <th>点赞量</th>
                             <th>评论量</th>
                             <th>分享量</th>
-                            <th>发布时间</th>
+                            <th>推荐时间</th>
                             <th>操作</th>
                         </tr>
                         </thead>
@@ -36,10 +36,10 @@
                         <tr v-for="(item,index) in items" :data-id="item.contentid">
                             <td class="center">{{index+1}}</td>
                           <!--  <td class="center">{{item.contenttitle}}</td>-->
-                            <td class="center">{{item.watchnum}}</td>
-                            <td class="center">{{item.goodnum}}</td>
-                            <td class="center">{{item.commentnum}}</td>
-                            <td class="center">{{item.sharenum}}</td>
+                            <td class="center">{{item.watchcount}}</td>
+                            <td class="center">{{item.goodcount}}</td>
+                            <td class="center">{{item.commentcount}}</td>
+                            <td class="center">{{item.pushcount}}</td>
                             <td class="center">{{item.createtime | time}}</td>
                             <td class="center">
                                 <button type="button" class="btn deletebtn" v-on:click="detail(item)">详情</button>
@@ -180,7 +180,7 @@
     function repoterdetail2(urldata){
         var type=urldata.contenttype;
         var url="recomovie.html";
-        if(type=="3" || type=="4"){
+        if(type=="3" || type=="4"|| type=="5"){
             url="../recopicture.html";
         }else{
             url="../recomovie.html";

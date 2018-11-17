@@ -106,7 +106,7 @@
         console.log(datapost);*/
         datapost=JSON.stringify(datapost);
         $.ajax({
-            url : path+'/CTKJBUSINESS/sencontrol/querysensitive.do',
+            url : path+'/sencontrol/querysensitive.do',
             cache:false,//false就不会从浏览器缓存中加载请求信息了
             type:"POST",
             contentType: "application/json",
@@ -147,7 +147,7 @@
          console.log(datapost);*/
         datapost=JSON.stringify(datapost);
         $.ajax({
-            url : path+'/CTKJBUSINESS/sencontrol/delsensitive.do',
+            url : path+'/sencontrol/delsensitive.do',
             cache:false,//false就不会从浏览器缓存中加载请求信息了
             type:"POST",
             contentType: "application/json",
@@ -198,7 +198,7 @@
          console.log(datapost);*/
         datapost=JSON.stringify(datapost);
         $.ajax({
-            url : path+'/CTKJBUSINESS/sencontrol/refushsensitive.do',
+            url : path+'/sencontrol/refushsensitive.do',
             cache:false,//false就不会从浏览器缓存中加载请求信息了
             type:"POST",
             contentType: "application/json",

@@ -48,10 +48,10 @@
                             <td><input type="radio" :value="item"  v-model="chooselist" @change="chooseRadio(item,index)"/></td>
                             <td class="center">{{index+1}}</td>
                             <td class="center">{{item.contenttitle}}</td>
-                            <td class="center">{{item.watchnum}}</td>
-                            <td class="center">{{item.goodnum}}</td>
-                            <td class="center">{{item.commentnum}}</td>
-                            <td class="center">{{item.sharenum}}</td>
+                            <td class="center">{{item.watchcount}}</td>
+                            <td class="center">{{item.goodcount}}</td>
+                            <td class="center">{{item.commentcount}}</td>
+                            <td class="center">{{item.sharecount}}</td>
                             <td class="center">{{item.createtime | time}}</td>
                             <td class="center">
                                 <button type="button" class="btn deletebtn" v-on:click="detail(item)">详情</button>
@@ -185,9 +185,9 @@
                 layer.confirm('确定替换吗？', {
                     btn: ['确定','取消'] //按钮
                 }, function(index){
-                    console.log(recondlist.chooselistnum);
+                   //console.log(recondlist.chooselistnum);
                     if(recondlist.chooselistnum && recondlist.chooselistnum !=""){
-                        console.log(1);
+                       //console.log(1);
                         let ind=recondlist.chooselistnum-1;
                         let postdata={"contentid":event.contentid,"contenttitle":event.contenttitle,"indexno":ind,"oldcontentid":recondlist.items[ind].contentid,"pushid":event.pushid,"userid":event.userid};
                         recondlist.items.splice(ind,1,postdata);
@@ -195,7 +195,7 @@
                         tabledata.items.splice(ev,1);
                         recondlist.chooselistnum="";
                     }else{
-                        console.log(2);
+                       //console.log(2);
                         layer.msg("请先选择需要替换的内容！！！")
                     }
 
@@ -217,7 +217,7 @@
                 });
             },
             deletecon:function(event,ei){//删除
-                console.log(event);
+               //console.log(event);
                 deleteRecon(event,ei)
             }
         }
@@ -226,7 +226,7 @@
     /*页面初始化*/
     $(function(){
         var userlevel=userdatas.data.userlevel;
-        if(userlevel =="S"){
+        if(userlevel =="S" || userlevel =="B"){
             $("#alterTableList").css("display","block");
             getRecondList(1);
             tabledata.suser=1;
@@ -248,42 +248,55 @@
     /*推荐队列最大页码*/
     function getrubbigsetpige(){
         $("#temporaryPageChoose").empty();
-        for(var i=0;i<100;i++){
-            $("#temporaryPageChoose").append(' <option value="'+(i+1)+'">第'+(i+1)+'页</option>');
-        }
-      /*  var tjdatas={"YES":1,};
-        tjdatas=JSON.stringify(tjdatas);
-        $.ajax({
-            url : path2+'/pushbakcontrol/queryAllPageSize.do',
-            cache:true,//false就不会从浏览器缓存中加载请求信息了
-            type:"POST",
-            contentType: "application/json",
-            dataType:"JSON",
-            async:false,
-            data: tjdatas,
-            error: function(data){
-                layer.msg("服务器未响应,请稍后再试!");
-                //console.log("马甲用户列表失败：");
-                //console.log(data);
-            },
-            success:function(diskJson){
-                // console.log("推荐队列最大页码：");
-                // console.log(diskJson);
-                $("#temporaryPageChoose").empty();
-                $("#editPageSelect").empty();
-                var checkpage=$("#temporaryPageChoose").attr("data-page");
-                let pagenum=parseInt(diskJson.data);
-                for(var i=0;i<=pagenum;i++){
-                    $("#temporaryPageChoose").append(' <option value="'+(i+1)+'">第'+(i+1)+'页</option>');
-                    $("#editPageSelect").append(' <option value="'+(i+1)+'">第'+(i+1)+'页</option>');
-                }
-                $("#temporaryPageChoose").val(checkpage);
-
+        $("#editPageSelect").empty();
+        var userlevel=userdatas.data.userlevel;
+        if(userlevel =="S" || userlevel =="B"){
+            getrubbigsetpige2();
+        }else{
+            for(var i=0;i<100;i++){
+                $("#temporaryPageChoose").append(' <option value="'+(i+1)+'">第'+(i+1)+'页</option>');
+                $("#editPageSelect").append(' <option value="'+(i+1)+'">第'+(i+1)+'页</option>');
             }
-        });*/
+        }
+
+
     }
 
-    /*获取推荐列表*/
+    function getrubbigsetpige2(){
+          var tjdatas={"YES":1,};
+       tjdatas=JSON.stringify(tjdatas);
+       $.ajax({
+           url : path2+'/pushbakcontrol/queryAllPageSize.do',
+           cache:true,//false就不会从浏览器缓存中加载请求信息了
+           type:"POST",
+           contentType: "application/json",
+           dataType:"JSON",
+           async:false,
+           data: tjdatas,
+           error: function(data){
+               layer.msg("服务器未响应,请稍后再试!");
+               //console.log("马甲用户列表失败：");
+               //console.log(data);
+           },
+           success:function(diskJson){
+               // console.log("推荐队列最大页码：");
+               // console.log(diskJson);
+               $("#temporaryPageChoose").empty();
+               $("#editPageSelect").empty();
+               var checkpage=$("#temporaryPageChoose").attr("data-page");
+               let pagenum=parseInt(diskJson.data);
+               for(var i=0;i<=pagenum;i++){
+                   $("#temporaryPageChoose").append(' <option value="'+(i+1)+'">第'+(i+1)+'页</option>');
+                   $("#editPageSelect").append(' <option value="'+(i+1)+'">第'+(i+1)+'页</option>');
+               }
+               $("#temporaryPageChoose").val(checkpage);
+
+           }
+       });
+    }
+
+
+        /*获取推荐列表*/
     function getRecondList(pageno){
         var datapost={"pagenum":pageno};
 //         console.log("datapost::");
@@ -304,8 +317,8 @@
             },
             success:function(diskJson){
                 layer.closeAll();
-               console.log("获取推荐列表：");
-                console.log(diskJson);
+              // console.log("获取推荐列表：");
+              //  console.log(diskJson);
                 /*翻页信息*/
                 if(diskJson.code =="1000"){
                     recondlist.items=diskJson.data;
@@ -326,12 +339,12 @@
     function getalterlist(pageno){
         var userid="";
         var userlevel=userdatas.data.userlevel;
-        if(userlevel =="S"){
+        if(userlevel =="S" || userlevel =="B"){
             userid=""
         }else{
             userid=userdatas.data.userid
         }
-        var datapost={"pagenum":"","userid":userid};
+        var datapost={"pagenum":pageno,"userid":userid};
 //         console.log("datapost::");
 //         console.log(datapost);
         datapost=JSON.stringify(datapost);
@@ -351,8 +364,8 @@
             },
             success:function(diskJson){
                 layer.closeAll();
-               console.log("获取备选内容列表：");
-                console.log(diskJson);
+              //console.log("获取备选内容列表：");
+               //console.log(diskJson);
                 if(diskJson.code =="1000"){
                    // pageinfo3(pageno,diskJson.data,10);//翻页控件信息
                     tabledata.items=diskJson.data;
@@ -392,8 +405,8 @@
 //                console.log(data);
             },
             success:function(diskJson){
-                console.log("刷新推荐列表：");
-                console.log(diskJson);
+               //console.log("刷新推荐列表：");
+               //console.log(diskJson);
                 if(diskJson.code =="1000"){
                   /*  var page=$("#temporaryPageChoose").val();
                     $("#temporaryPageChoose").attr("data-page",page);
@@ -412,8 +425,8 @@
 
     /*删除该条*/
     function deleteRecon(event,ev){
-        console.log(event);
-        console.log(ev);
+       //console.log(event);
+       //console.log(ev);
         var datapost={"pushid":event.pushid};
 //         console.log("datapost::");
 //         console.log(datapost);
@@ -433,8 +446,8 @@
 //                console.log(data);
             },
             success:function(diskJson){
-                console.log("删除该条：");
-                console.log(diskJson);
+               //console.log("删除该条：");
+               //console.log(diskJson);
                 if(diskJson.code =="1000"){
                     layer.msg("删除成功！！!");
                     tabledata.items.splice(ev,1);
@@ -472,8 +485,8 @@
 //                console.log(data);
             },
             success:function(diskJson){
-                console.log("查看内容详情接口：");
-                console.log(diskJson);
+               //console.log("查看内容详情接口：");
+               //console.log(diskJson);
                 if(diskJson.code =="1000"){
                     repoterdetail2(diskJson.data[0]);
 
@@ -490,7 +503,7 @@
     function repoterdetail2(urldata){
         var type=urldata.contenttype;
         var url="recomovie.html";
-        if(type=="3" || type=="4"){
+        if(type=="3" || type=="4"  || type=="5"){
             url="../recopicture.html";
         }else{
             url="../recomovie.html";
@@ -536,8 +549,8 @@
 //                console.log(data);
             },
             success:function(diskJson){
-                console.log("NH编辑备选页码：");
-                console.log(diskJson);
+               //console.log("NH编辑备选页码：");
+               //console.log(diskJson);
                 if(diskJson.code =="1000"){
                     layer.msg("替换成功！!");
                     var page=$("#temporaryPageChoose").val();

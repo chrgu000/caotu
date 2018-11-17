@@ -9,7 +9,7 @@
     <META HTTP-EQUIV="pragma" CONTENT="no-cache">
     <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
     <META HTTP-EQUIV="expires" CONTENT="0">
-    <title>头图</title>
+    <title>内含段子</title>
     <link href="img/logo.png" rel="shortcut icon">
     <link rel="stylesheet" href="css/common.css"/>
     <link rel="stylesheet" href="plugin/font/iconfont.css"/>
@@ -63,7 +63,9 @@
 
         <!--更多推荐-->
         <div id="moreRecommendBox" v-cloak>
-            <h3 class="title">更多精彩内容</h3>
+            <h3 class="title">
+                <img class="titleimg" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/moreforu.png" alt="">
+            </h3>
             <div class="allrecommendBox" style="overflow: hidden;">
                 <div class="rcommendBox" v-for="(item,index) in items" v-bind:data-id="item.tagid">
                     <a class="downhrefbtn concernBtn" v-bind:href="downhref" >
@@ -117,7 +119,26 @@
         el: '#moreRecommendBox',
         data: {
             downhref:"",
-            items: ""
+            items: [
+                {"tagimg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/01.jpg","tagalias":"上辈子拯救过宇宙才能娶到这么美的媳妇儿吧"},
+                {"tagimg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/02.jpg","tagalias":"他真的改行了，看来把我大话听进去了"},
+                {"tagimg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/03.jpg","tagalias":"你见过二哈拆家是的眼神吗？"},
+                {"tagimg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/04.jpg","tagalias":"二哈哭的跟个孩子似的"},
+                {"tagimg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/05.jpg","tagalias":"令人怀念的青春啊，还是上学好～"},
+                {"tagimg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/06.jpg","tagalias":"这就是我每天去学校的原因！"},
+                {"tagimg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/07.jpg","tagalias":"怎么判断你男朋友是真睡还是装睡？"},
+                {"tagimg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/08.jpg","tagalias":"姓王的人最怕什么？"},
+                {"tagimg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/09.jpg","tagalias":"我真的感觉到恋爱了，不开玩笑！"},
+                {"tagimg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/10.jpg","tagalias":"这是什么沙雕屏保？"},
+                {"tagimg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/11.jpg","tagalias":"明明是亲儿子，竟然想当我爸爸"},
+                {"tagimg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/12.jpg","tagalias":"男方队终于扳回一局!现在是二比九十八! "},
+                {"tagimg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/13.jpg","tagalias":"男孩子在外面一定要保护好寄几"},
+                {"tagimg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/14.jpg","tagalias":"真是个撩死人的小可爱没错了！"},
+                {"tagimg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/15.jpg","tagalias":"生活不易，全凭演技"},
+                {"tagimg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/16.jpg","tagalias":"宿醉醒来看到这个场景怎么办？"},
+                {"tagimg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/17.jpg","tagalias":"最强大脑测试，谁知道答案？写下来"},
+                {"tagimg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/18.jpg","tagalias":"做作业全凭想象系列，这孩子脑路清奇啊"},
+            ]
         },
         // 在 `methods` 对象中定义方法
         methods: {
@@ -244,7 +265,7 @@
 
         /*获取更多推荐*/
         var conttendtag=condatas.contenttag.split(";")[0];
-        getmoretj(conttendtag)
+        //getmoretj(conttendtag)
     }
 
 

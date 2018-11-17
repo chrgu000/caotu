@@ -175,7 +175,7 @@
             <tbody>
             <tr>
                 <td id="movietypetd" colspan="2">
-                    横竖视频：
+                    类型：
                     <span id="movieStyle" data-val="1"></span>
 
                 </td>
@@ -212,7 +212,7 @@
                     顶： <input type="number" id="goodNum" value="1" min="0"/>
                 </td>
                 <td class="">
-                    踩：<input type="number" id="unsupportNum" value="1" min="0"/>
+                    踩：<input type="number" id="unsupportNum" value="0" min="0"/>
                 </td>
             </tr>
             <tr class="movieTrBox">
@@ -356,7 +356,7 @@
                 <div id="imgmovieShowConts">
 
                 </div>
-                <input type="file" id="commentInputFile" name="" multiple accept="image/png,image/gif,image/jpg,image/jpeg"  value="">
+                <input type="file" id="commentInputFile" name="" accept="image/png,image/gif,image/jpg,image/jpeg"  value="">
                 <input type="file" id="commentmovieFile" name="" accept="audio/mp4,video/mp4,application/ogg, audio/ogg"  style="display: none;" value="">
                 <button type="button" class="btn btn-default inputfileBtn" id="choosePictureBtn" >选择图片</button>
                 <button type="button" class="btn btn-default inputfileBtn" id="chooseMovieBtn">选择视频</button>
@@ -426,8 +426,8 @@
     function getchecktype(contsdatas){
         //根据iframe的id获取对象
         layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:1000}) ;
-       console.log("contsdatas::");
-       console.log(contsdatas);
+       //console.log("contsdatas::");
+       //console.log(contsdatas);
         ////console.log(ifinfo);
         var murl="moveicheck.html";
         if(contsdatas.contenttype == "3"){
@@ -596,8 +596,8 @@
                 //console.log(data);
             },
             success:function(diskJson){
-              console.log("马甲用户列表获取：");
-              console.log(diskJson);
+              //console.log("马甲用户列表获取：");
+              //console.log(diskJson);
                 $("#checkpublisher").empty();
                 $("#myNameSelect").empty();
                 if(diskJson.data.length >0){
@@ -696,7 +696,7 @@
             $("#talkAboutBox .talkNum").html(talknum);
             $("#myComments").attr("placeholder","");
             layer.msg("发送成功。。。。");
-            console.log(usertalk.items);
+            //console.log(usertalk.items);
 
         }
 
@@ -728,7 +728,7 @@
         let contenttitle=$("#mainConTitle").val();
         let contenttype=$("#movieStyle").attr("data-val");
         let contentuid=$("#checkpublisher").val();//发布人马甲
-        if(contentuid ==""){
+        if(contentuid == null || contentuid ==""){
             layer.msg("请选择发布人！！");
             return fasle;
         }
@@ -769,9 +769,11 @@
             "playcount": playcount,
             "showtime": showtime,
             "contenttext":contenttext,
+            "flag":1,
+            "type":1
         };
-        console.log("tijiao 2postdata:");
-        console.log(tjdatas);
+        //console.log("tijiao 2postdata:");
+        //console.log(tjdatas);
         tjdatas=JSON.stringify(tjdatas);
         $.ajax({
             url : path+'/content/uploadAContentByUser.do',
@@ -835,7 +837,7 @@
     });
 
 
-    /*缩略图编辑打开*/
+    /*缩略图编辑打开放大*/
     $("#movieImgBox .movieshowimg").click(function(){
         let imgsrc=$("#movieImgBox .movieshowimg img").attr("src");
         $("#imgEditBox .imgshowBox img").attr("src",imgsrc);
@@ -862,11 +864,19 @@
         }
         if (window.FileReader) {
             var reader = new FileReader();
-            reader.readAsDataURL(files);
+            reader.index = 0;
+            reader.file = this.files[0];
+            reader.readAsDataURL(this.files[0]);  //转成base64
+            reader.fileName = this.files[0].name;
             //监听文件读取结束后事件
             reader.onloadend = function (e) {
                 fileslist[0]=files;
                 iffilechange=2;
+                var imgMsg = {
+                    name : this.fileName,//获取文件名
+                    file:this.file,//文件流
+                    base64 : this.result   //reader.readAsDataURL方法执行完后，base64数据储存在reader.result里
+                };
                 let img = new Image();              //手动创建一个Image对象
                 img.src = e.target.result;//创建Image的对象的url
                 img.onload = function () {
@@ -875,11 +885,24 @@
                     $("#movieImgBox .movieshowimg img").attr("data-height",this.height);
                 };
                 $("#movieImgBox .movieshowimg img").attr("src",e.target.result);    //e.target.result就是最后的路径地址
+                /*提交到腾讯云上*/
+                // console.log("imgMsg::");
+                // console.log(imgMsg);
+                runAsync(imgMsg).then(function(data){
+                    var onetdk=data.Url.substring(0, data.Url.indexOf('?'));
+                    return onetdk;
+                }).then(function(onetdk) {
+                    // console.log("onetdk::");
+                    // console.log(onetdk);
+                    var moviecover=JSON.parse(contentDatasurllist);
+                    moviecover[0]=onetdk;
+                    contentDatasurllist=moviecover;
 
+                });
 
             };
         }
-    });
+    })
 
 
 </script>

@@ -22,29 +22,29 @@
                         <thead>
                         <tr>
                             <th>序号</th>
-                            <th>类型</th>
                             <th>队列名称</th>
-                            <th>内容</th>
                             <th>查看次数</th>
                             <th>点赞量</th>
                             <th>评论量</th>
                             <th>分享量</th>
                             <th>推荐时间</th>
                             <th>操作人</th>
+                            <th>操作</th>
                         </tr>
                         </thead>
                         <tbody id="tablelistTbody">
                         <tr v-for="(item,index) in items">
                             <td class="center">{{index+1}}</td>
-                            <td class="center">{{item.contenttype == "3" ? "图片":item.contenttype == "4" ? "图文":item.contenttype == "1" ? "横视频":"竖视频"  }}</td>
                             <td class="center">{{item.pushid}}</td>
-                            <td class="center">{{item.contenttitle}}</td>
-                            <td class="center">{{item.watchCount}}</td>
-                            <td class="center">{{item.goodCount}}</td>
-                            <td class="center">{{item.commentCount}}</td>
-                            <td class="center">{{item.shareCount}}</td>
-                            <td class="center">{{item.updatetime | time}}</td>
+                            <td class="center">{{item.watchcount}}</td>
+                            <td class="center">{{item.goodcount}}</td>
+                            <td class="center">{{item.commentcount}}</td>
+                            <td class="center">{{item.sharecount}}</td>
+                            <td class="center">{{item.createtime | time}}</td>
                             <td class="center">{{item.userid}}</td>
+                            <td class="center">
+                                <button type="button" class="btn deletebtn" v-on:click="detail(item)">详情</button>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
@@ -78,31 +78,9 @@
         },
         // 在 `methods` 对象中定义方法
         methods: {
-            lookdetail:function(event){//查看详情
-
-               /* event=JSON.parse(event.pushdata);
-                var nedata=[],countlist=[];
-                $.each(event.contentdetail,function(i,n){
-                    nedata.push(n.contentid);
-                    countlist.push({"seecount": n.seecount,"allcount": n.allcount,"contentid":n.contentid});
-                });
-                layer.open({
-                    type: 2,
-                    title: '队列详情',
-                    shadeClose: true,
-                    maxmin: true, //开启最大化最小化按钮
-                    shade: 0.8,
-                    area: ['80%', '90%'],
-                    content: "../detaillist.html", //iframe的url
-                    success: function (layero, index) {
-                        var body = layer.getChildFrame('body', index);
-                        var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
-                        iframeWin.getcheck(nedata,countlist);
-                        iframeWin.pusblishtabledata.ispushed=2;
-                    }
-                });*/
-
-            }
+            detail:function(event){//详情
+                reportdetail(event)
+            },
         }
     });
 
@@ -138,7 +116,68 @@
         });
     }
 
+    /*点击详情查看*/
+    function reportdetail(nedata){
+//        console.log("nedata::");
+//        console.log(nedata);
+        var contentlist=[nedata.contentid];
+        var datapost={"contentlist":contentlist};
+//         console.log("datapost::");
+//         console.log(datapost);
+        datapost=JSON.stringify(datapost);
+        // tabledata.tagshow=contentshow;
+        $.ajax({
+            url : path+'/content/watchContentDetail.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+//                console.log("获取失败：");
+//                console.log(data);
+            },
+            success:function(diskJson){
+                //console.log("查看内容详情接口：");
+                //console.log(diskJson);
+                if(diskJson.code =="1000"){
+                    repoterdetail2(diskJson.data[0]);
 
+                }else{
+                    layer.msg("数据有误请重试!");
+                }
+
+
+            }
+        });
+    }
+
+    /*查看详情2*/
+    function repoterdetail2(urldata){
+        var type=urldata.contenttype;
+        var url="recomovie.html";
+        if(type=="3" || type=="4"|| type=="5"){
+            url="../recopicture.html";
+        }else{
+            url="../recomovie.html";
+        }
+        layer.open({
+            type: 2,
+            title: '内容详情',
+            shadeClose: true,
+            maxmin: true, //开启最大化最小化按钮
+            shade: 0.8,
+            area: ['80%', '90%'],
+            content: url, //iframe的url
+            success: function (layero, index) {
+                var body = layer.getChildFrame('body', index);
+                var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                iframeWin.geturl(urldata);
+            }
+        });
+    }
 
 </script>
 

@@ -43,10 +43,10 @@
                         <tr v-for="(item,index) in items" :data-id="item.contentid">
                             <td class="center">{{index+1}}</td>
                             <td class="center">{{item.contenttitle}}</td>
-                            <td class="center">{{item.watchnum}}</td>
-                            <td class="center">{{item.goodnum}}</td>
-                            <td class="center">{{item.commentnum}}</td>
-                            <td class="center">{{item.sharenum}}</td>
+                            <td class="center">{{item.watchcount}}</td>
+                            <td class="center">{{item.goodcount}}</td>
+                            <td class="center">{{item.commentcount}}</td>
+                            <td class="center">{{item.sharecount}}</td>
                             <td class="center">{{item.createtime | time}}</td>
                             <td class="center">
                                 <button type="button" class="btn deletebtn" v-on:click="detail(item)">详情</button>
@@ -146,8 +146,8 @@
             },
             success:function(diskJson){
                 layer.closeAll();
-                // console.log("获取推荐列表：");
-                // console.log(diskJson);
+                console.log("获取推荐列表：");
+                console.log(diskJson);
                 /*翻页信息*/
                 if(diskJson.code =="1000"){
                     recondlist.items=diskJson.data;
@@ -204,7 +204,7 @@
     function repoterdetail2(urldata){
         var type=urldata.contenttype;
         var url="recomovie.html";
-        if(type=="3" || type=="4"){
+        if(type=="3" || type=="4"|| type=="5"){
             url="../recopicture.html";
         }else{
             url="../recomovie.html";

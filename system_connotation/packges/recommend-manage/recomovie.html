@@ -34,6 +34,70 @@
         .otherDetailBox{width:100%;padding:10px;padding-left:80px;}
         .otherDetailBox p{margin:2px 0;}
         .otherDetailBox span{display: inline-block;margin-right:5px;}
+
+        /*评论区*/
+        #talkAboutBox .tittleBox{width:100%;height:40px;line-height: 40px;border:1px solid #bbb;}
+        #talkAboutBox .tittleBox span{display:inline-block;height:100%;text-align: center;}
+        #talkAboutBox  .commentSectionBox{width:100%;padding:12px;height:660px;overflow-y: auto;}
+        #talkAboutBox  .commentSectionBox .commentSection{width:100%;overflow: hidden;height:auto;}
+        #talkAboutBox .commentSection .userTitle .imgBox{width:25px;height:25px;border:1px solid #aaa;overflow: hidden;display: inline-block;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+            border-radius: 50%;vertical-align: middle;}
+        #talkAboutBox{background:#f0f3f4;}
+        #talkAboutBox .userTitle .imgBox img{width:100%;height:100%;}
+        #talkAboutBox .commentSection{border-bottom:1px dashed #bbb;}
+        #talkAboutBox .commentSection .userTitle{width:112px;float:left;}
+        #talkAboutBox .commentSection .conmentsConts{width:calc(100% - 300px);padding:0 15px;float:left;}
+        #talkAboutBox .commentSection .doBox{float:left;}
+        #talkAboutBox .commentSection .doBox .reply{color:#0064b6;padding-right:12px;}
+        #talkAboutBox .commentSection .praiseBox i{font-size:18px;margin-right:3px;}
+        #talkAboutBox .commontsSrBox{width:100%;min-height:235px;padding:12px;border:1px solid #bbb;position: relative;}
+        #myNameSelect{width:145px;height:30px;vertical-align: text-top;}
+        #myComments{width:calc(100% - 400px);vertical-align: top;margin-right:9px;height:75px;}
+        #mySetNum{width:75px;height:20px;padding-left:6px;}
+        #myConmentsEnter{position: absolute;right:62px;top:45px;width:172px;}
+        #myConmentsSub{position: absolute;left:95px;top:30px;}
+        .selefCon:hover{background:#179d82;color:#fff;}
+        .recalltalkcon{padding-left:12px;position: relative;margin:15px 0;}
+        .recalltalkcon:hover{background:#179d82;color:#fff;}
+        .recalltalkcon .callDoBox{position: absolute;right:-70px;bottom:3px;font-size:11px;}
+        .recalltalkcon .callDoBox .reply{padding-right:6px;}
+        .recalltalkcon:hover .callDoBox span{color:#bbb;!important;}
+        #detailCon .searchMenu .searchTag{width:76px;height:30px;}
+        #detailCon .searchMenu .searchSecondMenu{position: absolute;width:100%;left:0;top:28px;background:#eee;color:#bbb;list-style: none;padding:0;z-index: 98;border:1px solid #bbb;border-top:none;display: none;max-height: 420px;overflow-y: auto;}
+        #detailCon .searchMenu .searchSecondMenu.show{display: block;}
+        #detailCon .searchSecondMenu li{width:100%;text-align: left;padding-left:3px;cursor: pointer;line-height: 23px;}
+        #detailCon .searchSecondMenu li:hover{background:#fff;color:#333;border-top:1px solid #bbb;}
+
+        #movieImgBox .movieinputBox{position: absolute;left:82px;bottom:1px;width:75px;height:32px;overflow: hidden;}
+        #movieImgBox .moviebtn{display: inline-block;width:100%;height:27px;line-height: 27px;text-align: center;background:#568fb9;cursor: pointer;color: #fff;
+            -webkit-border-radius: 3px;z-index:50;
+            -moz-border-radius: 3px;
+            border-radius: 3px;}
+        #movieImgBox .movieshowimg{border: 1px solid #9d9e9e;overflow: hidden;width: 80px;height: 80px;line-height: 80px;text-align: center;  background: rgba(255,255,255,.4);  cursor: pointer;}
+        #movieImgBox .movieshowimg img{width: auto;height: auto;max-width: 80px;max-height: 80px;}
+        #movieimgfile{ position: absolute;top:0;left:0;z-index:60;cursor: pointer;width:100%;height:100%;opacity: 0;}
+        #movieImgBox .movieinputBox:hover .moviebtn{background:#204663;}
+        #movieImgBox .tips{color:#ce0000;font-size:8px;position: absolute;bottom:25px;left:82px;display: none;}
+        #movieImgBox .tips.show{display: block;}
+        #recommendPageBox{height:32px;line-height: 32px;}
+        #recommendPageBox select{margin-right:5px;}
+        #commontsSrBox .imgmovieShowBox{min-height: 130px;width:100%;position: relative;}
+        #imgmovieShowConts{width: calc(100% - 400px);margin:5px 9px 0 149px;overflow:hidden;border:1px solid #ddd;padding:4px;}
+        #commentInputFile{width:200px;height:30px;position: absolute;top:6px;right: 35px;display: none;}
+        .imgmovieShowBox .inputfileBtn{position: absolute;top:6px;right: 60px;}
+        #choosePictureBtn{right:154px;}
+        .imgMovieShowComBox{width:100%;}
+        .imgMovieShowComBox span{display: inline-block;border:1px solid #ddd;margin:3px;padding:2px; text-align: center;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;}
+        .movieshowBox span{width:45%;height:160px;}
+
+        .imgMovieShowComBox span img,
+        .imgMovieShowComBox span video{width:auto;height:auto;max-width:85px;max-height: 85px;vertical-align: top;}
+        .imgMovieShowComBox span video{max-width:45%;max-height: 160px;}
     </style>
 
 </head>
@@ -66,6 +130,60 @@
 
         </div>
 
+        <!--底部评论管理-->
+        <div id="talkAboutBox">
+            <div class="tittleBox">
+                <span style="width:43%;">评论管理</span>
+                <span style="width:25%;border-right:1px solid #bbb;border-left:1px solid #bbb;">评论数 ：<b class="talkNum"></b></span>
+                <span style="width:25%;">热评数 :<b class="hotTalkNum"></b></span>
+            </div>
+            <div class="commentSectionBox" id="commentSectionBox">
+                <div class="commentSection" v-for="(item,i) in items" v-bind:data-commentid="item.commentid" v-bind:data-commentreply="item.commentreply" v-bind:data-replycomment="item.replycomment" v-bind:data-replyuser="item.replyuser" v-bind:data-replyfirst="item.replyfirst">
+                    <p class="userTitle">
+                        <span class="imgBox"><img v-bind:src="item.userheadphoto" alt=""/></span>
+                        <span class="userName" v-bind:data-id="item.userid">{{item.username}}：</span>
+                    </p>
+                    <div class="conmentsConts" v-bind:data-replyuser="item.replyuser">
+                        <div class="selefCon" v-bind:data-contentid="item.contentid">{{item.commenttext}}
+                            <!--图片/视频-->
+                            <div class="imgMovieShowComBox">
+                            <span v-for="(itemimg,t) in JSON.parse(item.commenturl)">
+                                <img v-if="itemimg.type ==3 || itemimg.type ==4" v-bind:src="itemimg.info" alt="">
+                                <video v-else controls="controls" v-bind:src="itemimg.info">您的浏览器不支持</video>
+                            </span>
+
+                            </div>
+                        </div>
+                        <!--回复-->
+                        <div class="recalltalkcon" v-for="(itemcon,d) in item.childList"  v-bind:data-contentid="item.contentid"  v-bind:data-commentid="itemcon.commentid" v-bind:data-commentreply="itemcon.commentreply" v-bind:data-replycomment="itemcon.replycomment" v-bind:data-replyuser="itemcon.replyuser" v-bind:data-replyfirst="itemcon.replyfirst">
+                            <span class="recalluser" :data-id="itemcon.userid"  v-bind:data-replyuser="item.replyuser">
+                                <span class="imgBox" style="display: inline-block;width:25px;height:25px;margin-right:5px;">
+                                    <img style="width:100%;height:100%;vertical-align: middle;" v-bind:src="itemcon.userheadphoto" alt=""/>
+                                </span>{{itemcon.username}}  回复  {{itemcon.ruusername}}：</span>
+                            {{itemcon.commenttext}}
+                            <!--图片/视频-->
+                            <div class="imgMovieShowComBox"  >
+                            <span v-for="(itemimg2,t2) in JSON.parse(itemcon.commenturl)" >
+                                <img v-if="itemimg2.type ==3 || itemimg2.type ==4" v-bind:src="itemimg2.info" alt="">
+                                 <video v-else controls="controls" v-bind:src="itemimg2.info">您的浏览器不支持</video>
+                            </span>
+                            </div>
+                          <!--  <div class="callDoBox">
+                                <span class="reply" >回复</span>
+                                <span class="praiseBox"  ><i class="glyphicon glyphicon-thumbs-up"></i><b class="praiseNum">{{itemcon.commentgood}}</b></span>
+                            </div>-->
+                        </div>
+
+                    </div>
+                    <div class="doBox">
+                        <span class="reply">点赞量：</span>
+                        <span class="praiseBox"><i class="glyphicon glyphicon-thumbs-up"></i><b class="praiseNum">{{item.commentgood}}</b></span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
     <!-- Page-Level Scripts -->
         <script src="../../js/jquery.min.js?v=2.1.4"></script>
         <script src="../../plugin/layer/layer.js"></script>
@@ -82,16 +200,29 @@
 
             }
         });
-           // geturl();
+
+        /*品论区*/
+        var usertalk = new Vue({
+            el: '#commentSectionBox',
+            data: {
+                items: []
+            },
+            // 在 `methods` 对象中定义方法
+            methods: {
+                backcalltalk:function(event,i,d){
+
+                }
+            }
+        });
 
             /*获取下载地址*/
             function geturl(urldatas){
-                console.log("urldatas::");
-                console.log(urldatas);
+                //console.log("urldatas::");
+                //console.log(urldatas);
                 contentdetail.list=urldatas;
                 var url=JSON.parse(urldatas.contenturllist);
                 $("#video").attr("src",url[1]);
-
+                usertalk.items=urldatas.cmtlist;
             }
 
 

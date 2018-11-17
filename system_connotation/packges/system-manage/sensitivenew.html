@@ -73,7 +73,7 @@
            var datapost={"senvalue":senvalue,"sentype":sentype,"userid":createuser};
            datapost=JSON.stringify(datapost);
            $.ajax({
-               url : path+'/CTKJBUSINESS/sencontrol/addsensitive.do',
+               url : path+'/sencontrol/addsensitive.do',
                cache:false,//false就不会从浏览器缓存中加载请求信息了
                type:"POST",
                contentType: "application/json",

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> 运营内容管理</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link href="../../../css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="../../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+    <!-- jqgrid-->
+    <link href="../../../css/plugins/jqgrid/ui.jqgrid.css?0820" rel="stylesheet">
+
+    <link href="../../../css/animate.css" rel="stylesheet">
+    <link href="../../../css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="../../../css/common.css" rel="stylesheet">
+    <!-- 全局js -->
+    <script src="../../../js/jquery.min.js?v=2.1.4"></script>
+    <script src="../../../plugin/layer/layer.js"></script>
+    <script src="../../../js/vue.js"></script>
+    <style>
+        /* Additional style to fix warning dialog position */
+
+        #alertmod_table_list_2 {
+            top: 900px !important;
+        }
+    </style>
+
+</head>
+
+<body class="gray-bg">
+    <div style="padding-left:28px;padding-top:10px;">
+        <h3>运营内容管理</h3>
+        <select name="" id="newLabelLevel">
+            <option value="1">视频</option>
+            <option value="3">图文</option>
+            <option value="4">纯文字</option>
+            <option value="5">H5</option>
+        </select>
+        <button type="button" class="btn btn-sm btn-primary" id="createLabel">新 建</button>
+    </div>
+    <div class="wrapper wrapper-content  animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox-content">
+                    <div class="jqGrid_wrapper" id="tablelist">
+                        <!--   <table id="table_list_2"></table>-->
+                        <table  class="table table-striped" id="tablelistbox">
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>标题</th>
+                                <th>创建人</th>
+                                <th>创建时间</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tablelistTbody">
+                            <tr v-for="(item,index) in items">
+                                <td class="center">{{index+1}}</td>
+                                <td class="">{{item.contenttitle }}</td>
+                                <td class="center">{{item.userid}}</td>
+                                <td class="center">{{item.createtime | time}}</td>
+                                <td class="center">
+                                    <button type="button" class="btn deletebtn" v-on:click="detail(item)">详情</button>
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                        <div id="pagerlist">
+                            <div id="pagerbtnlist">
+                                <span class="glyphicon glyphicon-backward gbtn" id="prepagebtn" onclick="prepage(getlabel)"></span>
+                                <span class="addpagebox">
+                                    <span id="jumppage" onclick="jumppage(getlabel)">跳转到</span>
+                                    <input type="number" id="addpageinput" value="1" max="" min="1"/>
+                                    共 <span id="allpage">1</span>页
+                                </span>
+                                <span class="glyphicon glyphicon-forward gbtn" id="nextpagebtn" onclick="nextpage(getlabel)"></span>
+                            </div>
+                            <div id="allcontbox">
+                                <p id="allconts"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="../../../js/index.js"></script>
+    <!-- Page-Level Scripts -->
+    <script>
+        //新建标签
+        $("#createLabel").click(function(){
+            var lve=$("#newLabelLevel").val();
+            $("#contentPageBox").load("checksconts.html",function(){
+                getchecktype(lve);
+            });
+        });
+
+        var labeldata = new Vue({
+            el: '#tablelistTbody',
+            data: {
+                items:""
+            },
+            // 在 `methods` 对象中定义方法
+            methods: {
+                detail:function(event){//详情
+                    reportdetail(event)
+                }
+            }
+        });
+
+        $(function(){
+            getlabel(1);
+        });
+
+        /*运营管理列表*/
+        function getlabel(pageno){
+            var postdata={"pagesize":10,"pageno":pageno};
+            postdata=JSON.stringify(postdata);
+            $.ajax({
+                url : path2+'/pushbakcontrol/queryAllPush.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: postdata,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    //////console.log("获取失败：");
+                    //////console.log(data);
+                },
+                success:function(diskJson){
+                   ////console.log("运营管理列表：");
+                   ////console.log(diskJson);
+                    /*翻页信息*/
+                    pageinfo3(pageno,diskJson.data.totalCount,10);//翻页控件信息
+                    labeldata.items=diskJson.data.pushbaklist;
+
+
+                }
+            });
+        }
+
+        /*点击详情查看*/
+        function reportdetail(nedata){
+//        ////console.log("nedata::");
+//        ////console.log(nedata);
+            var contentlist=[nedata.contentid];
+            var datapost={"contentlist":contentlist};
+//         ////console.log("datapost::");
+//         ////console.log(datapost);
+            datapost=JSON.stringify(datapost);
+            // tabledata.tagshow=contentshow;
+            $.ajax({
+                url : path+'/content/watchContentDetail.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: datapost,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+//                ////console.log("获取失败：");
+//                //console.log(data);
+                },
+                success:function(diskJson){
+                    // //console.log("查看内容详情接口：");
+                    // //console.log(diskJson);
+                    if(diskJson.code =="1000"){
+                        repoterdetail2(diskJson.data[0]);
+
+                    }else{
+                        layer.msg("数据有误请重试!");
+                    }
+
+
+                }
+            });
+        }
+
+        /*查看详情2*/
+        function repoterdetail2(urldata){
+            var type=urldata.contenttype;
+            var url="recomovie.html";
+            if(type=="3" || type=="4"  || type=="5"){
+                url="../recopicture.html";
+            }else{
+                url="../recomovie.html";
+            }
+            layer.open({
+                type: 2,
+                title: '内容详情',
+                shadeClose: true,
+                maxmin: true, //开启最大化最小化按钮
+                shade: 0.8,
+                area: ['80%', '90%'],
+                content: url, //iframe的url
+                success: function (layero, index) {
+                    var body = layer.getChildFrame('body', index);
+                    var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                    iframeWin.geturl(urldata);
+                }
+            });
+        }
+
+    </script>
+
+    
+    
+
+</body>
+
+</html>
