@@ -97,7 +97,7 @@
 
         .imgMovieShowComBox span img,
         .imgMovieShowComBox span video{width:auto;height:auto;max-width:85px;max-height: 85px;vertical-align: top;}
-        .imgMovieShowComBox span video{max-width:45%;max-height: 160px;}
+        .imgMovieShowComBox span video{max-width:80%;max-height: 300px;}
     </style>
 
 </head>
@@ -146,11 +146,11 @@
                     <div class="conmentsConts" v-bind:data-replyuser="item.replyuser">
                         <div class="selefCon" v-bind:data-contentid="item.contentid">{{item.commenttext}}
                             <!--图片/视频-->
-                            <div class="imgMovieShowComBox">
-                            <span v-for="(itemimg,t) in JSON.parse(item.commenturl)">
-                                <img v-if="itemimg.type ==3 || itemimg.type ==4" v-bind:src="itemimg.info" alt="">
-                                <video v-else controls="controls" v-bind:src="itemimg.info">您的浏览器不支持</video>
-                            </span>
+                            <div class="imgMovieShowComBox" v-if="item.commenturl&&item.commenturl.length>0">
+                                <span v-for="(itemimg,t) in JSON.parse(item.commenturl)">
+                                    <img v-if="itemimg.type ==3 || itemimg.type ==4" v-bind:src="itemimg.info" alt="">
+                                    <video v-else controls="controls" v-bind:src="itemimg.info">您的浏览器不支持</video>
+                                </span>
 
                             </div>
                         </div>
@@ -162,11 +162,11 @@
                                 </span>{{itemcon.username}}  回复  {{itemcon.ruusername}}：</span>
                             {{itemcon.commenttext}}
                             <!--图片/视频-->
-                            <div class="imgMovieShowComBox"  >
-                            <span v-for="(itemimg2,t2) in JSON.parse(itemcon.commenturl)" >
-                                <img v-if="itemimg2.type ==3 || itemimg2.type ==4" v-bind:src="itemimg2.info" alt="">
-                                 <video v-else controls="controls" v-bind:src="itemimg2.info">您的浏览器不支持</video>
-                            </span>
+                            <div class="imgMovieShowComBox"  v-if="itemcon.commenturl&&itemcon.commenturl.length>0">
+                                <span v-for="(itemimg2,t2) in JSON.parse(itemcon.commenturl)" >
+                                    <img v-if="itemimg2.type ==3 || itemimg2.type ==4" v-bind:src="itemimg2.info" alt="">
+                                     <video v-else controls="controls" v-bind:src="itemimg2.info">您的浏览器不支持</video>
+                                </span>
                             </div>
                           <!--  <div class="callDoBox">
                                 <span class="reply" >回复</span>

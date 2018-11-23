@@ -78,7 +78,7 @@
 
         .imgMovieShowComBox span img,
         .imgMovieShowComBox span video{width:auto;height:auto;max-width:85px;max-height: 85px;vertical-align: top;}
-        .imgMovieShowComBox span video{max-width:45%;max-height: 160px;}
+        .imgMovieShowComBox span video{max-width:80%;max-height: 300px;}
         /*多图显示*/
         .delete {
             width: 100px;
@@ -127,13 +127,13 @@
     <div class="commentSectionBox" id="commentSectionBox">
         <div class="commentSection" v-for="(item,i) in items" v-bind:data-commentid="item.commentid" v-bind:data-commentreply="item.commentreply" v-bind:data-replycomment="item.replycomment" v-bind:data-replyuser="item.replyuser" v-bind:data-replyfirst="item.replyfirst">
             <p class="userTitle">
-               <!-- <span class="imgBox"><img v-bind:src="item.userheadphoto" alt=""/></span>-->
+                <span class="imgBox"><img v-bind:src="item.userheadphoto" alt=""/></span>
                 <span class="userName" v-bind:data-id="item.userid">{{item.username}}：</span>
             </p>
             <div class="conmentsConts" v-bind:data-replyuser="item.replyuser">
                 <div class="selefCon" v-bind:data-contentid="item.contentid">{{item.commenttext}}
                     <!--图片/视频-->
-                    <div class="imgMovieShowComBox">
+                    <div class="imgMovieShowComBox" v-if="item.commenturl&&item.commenturl.length>0">
                             <span v-for="(itemimg,t) in item.commenturl">
                                 <img v-if="itemimg.type ==3 || itemimg.type ==4" v-bind:src="itemimg.info" alt="">
                                 <video v-else controls="controls" v-bind:src="itemimg.info">您的浏览器不支持</video>
@@ -149,7 +149,7 @@
                                 </span>{{itemcon.username}}  回复  {{itemcon.ruusername}}：</span>
                     {{itemcon.commenttext}}
                     <!--图片/视频-->
-                    <div class="imgMovieShowComBox"  >
+                    <div class="imgMovieShowComBox"  v-if="itemcon.commenturl&&itemcon.commenturl.length>0">
                             <span v-for="(itemimg2,t2) in itemcon.commenturl" >
                                 <img v-if="itemimg2.type ==3 || itemimg2.type ==4" v-bind:src="itemimg2.info" alt="">
                                  <video v-else controls="controls" v-bind:src="itemimg2.info">您的浏览器不支持</video>
@@ -230,11 +230,12 @@
     var itemdatas="";
     /*获取下载地址*/
     function geturl(urldatas,iuserid,iusername){
-        if(typeof urldatas.commenturl == 'string'){
-            urldatas.commenturl=JSON.parse(urldatas.commenturl);
-        }
         console.log("urldatas::");
         console.log(urldatas);
+        if(urldatas.commenturl && urldatas.commenturl !="" && typeof urldatas.commenturl == 'string'){
+            urldatas.commenturl=JSON.parse(urldatas.commenturl);
+        }
+
         itemdatas=urldatas;
         let items=[urldatas];
         usertalk.items=items;
@@ -252,7 +253,7 @@
             layer.msg("发送内容不能为空！");
         }else{
             layer.msg('上传中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:1000}) ;
-            var commenturl=[];
+            let commenturl=[];
             var commenturltype="";
             //发送图片
             if(dataArr.length >0){
@@ -287,12 +288,17 @@
                 var replyfirst =usertalk.items[index].commentid;
                 usertalk.items[index].recall.push({ "commentid":commentid,"userid":userid,"replyuser":replyuser,"replyusername":replyusername,"commentreply":0,"userimg":userHead,"userName":userName,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":replycomment,"replyfirst":replyfirst,"createtime":createtime,"commenturl":commenturl,"commenturltype":commenturltype});
             }*/
-         console.log(usertalk.items);
+         //console.log(usertalk.items);
             let replyfirst=itemdatas.replyfirst;
             let replyid=itemdatas.commentid;
             let replyuid=itemdatas.userid;
+
             var postdata={"commenturl":commenturl,"contentid":contentid,"replyfirst":replyfirst,"replyid":replyid,"replyuid":replyuid,"text":text,"userid":userid};
-            postreplay(postdata);//提交数据
+
+            setTimeout(function(){
+                postreplay(postdata);//提交数据
+            },1000);
+
             $("#commontsSrBox").attr("data-type",0);
             $("#myComments").val("");
             $("#mySetNum").val(1);
@@ -308,6 +314,8 @@
     function postreplay(postdata){
 
         postdata=JSON.stringify(postdata);
+        // console.log("postdata::");
+        // console.log(postdata);
         $.ajax({
             url : path2+'/note/replyComment.do',
             cache:false,//false就不会从浏览器缓存中加载请求信息了

@@ -5,12 +5,10 @@
 //const path="http://192.168.1.114:8807";
 //const path2="http://192.168.1.114:8807";
 
-/*线上*/
-//const path="http://118.126.68.108:8808";
-//const path2="http://118.126.68.108:8808";
+
 /*线上改*/
-const path="https://api.itoutu.com:8898";
-const path2="https://api.itoutu.com:8898";
+const path="https://api.itoutu.com:8899/NHDZSEVER";
+const path2="https://api.itoutu.com:8899/NHDZSEVER";
 
 function check(diskJson) {
     // 保存缓存

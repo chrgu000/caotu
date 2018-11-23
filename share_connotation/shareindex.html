@@ -10,7 +10,7 @@
     <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
     <META HTTP-EQUIV="expires" CONTENT="0">
     <title>内含段子</title>
-    <link href="img/logo.png" rel="shortcut icon">
+    <link href="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/nhdzlogo.png" rel="shortcut icon">
     <link rel="stylesheet" href="css/common.css"/>
     <link rel="stylesheet" href="plugin/font/iconfont.css"/>
 
@@ -20,7 +20,7 @@
 </head>
 <body>
     <div class="conntentsBox">
-        <a id="shareHeader" class="downhrefbtn"  href="#">
+        <a id="shareHeader" class="downhrefbtn"  href="isshare.html">
             <img class="shareHeaderImg" style="width:100%;height:auto;"  src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/appshareneihan/shareTitle.png" alt=""/>
            <!-- <div class="logobox">
                 <img class="logo" src="img/logo.png" alt="logo"/>
@@ -40,7 +40,7 @@
 
             </div>
             <div style="text-align: center;margin-top:25px;">
-                <a class="downhrefbtn btn"  href="#" id="seeDetails">
+                <a class="downhrefbtn btn"  href="isshare.html" id="seeDetails">
                     <div id="userheadbox">
                         <div class="titleBox">
                             <div class="headTitleBox">
@@ -99,10 +99,10 @@
         el: '#mainContenBigBox',
         data: {
             "items": [],
-            "userhead":"",
+            "userhead":"游客",
             "guajianurl":"",
             "commendTitle":"",
-            "userheadphoto":""
+            "userheadphoto":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/nhdzhead.png"
 
         },
         // 在 `methods` 对象中定义方法
@@ -118,7 +118,7 @@
     var commendmore = new Vue({
         el: '#moreRecommendBox',
         data: {
-            downhref:"",
+            downhref:"isshare.html",
             items: [
                 {"tagimg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/01.jpg","tagalias":"上辈子拯救过宇宙才能娶到这么美的媳妇儿吧"},
                 {"tagimg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/02.jpg","tagalias":"他真的改行了，看来把我大话听进去了"},
@@ -153,34 +153,32 @@
 
     $(function(){
         iscontendtype();
-        phoneType();
     });
-
-    /*手机类型判断*/
-    function phoneType() {
-        var u = navigator.userAgent;
-        if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {//安卓手机
-            //alert("安卓手机");
-            $(".downhrefbtn").attr("href","http://sj.qq.com/myapp/detail.htm?apkName=com.caotu.toutu");
-            commendmore.downhref="http://sj.qq.com/myapp/detail.htm?apkName=com.caotu.toutu";//内容分享页的更多
-        } else if (u.indexOf('iPhone') > -1) {//苹果手机
-            $(".downhrefbtn").attr("href","https://itunes.apple.com/cn/app/id1398165300?mt=8");
-            commendmore.downhref="https://itunes.apple.com/cn/app/id1398165300?mt=8";
-            //alert("苹果手机");
-        } else if (u.indexOf('Windows Phone') > -1) {//winphone手机
-            //alert("winphone手机");
-            $(".downhrefbtn").attr("href","http://sj.qq.com/myapp/detail.htm?apkName=com.caotu.toutu");
-            commendmore.downhref="http://sj.qq.com/myapp/detail.htm?apkName=com.caotu.toutu";
-        }
-    }
 
 
     /*获取url判断类型*/
     function iscontendtype(){
-       var loctionsrc="?contendid=965a418e6e0511e8b56d309c23a27303";//假设得到的location.search; //获取url中"?"符后的字串
+     //  var loctionsrc='?contendid=965a418e6e0511e8b56d309c23a27303&userheadphoto=https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/nhdzhead.png&username=朱豪华';//假设得到的location.search; //获取url中"?"符后的字串
+     // var loctionsrc='?contendid%3dIbOrKHqvsm5LfS7O3uC1542359773006%26userheadphoto%3dhttps%3a%2f%2fctkj-1256675270.cos.ap-shanghai.myqcloud.com%2fnhdzhead.png%26username%3d%e6%9c%b1%e8%b1%aa%e5%8d%8e12345678954';//假设得到的location.search; //获取url中"?"符后的字串
+       var loctionsrc= window.location.search;
+        loctionsrc=decodeURIComponent(loctionsrc);
 //       var loctionsrc= window.location.search;
         var urldatas=GetRequest(loctionsrc);
-//        console.log(urldatas);
+        console.log("urldatas::");
+        console.log(urldatas);
+        if(urldatas.userheadphoto && urldatas.userheadphoto !=""){
+            commendinfo.userheadphoto=urldatas.userheadphoto;
+        }
+
+        if(urldatas.username && urldatas.username !=""){
+            let username="";
+            if(urldatas.username.length>8){
+                username=urldatas.username.substring(0,7)+"...";
+            }else{
+                username=urldatas.username;
+            }
+            commendinfo.userhead=username;
+        }
         getcommonddatas(urldatas.contendid);
     }
 
@@ -191,7 +189,7 @@
 //        tjdatas=JSON.stringify(tjdatas);
 
         $.ajax({
-            url : path2+'/CTKJSEVER/content/sharecontent.do',
+            url : path2+'/content/sharecontent.do',
             cache:false,//false就不会从浏览器缓存中加载请求信息了
             type:"POST",
 //            contentType: "application/json",
@@ -223,14 +221,7 @@
     }
 
     function condataqf(condatas){
-        if(condatas.userheadphoto && condatas.userheadphoto !=""){
-            commendinfo.userheadphoto=condatas.userheadphoto;
-        }
-        if(condatas.username && condatas.username !=""){
-            commendinfo.userhead=condatas.username;
-        }else{
-            commendinfo.userhead=condatas.contentuid;
-        }
+
         if(condatas.contenttitle && condatas.contenttitle !=""){
             commendinfo.commendTitle=condatas.contenttitle;
         }
@@ -275,7 +266,7 @@
         tjdatas=JSON.stringify(tjdatas);
        // console.log(tjdatas);
         $.ajax({
-            url :path2+'/CTKJSEVER/bannertag/sharesmalltag.do',
+            url :path2+'/bannertag/sharesmalltag.do',
             cache:false,//false就不会从浏览器缓存中加载请求信息了
             type:"POST",
             contentType:"application/json",

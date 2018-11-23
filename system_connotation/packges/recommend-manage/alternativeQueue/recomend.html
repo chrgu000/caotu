@@ -94,7 +94,7 @@
                                 <button type="button" class="btn deletebtn" v-on:click="detail(item)">详情</button>
                                 <button type="button" class="btn deletebtn" v-on:click="redact(item)">编辑</button>
                                 <button v-if="suser==1" type="button" class="btn deletebtn" v-on:click="changeRecond(item,index)">替换</button>
-                                <button v-else type="button" class="btn deletebtn" v-on:click="deletecon(item,index)" >删除</button>
+                                <button type="button" class="btn deletebtn" v-on:click="deletecon(item,index)" >删除</button>
                             </td>
                         </tr>
 
@@ -218,7 +218,15 @@
             },
             deletecon:function(event,ei){//删除
                //console.log(event);
-                deleteRecon(event,ei)
+                layer.confirm('确定删除该条吗？', {
+                    btn: ['确定','取消'] //按钮
+                }, function(index){
+                    deleteRecon(event,ei);
+                    layer.close(index);
+                }, function(index){
+                    layer.close(index);
+                });
+
             }
         }
     });
@@ -386,6 +394,10 @@
             return false;
         }
         let pagenum=$("#temporaryPageChoose").val();
+        if(recondlist.postlist.length<=0){
+            layer.msg("请选择需要替换的内容");
+            return false;
+        }
         var datapost={"pagenum":pagenum,"replace":recondlist.postlist};
 //         console.log("datapost::");
 //         console.log(datapost);
@@ -408,11 +420,7 @@
                //console.log("刷新推荐列表：");
                //console.log(diskJson);
                 if(diskJson.code =="1000"){
-                  /*  var page=$("#temporaryPageChoose").val();
-                    $("#temporaryPageChoose").attr("data-page",page);
-                    getRecondList(page);
-                    getalterlist();
-                    getrubbigsetpige();*/
+                    recondlist.postlist=[];
                     layer.msg("推荐队列刷新成功！！!");
                 }else{
                     layer.msg("数据有误请重试!");

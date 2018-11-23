@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> 运营内容管理</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link href="../../../css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="../../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+    <!-- jqgrid-->
+    <link href="../../../css/plugins/jqgrid/ui.jqgrid.css?0820" rel="stylesheet">
+
+    <link href="../../../css/animate.css" rel="stylesheet">
+    <link href="../../../css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="../../../css/common.css" rel="stylesheet">
+    <!-- 全局js -->
+    <script src="../../../js/jquery.min.js?v=2.1.4"></script>
+    <script src="../../../plugin/layer/layer.js"></script>
+    <script src="../../../js/vue.js"></script>
+    <style>
+        /* Additional style to fix warning dialog position */
+
+        #alertmod_table_list_2 {
+            top: 900px !important;
+        }
+    </style>
+
+</head>
+
+<body class="gray-bg">
+    <div style="padding-left:28px;padding-top:10px;">
+        <h3>系统通知</h3>
+        <button type="button" class="btn btn-sm btn-primary" id="createLabel">创建系统通知</button>
+    </div>
+    <div class="wrapper wrapper-content  animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox-content">
+                    <div class="jqGrid_wrapper" id="tablelist">
+                        <!--   <table id="table_list_2"></table>-->
+                        <table  class="table table-striped" id="tablelistbox">
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>类型</th>
+                                <th>标题</th>
+                                <th>创建人</th>
+                                <th>推送时间</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tablelistTbody">
+                            <tr v-for="(item,index) in items">
+                                <td class="center">{{index+1}}</td>
+                                <td class="">{{item.sendtype ==1 ? "内容" :"其他"}}</td>
+                                <td class="center">{{item.notetext}}</td>
+                                <td class="center">{{item.createuser }}</td>
+                                <td class="center">
+                                    {{item.sendtime | time}}
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                        <div id="pagerlist">
+                            <div id="pagerbtnlist">
+                                <span class="glyphicon glyphicon-backward gbtn" id="prepagebtn" onclick="prepage(getlabel)"></span>
+                                <span class="addpagebox">
+                                    <span id="jumppage" onclick="jumppage(getlabel)">跳转到</span>
+                                    <input type="number" id="addpageinput" value="1" max="" min="1"/>
+                                    共 <span id="allpage">1</span>页
+                                </span>
+                                <span class="glyphicon glyphicon-forward gbtn" id="nextpagebtn" onclick="nextpage(getlabel)"></span>
+                            </div>
+                            <div id="allcontbox">
+                                <p id="allconts"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="../../../js/index.js"></script>
+    <!-- Page-Level Scripts -->
+    <script>
+        //创建系统通知
+        $("#createLabel").click(function(){
+
+            $("#contentPageBox").load("informnew.html");
+        });
+
+        var labeldata = new Vue({
+            el: '#tablelistTbody',
+            data: {
+                items:""
+            },
+            // 在 `methods` 对象中定义方法
+            methods: {
+                detail:function(event){//
+
+                }
+            }
+        });
+
+        $(function(){
+            getlabel(1);
+        });
+
+        /*运营管理列表*/
+        function getlabel(pageno){
+            var postdata={"pagesize":10,"pageno":pageno};
+            postdata=JSON.stringify(postdata);
+            $.ajax({
+                url : path2+'/note/systemnotelist.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: postdata,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    //////console.log("获取失败：");
+                    //////console.log(data);
+                },
+                success:function(diskJson){
+                   console.log("系统通知列表：");
+                   console.log(diskJson);
+                    /*翻页信息*/
+                    pageinfo3(pageno,diskJson.data.count,10);//翻页控件信息
+                    labeldata.items=diskJson.data.rows;
+
+
+                }
+            });
+        }
+
+
+    </script>
+
+    
+    
+
+</body>
+
+</html>

@@ -77,7 +77,7 @@ Element {
 #attentBtn .iconfont{ font-size: 2.1rem;margin-right: 5px;}
 #contentTittle{font-size:1rem;padding-left:12px;color:#333;}
 #mainContntShowbox{width:100%;margin:10px auto;height:400px;}
-#mainContentBox{margin:0 auto;margin-top:72px;width:95%;padding:10px 0; box-sizing: border-box;
+#mainContentBox{margin:0 auto;margin-top:60px;width:95%;padding:10px 0; box-sizing: border-box;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;

@@ -147,7 +147,7 @@
                 <div class="conmentsConts" v-bind:data-replyuser="item.replyuser">
                     <div class="selefCon" v-bind:data-contentid="item.contentid">{{item.commenttext}}
                         <!--图片/视频-->
-                        <div class="imgMovieShowComBox">
+                        <div class="imgMovieShowComBox" v-if="item.commenturl&&item.commenturl.length>0">
                             <span v-for="(itemimg,t) in JSON.parse(item.commenturl)">
                                 <img v-if="itemimg.type ==3 || itemimg.type ==4" v-bind:src="itemimg.info" alt="">
                                 <video v-else controls="controls" v-bind:src="itemimg.info">您的浏览器不支持</video>
@@ -160,7 +160,7 @@
                         <span class="recalluser" :data-id="itemcon.userid"  v-bind:data-replyuser="item.replyuser">{{itemcon.userName}}  回复  {{itemcon.replyusername}}：</span>
                         {{itemcon.commenttext}}
                         <!--图片/视频-->
-                        <div class="imgMovieShowComBox"  >
+                        <div class="imgMovieShowComBox"  v-if="itemcon.commenturl&&itemcon.commenturl.length>0">
                             <span v-for="(itemimg2,t2) in JSON.parse(itemcon.commenturl)" >
                                 <img v-if="itemimg2.type ==3 || itemimg2.type ==4" v-bind:src="itemimg2.info" alt="">
                                  <video v-else controls="controls" v-bind:src="itemimg2.info">您的浏览器不支持</video>
@@ -224,7 +224,10 @@
             //console.log("urldatas::");
             //console.log(urldatas);
             contentdetail.list=urldatas;
-            var nedurl=JSON.parse(urldatas.contenturllist);
+            var nedurl=[];
+            if(urldatas.contenturllist && urldatas.contenturllist!=""){
+                nedurl=JSON.parse(urldatas.contenturllist);
+            }
             if(urldatas.contenttype ==5){
                 $("#imgconbox").append('<img src="'+nedurl[0]+'">');
                 $("#h5url").css("display","block").html("H5链接："+nedurl[1]);
@@ -235,6 +238,7 @@
             }
 
             usertalk.items=urldatas.cmtlist;
+
 
         }
 

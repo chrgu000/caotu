@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta content=”initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width” name=”viewport” />
+    <meta content=”telephone=no” name=”format-detection” />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="解锁月相，发现未知的自己">
+    <meta name="viewport" content="maximum-scale=1.0, user-scalable=0">
+    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+    <META HTTP-EQUIV="Expires" CONTENT="0">
+    <title></title>
+    <script>
+        phoneType2();
+        function phoneType2() {
+            var u = navigator.userAgent;
+            if (u.indexOf('Android') > -1 || u.indexOf('Linux') > -1) {//安卓手机
+                //console.log("Android");
+                window.location.href = "http://sj.qq.com/myapp/detail.htm?apkName=com.caotu.toutu";
+                return 2;
+            } else if (u.indexOf('iPhone') > -1) {//苹果手机
+                //console.log("苹果手机");
+                window.location.href = "https://itunes.apple.com/cn/app/id1440708783?mt=8";
+                return 3;
+            } else if (u.indexOf('Windows Phone') > -1) {//winphone手机
+                //console.log("winphone手机");
+                window.location.href = "http://sj.qq.com/myapp/detail.htm?apkName=com.caotu.toutu";
+                return 4;
+            }
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

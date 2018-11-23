@@ -14,23 +14,32 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="checksconts.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/packges/content-manage/checksconts.html">
+      <file leaf-file-name="ugc-checksconts.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/packges/content-manage/ugc-checksconts.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="296">
-              <caret line="899" column="18" lean-forward="true" selection-start-line="899" selection-start-column="18" selection-end-line="899" selection-end-column="18" />
+            <state relative-caret-position="226">
+              <caret line="356" column="104" lean-forward="true" selection-start-line="356" selection-start-column="104" selection-end-line="356" selection-end-column="104" />
               <folding>
-                <element signature="n#div#1;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
+                <element signature="n#div#2;n#body#0;n#html#0;n#!!top" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="uncheck.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/packges/content-manage/uncheck.html">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="203">
-              <caret line="58" column="123" lean-forward="true" selection-start-line="58" selection-start-column="55" selection-end-line="58" selection-end-column="123" />
+            <state relative-caret-position="22">
+              <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/index.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="4774">
+              <caret line="217" column="21" lean-forward="true" selection-start-line="217" selection-start-column="21" selection-end-line="217" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -52,12 +61,15 @@
       <find>subd</find>
       <find>isreload</find>
       <find>checkpublisher</find>
+      <find>searchSecondMenu</find>
+      <find>checkTagSearch1</find>
     </findStrings>
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/packges/content-manage/ugc-checksconts.html" />
+        <option value="$PROJECT_DIR$/js/index.js" />
       </list>
     </option>
   </component>
@@ -86,6 +98,11 @@
             <path>
               <item name="system" type="b2602c69:ProjectViewProjectNode" />
               <item name="system" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="system" type="b2602c69:ProjectViewProjectNode" />
+              <item name="system" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="system" type="b2602c69:ProjectViewProjectNode" />
@@ -139,11 +156,14 @@
       <workItem from="1542021798832" duration="2537000" />
       <workItem from="1542075475964" duration="1041000" />
       <workItem from="1542088882598" duration="2422000" />
+      <workItem from="1542447267796" duration="713000" />
+      <workItem from="1542589480089" duration="298000" />
+      <workItem from="1542592716940" duration="667000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="10430000" />
+    <option name="totallyTimeSpent" value="12108000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="7" />
@@ -186,6 +206,74 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/packges/content-manage/ugc-checksconts.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4268">
+          <caret line="194" column="31" lean-forward="true" selection-start-line="194" selection-start-column="31" selection-end-line="194" selection-end-column="31" />
+          <folding>
+            <element signature="n#div#2;n#body#0;n#html#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4774">
+          <caret line="217" column="21" lean-forward="true" selection-start-line="217" selection-start-column="21" selection-end-line="217" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="66">
+          <caret line="3" column="46" lean-forward="true" selection-start-line="3" selection-start-column="46" selection-end-line="3" selection-end-column="46" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packges/content-manage/checksconts.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19778">
+          <caret line="899" column="18" selection-start-line="899" selection-start-column="18" selection-end-line="899" selection-end-column="18" />
+          <folding>
+            <element signature="n#div#1;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packges/content-manage/uncheck.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1320">
+          <caret line="60" column="49" lean-forward="true" selection-start-line="60" selection-start-column="49" selection-end-line="60" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packges/content-manage/ugc-checksconts.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="8404">
+          <caret line="382" column="49" selection-start-line="382" selection-start-column="49" selection-end-line="382" selection-end-column="49" />
+          <folding>
+            <element signature="n#div#2;n#body#0;n#html#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packges/content-manage/checksconts.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19404">
+          <caret line="899" column="18" lean-forward="true" selection-start-line="899" selection-start-column="18" selection-end-line="899" selection-end-column="18" />
+          <folding>
+            <element signature="n#div#1;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packges/content-manage/uncheck.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1276">
+          <caret line="58" column="123" lean-forward="true" selection-start-line="58" selection-start-column="55" selection-end-line="58" selection-end-column="123" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/packges/content-manage/ugc-checksconts.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="6534">
@@ -262,20 +350,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/packges/content-manage/ugc-checksconts.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="347" column="41" lean-forward="true" selection-start-line="347" selection-start-column="41" selection-end-line="347" selection-end-column="41" />
-          <folding>
-            <element signature="n#div#2;n#body#0;n#html#0;n#!!top" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/packges/content-manage/checksconts.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="899" column="18" lean-forward="true" selection-start-line="899" selection-start-column="18" selection-end-line="899" selection-end-column="18" />
+        <state relative-caret-position="19404">
+          <caret line="899" column="18" selection-start-line="899" selection-start-column="18" selection-end-line="899" selection-end-column="18" />
           <folding>
             <element signature="n#div#1;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" />
           </folding>
@@ -284,8 +362,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/packges/content-manage/uncheck.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="203">
-          <caret line="58" column="123" lean-forward="true" selection-start-line="58" selection-start-column="55" selection-end-line="58" selection-end-column="123" />
+        <state relative-caret-position="1320">
+          <caret line="60" column="49" selection-start-line="60" selection-start-column="49" selection-end-line="60" selection-end-column="49" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4774">
+          <caret line="217" column="21" lean-forward="true" selection-start-line="217" selection-start-column="21" selection-end-line="217" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22">
+          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packges/content-manage/ugc-checksconts.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="226">
+          <caret line="356" column="104" lean-forward="true" selection-start-line="356" selection-start-column="104" selection-end-line="356" selection-end-column="104" />
+          <folding>
+            <element signature="n#div#2;n#body#0;n#html#0;n#!!top" />
+          </folding>
         </state>
       </provider>
     </entry>

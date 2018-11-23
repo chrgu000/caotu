@@ -400,9 +400,9 @@
     var isreload=1;
     $(function(){
         let dataval="",searchid=0;
-        getcheckdata();//审核数据
         getlabellist(dataval,searchid);//标签
         getpush();//马甲
+        getcheckdata();//审核数据
         getrubbigsetpige(3);//推荐队列最大页码
     });
 
@@ -466,10 +466,11 @@
 //                //console.log(data);
             },
             success:function(diskJson){
-               //console.log("ugc审核数据：");
-               //console.log(diskJson);
+               console.log("ugc审核数据：");
+               console.log(diskJson);
                 if(diskJson.code=="1000"){
                     getchecktype(diskJson.data);
+
 
                 }else if(diskJson.code=="2000"){
                     layer.msg(diskJson.message);
@@ -547,8 +548,20 @@
         let createuserName=userdatas.data.username;
         $("#finalAuditor").attr("data-id",createuser).html(createuserName);
         $("#checkpublisher").html(contsdatas.contentuid);
+        if(contsdatas.contenttag && contsdatas.contenttag !=""){
+            let tagshow=$("#checkTagul1 li[data-val="+contsdatas.contenttag +"]").html();
+            // console.log("tagshow::");
+            // console.log(tagshow);
+            let tagshowname=contsdatas.contenttag;
+            if(tagshow !=""&& tagshow!=undefined){
+                tagshowname=tagshow;
+            }
+            $("#checkTagSearch1").val(tagshowname ).attr("data-val",contsdatas.contenttag ).attr("disabled","disabled");
+        }else{
+            $("#checkTagSearch1").val("").attr("data-val","").removeAttr("disabled");
+        }
         //获取的评论
-        getcommentlistdatas(contsdatas.contentid)
+        getcommentlistdatas(contsdatas.contentid);
 
 
     }
@@ -701,15 +714,16 @@
     /*推荐队列最大页码*/
     function getrubbigsetpige(type){
         $("#recommendPageSelect").empty();
-        $("#recommendPageSelect").append(' <option value="">请选择</option>');
+
         $("#recommendItemSelect").empty();
-        $("#recommendItemSelect").append(' <option value="">请选择</option>');
-        if(type == 3 || type ==2){
+        if(type == 3 ){
+            $("#recommendPageSelect").append(' <option value="">请选择</option>');
+            $("#recommendItemSelect").append(' <option value="">请选择</option>');
             for(var i=0;i<100;i++){
                 $("#recommendPageSelect").append(' <option value="'+(i+1)+'">第'+(i+1)+'页</option>');
             }
             for(var i=0;i<6;i++){
-                $("#recommendItemSelect").append(' <option value="'+(i+1)+'">第'+(i+1)+'条</option>');
+                $("#recommendItemSelect").append(' <option value="'+(i)+'">第'+(i+1)+'条</option>');
             }
         }else{
             getrubbigsetpige2();
@@ -744,7 +758,7 @@
                     $("#recommendPageSelect").append(' <option value="'+(i+1)+'">第'+(i+1)+'页</option>');
                 }
                 for(var i=0;i<6;i++){
-                    $("#recommendItemSelect").append(' <option value="'+(i+1)+'">第'+(i+1)+'条</option>');
+                    $("#recommendItemSelect").append(' <option value="'+(i)+'">第'+(i+1)+'条</option>');
                 }
             }
         });
@@ -873,12 +887,16 @@
 
         }
         let ispass=$("#ispassSelect").val();
+
         let flag=$("#alternativeList").val();
         if(flag ==2){
             if(pagenum ==""||indexno==""){
                 layer.msg("请选择页码信息！！");
                 return false;
             }
+        }
+        if(ispass=="NO"){
+            flag=3;
         }
         var tjdatas={
             "checkuid":checkuid,
@@ -918,6 +936,7 @@
             },
             success:function(diskJson){
                 layer.closeAll();
+                $("#subcheckbtn").attr("disabled","disabled");
                 // //console.log("提交审核：");
                 //  //console.log(diskJson);
                 if(diskJson.code =="1000"){
@@ -958,9 +977,17 @@
                     //
                     // $("#subcheckbtn").attr("disabled","disabled");
                 }else{
-                    layer.msg("审核提交失败，请重试！！",{
-                        offset:['50%'],
-                        time: 1500 //2秒关闭（如果不配置，默认是3秒）
+                    layer.confirm('提交失败，该条内容可能已被删除(跳过直接审核下个内容，"取消"联系后台人员)', {
+                        btn: ['下一条',"取消"] //按钮
+                    }, function(index){
+                        /*初始化*/
+                        backzero();
+
+                        //    window.location.href="../content-manage/ugc-checksconts.html"
+                        layer.close(index);
+
+                    },function(index){
+                        layer.close(index);
                     });
                 }
 
@@ -1096,6 +1123,7 @@
         talknum=0;
         $("#talkAboutBox .talkNum").html(talknum);
         usertalk.items=[];
+        $("#subcheckbtn").removeAttr("disabled");
         getcheckdata();
     }
 

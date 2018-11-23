@@ -1,0 +1,70 @@
+/* 通用样式*/
+html,body{width:100%;}
+body{
+    font:10px "微软雅黑","\5FAE\8F6F\96C5\9ED1","\6807\6977\4F53",Arial,Helvertica,sans-serif;
+    color:#666;
+    margin:0;
+    padding:0;
+    width:100%;
+    min-height:100%;
+}
+ul,ol,p,h1,h2,h3,h4,h5,h6,dl,dt,dd{
+    margin:0;
+    padding:0;
+    list-style:none;
+}
+input{
+    border:none;
+}
+input:active,
+input:focus{outline:none;}
+button:active,
+button:focus{outline:none;}
+a{
+    color:#666;
+    text-decoration:none;
+}
+a:hover{
+    color:#ff0700;
+    text-decoration:none;
+}
+.lf{
+    float:left;
+}
+.rt{
+    float:right;
+}
+.clear{
+    clear:both;
+}
+
+
+*{box-sizing: border-box;}
+[v-cloak]{display: none;}
+
+/*背景*/
+#pageBgBox{width:100%;height:100%;position: fixed;left:0;top:0;z-index:-2;}
+#pageBgBox .topBg{position: absolute;top:0;right:60px;width:566px;height:auto;}
+#pageBgBox .bottomBg{position: absolute;bottom:0;right:0;width:400px;height:auto;}
+#pageBgBox .topBg img,
+#pageBgBox .bottomBg img{width:100%;height:auto;}
+/*头部*/
+#headerBox{width:85%;height:80px;padding:10px;margin:0 auto;margin-top:35px; }
+#headerBox .logoimgBox{display: inline-block;width:162px;height:55px;margin-right:30px;}
+#headerBox .logoimgBox img{width:100%;height:auto;vertical-align: middle;}
+#headerBox .titlePage{display: inline-block;font-size:15px;height:55px;padding:2px 6px;line-height: 55px;}
+#headerBox .titlePage a{display: inline-block;width:100%;height:100%;color:#8990a4;font-weight:600;}
+
+#contentBox{width:100%;margin-top:100px;margin-left:10%;}
+#contentBox .titImg{width:350px;height:auto;margin-bottom:25px;}
+#contentBox p{font-size:18px;color:#333;font-weight:600;line-height: 35px;}
+#contentBox .downBtn{display: inline-block;width:116px;height:50px;}
+#contentBox .downBtn a{display: inline-block;width:100%;height:100%;}
+#contentBox .downBtn img{width:100%;height:auto;}
+
+#showPhoneBox{width:525px;height:655px;position: fixed;top:9%;right:8%;z-index:20;}
+#showPhoneBox img{width:100%;height:auto;}
+
+#footerBox{width:100%;height:80px;line-height: 80px;text-align: center;position: fixed;left:0;bottom:0;}
+#footerBox span{display: inline-block;padding:5px 10px;}
+#footerBox span a{display: inline-block;width:100%;height:100%;}
