@@ -63,7 +63,7 @@ Element {
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;}
-#userheadbox{position: relative;height:60px;padding-left:13px;padding-top:7px;}
+#userheadbox{position: relative;height:60px;padding:15px 13px 15px;}
 #userheadbox .imgbox{display: inline-block;width:100%;height:100%;overflow: hidden;
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
@@ -71,7 +71,7 @@ Element {
 #userheadbox .imgbox img{height:100%;width:100%;}
 #userheadbox .userNameBox{float:left;width:204px;height:47px;text-align: left;color:#333;font-size:0.9rem; line-height: 23px;}
 #userheadbox .userNameBox .title{font-size:1.1rem;}
-#userheadbox .joinImg{position: absolute;right:5px;top:11px;width:60px;height:auto;}
+#userheadbox .joinImg{position: absolute;right:15px;top:26px;width:60px;height:auto;}
 
 #attentBtn{color:#fff;font-size:1.8rem;position: absolute;right:17px;top:0px;width:85px;background:none;padding:0;}
 #attentBtn .iconfont{ font-size: 2.1rem;margin-right: 5px;}
@@ -84,7 +84,7 @@ Element {
     -webkit-box-shadow: 3px 3px 13px #e8e6e6;
     -moz-box-shadow: 3px 3px 13px #e8e6e6;
     box-shadow: 3px 3px 13px #e8e6e6;}
-#seeDetails{width:86%;height:55px;line-height: 22px;border:0;font-size:1rem;font-family: serif;background:#fff;
+#seeDetails{width:86%;line-height: 22px;border:0;font-size:1rem;font-family: serif;background:#fff;
     -webkit-box-shadow: 3px 3px 13px #e8e6e6;
     -moz-box-shadow: 3px 3px 13px  #e8e6e6;
     box-shadow: 3px 3px 13px  #e8e6e6;
@@ -138,7 +138,7 @@ Element {
 #allThemeConBox .themeMainBox .videoBox{width:100%;height:410px;background:#333;}
 #allThemeConBox .themeMainBox .thempictureBox{width:100%;height:auto;}
 
-/*------�Զ����ͼƬ�����л�-----------*/
+/*------图片放大左右切换-----------*/
 #faxAllBox{position: fixed;left:0;top:0;width:100%;height:100%;background:#333;z-index:990;overflow: hidden;display: none;}
 #faxAllBox.show{display: block;}
 #faxAllBox .toptip{width:100%;height:60px;line-height:60px;background:rgba(0,0,0,.5);color:#fff;font-size:1.2rem;position: fixed;top:0;left:0;z-index:992;padding:0 15px;}
@@ -159,5 +159,16 @@ Element {
 .imgbox img{width:100%;height:auto;}
 .imgbox.wimg img{width:auto;height:100%;}
 
-.headTitleBox{width:45px;height:45px;float:left;position: relative;margin-right:5px;text-align: center;}
+.headTitleBox{width:45px;height:45px;float:left;position: relative;margin-right:5px;text-align: center;margin-top:4px;}
 .caidan{position: absolute;left:0;top:0;width:100%;height:100%;z-index:89;}
+
+/*评论详情*/
+#relContentBox{width:100%;padding:10px 95px 10px 10px;color:#828393;background:#F2F2F2;margin-top:20px;margin-bottom:10px;position: relative;box-sizing: border-box;min-height: 80px;}
+#relContentBox .title{font-size:0.7rem;}
+#relContentBox .relContentTitle{font-size:1rem;}
+#relContentBox .imgBox{width:53px;height:53px;position: absolute;top:15px;right:15px;overflow: hidden;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;}
+#relContentBox .imgBox img{width:100%;height:100%;}
+

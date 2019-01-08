@@ -1,0 +1,540 @@
+
+
+<style>
+    /* Additional style to fix warning dialog position */
+
+    #searchBox{border:1px solid #bbb;padding:25px;background:#eee;}
+    #contentTitle{width:300px;vertical-align: middle;height:28px;font-size:13px;}
+    .left{float:left;margin-right:3px;}
+    #searchBox input{width:150px;font-size:13px;height:28px;}
+    #searchBox select{width:50px;font-size:13px;height:28px;}
+    .searchMenu{position: relative;}
+   .searchMenu .searchTag{width:76px;height:30px;}
+    .searchMenu .searchSecondMenu{position: absolute;width:100%;left:0;top:28px;background:#eee;color:#bbb;list-style: none;padding:0;z-index: 98;border:1px solid #bbb;border-top:none;display: none;max-height: 420px;overflow-y: auto;}
+    .searchMenu .searchSecondMenu.show{display: block;}
+    .searchSecondMenu li{width:100%;text-align: left;padding-left:3px;cursor: pointer;line-height: 23px;}
+    .searchSecondMenu li:hover{background:#fff;color:#333;border-top:1px solid #bbb;}
+    #searchBtn{margin-bottom:12px;padding:5px 9px;}
+    #arryName,#pushtime,#goToWhere{height:32px;text-align: center;}
+    .surebtn{float:right;margin-right:7px;}
+    table input{cursor: pointer;}
+</style>
+
+<div style="padding:25px;font-size:16px;">
+    <p>筛选查询</p>
+    <div id="searchBox">
+        <button type="button" class="btn btn-sm btn-primary" id="searchBtn" onclick="searchsens(1)">搜  索</button>
+        <div style="border-bottom:1px dashed #ccc;padding-bottom:3px;">
+            文字描述：
+            <textarea id="contentTitle" maxlength="20" placeholder="标题搜索"></textarea>
+            <div style="margin-top:3px;height:32px;">
+                <span class="left">
+                     二级标签：
+                </span>
+
+                <div  class="left searchMenu">
+                    <input type="search" value="" data-val="" placeholder="请选择标签" id="checkTagSearch" class="searchTag"/>
+                    <ul class="searchSecondMenu" id="checkTagul1">
+
+                    </ul>
+                </div>
+
+            </div>
+            <div style="margin-top:3px;">
+                开始时间：<input style="margin-left:4px;" type="text" placeholder="开始时间" value="" id="startTime"/>
+                结束时间：<input type="text" placeholder="结束时间" value="" id="endTime"/>
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div style="padding-left:9px;margin:0;height:30px;line-height: 30px;margin-bottom:9px;">
+        队列名：
+        <input type="text" id="arryName" value="" placeholder="请输入队列名" style="margin-right:32px;"/>
+     <!--   位置：
+        <select name="" id="goToWhere">
+            <option value="push">推荐队列</option>
+            <option value="word">段子</option>
+            <option value="pic">图文</option>
+            <option value="vie">视频</option>
+        </select>-->
+        推荐时间：
+        <input type="text" id="pushtime" value=""/>
+        <button type="button" class="btn btn-sm btn-primary surebtn" onclick="arrysure()">确定</button>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox-content">
+                <div class="jqGrid_wrapper" id="tablelist2">
+                    <!--   <table id="table_list_2"></table>-->
+                    <table  class="table table-striped tablelistbox" id="tablelistbox2">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>序号</th>
+                            <th>类型</th>
+                            <th>文字描述</th>
+                            <th>标签名</th>
+                            <th>内容等级</th>
+                            <th>评论</th>
+                            <th>点赞</th>
+                            <th>发布时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tablelistTbody2">
+                        <tr v-for="(item,index) in chooselist" :data-id="item.contentid">
+                            <td><input type="checkbox" :value="item"  v-model="chooselist"/></td>
+                            <td class="center">{{index+1}}</td>
+                            <td class="center">{{item.contenttype == "3" ? "图文":item.contenttype == "4" ? "段子":item.contenttype == "1" ? "横视频":"竖视频"  }}</td>
+                            <td class="center">{{item.contenttitle}}</td>
+                            <td class="center">{{item.contenttag}}</td>
+                            <td class="center">{{item.contentlevel == "3" ? "A" :item.contentlevel == "2" ? "B" :item.contentlevel == "1" ? "C":"D"}}</td>
+                            <td class="center">{{item.contentcomment}}</td>
+                            <td class="center">{{item.contentgood}}</td>
+                            <td class="center">{{item.createtime | time}}</td>
+                            <td class="center">
+                                <button type="button" class="btn deletebtn" v-on:click="detail(item)">详情</button>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <h3 style="padding-left:9px;margin:0;height:30px;line-height: 30px;">数据列表
+          <button type="button" class="btn btn-sm btn-primary surebtn" style="margin-bottom:5px;" onclick="choosesure()">确定</button>
+    </h3>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox-content">
+                <div class="jqGrid_wrapper" id="tablelist">
+                    <!--   <table id="table_list_2"></table>-->
+                    <table  class="table table-striped tablelistbox" id="tablelistbox">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th>序号</th>
+                            <th>类型</th>
+                            <th>文字描述</th>
+                            <th>标签名</th>
+                            <th>内容等级</th>
+                            <th>评论</th>
+                            <th>点赞</th>
+                            <th>发布时间</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tablelistTbody">
+                        <tr v-for="(item,index) in items" :data-id="item.contentid">
+                            <td><input type="checkbox" :value="item" @change="chooseChange()"  v-model="chooselist"/></td>
+                            <td class="center">{{index+1}}</td>
+                            <td class="center">{{item.contenttype == "3" ? "图文":item.contenttype == "4" ? "段子":item.contenttype == "1" ? "横视频":"竖视频"  }}</td>
+                            <td class="center">{{item.contenttitle}}</td>
+                            <td class="center">{{item.contenttag}}</td>
+                            <td class="center">{{item.contentlevel == "3" ? "A" :item.contentlevel == "2" ? "B" :item.contentlevel == "1" ? "C":"D"}}</td>
+                            <td class="center">{{item.contentcomment}}</td>
+                            <td class="center">{{item.contentgood}}</td>
+                            <td class="center">{{item.createtime | time}}</td>
+                            <td class="center">
+                                <button type="button" class="btn deletebtn" v-on:click="detail(item)">详情</button>
+                            </td>
+                        </tr>
+
+                        </tbody>
+                    </table>
+                    <div id="pagerlist">
+                        <div id="pagerbtnlist">
+                            <span class="glyphicon glyphicon-backward gbtn" id="prepagebtn" onclick="prepage(searchsens)"></span>
+                                <span class="addpagebox">
+                                    <span id="jumppage" onclick="jumppage(searchsens)">跳转到</span>
+                                    <input type="number" id="addpageinput" value="1" max="" min="1"/>
+                                    共 <span id="allpage">1</span>页
+                                </span>
+                            <span class="glyphicon glyphicon-forward gbtn" id="nextpagebtn" onclick="nextpage(searchsens)"></span>
+                        </div>
+                        <div id="allcontbox">
+                            <p id="allconts"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Page-Level Scripts -->
+<script>
+    $(function(){
+        var date=new Date();
+        $('#endTime').datetimepicker({
+            value:date,
+            timeFormat: 'Y-m-d H:m', //格式化时间
+            maxDate:true
+        });
+        $('#startTime').datetimepicker({
+            value:date,
+            timeFormat: 'Y-m-d H:m', //格式化时间
+            maxDate:true
+        });
+
+        $('#pushtime').datetimepicker({
+            value:date,
+            format:'Y-m-d',
+            timepicker:false,//关闭时间选项
+            minDate:true
+        });
+
+
+    });
+
+    /*
+ *  监听点击日期时的事件
+ */
+    $('#pushtime').datetimepicker({
+        onSelectDate: function(dateText, inst) {
+           let chodat=$('#pushtime').val();
+            chodat=Date.parse(new Date(chodat));
+            var stime = Date.parse(new Date());
+            var usedTime = chodat - stime;  //两个时间戳相差的毫秒数
+            var days=Math.floor(usedTime/(24*3600*1000));
+            if(days<-1){
+                layer.msg("选择的时间不能早于当天！！");
+
+            }else if(days>6){
+                layer.msg("选择的时间不能晚于7天！！")
+                $('#pushtime').val("");
+            }
+
+
+        }
+    });
+
+    /*初始化数据表格*/
+    var tabledata = new Vue({
+        el: '#tablelistTbody',
+        data: {
+            items:[],
+            chooselist:[],
+            tagshow:[]
+        },
+        // 在 `methods` 对象中定义方法
+        methods: {
+            detail:function(event){//详情
+                reportdetail(event)
+            },
+            chooseChange:function(event){
+                if(this.chooselist.length >6){
+                    this.chooselist.pop();
+                }
+            },
+            sure:function (event) {
+
+            }
+        }
+    });
+
+    /*选择数据列*/
+    var choosecont = new Vue({
+        el: '#tablelistTbody2',
+        data: {
+            chooselist:[]
+        },
+        // 在 `methods` 对象中定义方法
+        methods: {
+            detail:function(event){
+                reportdetail(event)
+            },
+            sure: function (event) {
+                layer.confirm('确定选择吗？', {
+                    btn: ['确定','取消'] //按钮
+                }, function(index){
+
+                    layer.close(index);
+                }, function(index){
+                    layer.close(index);
+                });
+
+            }
+        }
+    });
+
+    /*标签搜索框焦点事件*/
+    $("#checkTagSearch").focus(function(){
+        $(".searchSecondMenu").addClass("show");
+    });
+    $("#checkTagSearch").blur(function(){
+        setTimeout(function(){
+            $(".searchSecondMenu").removeClass("show");
+        },500);
+
+    });
+    /*标签选择*/
+    $(".searchMenu .searchSecondMenu").delegate("li","click",function(){
+        let txt=$(this).html();
+        let dataval=$(this).attr("data-val");
+        $("#checkTagSearch").val(txt).attr("data-val",dataval);
+    });
+
+    /*搜索框键盘输入*/
+    $("#checkTagSearch").keyup(function(){
+        $(this).attr("data-val","");
+        var dataval=$(this).val();
+        getlabellist(dataval)
+
+    });
+    $("#checkTagSearch").keydown(function(event) {
+        if (event.keyCode == 13) {
+            $(this).attr("data-val","");
+            var dataval=$(this).val();
+            getlabellist(dataval);
+        }
+    });
+
+    /*标签列表获取*/
+    function getlabellist(dataval){
+        var datapost={"taglevel":2,"pageno":1,"pagesize":999,"tagname":dataval};
+        datapost=JSON.stringify(datapost);
+        $.ajax({
+            url : path2+'/tag/taglist.do',
+            cache:true,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:false,
+            data: datapost,
+            //data: {taglevel:3,pageno:1,pagesize:999},
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+                //console.log("标签列表获取失败：");
+                //console.log(data);
+            },
+            success:function(diskJson){
+//                console.log("标签列表获取：");
+//                console.log(diskJson);
+                $(".searchSecondMenu").empty();
+                $.each(diskJson.data.rows,function(i,n){
+                    if(n.tagid&&n.tagid !=null && n.tagname && n.tagname!=null){
+                        $(".searchSecondMenu").append(' <li data-val="'+ n.tagid+'">'+ n.tagname+'</li>');
+                    }
+                });
+            }
+        });
+    }
+
+
+    /*搜索*/
+    function searchsens(pageno){
+        var contenttitle=$("#contentTitle").val();
+        var startTime=$("#startTime").val();
+        startTime=startTime.replace(/\s+/g,"");
+        startTime=startTime.replace(/\//g, "");
+        startTime=startTime.replace(/:/g, "");
+        startTime=startTime+"00";
+        startTime=parseInt(startTime);
+        var endTime=$("#endTime").val();
+        endTime=endTime.replace(/\s+/g,"");
+        endTime=endTime.replace(/\//g, "");
+        endTime=endTime.replace(/:/g, "");
+        endTime=endTime+"00";
+        endTime=parseInt(endTime);
+        let contenttag=$("#checkTagSearch").attr("data-val");
+        var datapost={"pageno":pageno,"pagesize":10,"contenttitle":contenttitle,"endtime":endTime,"starttime":startTime,"contenttag":contenttag};
+//         console.log("datapost::");
+//         console.log(datapost);
+        datapost=JSON.stringify(datapost);
+        // tabledata.tagshow=contentshow;
+        $.ajax({
+            url : path+'/content/queryContentForQueen.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+//                console.log("获取失败：");
+//                console.log(data);
+            },
+            success:function(diskJson){
+                layer.closeAll();
+//                console.log("内容搜索所：");
+//                 console.log(diskJson);
+                /*翻页信息*/
+                if(diskJson.code =="1000"){
+                    pageinfo3(pageno,diskJson.data.totalCount,10);//翻页控件信息
+                    tabledata.items=diskJson.data.contentList;
+                }else{
+                    layer.msg("数据有误请重试!");
+                }
+
+
+            }
+        });
+    }
+
+    //    选择列表内容
+    function choosesure(){
+        layer.confirm('确定选择吗？', {
+            btn: ['确定','取消'] //按钮
+        }, function(index){
+            //    console.log(tabledata.chooselist) ;
+            choosecont.chooselist=tabledata.chooselist;
+
+            layer.close(index);
+        }, function(index){
+            layer.close(index);
+        });
+    }
+
+//    队列确定
+    function arrysure(){
+        layer.confirm('确定该队列选择吗？', {
+            btn: ['确定','取消'] //按钮
+        }, function(index){
+            arrypost();
+            layer.close(index);
+        }, function(index){
+            layer.close(index);
+        });
+    }
+//    队列确定提交
+    function arrypost(){
+        var queenname=$("#arryName").val();
+        var userid=userdatas.data.userid;//创建人id
+        if(queenname == ""){
+            layer.msg("请输入队列名称！！");
+            return false;
+        }
+        let time=$('#pushtime').val();
+        time=time.replace(/-/g,"");
+        console.log(time);
+       if(time == ""){
+           layer.msg("请选择时间！！");
+           return false;
+       }
+        var datapost={"usedate":time,"contentlist":[]};
+        if(choosecont.chooselist.length!=6){
+            layer.msg("精编队列必须是6条！！");
+            return false;
+        }else{
+            $.each(choosecont.chooselist,function(i,n){
+                datapost.contentlist.push({"contentid":n.contentid,"pushid":queenname,"indexno":i,"userid":userid,"contenttitle":n.contenttitle});
+            });
+        }
+            // console.log("datapost::");
+            // console.log(datapost);
+            datapost=JSON.stringify(datapost);
+            $.ajax({
+                url : path+'/content/pushGoodContentQueen.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: datapost,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+//                console.log("推送内容上精编队列：");
+//                console.log(data);
+                },
+                success:function(diskJson){
+               // console.log("推送内容上精编队列：");
+               // console.log(diskJson);
+                    /*翻页信息*/
+                    if(diskJson.code =="1000"){
+                        choosecont.chooselist=[];
+                        tabledata.chooselist=[];
+                        $("#arryName").val("");
+                        layer.msg("队列提交成功！！");
+                    }else{
+                        layer.msg("队列提交有误："+diskJson.data+"!");
+                    }
+
+
+                }
+            });
+
+
+
+    }
+
+
+
+    /*点击详情查看*/
+    function reportdetail(nedata){
+//        console.log("nedata::");
+//        console.log(nedata);
+        var contentlist=[nedata.contentid];
+        var datapost={"contentlist":contentlist};
+//         console.log("datapost::");
+//         console.log(datapost);
+        datapost=JSON.stringify(datapost);
+        // tabledata.tagshow=contentshow;
+        $.ajax({
+            url : path+'/content/watchContentDetail.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+//                console.log("获取失败：");
+//                console.log(data);
+            },
+            success:function(diskJson){
+                //console.log("查看内容详情接口：");
+                //console.log(diskJson);
+                if(diskJson.code =="1000"){
+                    repoterdetail2(diskJson.data.contentlist[0]);
+
+                }else{
+                    layer.msg("数据有误请重试!");
+                }
+
+
+            }
+        });
+    }
+
+    /*查看详情2*/
+    function repoterdetail2(urldata){
+        var type=urldata.contenttype;
+        var url="recomovie.html";
+        if(type=="3" || type=="4" || type=="5"){
+            url="../recopicture.html";
+        }else{
+            url="../recomovie.html";
+        }
+        layer.open({
+            type: 2,
+            title: '内容详情',
+            shadeClose: true,
+            maxmin: true, //开启最大化最小化按钮
+            shade: 0.8,
+            area: ['80%', '90%'],
+            content: url, //iframe的url
+            success: function (layero, index) {
+                var body = layer.getChildFrame('body', index);
+                var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                iframeWin.geturl(urldata);
+            }
+        });
+    }
+</script>
+
+    

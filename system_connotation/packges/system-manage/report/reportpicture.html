@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> </title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+    <script src="../../../js/vue.js"></script>
+
+
+    <style>
+        html,body{width:100%;height:100%;background:#fff;}
+        .lightBoxGallery img {
+            margin: 5px;
+            width: 30%;
+        }
+        .gohome{display: none;}
+        .blueimp-gallery>.slides>.slide>.slide-content{max-height: none;max-width: 56%;margin: 10% auto;}
+        .blueimp-gallery>.slides>.slide{overflow-y: auto;}
+        #imgEditBox{position: fixed;left:0;top:0;width:100%;height:100%;background:rgba(0,0,0,.7);z-index:999;display: none;}
+        #imgEditBox.show{display: block;}
+        #imgEditBox .close{display: inline-block;position: absolute;top:5px;right:9px;font-size:30px;cursor: pointer;line-height: 30px;  color: #fff;  text-shadow: 0 0 2px #000;opacity: .6;}
+        #imgEditBox .close:hover{opacity:.9;}
+
+        #blueimp-gallery .slide canvas{position: absolute;left: 0;  right: 0;  top: 0;  bottom: 0;margin:auto;}
+
+        .contentdescribeBox{width:100%;border-bottom:1px solid #ddd;height:75px;padding:20px 15px;font-size:14px;margin-bottom:9px;}
+        #contentdescribe{display: inline-block;width:60%;height:60px;border:1px solid #ddd;padding:12px;text-align: left;}
+    </style>
+
+</head>
+
+<body class="gray-bg">
+    <div class="wrapper wrapper-content">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox float-e-margins">
+
+                    <div class="ibox-content">
+                        <div class="contentdescribeBox">
+                            文字描述：<span id="contentdescribe"></span>
+                        </div>
+                        <div class="lightBoxGallery" >
+                            <div id="imgconbox">
+                                <!--<a id="img1box" href="../../../img/p_big1.jpg" title="图片" data-gallery=""><img src="../../../img/p1.jpg"></a>-->
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="imgEditBox">
+        <b class="close ">x</b>
+    </div>
+
+
+
+
+    <script src="../../../js/jquery.min.js?v=2.1.4"></script>
+    <script src="../../../plugin/layer/layer.js"></script>
+    <script type="text/javascript" src="../../../js/index.js"></script>
+
+    <script>
+        /*获取下载地址*/
+        function geturl(urldatas){
+            $("#imgconbox").empty();
+            $("#contentdescribe").html(urldatas.contenttitle);
+            var nedurl=JSON.parse(urldatas.contenturllist);
+            $.each(nedurl,function(i,n){
+                $("#imgconbox").append('<img src="'+n+'">');
+            })
+
+
+        }
+
+        /*图片编辑关闭*/
+        $("#imgEditBox .close").click(function(){
+            $("#imgEditBox").removeClass("show");
+        })
+
+
+
+
+
+
+    </script>
+
+    
+    
+
+</body>
+
+</html>

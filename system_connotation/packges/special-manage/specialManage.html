@@ -61,7 +61,7 @@
                                 <td class="center">{{item.tagname}}</td>
                                 <td class="center"><img v-bind:src="item.tagimg" alt="头像"></td>
                                 <td class="center">{{item.createtime | time}}</td>
-                                <td class="center">最近内容更新时间</td>
+                                <td class="center">{{item.lastflushtime | time}}</td>
                                 <td class="center">{{item.contentcount}}</td>
                                 <td class="center">{{item.followcount}}</td>
                                 <td class="center">{{item.createuser}}</td>

@@ -19,6 +19,8 @@
         <select name="" id="temporaryPageChoose">
 
         </select>
+        <button style="margin-left:15px;margin-right:5px;" type="button" id="prePageBtn" class="btn btn-default">上一页</button>
+        <button type="button" id="nextPageBtn" class="btn btn-default">下一页</button>
 
     </div>
     <div class="row">
@@ -93,7 +95,25 @@
     $("#temporaryPageChoose").change(function(){
         var page=$(this).val();
         getRecondList(page);
-
+    });
+    //上一页
+    $("#prePageBtn").click(function(){
+        var pagenow=parseInt($("#temporaryPageChoose").val());
+        if(pagenow>1){
+            letprepage=pagenow-1;
+            getRecondList(letprepage);
+            $("#temporaryPageChoose").val(letprepage);
+        }
+    });
+    //下一页
+    $("#nextPageBtn").click(function(){
+        var largepage= parseInt($("#temporaryPageChoose").attr("data-lpage"));
+        var pagenow=parseInt($("#temporaryPageChoose").val());
+        if(pagenow <=largepage){
+            let nextpage=pagenow+1;
+            getRecondList(nextpage);
+            $("#temporaryPageChoose").val(nextpage)
+        }
     });
 
     /*推荐队列最大页码*/
@@ -118,6 +138,7 @@
                 // console.log(diskJson);
                 $("#temporaryPageChoose").empty();
                 let pagenum=parseInt(diskJson.data);
+                $("#temporaryPageChoose").attr("data-lpage",pagenum);
                 for(var i=0;i<=pagenum;i++){
                     $("#temporaryPageChoose").append(' <option value="'+(i+1)+'">第'+(i+1)+'页</option>');
                 }
@@ -186,10 +207,10 @@
 //                console.log(data);
             },
             success:function(diskJson){
-                // console.log("查看内容详情接口：");
-                // console.log(diskJson);
+                console.log("查看内容详情接口：");
+                console.log(diskJson);
                 if(diskJson.code =="1000"){
-                    repoterdetail2(diskJson.data[0]);
+                    repoterdetail2(diskJson.data.contentlist[0]);
 
                 }else{
                     layer.msg("数据有误请重试!");

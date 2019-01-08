@@ -1,0 +1,485 @@
+
+<style>
+    /* Additional style to fix warning dialog position */
+    .labelBox{width:80%;min-width:370px;margin:0 auto;padding:40px 20px;border:1px solid #bbb;margin-top:15px;min-height: 450px;}
+    .lineBox{width:100%;margin:20px 0;position: relative;}
+    .lineBox .lineTitle{display:inline-block;width:120px;margin-right:6px;text-align: right;}
+    .lineBox input,
+    .lineBox select,#contentText{width:300px;height:30px;padding-left:7px;}
+    #contentText{height:90px;vertical-align:top;}
+    #backbtn{float:right;margin-top:-9px;}
+    #allUser,#pushNow{height:20px;width:25px;cursor: pointer;}
+    .must{color:#f11c1c;}
+    .searchMenu .searchTag{width:76px;height:30px;}
+    .searchMenu .searchSecondMenu{position: absolute;width:100%;left:0;top:28px;background:#eee;color:#bbb;list-style: none;padding:0;z-index: 98;border:1px solid #bbb;border-top:none;display: none;max-height: 420px;overflow-y: auto;}
+    .searchMenu .searchSecondMenu.show{display: block;}
+     .searchSecondMenu li{width:100%;text-align: left;padding-left:3px;cursor: pointer;line-height: 23px;}
+     .searchSecondMenu li:hover{background:#fff;color:#333;border-top:1px solid #bbb;}
+    #contenDetailBox{width:300px;margin-left:130px;margin-top:-20px;}
+    #contenDetailBox>div{width:100%;position: relative;}
+    #contenDetailBox input{width:100%;}
+    .chooseDiv{display: none;}
+    .chooseDiv.show{display: block;}
+    #oneUser,#oneUser2{width:220px;color:#ccc;}
+    #oneUser2{margin-left:130px;}
+    #searchUserbtn{background:#0086b3;color:#fff;}
+    #searchUserbtn:hover{background:#7266ba;}
+</style>
+
+<div style="width:80%;margin:0 auto;margin-top:25px;">
+    <h4>新增推送消息 <button type="button" class="btn btn-sm btn-primary" id="backbtn">返回》</button></h4>
+</div>
+<div class="labelBox">
+    <div class="lineBox">
+        <span class="lineTitle">标题：</span>
+        <input type="text" class="repead" id="newsTitle" value="" placeholder="标题"/>
+        <i class="must">*在40字以内</i>
+    </div>
+    <div class="lineBox">
+        <span class="lineTitle">内容：</span>
+        <textarea class="repead" rows="1" cols="20" id="contentText" maxlength="140"></textarea>
+        <i class="must" style="position: absolute;bottom:0;left:440px;">*在140字以内</i>
+    </div>
+    <div class="lineBox">
+        <span class="lineTitle">内容类型：</span>
+        <select name="" id="contentType">
+            <option value="1">内容(内容ID)</option>
+           <!-- <option value="3">bannner</option>-->
+            <option value="4">H5</option>
+           <!-- <option value="7">专栏</option>-->
+            <!--<option value="2">关注消息</option>-->
+            <!--<option value="5">评论消息</option>-->
+            <!--<option value="6">点赞消息</option>-->
+
+        </select>
+    </div>
+    <div class="lineBox">
+        <span class="lineTitle">详情：</span>
+        <div id="contenDetailBox">
+            <!-- banner/专栏-->
+            <div class="chooseDiv searchMenu">
+                <input type="search" value="" data-val="" placeholder="请选择标签" id="checkTagSearch1" class="searchTag repead"/>
+                <ul class="searchSecondMenu" id="checkTagul1">
+
+                </ul>
+            </div>
+            <!--内容/h5-->
+            <div class="chooseDiv conTypeInput show">
+                <input type="search" value="" class="repead" data-val="" placeholder="请输入" id="conH5" />
+            </div>
+        </div>
+    </div>
+    <div class="lineBox">
+        <span class="lineTitle">创建人：</span>
+        <input type="text" id="creatuser" value="" readonly/>
+    </div>
+    <div class="lineBox">
+        <span class="lineTitle">全体：</span>
+        <input type="checkbox" checked="checked" data-id="" id="allUser" value=""/>
+    </div>
+    <div class="lineBox" id="userInfosBox" data-userid="">
+        <span class="lineTitle">单个：</span>
+        <input type="text" id="oneUser" class="repead" data-id="" value="" placeholder="输入用户昵称"/>
+        <button class="btn" type="button" id="searchUserbtn" onclick="searchmajia()">搜索匹配</button>
+        <div style="margin-top:5px;">
+            <input type="text" id="oneUser2" class="repead" data-id="" value="" placeholder="输入段友号"/>
+            <button class="btn" type="button" id="searchUserNumbtn" onclick="searchmajia2()">搜索匹配</button>
+        </div>
+    </div>
+    <div class="lineBox">
+        <span class="lineTitle">推送时间：</span>
+        <input type="text" id="pushTime" value="" />
+        <i class="must" style="position: absolute;bottom:0;left:440px;">注：最早只能选当前两个小时之后</i>
+    </div>
+    <div class="lineBox">
+        <span class="lineTitle">立即推送：</span>
+        <input type="checkbox" data-id="" id="pushNow" value=""/>
+    </div>
+    <div class="lineBox" style="padding-left:130px;margin-top:35px;">
+        <button type="button" class="btn btn-sm btn-primary" id="submit" onclick="creatlabel()">提 交</button>
+        <button type="button" class="btn btn-sm btn-primary" id="replay" onclick="replay()">重 置</button>
+    </div>
+</div>
+
+
+<script>
+    $(function(){
+        $("#creatuser").val(userdatas.data.username);
+        var date = new Date();
+        $('#pushTime').datetimepicker({
+            timeFormat: 'Y-m-d H:m', //格式化时间
+            value:date,
+            hours12:false,
+            timepicker:true//关闭时间选项(true打开false关闭)
+        });
+    });
+
+    /*标签列表获取*/
+    function getlabellist(dataval){
+        var datapost={"taglevel":3,"pageno":1,"pagesize":999,"tagname":dataval};
+        datapost=JSON.stringify(datapost);
+        $.ajax({
+            url : path2+'/tag/taglist.do',
+            cache:true,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:false,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+                //console.log("标签列表获取失败：");
+                //console.log(data);
+            },
+            success:function(diskJson){
+//                console.log("标签列表获取：");
+//                console.log(diskJson);
+                $(".searchSecondMenu").empty();
+                $.each(diskJson.data.rows,function(i,n){
+                    if(n.tagid&&n.tagid !=null && n.tagname && n.tagname!=null){
+                        $(".searchSecondMenu").append(' <li data-val="'+ n.tagid+'">'+ n.tagname+'</li>');
+                    }
+                });
+            }
+        });
+    }
+
+    /*banner列表获取*/
+    function getbannerlist(dataval){
+        var datapost={"bannertext":dataval};
+        datapost=JSON.stringify(datapost);
+        $.ajax({
+            url : path2+'/push/searchbanner.do',
+            cache:true,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:false,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+                //console.log("标签列表获取失败：");
+                //console.log(data);
+            },
+            success:function(diskJson){
+//                console.log("banner列表获取：");
+//                console.log(diskJson);
+                $(".searchSecondMenu").empty();
+                $.each(diskJson.data,function(i,n){
+                    if(n.bannerid&&n.bannerid !=null && n.bannertext && n.bannertext!=null){
+                        $(".searchSecondMenu").append(' <li data-val="'+ n.bannerid+'">'+ n.bannertext+'</li>');
+                    }
+                });
+
+
+
+            }
+        });
+    }
+    /*标签搜索框焦点事件*/
+    $("#contenDetailBox .searchMenu .searchTag").focus(function(){
+        $(this).siblings(".searchSecondMenu").addClass("show");
+        isbantag("");
+    });
+    $("#contenDetailBox .searchMenu .searchTag").blur(function(){
+        setTimeout(function(){
+            $(".searchSecondMenu").removeClass("show");
+        },500);
+
+    });
+    /*标签选择*/
+    $("#contenDetailBox .searchMenu .searchSecondMenu").delegate("li","click",function(){
+        let txt=$(this).html();
+        let dataval=$(this).attr("data-val");
+        $(this).parent(".searchSecondMenu").siblings(".searchTag").val(txt).attr("data-val",dataval);
+    });
+    /*搜索框键盘输入*/
+    $("#contenDetailBox .searchMenu .searchTag").keyup(function(){
+        $(this).attr("data-val","");
+        var dataval=$(this).val();
+        isbantag(dataval);
+
+    });
+    $("#contenDetailBox .searchMenu .searchTag").keydown(function(event) {
+        if (event.keyCode == 13) {
+            $(this).attr("data-val","");
+            var dataval=$(this).val();
+            isbantag(dataval);
+        }
+    });
+
+/*识别banner和标签*/
+    function isbantag(dataval){
+        var conType=$("#contentType").val();
+        if(conType == 3 ){
+            getbannerlist(dataval);
+        }else if(conType == 7){
+            getlabellist(dataval);
+        }
+    }
+
+    /*选择内容类型*/
+    $("#contentType").change(function(){
+      var conType=$(this).val();
+        $("#contenDetailBox input").val("");
+        if(conType == 3 || conType == 7){
+            $("#contenDetailBox .searchMenu ").addClass("show");
+            $("#contenDetailBox .conTypeInput ").removeClass("show");
+        }else{
+            $("#contenDetailBox .searchMenu ").removeClass("show");
+            $("#contenDetailBox .conTypeInput ").addClass("show");
+        }
+    });
+
+    /*搜索用户*/
+    function searchmajia(){
+        var dataval=$("#oneUser").val();
+        var datapost={"username":dataval};
+        datapost=JSON.stringify(datapost);
+        $.ajax({
+            url : path+'/vest/searchuser.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+
+            },
+            success:function(diskJson){
+//                console.log("用户列表获取：");
+//                console.log(diskJson);
+                if(diskJson.code=="1000" && diskJson.data){
+                    layer.msg("匹配成功！！");
+                    $("#userInfosBox").attr("data-userid",diskJson.data.userid);
+                    $("#oneUser").css("color","#333");
+                }else{
+                    $("#userInfosBox").attr("data-userid","");
+                    $("#oneUser").css("color","#ccc");
+                    layer.msg("该用户不存在，请重新搜索！！")
+                }
+            }
+        });
+    }
+
+    /*搜索用户*/
+    function searchmajia2(){
+        var uno=$("#oneUser2").val();
+        var datapost={"uno":uno};
+        datapost=JSON.stringify(datapost);
+        $.ajax({
+            url : path+'/search/queryUserbyuno.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+
+            },
+            success:function(diskJson){
+               console.log("用户列表获取：");
+               console.log(diskJson);
+                if(diskJson.code=="1000" && diskJson.data.length>0){
+                    layer.msg("匹配成功！！");
+                    $("#userInfosBox").attr("data-userid",diskJson.data[0].userid);
+                    $("#oneUser2").css("color","#333");
+                }else{
+                    $("#userInfosBox").attr("data-userid","");
+                    $("#oneUser2").css("color","#ccc");
+                    layer.msg("该用户不存在，请重新搜索！！")
+                }
+            }
+        });
+    }
+    /*返回*/
+    $("#backbtn").click(function(){
+        $("#contentPageBox").load("pushmana.html");
+    });
+    //账号限制
+/*    $("#newsTitle").blur(function(){
+        var dva=$(this).val();
+        if(dva==""){
+            layer.msg("标题不能为空！！")
+        }else if(dva.length >40){
+            layer.msg("标题在40字以内！！")
+        }
+    });*/
+    $("#contentText").blur(function(){
+        var dva=$(this).val();
+        if(dva==""){
+            layer.msg("消息内容不能为空！！")
+        }else if(dva.length >140){
+            layer.msg("标题在300字以内！！")
+        }
+    });
+    /*指定人*/
+    $("#allUser").click(function(){
+        if($("input[type='checkbox']").is(':checked')){
+            $("#oneUser").val("");
+            $("#oneUser2").val("");
+            $("#userInfosBox").attr("data-userid","");
+        }
+    });
+    $("#oneUser").focus(function(){
+        $("#allUser").attr("checked",false);
+        $("#oneUser2").val("");
+        $("#userInfosBox").attr("data-userid","");
+    });
+    $("#oneUser").keydown(function(){
+        $("#oneUser").css("color","#ccc");
+        $("#userInfosBox").attr("data-userid","");
+    });
+    $("#oneUser2").focus(function(){
+        $("#allUser").attr("checked",false);
+        $("#oneUser").val("");
+        $("#userInfosBox").attr("data-userid","");
+    });
+    $("#oneUser2").keydown(function(){
+        $("#oneUser2").css("color","#ccc");
+        $("#userInfosBox").attr("data-userid","");
+    });
+/*推送时间*/
+    $("#pushNow").click(function(){
+        if($("#pushNow").is(':checked')){
+            $("#pushTime").val("");
+        }
+    });
+    $("#pushTime").focus(function(){
+        $("#pushNow").attr("checked",false);
+    });
+    $("#pushTime").change(function(){
+        var pushtime= $.trim($(this).val());
+        pushtime=pushtime.replace(/\s+/g,"");
+        pushtime=pushtime.replace(/\//g, "");
+        pushtime=parseInt(pushtime.replace(/:/g, ""));
+        pushtime=pushtime*100;
+        var date = parseInt(getmytime());
+        if(pushtime<(date+20000)){
+            layer.msg("最早只能选当前两个小时之后！！");
+        }
+
+    })
+    /*创建运营账号*/
+    function creatlabel(){
+        var pushtitle=$("#newsTitle").val();//推送标题
+        var pushcontent=$("#contentText").val();//推送内容
+        var createuser=userdatas.data.userid;//创建人id
+        var pushtype=$("#contentType").val();//推送类型
+        var pushextra="";//推送类型附带详情
+        if(pushtype == 3 || pushtype == 7){
+            pushextra=$("#checkTagSearch1").attr("data-val");
+        }else{
+            pushextra=$("#conH5").val();
+        }
+        if(pushextra ==""){
+            layer.msg("请输入详情！！");
+            return false;
+        }
+        var pushuserid="";//指定推送用户id 群发不传此字段
+        if($("#allUser").is(':checked')){
+            pushuserid="";
+        }else{
+            var pushduser= $.trim($("#userInfosBox").attr("data-userid"));
+            if(pushduser==""){
+                layer.msg("用户不存在请重新搜索匹配！！");
+                return false;
+            }else{
+                pushuserid=pushduser;
+            }
+        }
+      //  console.log(pushuserid);
+        var pushtime=$("#pushTime").val();//指定推送时间
+        if($("#pushNow").is(':checked')){
+            pushtime="";
+        }else{
+            var choosetime=$("#pushTime").val();//指定推送时间
+            if(choosetime==""){
+                layer.msg("请输入推送时间！！");
+                return false;
+            }else{
+
+                choosetime=choosetime.replace(/\s+/g,"");
+                choosetime=choosetime.replace(/\//g, "");
+                choosetime=parseInt(choosetime.replace(/:/g, ""));
+                choosetime=choosetime*100;
+
+                var date = parseInt(getmytime());
+                if(choosetime<(date+20000)){
+                    layer.msg("最早只能选当前两个小时之后！！");
+                    return false;
+                }else{
+                    pushtime=choosetime;
+                }
+            }
+        }
+
+       /* if(pushtitle==""){
+            layer.msg("标题不能为空！！");
+            return false;
+        }else if(pushtitle.length >40){
+            layer.msg("标题在40字以内！！");
+            return false;
+        }*/
+        if(pushcontent==""){
+            layer.msg("消息内容不能为空！！");
+            return false;
+        }else if(pushcontent.length >140){
+            layer.msg("标题在140字以内！！");
+            return false;
+        }
+
+        var datapost={
+            "createuser":createuser,
+            "pushcontent":pushcontent,
+            "pushextra":pushextra,
+            "pushtime":pushtime,
+            "pushtitle":pushtitle,
+            "pushtype":pushtype,
+            "pushuserid":pushuserid
+        };
+       // console.log(datapost);
+        datapost=JSON.stringify(datapost);
+        $.ajax({
+            url : path+'/push/addpush.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+//                   console.log("新增内容运营失败：");
+//                   console.log(data);
+            },
+            success:function(diskJson){
+                    // console.log("新增推送消息：");
+                    // console.log(diskJson);
+                if(diskJson.code =="1000"){
+                    layer.msg("创建成功！！");
+                    replay();
+                }else{
+                    layer.msg(diskJson.message);
+                }
+
+
+            }
+        });
+    }
+
+
+
+    /*重置*/
+    function replay(){
+        $(".repead").val("");
+        $("#userInfosBox").attr("data-userid","");
+    }
+</script>
+
+    
+    

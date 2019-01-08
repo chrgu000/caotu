@@ -36,7 +36,7 @@
         <div class="" style="margin-top:9px;position: relative;">
             <div class="left">
                 <span class="left">
-                     三级标签：
+                     二级标签：
                 </span>
 
                 <div  class="left searchMenu">
@@ -189,7 +189,7 @@
 
     /*标签列表获取*/
     function getlabellist(dataval){
-        var datapost={"taglevel":3,"pageno":1,"pagesize":999,"tagname":dataval};
+        var datapost={"taglevel":2,"pageno":1,"pagesize":999,"tagname":dataval};
         datapost=JSON.stringify(datapost);
         $.ajax({
             url : path2+'/tag/taglist.do',
@@ -342,8 +342,10 @@
             }
         });
 
-
     }
+
+
+
 </script>
 
     

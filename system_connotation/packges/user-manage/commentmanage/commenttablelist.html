@@ -39,6 +39,7 @@
                                 <tr>
                                     <th>序号</th>
                                     <th>评论者</th>
+                                    <th>评论者ID</th>
                                     <th>评论内容</th>
                                     <th>评论时间</th>
                                     <th>操作</th>
@@ -48,6 +49,7 @@
                                     <tr v-for="(item,index) in items" v-bind:data-id="item.commentid">
                                         <td class="center">{{index+1}}</td>
                                         <td class="center">{{item.username}}</td>
+                                        <td class="center">{{item.userid}}</td>
                                         <td class="center">{{item.commenttext}}</td>
                                         <td class="center">{{item.createtime | time}}</td>
                                         <td class="center">
@@ -115,12 +117,14 @@
 
         //马甲管理列表
         function getcheck(pageno){
+            layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000}) ;
             var userid= $("#tablelistbox").attr("data-id");
             var postdata={"userid":userid,"pageno":pageno,"pagesize":10};
             postdata=JSON.stringify(postdata);
             $.ajax({
                 url : path2+'/note/cmtNoteList.do',
                 cache:false,//false就不会从浏览器缓存中加载请求信息了
+                timeout : 50000, //超时时间设置，单位毫秒
                 type:"POST",
                 contentType: "application/json",
                 dataType:"JSON",
@@ -133,8 +137,8 @@
                 },
                 success:function(diskJson){
                     layer.closeAll();
-                    console.log("马甲用户消息列表：");
-                    console.log(diskJson);
+                    // console.log("马甲用户消息列表：");
+                    // console.log(diskJson);
 
                     /*翻页信息*/
                     pageinfo3(pageno,diskJson.data.count,10);//翻页控件信息
@@ -169,10 +173,10 @@
 //                console.log(data);
                 },
                 success:function(diskJson){
-                    //console.log("查看内容详情接口：");
-                    //console.log(diskJson);
+                    console.log("查看内容详情接口：");
+                    console.log(diskJson);
                     if(diskJson.code =="1000"){
-                        repoterdetail2(diskJson.data[0]);
+                        repoterdetail2(diskJson.data.contentlist[0]);
 
                     }else{
                         layer.msg("数据有误请重试!");

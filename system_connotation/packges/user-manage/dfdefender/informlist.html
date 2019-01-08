@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> 段友守护者——列表</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link href="../../../css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="../../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+
+    <!-- jqgrid-->
+    <link href="../../../css/plugins/jqgrid/ui.jqgrid.css?0820" rel="stylesheet">
+
+    <link href="../../../css/animate.css" rel="stylesheet">
+    <link href="../../../css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="../../../css/common.css" rel="stylesheet">
+    <!-- 全局js -->
+    <script src="../../../js/jquery.min.js?v=2.1.4"></script>
+    <script src="../../../plugin/layer/layer.js"></script>
+    <script src="../../../js/vue.js"></script>
+    <style>
+        /* Additional style to fix warning dialog position */
+
+        #alertmod_table_list_2 {
+            top: 900px !important;
+        }
+    </style>
+
+</head>
+
+<body class="gray-bg">
+    <div style="padding-left:28px;padding-top:10px;">
+        <h3>段友守护者</h3>
+    </div>
+    <div class="wrapper wrapper-content  animated fadeInRight">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox-content">
+                    <div class="jqGrid_wrapper" id="tablelist">
+                        <!--   <table id="table_list_2"></table>-->
+                        <table  class="table table-striped" id="tablelistbox">
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>用户名</th>
+                                <th>段友号</th>
+                                <th>累计审核数量</th>
+                                <th>上周审核数量</th>
+                                <th>上周违规内容</th>
+                                <th>认证时间</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tablelistTbody">
+                            <tr v-for="(item,index) in items">
+                                <td class="center">{{index+1}}</td>
+                                <td class="">{{item.username}}</td>
+                                <td class="">{{item.uno}}</td>
+                                <td class="center">{{item.allnum}}</td>
+                                <td class="center">{{item.lastweeknum }}</td>
+                                <td class="center">{{item.errornum }}</td>
+                                <td class="center">
+                                    {{item.honoridlist[2] | time}}
+                                </td>
+                                <td class="center">
+                                    <button type="button" class="btn btn-default" v-on:click="detaillist(item)">审核详情</button>
+                                    <button type="button" class="btn btn-default" v-on:click="cancel(item)">取消认证</button>
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                        <div id="pagerlist">
+                            <div id="pagerbtnlist">
+                                <span class="glyphicon glyphicon-backward gbtn" id="prepagebtn" onclick="prepage(getlabel)"></span>
+                                <span class="addpagebox">
+                                    <span id="jumppage" onclick="jumppage(getlabel)">跳转到</span>
+                                    <input type="number" id="addpageinput" value="1" max="" min="1"/>
+                                    共 <span id="allpage">1</span>页
+                                </span>
+                                <span class="glyphicon glyphicon-forward gbtn" id="nextpagebtn" onclick="nextpage(getlabel)"></span>
+                            </div>
+                            <div id="allcontbox">
+                                <p id="allconts"></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="../../../js/index.js"></script>
+    <!-- Page-Level Scripts -->
+    <script>
+
+        var labeldata = new Vue({
+            el: '#tablelistTbody',
+            data: {
+                items:""
+            },
+            // 在 `methods` 对象中定义方法
+            methods: {
+                detaillist:function(event){//详情
+                    $("#contentPageBox").load("defdetaillist.html",function(){
+                        $("#defdetail").attr("data-userid",event.userid);
+                    });
+                },
+                cancel:function(event){//取消认证
+                    layer.confirm('确定取消该用户权限吗？', {
+                        btn: ['确定','取消'] //按钮
+                    }, function(index){
+                        cancelzg(event);
+                        layer.close(index);
+                    }, function(index){
+                        layer.close(index);
+                    });
+
+                },
+            }
+        });
+
+        $(function(){
+            getlabel(1);
+        });
+
+        /*段友守护者列表*/
+        function getlabel(pageno){
+            let userid=userdatas.userid;
+            var postdata={"pagesize":10,"pageno":pageno};
+            postdata=JSON.stringify(postdata);
+            $.ajax({
+                url : path2+'/usercheck/getcountusercheck.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: postdata,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    //////console.log("获取失败：");
+                    //////console.log(data);
+                },
+                success:function(diskJson){
+                   console.log("段友守护者列表：");
+                   console.log(diskJson);
+                    /*翻页信息*/
+                    if(diskJson.code==1000){
+                        $.each(diskJson.data.CheckReportList,function(i,n){
+                            let c=n.honoridlist.split(',');
+                            diskJson.data.CheckReportList[i].honoridlist=c;
+                        });
+                        pageinfo3(pageno,diskJson.data.TotalCount,10);//翻页控件信息
+                        labeldata.items=diskJson.data.CheckReportList;
+                    }
+
+
+
+                }
+            });
+        }
+
+        /*取消认证资格*/
+        function cancelzg(data) {
+            let allnum=data.allnum;
+            let errornum=data.errornum;
+            let userid=data.userid;
+            let honorid=data.honoridlist[0];
+            var postdata={"allnum":allnum,"errornum":errornum,"userid":userid,"honorid":honorid};
+            postdata=JSON.stringify(postdata);
+            $.ajax({
+                url : path2+'/usercheck/deleteuserhonor.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: postdata,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    //////console.log("获取失败：");
+                    //////console.log(data);
+                },
+                success:function(diskJson){
+                    console.log("段友守护者列表：");
+                    console.log(diskJson);
+                    /*翻页信息*/
+                    if(diskJson.code==1000){
+                        layer.msg("已成功取消该用户的认证权限！！")
+                    }else{
+                        layer.msg("取消失败，请重试！！")
+                    }
+
+
+
+                }
+            });
+        }
+
+
+    </script>
+
+    
+    
+
+</body>
+
+</html>

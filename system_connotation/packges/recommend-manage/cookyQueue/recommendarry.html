@@ -1,0 +1,56 @@
+    <!DOCTYPE html>
+        <html>
+        <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!--360浏览器优先以webkit内核解析-->
+        <title>推荐管理——精编队列</title>
+        <link href="../../../css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+        <link href="../../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+        <link href="../../../css/animate.css" rel="stylesheet">
+        <link href="../../../css/style.css?v=4.1.0" rel="stylesheet">
+        <link href="../../../plugin/datepicker/jquery.datetimepicker.css" rel="stylesheet">
+        <link href="../../../css/common.css" rel="stylesheet">
+            <!-- 全局js -->
+            <script src="../../../js/jquery.min.js?v=2.1.4"></script>
+            <script src="../../../plugin/datepicker/jquery.datetimepicker.full.min.js"></script>
+            <script src="../../../plugin/layer/layer.js"></script>
+            <script src="../../../js/vue.js"></script>
+        <style>
+        #contentTypeBox{width:100%;height:60px;padding-top:12px;padding-left:30px;border-bottom:1px dashed #1c2b36;}
+        #contentTypeBox .contentType.active{background:#9d14bd;}
+        #contentPageBox{width:100%;height:calc(100% - 100px);}
+        .headTitle {font-size: 16px;color:#4a5f6f;font-weight:700;display: inline-block;line-height:35px;margin-right:6px; }
+        </style>
+        </head>
+
+<body class="gray-bg">
+
+    <div id="contentTypeBox">
+        <span class="headTitle">推荐管理——精编队列</span>
+        <span class="contentType active btn btn-primary con1" data-url="checkedlist.html" >从内含段子查询</span>
+        <span class="contentType btn btn-primary con2" data-url="unrecomend.html" >待推荐队列</span>
+        <span class="contentType btn btn-primary con3" data-url="recomend.html" >已推荐</span>
+    </div>
+    <div id="contentPageBox" data-info="cod" >
+
+    </div>
+
+    <script type="text/javascript" src="../../../js/index.js"></script>
+    <script type="text/javascript">
+        $(function(){
+            $("#contentPageBox").load("checkedlist.html");
+        });
+
+        $("#contentTypeBox .contentType").click(function(){
+            $(this).addClass("active").siblings(".active").removeClass("active");
+            var url=$(this).attr("data-url");
+            $("#contentPageBox").load(url);
+        })
+
+
+
+
+    </script>
+</body>
+</html>

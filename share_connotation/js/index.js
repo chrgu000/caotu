@@ -1,9 +1,9 @@
 /**
  * Created by zhu on 2018/5/31.
  */
-
-//const path="http://192.168.1.114:8807";
-//const path2="http://192.168.1.114:8807";
+//
+// const path="http://192.168.1.114:8860/NHDZSEVER";
+// const path2="http://192.168.1.114:8860/NHDZSEVER";
 
 
 /*线上改*/
@@ -83,7 +83,6 @@ document.addEventListener("touchend",function(e){
                 $("#faxAllBox ul li:nth-child("+(sn-1)+")").css("margin-left","-"+w).addClass("show").animate({
                     marginLeft:0
                 },250);
-
             }
         }else{
             if(sn<an){
@@ -121,4 +120,68 @@ document.addEventListener("touchend",function(e){
 });
 
 
+/*手机类型&浏览器类型*/
+function phoneType() {
+    var ua = window.navigator.userAgent.toLowerCase();
+    if(ua.match(/MicroMessenger/i) == 'micromessenger'){
 
+        //console.log("微信打开");
+        return 1;
+    }else if(ua.match(/QQ/i) == "qq"){
+        //console.log("qq");
+        return "qq";
+    }
+
+    var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+
+
+    if (userAgent.indexOf("Opera") > -1) {
+
+        return "Opera"
+
+    }; //判断是否Opera浏览器
+
+    if (userAgent.indexOf("Firefox") > -1) {
+
+        return "FF";
+
+    } //判断是否Firefox浏览器
+
+    if (userAgent.indexOf("Chrome") > -1){
+
+        return "Chrome";
+
+    }
+
+    if (userAgent.indexOf("Safari") > -1) {
+
+        return "Safari";
+
+    } //判断是否Safari浏览器
+
+    if (userAgent.indexOf("compatible") > -1 && userAgent.indexOf("MSIE") > -1 && !isOpera) {
+
+        return "IE";
+
+    }
+
+}
+
+
+/*随机字符串*/
+function randomString(len) {
+    len = len || 16;
+    var chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz23456789';    /****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
+    var maxPos = chars.length;
+    var pwd = '';
+    for (var i = 0; i < len; i++) {
+        pwd += chars.charAt(Math.floor(Math.random() * maxPos));
+    }
+    return pwd;
+}
+
+/*随机数*/
+function randomnum(minNum,maxNum){
+    var num=parseInt(Math.random()*(maxNum-minNum+1)+minNum,10);
+    return num;
+}

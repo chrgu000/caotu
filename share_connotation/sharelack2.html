@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0,minimum=1.0,user-scalable=no">
+    <!--强制页面横屏或竖屏显示 content：landscape|portrait-->
+    <meta name="screen-orientation" content="landscape">
+    <meta content=”telephone=no” name=”format-detection” />
+    <meta property="og:title" content="皮皮段子">
+
+    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+    <META HTTP-EQUIV="Expires" CONTENT="0">
+    <!-- 分享显示的标题-->
+    <meta itemprop="name" content="皮皮段子" />
+    <!-- 分享显示的缩略图-->
+    <meta itemprop="image" content="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/logo280.png" />
+    <!-- 分享显示的简介-->
+    <meta name="description" itemprop="description" content="" />
+    <title>皮皮段子</title>
+    <link href="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/logo280.png" rel="shortcut icon">
+    <link rel="stylesheet" href="css/common.css"/>
+    <link rel="stylesheet" href="plugin/font/iconfont.css"/>
+
+    <script type="application/javascript" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/jquery.min.js"></script>
+    <script type="application/javascript" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/vue.js"></script>
+    <script type="application/javascript" src="plugin/layer/layer.js"></script>
+
+    <!-- 必须引入的文件-->
+    <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <script type="application/javascript" src="https://ctkj-1256675270.file.myqcloud.com/jquery.min.js"></script>
+    <script src="js/sha1.js"></script>
+    <!-- 微信分享时调用对应的接口js文件-->
+    <script src="js/wxShare.js"></script>
+    <style>
+        #mainContntShowbox .lackimg{width:28%;height:auto;margin-top:10%;}
+        #mainContntShowbox .lackp{text-align: center;font-size:1.2rem;color:#999;margin-top:20px;}
+    </style>
+</head>
+<body>
+<div class="conntentsBox">
+    <a id="shareHeader" class="downhrefbtn"  href="isshare.html">
+        <img class="shareHeaderImg" style="width:100%;height:auto;"  src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/sharetitle2.png" alt=""/>
+        <!-- <div class="logobox">
+             <img class="logo" src="img/logo.png" alt="logo"/>
+             <span>
+                 头图
+             </span>
+         </div>
+         <a class="downhrefbtn"  href="#"  id="downappbtn">下 载</a>-->
+    </a>
+    <div class="conntentsBox" id="mainContentBox" >
+        <div id="mainContntShowbox" style="width:92%;background:#F8F9FB;text-align: center;height:210px; overflow: hidden;">
+            <img class="lackimg" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/lackshowimg.png" alt="内容缺失"/>
+            <p class="lackp">好遗憾，这条内容已被删除</p>
+        </div>
+    </div>
+
+    <!--更多推荐-->
+    <div id="moreRecommendBox" v-cloak>
+        <h3 class="title">
+            <img class="titleimg" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/moreforu.png" alt="">
+        </h3>
+        <div class="allrecommendBox" style="overflow: hidden;">
+            <div class="rcommendBox" v-for="(item,index) in items" v-bind:data-id="item.tagid">
+                <a class="downhrefbtn concernBtn" v-bind:href="downhref" >
+                         <span class="rcommendTitleBox">
+                            <img v-bind:src="item.tagimg" alt=""/>
+                          </span>
+                    <p class="rcommendTitle">{{item.tagalias}}</p>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--分享按钮组-->
+<!--    <div class="bdsharebuttonbox" data-tag="share_1">
+        <a class="bds_mshare" data-cmd="mshare"></a>
+        <a class="bds_qzone" data-cmd="qzone" href="#"></a>
+        <a class="bds_tsina" data-cmd="tsina"></a>
+        <a class="bds_baidu" data-cmd="baidu"></a>
+        <a class="bds_renren" data-cmd="renren"></a>
+        <a class="bds_tqq" data-cmd="tqq"></a>
+        <a class="bds_more" data-cmd="more">更多</a>
+        <a class="bds_count" data-cmd="count"></a>
+    </div>-->
+
+
+<script type="application/javascript" src="js/index.js"></script>
+<script type="text/javascript">
+
+
+
+
+    /*更多推荐*/
+    var commendmore = new Vue({
+        el: '#moreRecommendBox',
+        data: {
+            downhref:"isshare.html",
+            items: [
+                {"tagimg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/01.jpg","tagalias":"上辈子拯救过宇宙才能娶到这么美的媳妇儿吧"},
+                {"tagimg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/02.jpg","tagalias":"他真的改行了，看来把我大话听进去了"},
+                {"tagimg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/03.jpg","tagalias":"你见过二哈拆家是的眼神吗？"},
+                {"tagimg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/04.jpg","tagalias":"二哈哭的跟个孩子似的"},
+                {"tagimg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/05.jpg","tagalias":"令人怀念的青春啊，还是上学好～"},
+                {"tagimg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/06.jpg","tagalias":"这就是我每天去学校的原因！"},
+                {"tagimg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/07.jpg","tagalias":"怎么判断你男朋友是真睡还是装睡？"},
+                {"tagimg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/08.jpg","tagalias":"姓王的人最怕什么？"},
+                {"tagimg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/09.jpg","tagalias":"我真的感觉到恋爱了，不开玩笑！"},
+                {"tagimg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/10.jpg","tagalias":"这是什么沙雕屏保？"},
+                {"tagimg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/11.jpg","tagalias":"明明是亲儿子，竟然想当我爸爸"},
+                {"tagimg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/12.jpg","tagalias":"男方队终于扳回一局!现在是二比九十八! "},
+                {"tagimg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/13.jpg","tagalias":"男孩子在外面一定要保护好寄几"},
+                {"tagimg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/14.jpg","tagalias":"真是个撩死人的小可爱没错了！"},
+                {"tagimg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/15.jpg","tagalias":"生活不易，全凭演技"},
+                {"tagimg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/16.jpg","tagalias":"宿醉醒来看到这个场景怎么办？"},
+                {"tagimg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/17.jpg","tagalias":"最强大脑测试，谁知道答案？写下来"},
+                {"tagimg":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/18.jpg","tagalias":"做作业全凭想象系列，这孩子脑路清奇啊"},
+            ]
+        },
+        // 在 `methods` 对象中定义方法
+        methods: {
+            goods: function (event,i) {
+
+            }
+        }
+    });
+
+
+    /*获取更多推荐*/
+    function getmoretj(conttendtag){
+        var tjdatas={"tagid":conttendtag};
+        tjdatas=JSON.stringify(tjdatas);
+        // console.log(tjdatas);
+        $.ajax({
+            url :path2+'/bannertag/sharesmalltag.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType:"application/json",
+            dataType:"JSON",
+            async:true,
+            data: tjdatas,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+                console.log("获取失败：");
+                console.log(data);
+            },
+            success:function(diskJson){
+                console.log("更多推荐:");
+                console.log(diskJson);
+                if(diskJson.code =="1000"){
+                    commendmore.items=diskJson.data.rows;
+                }else{
+                    layer.msg("网络异常，请重试！！")
+                }
+
+            }
+        });
+    }
+
+
+</script>
+</body>
+</html>

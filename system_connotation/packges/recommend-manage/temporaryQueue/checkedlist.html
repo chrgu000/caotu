@@ -15,7 +15,7 @@
     .searchSecondMenu li{width:100%;text-align: left;padding-left:3px;cursor: pointer;line-height: 23px;}
     .searchSecondMenu li:hover{background:#fff;color:#333;border-top:1px solid #bbb;}
     #searchBtn{margin-bottom:12px;padding:5px 9px;}
-    #arryName,#pushtime{height:32px;text-align: center;}
+    #arryName,#pushtime,#goToWhere{height:32px;text-align: center;}
     .surebtn{float:right;margin-right:7px;}
     table input{cursor: pointer;}
 </style>
@@ -27,6 +27,19 @@
         <div style="border-bottom:1px dashed #ccc;padding-bottom:3px;">
             文字描述：
             <textarea id="contentTitle" maxlength="20" placeholder="标题搜索"></textarea>
+            <div style="margin-top:3px;height:32px;">
+                <span class="left">
+                     二级标签：
+                </span>
+
+                <div  class="left searchMenu">
+                    <input type="search" value="" data-val="" placeholder="请选择标签" id="checkTagSearch" class="searchTag"/>
+                    <ul class="searchSecondMenu" id="checkTagul1">
+
+                    </ul>
+                </div>
+
+            </div>
             <div style="margin-top:3px;">
                 开始时间：<input style="margin-left:4px;" type="text" placeholder="开始时间" value="" id="startTime"/>
                 结束时间：<input type="text" placeholder="结束时间" value="" id="endTime"/>
@@ -41,7 +54,14 @@
 <div class="wrapper wrapper-content  animated fadeInRight">
     <div style="padding-left:9px;margin:0;height:30px;line-height: 30px;margin-bottom:9px;">
         队列名：
-        <input type="text" id="arryName" value="" placeholder="请输入队列名" style="margin-right:7px;"/>
+        <input type="text" id="arryName" value="" placeholder="请输入队列名" style="margin-right:32px;"/>
+        位置：
+        <select name="" id="goToWhere">
+            <option value="push">推荐队列</option>
+            <option value="word">段子</option>
+            <option value="pic">图文</option>
+            <option value="vie">视频</option>
+        </select>
       <!--  推荐时间：
         <input type="text" id="pushtime" value=""/>-->
         <button type="button" class="btn btn-sm btn-primary surebtn" onclick="arrysure()">确定</button>
@@ -70,7 +90,7 @@
                         <tr v-for="(item,index) in chooselist" :data-id="item.contentid">
                             <td><input type="checkbox" :value="item"  v-model="chooselist"/></td>
                             <td class="center">{{index+1}}</td>
-                            <td class="center">{{item.contenttype == "3" ? "图片":item.contenttype == "4" ? "图文":item.contenttype == "1" ? "横视频":"竖视频"  }}</td>
+                            <td class="center">{{item.contenttype == "3" ? "图文":item.contenttype == "4" ? "段子":item.contenttype == "1" ? "横视频":"竖视频"  }}</td>
                             <td class="center">{{item.contenttitle}}</td>
                             <td class="center">{{item.contenttag}}</td>
                             <td class="center">{{item.contentlevel == "3" ? "A" :item.contentlevel == "2" ? "B" :item.contentlevel == "1" ? "C":"D"}}</td>
@@ -118,7 +138,7 @@
                         <tr v-for="(item,index) in items" :data-id="item.contentid">
                             <td><input type="checkbox" :value="item" @change="chooseChange()"  v-model="chooselist"/></td>
                             <td class="center">{{index+1}}</td>
-                            <td class="center">{{item.contenttype == "3" ? "图片":item.contenttype == "4" ? "图文":item.contenttype == "1" ? "横视频":"竖视频"  }}</td>
+                            <td class="center">{{item.contenttype == "3" ? "图文":item.contenttype == "4" ? "段子":item.contenttype == "1" ? "横视频":"竖视频"  }}</td>
                             <td class="center">{{item.contenttitle}}</td>
                             <td class="center">{{item.contenttag}}</td>
                             <td class="center">{{item.contentlevel == "3" ? "A" :item.contentlevel == "2" ? "B" :item.contentlevel == "1" ? "C":"D"}}</td>
@@ -186,7 +206,7 @@
                 reportdetail(event)
             },
             chooseChange:function(event){
-                if(this.chooselist.length >2){
+                if(this.chooselist.length >20){
                     this.chooselist.pop();
                 }
             },
@@ -221,6 +241,70 @@
         }
     });
 
+    /*标签搜索框焦点事件*/
+    $("#checkTagSearch").focus(function(){
+        $(".searchSecondMenu").addClass("show");
+    });
+    $("#checkTagSearch").blur(function(){
+        setTimeout(function(){
+            $(".searchSecondMenu").removeClass("show");
+        },500);
+
+    });
+    /*标签选择*/
+    $(".searchMenu .searchSecondMenu").delegate("li","click",function(){
+        let txt=$(this).html();
+        let dataval=$(this).attr("data-val");
+        $("#checkTagSearch").val(txt).attr("data-val",dataval);
+    });
+
+    /*搜索框键盘输入*/
+    $("#checkTagSearch").keyup(function(){
+        $(this).attr("data-val","");
+        var dataval=$(this).val();
+        getlabellist(dataval)
+
+    });
+    $("#checkTagSearch").keydown(function(event) {
+        if (event.keyCode == 13) {
+            $(this).attr("data-val","");
+            var dataval=$(this).val();
+            getlabellist(dataval);
+        }
+    });
+
+    /*标签列表获取*/
+    function getlabellist(dataval){
+        var datapost={"taglevel":2,"pageno":1,"pagesize":999,"tagname":dataval};
+        datapost=JSON.stringify(datapost);
+        $.ajax({
+            url : path2+'/tag/taglist.do',
+            cache:true,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:false,
+            data: datapost,
+            //data: {taglevel:3,pageno:1,pagesize:999},
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+                //console.log("标签列表获取失败：");
+                //console.log(data);
+            },
+            success:function(diskJson){
+//                console.log("标签列表获取：");
+//                console.log(diskJson);
+                $(".searchSecondMenu").empty();
+                $.each(diskJson.data.rows,function(i,n){
+                    if(n.tagid&&n.tagid !=null && n.tagname && n.tagname!=null){
+                        $(".searchSecondMenu").append(' <li data-val="'+ n.tagid+'">'+ n.tagname+'</li>');
+                    }
+                });
+            }
+        });
+    }
+
+
     /*搜索*/
     function searchsens(pageno){
         var contenttitle=$("#contentTitle").val();
@@ -236,7 +320,8 @@
         endTime=endTime.replace(/:/g, "");
         endTime=endTime+"00";
         endTime=parseInt(endTime);
-        var datapost={"pageno":pageno,"pagesize":10,"contenttitle":contenttitle,"endtime":endTime,"starttime":startTime};
+        let contenttag=$("#checkTagSearch").attr("data-val");
+        var datapost={"pageno":pageno,"pagesize":10,"contenttitle":contenttitle,"endtime":endTime,"starttime":startTime,"contenttag":contenttag};
 //         console.log("datapost::");
 //         console.log(datapost);
         datapost=JSON.stringify(datapost);
@@ -304,50 +389,82 @@
             layer.msg("请输入队列名称！！");
             return false;
         }
-
-        var datapost={"replace":[]};
+        let loc=$("#goToWhere").val();
+        let iscando=1;
+        var datapost={"loc":loc,"replace":[]};
         if(choosecont.chooselist.length<=0){
             layer.msg("请选择内容！！");
             return false;
         }else{
+            if(loc =="push"){
+                if(choosecont.chooselist.length>2){
+                    layer.msg("推荐队列不能多于2条!!");
+                    iscando=0;
+                    return false;
+                }
+            }
+
             $.each(choosecont.chooselist,function(i,n){
+                if(loc =="word"){
+                    if(n.contenttype !=4){
+                        layer.msg("有段子之外的内容类型，请重新选择！！");
+                        iscando=0;
+                        return false;
+                    }
+                }else if(loc =="pic"){
+                    if(n.contenttype !=3){
+                        layer.msg("有图文之外的内容类型，请重新选择！！");
+                        iscando=0;
+                        return false;
+                    }
+                }else if(loc =="vie"){
+                    if(n.contenttype !=1 && n.contenttype !=2){
+                        layer.msg("有视频之外的内容类型，请重新选择！！");
+                        iscando=0;
+                        return false;
+                    }
+                }
                 datapost.replace.push({"contentid":n.contentid,"pushid":queenname,"userid":userid,"contenttitle":n.contenttitle});
             });
+
+
         }
 
-//         console.log("datapost::");
-//         console.log(datapost);
-        datapost=JSON.stringify(datapost);
-        $.ajax({
-            url : path+'/content/immediateEffect.do',
-            cache:false,//false就不会从浏览器缓存中加载请求信息了
-            type:"POST",
-            contentType: "application/json",
-            dataType:"JSON",
-            async:true,
-            data: datapost,
-            error: function(data){
-                layer.msg("服务器未响应,请稍后再试!");
+        if(  iscando==1){
+            // console.log("datapost::");
+            // console.log(datapost);
+            datapost=JSON.stringify(datapost);
+            $.ajax({
+                url : path+'/content/immediateEffect.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: datapost,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
 //                console.log("推荐队列新增失败：");
 //                console.log(data);
-            },
-            success:function(diskJson){
-                layer.closeAll();
+                },
+                success:function(diskJson){
+                    layer.closeAll();
 //                console.log("推荐队列新增：");
 //                console.log(diskJson);
-                /*翻页信息*/
-                if(diskJson.code =="1000"){
-                    choosecont.chooselist=[];
-                    tabledata.chooselist=[];
-                    $("#arryName").val("");
-                    layer.msg("队列提交成功！！");
-                }else{
-                    layer.msg("队列提交有误："+diskJson.message+"!");
+                    /*翻页信息*/
+                    if(diskJson.code =="1000"){
+                        choosecont.chooselist=[];
+                        tabledata.chooselist=[];
+                        $("#arryName").val("");
+                        layer.msg("队列提交成功！！");
+                    }else{
+                        layer.msg("队列提交有误："+diskJson.message+"!");
+                    }
+
+
                 }
-
-
-            }
-        });
+            });
+        }
 
 
     }
@@ -381,7 +498,7 @@
                 //console.log("查看内容详情接口：");
                 //console.log(diskJson);
                 if(diskJson.code =="1000"){
-                    repoterdetail2(diskJson.data[0]);
+                    repoterdetail2(diskJson.data.contentlist[0]);
 
                 }else{
                     layer.msg("数据有误请重试!");

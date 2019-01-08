@@ -12,6 +12,7 @@
     <link href="../../../css/style.css?v=4.1.0" rel="stylesheet">
     <link href="../../../plugin/datepicker/jquery.datetimepicker.css" rel="stylesheet">
     <link href="../../../plugin/font/iconfont.css" rel="stylesheet">
+    <link href="../../../css/common.css" rel="stylesheet">
 
     <style>
         #topKzCon{padding:10px 20px;;}
@@ -139,6 +140,9 @@
         .layui-layer-dialog .layui-layer-content{color:#fff;}
         #fixedTips{position: fixed;width:100%;height:100%;background:rgba(0,0,0,.5);z-index: 98;color:#fff;left:0;top:0;display: none;}
         #fixedTips .tips{color:#fff;font-size: 27px;text-align: center;line-height: 350px;}
+        /*内容链接*/
+        #contentUrlBox{position: fixed;width:100%;height:100%;padding:15px;background:#fff;top:0;bottom:0;left:0;right:0;margin:0 auto;display: none;overflow: auto;}
+        #contentUrlBox li{width:100%;line-height: 30px;color:#333;font-size:13px;}
 
     </style>
 </head>
@@ -197,8 +201,9 @@
                 <td>
                     是否通过：
                     <select id="ispassSelect">
-                        <option value="NO">不通过</option>
                         <option value="YES">通过</option>
+                        <option value="NO">不通过</option>
+
                     </select>
                 </td>
             </tr>
@@ -262,9 +267,12 @@
                  </td>
              </tr>-->
             <tr>
-                <td colspan="2">
+                <td colspan="">
                     最后审核人：
                     <span id="finalAuditor"></span>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-default" id="lookContentUrl">查看链接</button>
                 </td>
             </tr>
             </tbody>
@@ -313,12 +321,12 @@
                 <div class="selefCon" v-bind:data-contentid="item.contentid">{{item.commenttext}}
                     <!--图片/视频-->
                     <div class="imgMovieShowComBox" v-if="item.commenturltype==3 || item.commenturltype==4">
-                        <span v-for="(itemimg,t) in item.commenturl">
+                        <span v-for="(itemimg,t) in item.commenturl" v-on:click="showimg(item.commenturl,t,1)">
                             <img v-bind:src="itemimg.info" alt="">
                         </span>
                     </div>
                     <div class="imgMovieShowComBox movieshowBox" v-else>
-                          <span v-for="(itemimg,t) in item.commenturl">
+                          <span v-for="(itemimg,t) in item.commenturl" v-on:click="showimg(item.commenturl,t,2)">
                                <video controls="controls" v-bind:src="itemimg.info">您的浏览器不支持</video>
                         </span>
                     </div>
@@ -329,12 +337,12 @@
                     {{itemcon.commenttext}}
                     <!--图片/视频-->
                     <div class="imgMovieShowComBox"  v-if="itemcon.commenturltype==3 ||itemcon.commenturltype==4">
-                        <span v-for="(itemimg2,t2) in itemcon.commenturl" >
+                        <span v-for="(itemimg2,t2) in itemcon.commenturl" v-on:click="showimg(itemcon.commenturl,t2,1)">
                             <img v-bind:src="itemimg2.info" alt="">
                         </span>
                     </div>
-                    <div class="imgMovieShowComBox movieshowBox" v-else>
-                        <span v-for="(itemimg2,t2) in itemcon.commenturl" >
+                    <div class="imgMovieShowComBox movieshowBox" v-else >
+                        <span v-for="(itemimg2,t2) in itemcon.commenturl" v-on:click="showimg(itemcon.commenturl,t2,2)">
                           <video controls="controls" v-bind:src="itemimg2.info">您的浏览器不支持</video>
                         </span>
                     </div>
@@ -385,7 +393,22 @@
 <div id="fixedTips">
     <h3 class="tips">已无审核内容！！！</h3>
 </div>
+<!--评论图片视频点击放大-->
+<div id="faxAllBox">
+    <div class="toptip"><span><b class="pre">1</b>/ <b class="all">1</b></span><b class="iconfont close" onclick="closeimg()">X</b></div>
+    <span class="runLeftBtn runBtn" onclick="turnleftfun()">《</span>
+    <span class="runRightBtn runBtn" onclick="turnrightfun()">》</span>
+    <ul>
 
+    </ul>
+</div>
+
+<!--内容链接-->
+    <div id="contentUrlBox">
+        <ul>
+
+        </ul>
+    </div>
 
 <script src="../../../js/jquery.min.js?v=2.1.4"></script>
 <script src="../../../plugin/datepicker/jquery.datetimepicker.full.min.js"></script>
@@ -442,6 +465,33 @@
                 $("#commontsSrBox").attr("data-list",i);
                 $("#commontsSrBox").attr("data-list2",d);
                 $("#myComments").attr("placeholder","回复"+callname+"：")
+            },
+            showimg: function (event,i,type) {
+                //  console.log(event);
+                // console.log(i);
+                /*------自定义的图片左右切换-----------*/
+                $("#faxAllBox").addClass("show");
+                $("#faxAllBox ul").empty();
+                $("#faxAllBox .toptip b.all").html(event.length);
+                $("#faxAllBox .toptip b.pre").html(i+1);
+                var w=$(window).width();
+                var w2=w*event.length+"px";
+                $("#faxAllBox ul").css("width",w2);
+                var stw='width:'+w+"px";
+                $.each(event,function(c,t){
+                    if(type==1){
+                        if(c==i){
+                            $("#faxAllBox ul").append('<li style="'+stw+'" class="show" data-type="'+(c+1)+'"><div class="simgbox"><span class="simgspan"><img src="'+ t.info+'" alt=""/></span></div> </li>');
+                        }else{
+                            $("#faxAllBox ul").append('<li style="'+stw+'" data-type="'+(c+1)+'"><div class="simgbox"><span class="simgspan"><img src="'+ t.info+'" alt=""/></span></div> </li>');
+                        }
+                    }else{
+                        $("#faxAllBox ul").append('<li style="'+stw+'" class="show" data-type="'+(c+1)+'"><div class="simgbox movieShowBox"><video src="'+ t.info+'" controls="controls"></video></div> </li>');
+                    }
+
+                })
+
+
             }
         }
     });
@@ -494,13 +544,13 @@
     }
 
     /*获取审核类型加载视频/图片页面*/
+
     function getchecktype(contsdatas){
         //根据iframe的id获取对象
         layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:1000}) ;
-       // console.log("contsdatas::");
-       // console.log(contsdatas);
         //////console.log(ifinfo);
         var murl="moveicheck.html";
+
         if(contsdatas.contenttype == "3"){
             murl="picturecheck.html";
 
@@ -509,11 +559,7 @@
             $("#movieCoverChangeBox").css({"display":"none"});
         }else if(contsdatas.contenttype == "4"){
             murl="picturecheck.html";
-            if(contsdatas.contenturllist ==""){
-                $("#movieStyle").attr("data-val",4).html("纯文字");
-            }else{
-                $("#movieStyle").attr("data-val",3).html("图片");
-            }
+            $("#movieStyle").attr("data-val",4).html("纯文字");
             $("#movieCoverChangeBox").css({"display":"none"});
             $(".movieTrBox").css({"display":"none"});
         }else{
@@ -529,13 +575,27 @@
             geturl(contsdatas.contenturllist);
         });
 
+
+
+        contentUrldel(contentDatasurllist);
         /*视频/图片右侧信息*/
         $("#unchecknum").html(contsdatas.pushcount);
+        // console.log("contsdatas::");
+        // console.log(contsdatas);
+        // console.log(contsdatas.contenttitle);
         if(contsdatas.contenttitle && contsdatas.contenttitle !=""){
-            let contitle=filteremoji(contsdatas.contenttitle);
-            $("#mainConTitle").attr("readonly","readonly");
-            $("#mainCont .contitleTip").html(contsdatas.contenttitle.length+"/字");
-            $("#mainConTitle").val(contitle);
+            let contile=$.trim(contsdatas.contenttitle);
+           // let contile2=filteremoji(contile);
+            if(contile!="" ){
+                $("#mainConTitle").attr("readonly","readonly");
+                $("#mainCont .contitleTip").html(contsdatas.contenttitle.length+"/字");
+                $("#mainConTitle").val(contile);
+            }else{
+                $("#mainConTitle").removeAttr("readonly");
+                $("#mainCont .contitleTip").html("0/字");
+                $("#mainConTitle").val("");
+            }
+
         }else{
             $("#mainConTitle").removeAttr("readonly");
             $("#mainCont .contitleTip").html("0/字");
@@ -548,17 +608,16 @@
         let createuserName=userdatas.data.username;
         $("#finalAuditor").attr("data-id",createuser).html(createuserName);
         $("#checkpublisher").html(contsdatas.contentuid);
+        /*标签处理*/
+        $("#detailCon .searchMenu .searchTag").val("").attr("data-val","").removeAttr("disabled");
         if(contsdatas.contenttag && contsdatas.contenttag !=""){
-            let tagshow=$("#checkTagul1 li[data-val="+contsdatas.contenttag +"]").html();
-            // console.log("tagshow::");
-            // console.log(tagshow);
-            let tagshowname=contsdatas.contenttag;
-            if(tagshow !=""&& tagshow!=undefined){
-                tagshowname=tagshow;
-            }
-            $("#checkTagSearch1").val(tagshowname ).attr("data-val",contsdatas.contenttag ).attr("disabled","disabled");
-        }else{
-            $("#checkTagSearch1").val("").attr("data-val","").removeAttr("disabled");
+            let conlstag=contsdatas.contenttag.split(";");//临时加的
+            let tagshow=[];
+            $.each(conlstag,function(i,n){
+                let sname=$("#checkTagul1 li[data-val="+n +"]").html();
+                tagshow.push(sname);
+                $("#checkTagSearch"+(i+1)).val(sname ).attr("data-val",n ).attr("disabled","disabled");
+            });
         }
         //获取的评论
         getcommentlistdatas(contsdatas.contentid);
@@ -884,7 +943,6 @@
          /*   let w=$("#movieImgBox .movieshowimg img").attr("data-width");
             let h=$("#movieImgBox .movieshowimg img").attr("data-height");
             contenttext=w+","+h;*/
-
         }
         let ispass=$("#ispassSelect").val();
 
@@ -906,14 +964,12 @@
             "contentid":contentid,
             "contenttag":contenttag,
             "contenttitle":contenttitle,
-            "contenttype":contenttype,
             "contenturllist": contenturllist,//
             "indexno": indexno,
             "pagenum": pagenum,
             "playcount": playcount,
             "ispass":ispass,
             "flag":flag
-
         };
         //console.log("tijiao 2postdata:");
         //console.log(tjdatas);
@@ -977,6 +1033,11 @@
                     //
                     // $("#subcheckbtn").attr("disabled","disabled");
                 }else{
+                    talknum=0;
+                    $("#talkAboutBox .talkNum").html(talknum);
+                    usertalk.items=[];
+                    $("#subcheckbtn").removeAttr("disabled");
+
                     layer.confirm('提交失败，该条内容可能已被删除(跳过直接审核下个内容，"取消"联系后台人员)', {
                         btn: ['下一条',"取消"] //按钮
                     }, function(index){
@@ -1125,7 +1186,37 @@
         usertalk.items=[];
         $("#subcheckbtn").removeAttr("disabled");
         getcheckdata();
+        $("#ispassSelect").val("YES");
     }
+
+    //显示内容链接
+    function  contentUrldel(contentDatasurllist){
+        // console.log("contentDatasurllist::");
+        // console.log(contentDatasurllist);
+        $("#contentUrlBox ul").empty();
+        if(contentDatasurllist && contentDatasurllist!=undefined && contentDatasurllist!=""){
+            let nedurl=JSON.parse(contentDatasurllist);
+            $.each(nedurl,function(i,n){
+                $("#contentUrlBox ul").append('<li><a href="'+n+'" target="_blank">'+n+'</a></li>');
+            })
+        }
+
+
+
+    }
+    $("#lookContentUrl").click(function(){
+        layer.open({
+            type: 1,
+            title: '备选队列页码选择',
+            maxmin: false, //开启最大化最小化按钮
+            area: ['500px', "320px"],
+            content: $("#contentUrlBox"),
+            success: function (layero, index) {
+
+            }
+        });
+    });
+
 
     /*离开页面时的判断*/
     window.onbeforeunload=function (e){
@@ -1135,6 +1226,7 @@
         }
 
     };
+
 
 </script>
 </body>

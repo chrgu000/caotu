@@ -6,8 +6,11 @@
         .dataTitle{line-height: 45px;margin:0;}
         .dataConBox{border:1px solid #bbb;height:170px;padding-top:22px;}
         .usershownum{font-size:30px;text-align: center;font-weight:700;}
+        #userInfoDat{position: relative;}
         #userInfoDat .lower{color:#006621;font-size:18px;}
         #userInfoDat .height{color:#FF2B00;font-size:18px;}
+        #ugcShowDataBox{position: absolute;bottom:-25px;left:0;border:1px solid #ddd;}
+        #ugcShowDataBox i{color:#0a6aa1;font-size:9px;padding-right:12px;}
         .dataConBox .title{display: inline-block;width:25%;text-align: right;}
         .dataConBox .changeNum{display: inline-block;width:30%;text-align: center;}
         .labelpagesbox{width:100%;border:1px solid #ddd;margin-top:-1px;padding:9px;}
@@ -106,6 +109,11 @@
                 </div>
 
             </div>
+
+            <div id="ugcShowDataBox">
+                <p style="margin:2px 30px;">UGC累计内容量：<b>{{allugc}}</b> <i>(备注：截止至当日凌晨2:00)</i>当日UGC内容量：<b>{{todayugc}}</b> <i>(备注：当日凌晨2:00到现在)</i></p>
+
+            </div>
         </div>
 
         <!--折线图-->
@@ -196,7 +204,9 @@
                 newuswer: {"dayadd":"","weekchange":"","weekbl":"","monthchange":"","monthbl":""},
                 activeuser: {"dayadd":"","weekchange":"","weekbl":"","monthchange":"","monthbl":""},
                 alluser: {"dayadd":"","weekchange":"","weekbl":"","monthchange":"","monthbl":""},
-                maxuser: {"dayadd":"","weekchange":"","weekbl":"","monthchange":"","monthbl":""}
+                maxuser: {"dayadd":"","weekchange":"","weekbl":"","monthchange":"","monthbl":""},
+                allugc:"",
+                todayugc:"",
             }
         });
 
@@ -223,10 +233,10 @@
             var sevenday=gettime(-7);
             var fourteenday=gettime(-14);
             var monthday=gettime(-31);
-            console.log(today);
-            console.log(yesterday);
-            console.log(fourteenday);
-            console.log(monthday);
+            // console.log(today);
+            // console.log(yesterday);
+            // console.log(fourteenday);
+            // console.log(monthday);
             $(".datechooseBox").attr("data-val",today);
             $("#yesterdayBtn").attr("data-val",yesterday);
             $("#sevendayBtn").attr("data-val",sevenday);
@@ -244,6 +254,7 @@
             });
 
             getechatdatatop(yesterday,yesterday);
+            todayugc();//ugc当日总量查询
             getechatdata(yesterday,yesterday);
             getechatyerdata();//图4活跃
             tablestarttime=yesterday;
@@ -258,7 +269,7 @@
 //            //console.log(datapost);
             datapost=JSON.stringify(datapost);
             $.ajax({
-                url : path+'/CTKJBUSINESS/analysis/analysisuser.do',
+                url : path+'/analysis/analysisuser.do',
                 cache:false,//false就不会从浏览器缓存中加载请求信息了
                 type:"POST",
                 contentType: "application/json",
@@ -271,8 +282,8 @@
                     //console.log(data);
                 },
                 success:function(diskJson){
-//                    console.log("用户分析top4：");
-//                    console.log(diskJson);
+                   // console.log("用户分析top4：");
+                   // console.log(diskJson);
                     if(diskJson.code=="1000"){
                         if(diskJson.data.reportlist.length>=1){
                             topdata(diskJson.data.reportlist[0]);
@@ -292,7 +303,7 @@
 //            //console.log(datapost);
             datapost=JSON.stringify(datapost);
             $.ajax({
-                url : path+'/CTKJBUSINESS/analysis/analysisactive.do',
+                url : path+'/analysis/analysisactive.do',
                 cache:false,//false就不会从浏览器缓存中加载请求信息了
                 type:"POST",
                 contentType: "application/json",
@@ -316,7 +327,6 @@
                             layer.msg("暂无数据，请刷新重试！！");
                             $("#labelpage4").html("<h1 class='eachartstips'>暂无数据！！！</h1>")
                         }
-
                     }else{
                         layer.msg("数据有误，请刷新重试！！")
                     }
@@ -330,12 +340,12 @@
 //            //console.log(datapost);
             datapost=JSON.stringify(datapost);
             $.ajax({
-                url : path+'/CTKJBUSINESS/analysis/analysisuser.do',
+                url : path+'/analysis/analysisuser.do',
                 cache:false,//false就不会从浏览器缓存中加载请求信息了
                 type:"POST",
                 contentType: "application/json",
                 dataType:"JSON",
-                async:false,
+                async:true,
                 data: datapost,
                 error: function(data){
                     layer.msg("服务器未响应,请稍后再试!");
@@ -343,8 +353,8 @@
                     //console.log(data);
                 },
                 success:function(diskJson){
-                    //console.log("用户分析：");
-                    //console.log(diskJson);
+                    // console.log("用户分析：");
+                    // console.log(diskJson);
                     if(diskJson.code=="1000"){
                         if(diskJson.data.reportlist.length>0){
                             echartsdata=diskJson.data.reportlist;
@@ -377,7 +387,7 @@
 //            console.log(datapost);
             datapost=JSON.stringify(datapost);
             $.ajax({
-                url : path+'/CTKJBUSINESS/analysis/analysisuser.do',
+                url : path+'/analysis/analysisuser.do',
                 cache:false,//false就不会从浏览器缓存中加载请求信息了
                 type:"POST",
                 contentType: "application/json",
@@ -429,6 +439,44 @@
             userinfotdatas.activeuser=activeuserlist;
             userinfotdatas.alluser=alluserlist;
             userinfotdatas.maxuser=maxuserlist;
+            userinfotdatas.allugc=topdata.ugcpush;
+
+        }
+
+        /*当日UGC内容量*/
+        function todayugc(){
+            var datapost={"YES":"yes"};
+//            console.log(datapost);
+            datapost=JSON.stringify(datapost);
+            $.ajax({
+                url : path+'/config/queryUGCNum.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: datapost,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    //console.log("用户分析表格：");
+                    //console.log(data);
+                },
+                success:function(diskJson){
+                   // console.log("当日UGC内容量：");
+                   // console.log(diskJson);
+                    if(diskJson.code=="1000"){
+                        if(diskJson.data.allpush && diskJson.data.allpush!=""){
+                            userinfotdatas.todayugc=diskJson.data.allpush;
+                        }else{
+                            userinfotdatas.todayugc=0;
+                        }
+
+
+                    }else{
+                        layer.msg("数据有误，请刷新重试！！")
+                    }
+                }
+            });
         }
 
         /*标签切换*/
@@ -525,6 +573,7 @@
 
         /*表1新增注册人数*/
         function echart1(){
+
             var xlist=[],ylist=[];
             $("#labelpage1").empty();
             if(echartsdata.length>0){
@@ -594,6 +643,7 @@
 
         /*表2活跃用户数*/
         function echart2(){
+
             var xlist=[],ylist=[];
             $("#labelpage2").empty();
             if(echartsdata.length>0){
@@ -664,6 +714,7 @@
 
         /*表3累计用户数*/
         function echart3(){
+
             var xlist=[],ylist=[];
             $("#labelpage3").empty();
             if(echartsdata.length>0){
@@ -734,6 +785,7 @@
 
         /*表4用户活跃时间段分布*/
         function echart4(){
+
             var xlist=[],ylist=[];
             var titletime="",max="";
             $("#labelpage4").empty();

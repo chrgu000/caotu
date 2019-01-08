@@ -82,13 +82,14 @@
                                 <td class="center">{{index+1}}</td>
                                 <td class="center">{{item.reportdes }}</td>
                                 <td>{{item.reporttext}}</td>
-                                <td class="center">{{item.reporttype=="1"?"内容":"评论"}}</td>
+                                <td class="center" v-if="item.reporttype==1">内容</td>
+                                <td class="center" style="cursor: pointer;" v-else v-on:click="lookcomment(item)">评论</td>
                                 <td class="center">{{item.reportObject}}</td>
                                 <td class="center">{{item.createtime | time}}</td>
                                 <td class="center">{{item.reportusername}}</td>
                                 <td class="center">{{item.dealres=="0"?"待处理":(item.dealres=="1"?"通过":"未通过")}}</td>
                                 <td class="center" v-if="item.dealres==1">
-                                    <button type="button" class="btn" v-if="item.reporttype==1" v-on:click="lookconten(item)">详情</button>
+                                    <button type="button" class="btn" v-if="item.reporttype==1" v-on:click="lookconten2(item)">详情</button>
                                 </td>
                                 <td class="center" v-else>
                                     <button type="button" class="btn" v-on:click="lookconten(item)">详情</button>
@@ -155,9 +156,16 @@
                 });
 
             },
-            lookconten:function(event){
-                console.log(event);
+            lookconten:function(event){//待审核未通过详情
+               // console.log(event);
                 reportdetail(event);
+            },
+            lookconten2:function(event){//已通过详情
+                // console.log(event);
+                reportdetail(event);
+            },
+            lookcomment:function(event){//评论详情
+                commentdetail(event);
             }
 
         }
@@ -204,8 +212,8 @@
         getcheck(1);
     }
 
-/*点击详情查看*/
-    function reportdetail(nedata){
+/*点击详情查看已通过的只能看内容相情*/
+ /*   function reportdetail3(nedata){
         var contentid=nedata.contentid;
         if(nedata.cmtcontentid){
             contentid=nedata.cmtcontentid;
@@ -232,11 +240,11 @@
 //                console.log(diskJson);
                 if(diskJson.code == "1000"){
                     var type=diskJson.data.contenttype;
-                    var url="reportmovie.html";
+                    var url="report/reportmovie.html";
                     if(type=="3" || type=="4"){
-                        url="reportpicture.html";
+                        url="report/reportpicture.html";
                     }else{
-                        url="reportmovie.html";
+                        url="report/reportmovie.html";
                     }
 
                     layer.open({
@@ -258,10 +266,80 @@
 
             }
         });
+    }*/
+    /*点击详情查看*/
+    function reportdetail(nedata){
+       console.log("nedata::");
+       console.log(nedata);
+        var contentlist=[];
+       if(nedata.reporttype ==1){
+           contentlist=[nedata.contentid];
+       }else{
+           contentlist=[nedata.cmtcontentid];
+       }
+
+        var datapost={"contentlist":contentlist};
+//         console.log("datapost::");
+//         console.log(datapost);
+        datapost=JSON.stringify(datapost);
+        // tabledata.tagshow=contentshow;
+        $.ajax({
+            url : path+'/content/watchContentDetail.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+//                console.log("获取失败：");
+//                console.log(data);
+            },
+            success:function(diskJson){
+                console.log("查看内容详情接口：");
+                console.log(diskJson);
+                if(diskJson.code =="1000"){
+                    if(diskJson.data.contentlist[0].contentid && diskJson.data.contentlist[0].contentid!=""){
+                        repoterdetail2(diskJson.data.contentlist[0]);
+                    }else{
+                        layer.msg("该内容已被删除！！");
+                    }
+
+
+                }else{
+                    layer.msg("数据有误请重试!");
+                }
+
+
+            }
+        });
     }
 
-
-
+    /*查看详情2*/
+    function repoterdetail2(urldata){
+        var type=urldata.contenttype;
+        var url="recomovie.html";
+        if(type=="3" || type=="4" || type=="5"){
+            url="recopicture.html";
+        }else{
+            url="recomovie.html";
+        }
+        layer.open({
+            type: 2,
+            title: '内容详情',
+            shadeClose: true,
+            maxmin: true, //开启最大化最小化按钮
+            shade: 0.8,
+            area: ['80%', '90%'],
+            content: url, //iframe的url
+            success: function (layero, index) {
+                var body = layer.getChildFrame('body', index);
+                var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                iframeWin.geturl(urldata);
+            }
+        });
+    }
 
     /*是否通过*/
     function ispass(redata,ispa){
@@ -296,6 +374,65 @@
                 }
 
 
+            }
+        });
+    }
+
+    /*评论详情*/
+    function commentdetail(neddata){
+        // console.log("neddata:");
+        // console.log(neddata);
+        var datapost={"cmtid":neddata.commentid};
+        datapost=JSON.stringify(datapost);
+        // tabledata.tagshow=contentshow;
+        $.ajax({
+            url : path+'/note/cmtInfo.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+//                console.log("获取失败：");
+//                console.log(data);
+            },
+            success:function(diskJson){
+                // console.log("查看评论详情接口：");
+                // console.log(diskJson);
+                if(diskJson.code =="1000"){
+                    if(diskJson.data.commentid && diskJson.data.commentid!=""){
+                        commentdetail2(diskJson.data);
+                    }else{
+                        layer.msg("该内容已被删除！！");
+                    }
+
+
+                }else{
+                    layer.msg("数据有误请重试!");
+                }
+
+
+            }
+        });
+    }
+
+    /*查看评论详情2*/
+    function commentdetail2(urldata){
+        var url="report/recomentdetail.html";
+        layer.open({
+            type: 2,
+            title: '内容详情',
+            shadeClose: true,
+            maxmin: true, //开启最大化最小化按钮
+            shade: 0.8,
+            area: ['80%', '90%'],
+            content: url, //iframe的url
+            success: function (layero, index) {
+                var body = layer.getChildFrame('body', index);
+                var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                iframeWin.geturl(urldata);
             }
         });
     }

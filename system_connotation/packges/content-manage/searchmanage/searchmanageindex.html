@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> 删除管理</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link href="../../../css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="../../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../../css/common.css" rel="stylesheet">
+    <link href="../../../plugin/layer/skin/layer.css" rel="stylesheet">
+    <link href="../../../css/animate.css" rel="stylesheet">
+    <link href="../../../css/style.css?v=4.1.0" rel="stylesheet">
+
+    <style>
+        /* Additional style to fix warning dialog position */
+
+        #alertmod_table_list_2 {
+            top: 900px !important;
+        }
+        .btitle{padding-left:20px;height:45px;border-bottom:1px solid #bbb; line-height: 37px;}
+        #searchBox{border:1px solid #bbb;padding:25px;}
+        .titlebtn{float:right;margin-right:6px;margin-bottom:6px;}
+        #refreshNow{background:#f05151;}
+        #pageLoadBox{width:100%;}
+        #alertmod_table_list_2 {
+            top: 900px !important;
+        }
+        .btitle{padding-left:20px;height:45px;border-bottom:1px solid #bbb; line-height: 37px;}
+        #searchBox{border:1px solid #bbb;padding:25px;}
+        #searchBox>div{margin:4px 0;}
+        #secsitdc{padding-left:7px;}
+        .titlebtn{float:right;margin-right:6px;margin-bottom:6px;}
+        #refreshNow{background:#f05151;}
+        #contentListBox{width:100%;padding:6px;}
+    </style>
+
+</head>
+
+<body class="gray-bg">
+<h3 class="btitle">删除管理</h3>
+    <div id="pageLoadBox">
+        <div style="padding:25px;font-size:16px;">
+            <p>筛选查询</p>
+            <div id="searchBox">
+                <div>
+                    内容名称：<input type="search" class="secsitdc" value="" id="secsitdc"/>
+                    <button type="button" class="btn btn-sm btn-primary" id="searchBtn" >搜  索</button>
+                </div>
+               <div>
+                   内 容 I D：<input type="search" class="secsitdc" value="" id="searchConId"/>
+                   <button type="button" class="btn btn-sm btn-primary" id="searchBtn2" >搜  索</button>
+               </div>
+              <div>
+                  段 友 号 ：<input type="search" class="secsitdc" value="" id="dfUserNum"/>
+                  <button type="button" class="btn btn-sm btn-primary" id="searchBtn3" >搜  索</button>
+              </div>
+
+            </div>
+        </div>
+        <div class="wrapper wrapper-content  animated fadeInRight">
+            <h3 style="padding-left:9px;margin:0;height:30px;line-height: 30px;">数据列表</h3>
+            <div id="contentListBox">
+
+            </div>
+        </div>
+    </div>
+
+
+<!-- 全局js -->
+<script src="../../../js/jquery.min.js?v=2.1.4"></script>
+<script src="../../../plugin/layer/layer.js"></script>
+<script src="../../../js/vue.js"></script>
+<script type="text/javascript" src="../../../js/index.js"></script>
+
+<!-- Page-Level Scripts -->
+<script>
+
+
+    $("#searchBox input").focus(function(){
+        $("#searchBox input").val("");
+    });
+
+    //搜索用户名
+    $("#searchBtn").click(function(){
+        $("#contentListBox").load("searchconname.html");
+    });
+    //搜索用户ID
+    $("#searchBtn2").click(function(){
+        $("#contentListBox").load("searchconid.html");
+    });
+    //搜索用户段友号
+    $("#searchBtn3").click(function(){
+        $("#contentListBox").load("searchconnum.html");
+    });
+
+
+
+//    删除
+    function deletesens(deldata){
+
+        var userid=userdatas.data.userid;
+        console.log("userdatas::");
+        console.log(userdatas);
+        var datapost={"contentid":deldata,"userid":userid};
+//         console.log("datapost::");
+//         console.log(datapost);
+        datapost=JSON.stringify(datapost);
+        $.ajax({
+            url : path+'/content/deletecontent.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+//                console.log("删除敏感词失败：");
+//                console.log(data);
+            },
+            success:function(diskJson){
+                layer.closeAll();
+//                console.log("删除内容：");
+//                console.log(diskJson);
+                /*翻页信息*/
+                if(diskJson.code =="1000"){
+                    layer.msg("删除成功!",{
+                        time:1000
+                    },function(){
+                       // getcheck();
+                    });
+
+                }else{
+                    layer.msg("该内容已被删除!");
+                }
+
+
+            }
+        });
+    }
+
+    /*点击详情查看*/
+    function repoterdetail2(nedata){
+        // console.log("nedata::");
+        // console.log(nedata);
+        var contentlist=[nedata.contentid];
+        let deletef=nedata.deletef;
+        var datapost={"contentlist":contentlist,"checkdetail":"YES","deletef":deletef};
+//         console.log("datapost::");
+//         console.log(datapost);
+        datapost=JSON.stringify(datapost);
+        // tabledata.tagshow=contentshow;
+        $.ajax({
+            url : path+'/content/watchContentDetail.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+//                console.log("获取失败：");
+//                console.log(data);
+            },
+            success:function(diskJson){
+                console.log("查看内容详情接口：");
+                console.log(diskJson);
+                if(diskJson.code =="1000"){
+                    let x=nedata.contentid;
+                    let dfdata=diskJson.data[x];
+
+                    repoterdetail3(diskJson.data.contentlist[0],dfdata);
+
+                }else{
+                    layer.msg("数据有误请重试!");
+
+                }
+
+
+            }
+        });
+    }
+
+    /*查看详情2*/
+    function repoterdetail3(urldata,dfdata){
+        layer.open({
+            type: 2,
+            title: '内容详情',
+            shadeClose: true,
+            maxmin: true, //开启最大化最小化按钮
+            shade: 0.8,
+            area: ['100%', '100%'],
+            content: "checksconts.html", //iframe的url
+            success: function (layero, index) {
+                var body = layer.getChildFrame('body', index);
+                var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                iframeWin.getcheckdata(urldata,dfdata);
+            }
+        });
+    }
+
+</script>
+
+    
+    
+
+</body>
+
+</html>

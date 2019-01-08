@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> 分享管理</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <style>
+        /* Additional style to fix warning dialog position */
+
+        #alertmod_table_list_2 {
+            top: 900px !important;
+        }
+        #createLabel{margin-top:10px;margin-left:30px;}
+        #chooseMajia{margin-top:10px;}
+        .btitle{padding-left:20px;height:45px;border-bottom:1px solid #bbb; line-height: 37px;}
+        #tablelistbox .btn{color:#5a656d;}
+        #tablelistbox .btn:hover{color:#fff;background:#0088cc;}
+        #tablelistbox  .lookmeitem{color:#0a6aa1;cursor: pointer;}
+
+        .popShadeBox{width:100%;margin:0 auto;height:100%;border:1px solid #ddd;background:#fff;padding:30px;display: none;}
+        .popShadeBox .popBox{width:100%;overflow-y: auto;padding:6px;border:1px solid #ddd;}
+        .popShadeBox .popBox label{cursor: pointer;margin:15px;}
+        .popShadeBox .popBox input{vertical-align: sub;margin-right:3px;cursor: pointer;}
+        .popShadeBox .suredbtn{float:right;margin-right:3px;background:#52b5dc;color:#fff;margin-bottom:10px;}
+        #tablelistTbody td img{width:auto;height:auto;max-height: 80px;max-width: 80px;}
+        #lookedMajia{padding:15px;border-bottom:1px dashed #ccc;}
+        #lookedMajia span{display: inline-block;padding:4px;margin:4px;}
+    </style>
+
+</head>
+
+<body>
+
+    <div id="contentPageBox">
+        <h3 class="btitle">分享管理列表</h3>
+        <button type="button" class="btn btn-sm btn-primary" id="createLabel">新建</button>
+        <div class="wrapper wrapper-content  animated fadeInRight">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox-content">
+                        <div class="jqGrid_wrapper" id="tablelist">
+                            <!--   <table id="table_list_2"></table>-->
+                            <table  class="table table-striped" id="tablelistbox">
+                                <thead>
+                                <tr>
+                                    <th>位置</th>
+                                    <th>标题</th>
+                                    <th>图片</th>
+                                    <th>操作人</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody id="tablelistTbody">
+                                    <tr v-for="(item,index) in items">
+                                        <td class="center">{{index+1}}</td>
+                                        <td class="center">{{item.contenttitle}}</td>
+                                        <td class="center"><img v-bind:src="item.contentpic" alt="头像"></td>
+                                        <td class="center">{{item.userid}}</td>
+                                        <td class="center">
+                                            <button type="button" class="btn deletebtn" v-on:click="change(item)">替换</button>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 全局js -->
+    <!-- Page-Level Scripts -->
+    <script>
+        var sharedata = new Vue({
+            el: '#tablelistTbody',
+            data: {
+                items:""
+            },
+            // 在 `methods` 对象中定义方法
+            methods: {
+                change:function(events){//消息
+                    $("#contentPageBox").load("newshare.html",function(){
+                        $("body").attr("data-index",sharedata.items.length);
+                        $("body").attr("data-type","EDIT");
+                    });
+                }
+
+            }
+        });
+
+
+
+
+        //分享管理列表
+        function getcheck(pageno){
+            layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000}) ;
+            var postdata={"YES":"yes"};
+            postdata=JSON.stringify(postdata);
+            $.ajax({
+                url : path2+'/config/scanShareContent.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: postdata,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    //console.log("获取失败：");
+                    //console.log(data);
+                },
+                success:function(diskJson){
+                    layer.closeAll();
+                   // console.log("分享管理列表：");
+                   // console.log(diskJson);
+                    sharedata.items=diskJson.data;
+
+                }
+            });
+        }
+
+        //新建
+        $("#createLabel").click(function(){
+            $("#contentPageBox").load("newshare.html",function(){
+                $("body").attr("data-index",sharedata.items.length);
+                $("body").attr("data-type","ADD");
+            });
+
+        });
+
+
+
+    </script>
+
+    
+    
+
+</body>
+
+</html>

@@ -3,11 +3,27 @@
     #arryName,#pushtime{height:32px;text-align: center;}
     .surebtn{float:right;margin-right:7px;}
     table input{cursor: pointer;}
-    /*编辑弹框*/
-    #editPopBox{width:100%;height:100%;padding:10px;background:#fff;text-align: center;padding-bottom:25px;display: none;}
-    #editPopBox .editBox{height:55px;margin-top:25px;font-size:14px;}
-    #editPopBox .editBox select{margin-right:6px;}
-    #editPopBox .btn{margin:1px 3px;}
+    #tablelistbox{
+        table-layout:fixed;word-wrap:break-word;
+    }
+    #tablelistbox td{white-space:nowrap;overflow:hidden;text-overflow: ellipsis;}
+    #tablelistbox th.short,
+    #tablelistbox td.short{width:85px;}
+    #tablelistbox th.caozuo,
+    #tablelistbox td.caozuo{width:175px;}
+
+    #tablelistbox th.time,
+    #tablelistbox td.time{width:165px;}
+   /* #tablelistbox{width:100%;}
+    #tablelistbox th,
+    #tablelistbox td{width:15%;display: inline-block;height:45px;white-space: nowrap; !*!/不换行*!
+    text-overflow: ellipsis; !*!/超出部分用....代替*!
+    overflow: hidden; !*!/超出隐藏*!
+    }
+    #tablelistbox th.long,
+    #tablelistbox td.long{width:510px;}
+*/
+
 </style>
 
 
@@ -16,6 +32,8 @@
     <select name="" data-page="1" id="temporaryPageChoose">
 
     </select>
+    <button style="margin-left:15px;margin-right:5px;" type="button" id="prePageBtn" class="btn btn-default">上一页</button>
+    <button type="button" id="nextPageBtn" class="btn btn-default">下一页</button>
 </div>
 <div class="wrapper wrapper-content  animated fadeInRight" id="alterTableList">
     <div style="padding-left:9px;margin:0;height:30px;line-height: 30px;margin-bottom:9px;">
@@ -72,37 +90,33 @@
 <div class="wrapper wrapper-content  animated fadeInRight">
     <h3 style="padding-left:9px;margin:0;height:30px;line-height: 30px;">备选内容列表</h3>
     <div class="row">
-        <div class="col-sm-12">
-            <div class="ibox-content">
-                <div class="jqGrid_wrapper" id="tablelist">
-                    <!--   <table id="table_list_2"></table>-->
-                    <table  class="table table-striped tablelistbox" id="tablelistbox">
-                        <thead>
-                        <tr>
-                            <th>条码</th>
-                            <th>内容</th>
-                            <th>发布时间</th>
-                            <th>操作</th>
-                        </tr>
-                        </thead>
-                        <tbody id="tablelistTbody">
-                        <tr v-for="(item,index) in items" :data-id="item.contentid">
-                            <td class="center">{{item.pagenum}}页{{Number(item.indexno)+1}}条</td>
-                            <td class="center">{{item.contenttitle}}</td>
-                            <td class="center">{{item.createtime | time}}</td>
-                            <td class="center">
-                                <button type="button" class="btn deletebtn" v-on:click="detail(item)">详情</button>
-                                <button type="button" class="btn deletebtn" v-on:click="redact(item)">编辑</button>
-                                <button v-if="suser==1" type="button" class="btn deletebtn" v-on:click="changeRecond(item,index)">替换</button>
-                                <button type="button" class="btn deletebtn" v-on:click="deletecon(item,index)" >删除</button>
-                            </td>
-                        </tr>
+        <div class="jqGrid_wrapper" id="tablelist" style="width:98%;margin:0 auto;padding:10px;background:#fff;overflow: auto;">
+            <!--   <table id="table_list_2"></table>-->
+            <table  class="table table-striped tablelistbox" id="tablelistbox">
+                <thead>
+                <tr>
+                    <th class="short">条码</th>
+                    <th class="long">内容</th>
+                    <th class="time">发布时间</th>
+                    <th class="caozuo">操作</th>
+                </tr>
+                </thead>
+                <tbody id="tablelistTbody">
+                <tr v-for="(item,index) in items" :data-id="item.contentid">
+                    <td class="center short">{{item.pagenum}}页{{Number(item.indexno)+1}}条</td>
+                    <td class="center long">{{item.contenttitle}}</td>
+                    <td class="center time">{{item.createtime | time}}</td>
+                    <td class="center caozuo">
+                        <button type="button" class="btn deletebtn" v-on:click="detail(item)">详情</button>
+                        <button type="button" class="btn deletebtn" v-on:click="redact(item)">编辑</button>
+                        <button v-if="suser==1" type="button" class="btn deletebtn" v-on:click="changeRecond(item,index)">替换</button>
+                        <button type="button" class="btn deletebtn" v-on:click="deletecon(item,index)" >删除</button>
+                    </td>
+                </tr>
 
-                        </tbody>
-                    </table>
+                </tbody>
+            </table>
 
-                </div>
-            </div>
         </div>
     </div>
 </div>
@@ -253,6 +267,26 @@
         getalterlist(page)
     });
 
+    //上一页
+    $("#prePageBtn").click(function(){
+        var pagenow=parseInt($("#temporaryPageChoose").val());
+        if(pagenow>1){
+            letprepage=pagenow-1;
+            getRecondList(letprepage);
+            $("#temporaryPageChoose").val(letprepage);
+        }
+    });
+    //下一页
+    $("#nextPageBtn").click(function(){
+        var largepage= parseInt($("#temporaryPageChoose").attr("data-lpage"));
+        var pagenow=parseInt($("#temporaryPageChoose").val());
+        if(pagenow <=largepage){
+            let nextpage=pagenow+1;
+            getRecondList(nextpage);
+            $("#temporaryPageChoose").val(nextpage)
+        }
+    });
+
     /*推荐队列最大页码*/
     function getrubbigsetpige(){
         $("#temporaryPageChoose").empty();
@@ -261,13 +295,12 @@
         if(userlevel =="S" || userlevel =="B"){
             getrubbigsetpige2();
         }else{
+            $("#temporaryPageChoose").attr("data-lpage","100");
             for(var i=0;i<100;i++){
                 $("#temporaryPageChoose").append(' <option value="'+(i+1)+'">第'+(i+1)+'页</option>');
                 $("#editPageSelect").append(' <option value="'+(i+1)+'">第'+(i+1)+'页</option>');
             }
         }
-
-
     }
 
     function getrubbigsetpige2(){
@@ -293,6 +326,7 @@
                $("#editPageSelect").empty();
                var checkpage=$("#temporaryPageChoose").attr("data-page");
                let pagenum=parseInt(diskJson.data);
+               $("#temporaryPageChoose").attr("data-lpage",pagenum);
                for(var i=0;i<=pagenum;i++){
                    $("#temporaryPageChoose").append(' <option value="'+(i+1)+'">第'+(i+1)+'页</option>');
                    $("#editPageSelect").append(' <option value="'+(i+1)+'">第'+(i+1)+'页</option>');
@@ -496,7 +530,7 @@
                //console.log("查看内容详情接口：");
                //console.log(diskJson);
                 if(diskJson.code =="1000"){
-                    repoterdetail2(diskJson.data[0]);
+                    repoterdetail2(diskJson.data.contentlist[0]);
 
                 }else{
                     layer.msg("数据有误请重试!");

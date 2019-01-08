@@ -1,14 +1,14 @@
 
-
-// const path="http://192.168.1.111:8080/NHDZBUSINESS";//老冯
-// const path2="http://192.168.1.111:8080/NHDZBUSINESS";//老冯
-// const path="http://192.168.1.114:8868/NHDZBUSINESS";//测试服务器
-// const path2="http://192.168.1.114:8868/NHDZBUSINESS";//测试服务器
+ //
+ // const path="http://192.168.1.111:8080/NHDZBUSINESS";//老冯
+ // const path2="http://192.168.1.111:8080/NHDZBUSINESS";//老冯
+const path="http://192.168.1.114:8868/NHDZBUSINESS";//测试服务器
+const path2="http://192.168.1.114:8868/NHDZBUSINESS";//测试服务器
 
 
 /*线上*/
-const path="http://192.168.1.114:8878/NHDZBUSINESS";
-const path2="http://192.168.1.114:8878/NHDZBUSINESS";
+// const path="http://192.168.1.114:8878/NHDZBUSINESS";
+// const path2="http://192.168.1.114:8878/NHDZBUSINESS";
 
 var userdatas=getload();
 /*console.log("用户信息userdatas：");
@@ -22,7 +22,7 @@ $(document).ajaxSuccess(function(event,xhr,options){
         if(xhr.responseJSON.code == "1024"){
             layer.msg("登陆失效请重新登陆！！！");
             setTimeout(function(){
-                window.location.href="../../login.html";
+                window.location.href="login.html";
             },1000)
 
         }
@@ -162,6 +162,23 @@ function getmytime(){
     return ctime;
 }
 
+/*获取当前时间到日*/
+function getmytime2(){
+    var myDate = new Date();
+    var year=myDate.getFullYear();    //获取完整的年份(4位,1970-????)
+    var month=myDate.getMonth();       //获取当前月份(0-11,0代表1月)
+    if(month<9){
+        month="0"+(month+1)
+    }else{month=month+1;}
+    var day=myDate.getDate();        //获取当前日(1-31)
+    if(day<10){
+        day="0"+day
+    }
+
+    var ctime=String(year)+String(month)+String(day);
+    return ctime;
+}
+
 /*过滤emoji表情*/
 function filteremoji(emojireg){
     var ranges = [
@@ -175,6 +192,15 @@ function filteremoji(emojireg){
     return emojireg;
 }
 
+//js正则匹配过滤 特殊字符
+function stripscript(s) {
+    var pattern = new RegExp("[`~!@#$^&*()=|{}':;',\\[\\]<>/?~！@#￥……&*（）&mdash;—|{}【】‘；：”“'。，、？]");
+    var rs = "";
+    for (var i = 0; i < s.length; i++) {
+        rs = rs+s.substr(i, 1).replace(pattern, '');
+    }
+    return rs;
+}
 
 
 
@@ -369,3 +395,132 @@ function downloadFile(url) {
 }
 
 
+/*------自定义的图片左右切换--------*/
+/*关闭图片展示*/
+function closeimg(){
+    $("#faxAllBox").removeClass("show");
+    $("#faxAllBox ul").empty();
+}
+//往左
+    function turnleftfun(){
+        var sn=Number($("#faxAllBox .toptip b.pre").html());//当前图片页
+        var an=Number($("#faxAllBox .toptip b.all").html());//所有图片的数量
+        var w=$("#faxAllBox ul li").width();
+        w=w+"px";
+
+        if(sn>1){
+            $("#faxAllBox .toptip b.pre").html(sn-1);
+            $("#faxAllBox ul li:nth-child("+(sn-1)+")").css("margin-left","-"+w).addClass("show").animate({
+                marginLeft:0
+            },250);
+        }
+
+    }
+
+//往右
+function turnrightfun(){
+    var sn=Number($("#faxAllBox .toptip b.pre").html());//当前图片页
+    var an=Number($("#faxAllBox .toptip b.all").html());//所有图片的数量
+    var w=$("#faxAllBox ul li").width();
+    w=w+"px";
+
+    if(sn<an){
+        $("#faxAllBox .toptip b.pre").html(sn+1);
+        $("#faxAllBox ul li:nth-child("+(sn+1)+")").addClass("show");
+        $("#faxAllBox ul li:nth-child("+sn+")").animate({
+            marginLeft:"-"+w
+        },250);
+
+        // console.log("向左滑动");
+    }
+}
+
+/*图片转为base64资源*/
+function runbase64asc(imgUrl){
+    var p = new Promise(function(resolve, reject){
+        window.URL = window.URL || window.webkitURL;
+        var xhr = new XMLHttpRequest();
+        var base64="";
+        xhr.open("get", imgUrl, true);
+        // 至关重要
+        xhr.responseType = "blob";
+        xhr.onload = function () {
+            if (this.status == 200) {
+                //得到一个blob对象
+                var blob = this.response;
+                //   console.log("blob", blob);
+                // 至关重要
+                let oFileReader = new FileReader();
+                oFileReader.onloadend = function (e) {
+                    base64 = e.target.result;
+                    resolve(base64);
+                    // console.log("方式一》》》》》》》》》", base64)
+                };
+                oFileReader.readAsDataURL(blob);
+
+            }
+        };
+        xhr.send();
+    });
+    return p;
+}
+
+function runbase64(url) {
+    var cav= document.createElement("canvas");
+    var ctx=cav.getContext("2d");
+    var img = new Image();
+    img.src = url;
+    img.crossOrigin = '*';//解决跨域问题，需在服务器端运行，也可为 anonymous
+    img.onload = function () {
+        ctx.drawImage(img, 0, 0);//img转换为canvas
+        ctx.fillRect(0, 0, 50, 50);
+        var base64 = cav.toDataURL('images/png');//注意是canvas元素才有 toDataURL 方法
+        //console.log(base64);
+        $('#bas64img')[0].src = base64;//canvas 转换为 img
+    }
+}
+
+/*v预处理图片缓存*/
+function cacheExternalImage(url){
+    var img = new Image,
+        src = url,
+        cvs = document.createElement('canvas'),
+        ctx = cvs.getContext('2d');
+    img.crossOrigin = "Anonymous";
+    img.onload = function() {
+        //ctx.drawImage( img, 0, 0 );
+    }
+    img.src = src;
+    if ( img.complete || img.complete === undefined ) {
+        img.src = "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+        img.src = src;
+    }
+
+    let yimgsrc=img.src;
+    runbase64(yimgsrc);
+}
+
+
+
+
+
+ /*
+*  监听点击日期时的事件
+*/
+/*
+ $('#pushtime').datetimepicker({
+     onSelectDate: function(dateText, inst) {
+         let chodat=$('#pushtime').val();
+         chodat=Date.parse(new Date(chodat));
+         var stime = Date.parse(new Date());
+         var usedTime = chodat - stime;  //两个时间戳相差的毫秒数
+         var days=Math.floor(usedTime/(24*3600*1000));
+         if(days<-1){
+             layer.msg("选择的时间不能早于当天！！")
+         }else if(days>6){
+             layer.msg("选择的时间不能晚于7天！！")
+         }
+
+
+     }
+ });*/

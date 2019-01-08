@@ -12,6 +12,7 @@
     <link href="../../../css/style.css?v=4.1.0" rel="stylesheet">
     <link href="../../../plugin/datepicker/jquery.datetimepicker.css" rel="stylesheet">
     <link href="../../../plugin/font/iconfont.css" rel="stylesheet">
+    <link href="../../../css/common.css" rel="stylesheet">
 
     <style>
         #topKzCon{padding:10px 20px;;}
@@ -314,13 +315,13 @@
                 <div class="selefCon" v-bind:data-contentid="item.contentid">{{item.commenttext}}
                     <!--图片/视频-->
                     <div class="imgMovieShowComBox" v-if="item.commenturltype==3 || item.commenturltype==4">
-                        <span v-for="(itemimg,t) in item.commenturl">
+                        <span v-for="(itemimg,t) in item.commenturl" v-on:click="showimg(item.commenturl,t,1)">
                             <img v-bind:src="itemimg.info" alt="">
                         </span>
 
                     </div>
                     <div class="imgMovieShowComBox movieshowBox" v-else>
-                          <span v-for="(itemimg,t) in item.commenturl">
+                          <span v-for="(itemimg,t) in item.commenturl" v-on:click="showimg(item.commenturl,t,2)">
                                <video controls="controls" v-bind:src="itemimg.info">您的浏览器不支持</video>
                         </span>
                     </div>
@@ -331,12 +332,12 @@
                     {{itemcon.commenttext}}
                     <!--图片/视频-->
                     <div class="imgMovieShowComBox"  v-if="itemcon.commenturltype==3 ||itemcon.commenturltype==4">
-                        <span v-for="(itemimg2,t2) in itemcon.commenturl" >
+                        <span v-for="(itemimg2,t2) in itemcon.commenturl" v-on:click="showimg(itemcon.commenturl,t2,1)">
                             <img v-bind:src="itemimg2.info" alt="">
                         </span>
                     </div>
                     <div class="imgMovieShowComBox movieshowBox" v-else>
-                        <span v-for="(itemimg2,t2) in itemcon.commenturl" >
+                        <span v-for="(itemimg2,t2) in itemcon.commenturl" v-on:click="showimg(itemcon.commenturl,t2,2)">
                           <video controls="controls" v-bind:src="itemimg2.info">您的浏览器不支持</video>
                         </span>
                     </div>
@@ -383,6 +384,16 @@
                 <button type="button" class="btn btn-sm btn-primary" id="myConmentsEnter" onclick="enterd()">发 送</button>
             </div>
     </div>
+</div>
+
+<!--评论图片视频点击放大-->
+<div id="faxAllBox">
+    <div class="toptip"><span><b class="pre">1</b>/ <b class="all">1</b></span><b class="iconfont close" onclick="closeimg()">X</b></div>
+    <span class="runLeftBtn runBtn" onclick="turnleftfun()">《</span>
+    <span class="runRightBtn runBtn" onclick="turnrightfun()">》</span>
+    <ul>
+
+    </ul>
 </div>
 
 
@@ -437,6 +448,33 @@
                 $("#commontsSrBox").attr("data-list",i);
                 $("#commontsSrBox").attr("data-list2",d);
                 $("#myComments").attr("placeholder","回复"+callname+"：")
+            },
+            showimg: function (event,i,type) {
+                  //  console.log(event);
+                  // console.log(i);
+                /*------自定义的图片左右切换-----------*/
+                $("#faxAllBox").addClass("show");
+                $("#faxAllBox ul").empty();
+                $("#faxAllBox .toptip b.all").html(event.length);
+                $("#faxAllBox .toptip b.pre").html(i+1);
+                var w=$(window).width();
+                var w2=w*event.length+"px";
+                $("#faxAllBox ul").css("width",w2);
+                var stw='width:'+w+"px";
+                $.each(event,function(c,t){
+                    if(type==1){
+                        if(c==i){
+                            $("#faxAllBox ul").append('<li style="'+stw+'" class="show" data-type="'+(c+1)+'"><div class="simgbox"><span class="simgspan"><img src="'+ t.info+'" alt=""/></span></div> </li>');
+                        }else{
+                            $("#faxAllBox ul").append('<li style="'+stw+'" data-type="'+(c+1)+'"><div class="simgbox"><span class="simgspan"><img src="'+ t.info+'" alt=""/></span></div> </li>');
+                        }
+                    }else{
+                        $("#faxAllBox ul").append('<li style="'+stw+'" class="show" data-type="'+(c+1)+'"><div class="simgbox movieShowBox"><video src="'+ t.info+'" controls="controls"></video></div> </li>');
+                    }
+
+                })
+
+
             }
         }
     });

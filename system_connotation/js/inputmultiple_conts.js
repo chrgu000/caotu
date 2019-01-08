@@ -35,8 +35,9 @@ function conreadFile(){
         reader.readAsDataURL(this.files[i]);  //转成base64
         reader.fileName = this.files[i].name;
         reader.onload = function(e){
+            let imgname=stripscript(this.fileName);
             var imgMsg = {
-                name : this.fileName,//获取文件名
+                name : imgname,//获取文件名
                 file:this.file,//文件流
                 base64 : this.result   //reader.readAsDataURL方法执行完后，base64数据储存在reader.result里
             };
@@ -161,8 +162,11 @@ function conreadFile2(){
         conmoviefd2.append(i,this.files[i]);
         reader2.readAsDataURL(this.files[i]);  //转成base64
         reader2.onload = function(e){
+            // let imgname=stripscript(this.fileName);
+            let date= Date.now().toString(36);
+            let imgname=date+".mp4";
             var moveMsg = {
-                name : this.fileName,//获取文件名
+                name : imgname,//获取文件名
                 file:this.file,//文件流
             };
             moviedatalist[1]=this.result;

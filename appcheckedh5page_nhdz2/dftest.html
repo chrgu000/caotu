@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0,minimum=1.0,user-scalable=no">
+    <!--强制页面横屏或竖屏显示 content：landscape|portrait-->
+    <meta name="screen-orientation" content="landscape">
+    <meta content=”telephone=no” name=”format-detection” />
+    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+    <META HTTP-EQUIV="Expires" CONTENT="0">
+    <title>段友守护者测试题</title>
+    <link rel="stylesheet" href="css/common.css">
+
+    <style>
+        body{background:url("https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/appcheckedh5page_nhdz/testbg.png");background-size: cover;}
+        .conntentsBox{height:100%;padding:6px 0;font-family: "Adobe 黑体 Std R";}
+        .logoBox{height:48px;padding:5px;padding-left:12px;}
+        .logoBox img{height:100%;width:auto;}
+        #testBody{width:100%;height:92%;}
+        #testIndexBox{text-align: center;position: relative;z-index:3;height:100%;}
+        #testIndexBox .testindexBg{position: absolute;top:35px;right:0;width:95%;height:auto;z-index:-1;}
+        #testIndexBox .testTitleInfo{color:#333;font-size:1.3rem;text-align: left;line-height: 40px;}
+        #beginTest{width:60%;position: absolute;top:60%;left:23%;background:none;border:none;}
+        #beginTest img{width:100%;height:auto;}
+        #testIndexBox .tips{top:82%;position: absolute;left:25px;color:#9B794A;font-size:0.9rem;font-family: "Adobe Fan Heiti Std B";font-weight:600;}
+        #testContsBox{width:100%;position: relative;display: none;min-height: 82%;}
+        #testContsBox .testconts{width:100%;height:95%;position: relative;z-index: 5;display: none;padding:40px;padding-top:50px;}
+        #testContsBox .testconts.active{display: block;}
+        #testContsBox .contsPageBg{position: absolute;left:0;top:0;width:100%;height:100%;z-index:1;}
+        #testContsBox .testconts .title{font-size:1.1rem;color:#333;}
+        #testContsBox .testconts .contsDetail{width:100%;margin:5px 0;}
+        #testContsBox .testconts .contsDetail>div{width:100%;height:100%;}
+        #testContsBox .testconts .contsDetail span{display: inline-block;width:28%;height:110px;text-align: center;line-height: 110px;border:1px solid #E5E7EA;text-indent: 0;margin:2px;float:left;vertical-align: middle;}
+        #testContsBox .testconts .contsDetail span.alone{width:40%;height:100%;}
+        #testContsBox .testconts .contsDetail span img{height:auto;width:auto;max-width: 100%;max-height: 100%;vertical-align: middle;}
+        #testContsBox .testconts .question{font-weight:600;}
+        #testContsBox .testconts .answerBox{width:90%;margin:5px auto;}
+        #testContsBox .testconts .answerBox li{position: relative;line-height: 40px;font-size:1.2rem;font-weight:600;cursor: pointer;}
+        #testContsBox .testconts .chooseImg{position: absolute;left:-15px;top:-6px;height:95%;width:auto;}
+        #testContsBox .testconts .tips{text-align: center;font-size:0.9rem;display: none;}
+        #testContsBox .testconts .tips .analysis{text-align: left;}
+        #nextTestBtn,#subBtn{position: relative;width:130px;height:42px;z-index:9;background:none;border:none;}
+        #nextTestBtn img,
+        #subBtn img{width:100%;height:auto;}
+        #subBtn{display: none;}
+        #testResultBox{width:100%;position: relative;display: none;margin-bottom:23px;}
+        #testResultBox img{width:100%;height:auto;}
+        #result{position: absolute;width:100%;left:0;top:43%;font-size:1.1rem;color:#23A393;text-align: center;font-weight: 600;}
+        #result.fail{top:38%;}
+        #checkedNow{background: none;border:none;width:130px;height:45px;}
+        #checkedNow img{width:100%;height:auto;}
+
+        #userFullTipBox{width:100%;height:100%;position: fixed;left:0;top:0;z-index:50;background:rgba(0,0,0,.5);display: none;text-align: center;}
+        #userFullTipBox.active{display: block;}
+        #userFullTipBox .fullimg{width:80%;height:auto;margin-top:20%;}
+        #userFullBtnBox{width:100%;margin-top:-110px;text-align: center;}
+        #userFullBtnBox button{width:45%;height:55px;}
+        #userFullBtn img{width:100%;height:auto;}
+
+
+        @media (max-height: 480px) {
+            #testBody{height:89%;}
+            #beginTest{top:68%;left:19%;}
+            #testIndexBox .tips{font-size:0.8rem;top:95%;}
+        }
+
+
+
+    </style>
+
+</head>
+<body>
+    <div class="conntentsBox" style="">
+        <div class="logoBox">
+            <img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/appcheckedh5page_nhdz/logo.png" alt="">
+        </div>
+
+        <div id="testBody">
+            <!--测试首页-->
+            <div id="testIndexBox">
+                <img class="testindexBg" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/appcheckedh5page_nhdz/testindex.png" alt="">
+
+                <button type="button" id="beginTest">
+                    <img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/appcheckedh5page_nhdz/teststartbtn.png" alt="">
+                </button>
+                <p class="tips" >PS：若本次测试失败，第二天可再次参加考试</p>
+            </div>
+            <!--1-->
+            <div id="testContsBox">
+                <img class="contsPageBg" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/appcheckedh5page_nhdz/testpage.png" alt="">
+                <div class="testconts" v-bind:id='"testindex"+index' v-bind:data-index="index" v-for="(item,index) in items">
+                    <div class="contsDetailBox" >
+                        <p class="title">{{index+1}}.{{item.contenttitle}}</p>
+                        <div class="contsDetail">
+                            <div class="videoBox" v-if="item.contenttype==1 ||item.contenttype==2" style="height:190px;">
+                                <video v-bind:id='"video"+index' class="videoshow" controlslist="nodownload" autoplay v-bind:poster="item.contenturllist[0]" controls="controls"  x5-video-player-fullscreen="true" x5-video-orientation="portraint"  height="100%" width="100%" >
+                                    <source v-bind:src="item.contenturllist[1]">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
+                            <div class="pictureBox" v-else-if="item.contenttype==3" style="overflow: hidden;">
+                                <span v-on:click="showimg(item.contenturllist,index2,1)"  v-for="(item2,index2) in item.contenturllist" ><img v-bind:src="item2" alt=""></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="questionBox">
+                        <p class="question">{{item.question}}</p>
+                        <ul class="answerBox">
+                            <li v-for="(item3,index3) in item.answerlist" v-bind:data-right="items.isright" v-on:click="choose(item3,index3,index)">
+                                <span class="chooseImg" v-if="item3.isshow==1">
+                                    <img v-bind:src="item3.chooseimg" alt="">
+                                </span>
+                                {{index3==0?"A":index3==1?"B":index3==2?"C":"D"}}.{{item3.answer}}
+                            </li>
+                        </ul>
+                        <div class="tips">
+                            <p class="isright">好遗憾，答错了</p>
+                            <p class="analysis">{{item.analysis}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="text-align: center;width:100%;margin-top:50px;margin-bottom:50px;">
+                    <button id="nextTestBtn" type="button"><img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/appcheckedh5page_nhdz/nextbutton.png" alt=""></button>
+                    <button id="subBtn" onclick="subtest()" type="button"><img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/appcheckedh5page_nhdz/subbtn.png" alt=""></button>
+                </div>
+            </div>
+            <!--结果页-->
+            <div id="testResultBox">
+                <img src="" alt="" class="resultImg">
+                <div id="result"></div>
+                <div style="text-align: center">
+
+                        <button type="button" id="checkedNow"> <a href=""> <img src="" alt=""></a></button>
+
+
+                </div>
+
+            </div>
+
+
+
+        </div>
+
+    </div>
+
+    <!--图片放大展示-->
+    <!--/*------自定义的图片左右切换-----------*/-->
+    <div id="faxAllBox" onclick="closeimg()">
+        <div class="toptip"><span><b class="pre">1</b>/ <b class="all">1</b></span><b class="iconfont close" onclick="closeimg()">X</b></div>
+        <ul>
+
+        </ul>
+    </div>
+    <!--人爆满的提示-->
+    <div id="userFullTipBox" class="">
+        <img class="fullimg" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/appcheckedh5page_nhdz/userfulltip.png" alt="">
+
+        <div id="userFullBtnBox">
+            <button type="button" class="buttonimg" id="userFullBtn"><img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/appcheckedh5page_nhdz/iknowbtn.png" alt=""></button>
+        </div>
+    </div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/jquery.mousewheel.min.js"></script>
+    <script src="plugin/layer/layer.js"></script>
+    <script src="js/vue.js"></script>
+    <script src="js/index.js"></script>
+    <script src="js/testlist.js"></script>
+    <script>
+
+        /*结果*/
+        var result={
+            userid:"",
+            grade:0
+        };
+
+        var cannext=0;
+        var testvuelist = new Vue({
+            el: '#testContsBox',
+            data: {
+                canchoose:1,
+                chooseimg:"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/appcheckedh5page_nhdz/choose.png",
+                chooserightimg:"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/appcheckedh5page_nhdz/rightchoose.png",
+                items: testdata
+            },
+            // 在 `methods` 对象中定义方法
+            methods: {
+                choose:function(event,ind,ixc){
+                  //  console.log(event);
+                    cannext=1;
+                    if(testvuelist.canchoose==1){
+                        testvuelist.canchoose=0;
+                        for(var i=0;i<4;i++){
+                            if(testvuelist.items[ixc].answerlist[i].isright==1){
+                                testvuelist.items[ixc].answerlist[i].isshow=1;
+                                testvuelist.items[ixc].answerlist[i].chooseimg=testvuelist.chooserightimg;
+                            }else{
+                                testvuelist.items[ixc].answerlist[i].isshow=0;
+                                testvuelist.items[ixc].answerlist[i].chooseimg="";
+                            }
+
+                        }
+                        testvuelist.items[ixc].answerlist[ind].isshow=1;
+                        testvuelist.items[ixc].answerlist[ind].chooseimg=testvuelist.chooseimg;
+                        if(event.isright==1){
+
+                            $("#testContsBox .testconts .tips .isright").html("答对了，你好棒呀！");
+                            $("#testContsBox .testconts .tips").css({"color":"#23A393","display":"block"});
+                            result.grade++;
+                        }else{
+                            $("#testContsBox .testconts .tips .isright").html("好遗憾，答错了！");
+                            $("#testContsBox .testconts .tips").css({"color":"#E37070","display":"block"});
+                        }
+                    }
+                },
+                showimg: function (event,i,type) {
+                    // console.log(event);
+                  //  console.log(i);
+                    /*------自定义的图片左右切换-----------*/
+                    isfull=1;
+                    $("#faxAllBox").addClass("show");
+                    $("#faxAllBox ul").empty();
+                    $("#faxAllBox .toptip b.all").html(event.length);
+                    $("#faxAllBox .toptip b.pre").html(i+1);
+                    var w=$(window).width();
+                    var w2=w*event.length+"px";
+                    $("#faxAllBox ul").css("width",w2);
+                    var stw='width:'+w+"px";
+                    $.each(event,function(c,t){
+                        if(type==1){
+                            if(c==i){
+                                $("#faxAllBox ul").append('<li style="'+stw+'" class="show" data-type="'+(c+1)+'"><div class="simgbox"><span class="simgspan"><img src="'+ t+'" alt=""/></span></div> </li>');
+                            }else{
+                                $("#faxAllBox ul").append('<li style="'+stw+'" data-type="'+(c+1)+'"><div class="simgbox"><span class="simgspan"><img src="'+ t+'" alt=""/></span></div> </li>');
+                            }
+                        }else{
+                            $("#faxAllBox ul").append('<li style="'+stw+'" class="show" data-type="'+(c+1)+'"><div class="simgbox movieShowBox"><video autoplay x5-video-player-fullscreen="true" x5-video-orientation="portraint"  controlslist="nodownload"  src="'+ t+'" controls="controls"></video></div> </li>');
+                        }
+
+                    })
+
+
+
+                }
+
+            }
+        });
+
+    //    开始测试
+        $("#beginTest").click(function(){
+            $("#testIndexBox").css({"display":"none"});
+            $("#testContsBox").css({"display":"block"});
+            $("#testindex0").addClass("active");
+            cannext=0;
+        });
+        /*下一题*/
+        $("#nextTestBtn").click(function () {
+            if(cannext==1){
+                let index=Number($(".testconts.active").attr("data-index"));
+                $("#testContsBox .testconts .tips").css({"display":"none"});
+                var myvideo=document.getElementById("video"+index);
+                if(myvideo!="" && myvideo !=null && myvideo!=undefined){
+                    myvideo.pause();
+                }
+
+             //   $(".testconts.active video").pause();
+                if(index==8){
+                    $("#nextTestBtn").css("display","none");
+                    $("#subBtn").css("display","inline-block");
+                }
+                if(index==9){
+                    console.log(result.grade);
+                }else{
+                    testvuelist.canchoose=1;
+                    $("#testindex"+index).removeClass("active");
+                    $("#testindex"+(index+1)).addClass("active");
+                }
+                cannext=0;
+            }
+
+        });
+
+
+        /*提交ajax*/
+        function subtest(){
+            $("#testResultBox").css({"display":"block"});
+
+           // console.log(tjdatas);
+            $("#checkedNow a").attr("href","javascript:void(0);");
+            $("#checkedNow img").attr("src","https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/appcheckedh5page_nhdz/checkednow2.png");
+            if(result.grade >=9){
+                $("#testResultBox .resultImg").attr("src","https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/appcheckedh5page_nhdz/testsuccesss.png");
+            }else{
+                $("#testResultBox .resultImg").attr("src","https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/appcheckedh5page_nhdz/testfail.png");
+                $("#result").addClass("fail");
+            }
+            $("#result").html("答对题目："+result.grade+"个");
+            $("#testContsBox").css({"display":"none"});
+            $("#testResultBox").css({"display":"block"});
+            localStorage.istest ="1" ;//存缓存
+            subtest2();
+        }
+
+        /*提交答案2*/
+        function subtest2(){
+            let userinfolist=JSON.parse(localStorage.userinfolist);
+            let codea=userinfolist.appticket;
+            let codeb=userinfolist.userid;
+            let codec=userinfolist.codec;
+            let ispass="";
+            if(result.grade >=9){
+                ispass="YES";
+            }else{
+                ispass="NO";
+            }
+            let tjdatas={"codea":codea,"codeb":codeb,"codec":codec,"ispass":ispass};
+            tjdatas=JSON.stringify(tjdatas);
+            $.ajax({
+                url : path+'/webcheck/webCommitTestResult.do',
+                cache:true,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:false,
+                data: tjdatas,
+                error: function(data){
+                    layer.msg("网络有问题！！",{
+                        offset:['50%'],
+                        time: 1500 //2秒关闭（如果不配置，默认是3秒）
+                    })
+                    //console.log("提交图片/视频流失败：");
+                    //console.log(data);
+                },
+                success:function(diskJson){
+                    layer.closeAll();
+                     console.log("提交结果：");
+                     console.log(diskJson);
+                    if(diskJson.code =="1000"){
+                        if(result.grade >=9){
+                            $("#checkedNow a").attr("href","checkedindex.html");
+                            $("#checkedNow img").attr("src","https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/appcheckedh5page_nhdz/checkednow.png");
+                        }
+                    }else if(diskJson.code =="3333"){
+                        $("#userFullTipBox").addClass("active");
+                    }else{
+                        layer.msg("网络有问题，请重试！！",{
+                            offset:['50%'],
+                            time: 1500 //2秒关闭（如果不配置，默认是3秒）
+                        });
+                    }
+
+                }
+            });
+        }
+
+        /*------自定义的图片左右切换--------*/
+        /*关闭图片展示*/
+        function closeimg(){
+            $("#faxAllBox").removeClass("show");
+            $("#faxAllBox ul").empty();
+        }
+        /*禁止浏览器左滑返回*/
+        /*document.addEventListener('touchmove',function(e){
+            if($("#faxAllBox").hasClass("show")){
+                e.preventDefault();
+            }
+
+        }, false);*/
+        /*展示图片的左右滑动*/
+        var startPoint = null;
+        var bigimg=document.getElementById('faxAllBox');
+        bigimg.addEventListener("touchstart",function(e){
+            var e = e||window.event;
+            startPoint = e.touches[0];
+        });
+        bigimg.addEventListener("touchend",function(e){
+            var e=e||window.event;
+            //e.changedTouches能找到离开手机的手指，返回的是一个数组
+            var endPoint = e.changedTouches[0];
+            //计算终点与起点的差值
+            var x = endPoint.clientX - startPoint.clientX;
+            var y = endPoint.clientY - startPoint.clientY;
+            //设置滑动距离的参考值
+            var d = 10;
+            var sn=Number($("#faxAllBox .toptip b.pre").html());//当前图片页
+            var an=Number($("#faxAllBox .toptip b.all").html());//所有图片的数量
+            var w=$("#faxAllBox ul li").width();
+            w=w+"px";
+            if(Math.abs(x)>d){
+                if(x>0){
+                    //console.log("向右滑动");
+                    if(sn>1){
+                        $("#faxAllBox .toptip b.pre").html(sn-1);
+                        $("#faxAllBox ul li:nth-child("+(sn-1)+")").css("margin-left","-"+w).addClass("show").animate({
+                            marginLeft:0
+                        },250);
+
+                    }
+                }else{
+                    if(sn<an){
+                        $("#faxAllBox .toptip b.pre").html(sn+1);
+                        $("#faxAllBox ul li:nth-child("+(sn+1)+")").addClass("show");
+                        $("#faxAllBox ul li:nth-child("+sn+")").animate({
+                            marginLeft:"-"+w
+                        },250);
+
+                        // console.log("向左滑动");
+                    }
+
+                }
+            }
+        });
+
+        $("#userFullBtn").click(function(){
+            $("#userFullTipBox").removeClass("active");
+        });
+
+
+
+
+
+    </script>
+
+
+</body>
+</html>

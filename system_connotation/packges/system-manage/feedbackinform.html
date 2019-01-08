@@ -27,7 +27,7 @@
         .btitle{padding-left:20px;height:45px;border-bottom:1px solid #bbb; line-height: 37px;}
         #searchBox{border:1px solid #bbb;padding:25px;}
         #addNewBtn{float:right;margin-right:20px;margin-bottom:6px;}
-        #questiontype{width:120px;height:30px;font-size:13px;}
+        #questiontype,#isdealSELECT{width:120px;height:30px;font-size:13px;}
         #tablelistbox .feedurllist img{width:auto;height:auto;max-width: 100px;max-height: 100px;cursor: pointer;}
         #tablelistbox .isdeal{cursor: pointer;color:#2653bb;}
         #bigImgBox{display: none;position: fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);z-index:99;text-align: center;padding:20px;padding-top:80px;overflow-y: auto;}
@@ -37,6 +37,13 @@
         #bigImgBox .close:hover{color:#fff;}
         #tablelistbox tr,
         .tablelistbox tr{display: table-row;}
+
+        /*回复u*/
+        #replyEditBox{width:100%;height:100%;padding:15px;overflow: auto;background:#fff;color:#333;font-size:15px;display: none;}
+        #replyEditBox>div{line-height: 46px;}
+        #reltext{vertical-align: top;}
+        #replyEditBox button{padding:6px 15px;margin:5px 9px;}
+
     </style>
 
 </head>
@@ -56,6 +63,12 @@
                 <option value="">所有</option>
                 <option value="1">功能问题</option>
                 <option value="2">其他反馈</option>
+            </select>
+            是否已处理：
+            <select name="" id="isdealSELECT" class="">
+                <option value="">所有</option>
+                <option value="1">已处理</option>
+                <option value="0">未处理</option>
             </select>
             <button type="button" class="btn btn-sm btn-primary" id="searchBtn" onclick="searchfeed()">搜  索</button>
         </div>
@@ -78,6 +91,7 @@
                                 <th>反馈时间</th>
                                 <th>反馈用户</th>
                                 <th>处理状态</th>
+                                <th>操作</th>
                             </tr>
                             </thead>
                             <tbody id="tablelistTbody">
@@ -92,6 +106,7 @@
                                 <td class="center">{{item.feedusername}}</td>
                                 <td class="center isdeal" v-if="item.isdeal ==0" :data-id="item.isdeal" v-on:click="greet(item,index)">未处理</td>
                                 <td class="center isdeal" v-else :data-id="item.isdeal" style="color:#333;">已处理</td>
+                                <td class="center"><button type="button" class="btn-default" v-on:click="replay(item)">回复</button></td>
                             </tr>
                             </tbody>
                         </table>
@@ -115,6 +130,18 @@
         </div>
     </div>
 
+    <!--回复用户u-->
+    <div id="replyEditBox" data-cid="">
+        <select name="" id="useridSelect">
+            <option value="001ae21c998b4e5aae8099838da9c580">段子哥</option><!--线上-->
+           <!-- <option value="07ae3c42c5bd4935a94957712e390108">线下段子哥</option>--><!--线下-->
+        </select>
+        <textarea name="" data-senduser="" id="reltext" cols="50" rows="7"></textarea>
+        <div style="text-align: center;margin-top:25px;">
+            <button type="button" class="btn" id="sureReport" onclick="replytzcomment()">确定</button>
+            <button type="button" class="btn" id="cancelReport">取消</button>
+        </div>
+    </div>
 <script src="../../js/jquery.min.js?v=2.1.4"></script>
 <script src="../../plugin/layer/layer.js"></script>
 <script src="../../js/vue.js"></script>
@@ -140,6 +167,20 @@
                     });
 
                 },
+                replay:function(event){
+                    layer.open({
+                        type: 1,
+                        title: '回复用户',
+                        maxmin: false, //开启最大化最小化按钮
+                        area: ['550px', "380px"],
+                        content: $("#replyEditBox"),
+                        success: function (layero, index) {
+                            //console.log(event);
+                            $("#reltext").val("");
+                            $("#reltext").attr("data-senduser",event.feeduid);
+                        }
+                    });
+                },
                 bigimg:function(event){
                     $("#bigImgBox img").attr("src",event.feedurllist);
                     $("#bigImgBox").addClass("show");
@@ -152,7 +193,8 @@
         /*反馈列表*/
         function getcheck(pageno){
             var feedtype=$("#questiontype").val();
-            var datapost={"pageno":pageno,"pagesize":20,"feedtype":feedtype};
+            var isdeal=$("#isdealSELECT").val();
+            var datapost={"pageno":pageno,"pagesize":20,"feedtype":feedtype,"isdeal":isdeal};
             //console.log(datapost);
             datapost=JSON.stringify(datapost);
             layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000}) ;
@@ -237,9 +279,47 @@
         /*关闭*/
         $("#bigImgBox .close").click(function(){
             $("#bigImgBox").removeClass("show");
-        })
+        });
+
+        /*回复*/
+        function replytzcomment(){
+            let createuser=userdatas.data.userid;
+            let friendid=$("#useridSelect").val();
+            let notetext=$("#reltext").val();
+            let sendtime="";
+            let senduser=$("#reltext").attr("data-senduser");
+            var datapost={"createuser":createuser,"friendid":friendid,"notetext":notetext,"sendtime":sendtime,"senduser":senduser};
+            datapost=JSON.stringify(datapost);
+            $.ajax({
+                url : path+'/note/addsystemnote.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: datapost,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+//                    console.log("修改处理状态失败：");
+//                    console.log(data);
+                },
+                success:function(diskJson){
+                    layer.closeAll();
+                   console.log("回复消息：");
+                   console.log(diskJson);
+                    /*翻页信息*/
+                    if(diskJson.code=="1000"){
+                        layer.msg("回复成功!");
+
+                    }else{
+                        layer.msg("回复失败，请重试!");
+                    }
 
 
+
+                }
+            });
+        }
 
     </script>
 

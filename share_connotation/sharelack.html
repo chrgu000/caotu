@@ -6,9 +6,18 @@
     <!--强制页面横屏或竖屏显示 content：landscape|portrait-->
     <meta name="screen-orientation" content="landscape">
     <meta content=”telephone=no” name=”format-detection” />
-    <META HTTP-EQUIV="pragma" CONTENT="no-cache">
-    <META HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
-    <META HTTP-EQUIV="expires" CONTENT="0">
+    <meta property="og:title" content="内含段子">
+
+    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+    <META HTTP-EQUIV="Expires" CONTENT="0">
+    <!-- 分享显示的标题-->
+    <meta itemprop="name" content="内含段子" />
+    <!-- 分享显示的缩略图-->
+    <meta itemprop="image" content="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/nhdzlogo.png" />
+    <!-- 分享显示的简介-->
+    <meta name="description" itemprop="description" content="" />
     <title>内含段子</title>
     <link href="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/nhdzlogo.png" rel="shortcut icon">
     <link rel="stylesheet" href="css/common.css"/>
@@ -17,6 +26,13 @@
     <script type="application/javascript" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/jquery.min.js"></script>
     <script type="application/javascript" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/vue.js"></script>
     <script type="application/javascript" src="plugin/layer/layer.js"></script>
+
+    <!-- 必须引入的文件-->
+    <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <script type="application/javascript" src="https://ctkj-1256675270.file.myqcloud.com/jquery.min.js"></script>
+    <script src="js/sha1.js"></script>
+    <!-- 微信分享时调用对应的接口js文件-->
+    <script src="js/wxShare.js"></script>
     <style>
         #mainContntShowbox .lackimg{width:28%;height:auto;margin-top:10%;}
         #mainContntShowbox .lackp{text-align: center;font-size:1.2rem;color:#999;margin-top:20px;}

@@ -1,0 +1,541 @@
+﻿<!doctype html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+	<meta content="yes" name="apple-mobile-web-app-capable">
+	<meta content="black" name="apple-mobile-web-app-status-bar-style">
+	<meta content="telephone=no" name="format-detection">
+	<meta content="email=no" name="format-detection">
+	<title>过年了，你离家乡有多远？</title>
+	<style type="text/css">
+		* {
+			margin: 0;
+			padding: 0;
+			-webkit-appearance: none;
+			-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+			-webkit-touch-callout: none;
+			box-sizing: border-box;
+		}
+
+		html,
+		body {
+			margin: 0 auto;
+			width: 100%;
+			min-height: 100%;
+			overflow-x: hidden;
+			-webkit-user-select: none;
+		}
+
+		body {
+			font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+			-webkit-text-size-adjust: 100%;
+			-webkit-overflow-scrolling: touch;
+			overflow-scrolling: touch;
+			padding-top: constant(safe-area-inset-top);
+			padding-left: constant(safe-area-inset-left);
+			padding-right: constant(safe-area-inset-right);
+			padding-bottom: constant(safe-area-inset-bottom);
+			background-image: url(https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/activeallimgs/activemap/red.png);
+		}
+
+		.page {
+			background-image: url(https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/activeallimgs/activemap/map_bg.png);
+			position: fixed;
+			top: 0;
+			left: 0;
+			bottom: 0;
+			right: 0;
+			background-position: center 0;
+			background-repeat: no-repeat;
+			background-size: 100% auto;
+		}
+
+		.map {
+			width: 100%;
+			height: 100%;
+			background-image: url(https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/activeallimgs/activemap/Group.png);
+			background-position: center 0;
+			background-repeat: no-repeat;
+			background-size: 100% auto;
+		}
+
+		#container {
+			height: 4rem;
+			width: 100%;
+			display: none;
+		}
+
+		.content-block input[type='text'],
+		.content-block input[type='hidden'] {
+			width: 2rem;
+			height: 0.88rem;
+			font-size: 0.18rem;
+			border: 0;
+			border-radius: 0.1rem;
+			padding: 0.05rem;
+			position: absolute;
+		}
+
+		#demo1 {
+			left: 0.98rem;
+			top: 0.94rem;
+		}
+
+		#demo2 {
+			right: 0.8rem;
+			top: 0.94rem;
+		}
+
+		.ticket {
+			position: fixed;
+			left: 0.06rem;
+			top: 6.96rem;
+			background-image: url(images/chepiao_bg.png);
+			background-position: center 0;
+			background-repeat: no-repeat;
+			background-size: 100% auto;
+			width: 7.36rem;
+			height: 4.36rem;
+		}
+
+		#btn {
+			width: 4.12rem;
+			height: 2.06rem;
+			border: 0;
+			background-color: transparent;
+			background-image: url(https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/activeallimgs/activemap/dlvt_button.png);
+			background-position: center 0;
+			background-repeat: no-repeat;
+			background-size: 100% auto;
+			position: fixed;
+			left: 1.68rem;
+			top: 11rem;
+		}
+
+		#name {
+			position: absolute;
+			left: 3rem;
+			top: 2.2rem;
+			width: 2rem;
+			height: 0.5rem;
+			border-radius: 0;
+			background-color: rgba(0, 0, 0, 0);
+			border: 0;
+			outline: none;
+			padding: 0;
+			font-size: 0.28rem;
+		}
+
+		#btn:focus {
+			outline: 0;
+		}
+
+		#btn:active {
+			background-image: url(https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/activeallimgs/activemap/btn_active.png);
+		}
+
+		#canvas {
+			position: fixed;
+			left: 0;
+			top: 0;
+		}
+	</style>
+	<link rel="stylesheet" href="css/LArea.css">
+	<link rel="stylesheet" href="https://a.amap.com/jsapi_demos/static/demo-center/css/demo-center.css" />
+	<script src="js/rem.js"></script>
+</head>
+
+<body>
+	<!-- 埋点 -->
+	<div style="display:none"><script src="https://s23.cnzz.com/z_stat.php?id=1275868709&web_id=1275868709" language="JavaScript"></script></div>
+	<div class="page">
+		<div class="map">
+			<div id="container"></div>
+			<canvas id="canvas"></canvas>
+			<div class="ticket">
+				<div class="content-block">
+					<input id="demo1" type="text" value="出发地">
+					<input id="value1" type="hidden" value="2,2288">
+					<input id="demo2" type="text" value="目的地">
+					<input id="value2" type="hidden" value="20,234,504">
+				</div>
+				<input id="name" type="text" maxlength="8">
+			</div>
+			<button id="btn"></button>
+		</div>
+	</div>
+	<script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.12&key=26639718a413b022fefb366b7824b048&plugin=AMap.Geocoder"></script>
+	<script src="js/LAreaData1.js"></script>
+	<script src="js/LAreaData2.js"></script>
+	<script src="js/LArea.js"></script>
+	<script>
+		//地图初始化
+		var map = new AMap.Map("container", {
+			resizeEnable: true,
+			zoom: 13
+		});
+		//省市区三级联动
+		var area1 = new LArea();
+		area1.init({
+			'trigger': '#demo1', //触发选择控件的文本框，同时选择完毕后name属性输出到该位置
+			'valueTo': '#value1', //选择完毕后id属性输出到该位置
+			'keys': {
+				id: 'id',
+				name: 'name'
+			}, //绑定数据源相关字段 id对应valueTo的value属性输出 name对应trigger的value属性输出
+			'type': 1,
+			'data': LAreaData
+		});
+		// area1.value=[0,0];
+		var area2 = new LArea();
+		area2.init({
+			'trigger': '#demo2',
+			'valueTo': '#value2',
+			'keys': {
+				id: 'id',
+				name: 'name'
+			},
+			'type': 1,
+			'data': LAreaData
+		});
+
+		//canvas画布描点
+		var canvas = document.querySelector('#canvas');
+		var ctx = canvas.getContext('2d');
+		//canvas适配移动端rem！
+		//获取屏幕的宽度
+		var clientWidth = document.documentElement.clientWidth;
+		var clientHeight = document.documentElement.clientHeight;
+		//根据设计图中的canvas画布的占比进行设置
+		var canvasWidth = Math.floor(clientWidth * 750 / 750);
+		var canvasHeight = Math.floor(clientWidth * 650 / 750);
+		canvas.setAttribute('width', canvasWidth + 'px');
+		canvas.setAttribute('height', canvasHeight + 'px');
+		//绘制圆点
+		var proX = canvasWidth / 750;
+		var proY = canvasHeight / 650;
+		var r = 8 * proX;
+		var data = [{
+				'北京市': [545 * proX, 250 * proY]
+			},
+			{
+				'广东省': [540 * proX, 510 * proY]
+			},
+			{
+				'广西壮族自治区': [465 * proX, 520 * proY]
+			},
+			{
+				'海南省': [497 * proX, 580 * proY]
+			},
+			{
+				'重庆市': [430 * proX, 425 * proY]
+			},
+			{
+				'四川省': [395 * proX, 405 * proY]
+			},
+			{
+				'贵州省': [435 * proX, 470 * proY]
+			},
+			{
+				'云南省': [380 * proX, 500 * proY]
+			},
+			{
+				'西藏自治区': [210 * proX, 410 * proY]
+			},
+			{
+				'陕西省': [460 * proX, 350 * proY]
+			},
+			{
+				'甘肃省': [395 * proX, 330 * proY]
+			},
+			{
+				'青海省': [355 * proX, 320 * proY]
+			},
+			{
+				'宁夏回族自治区': [425 * proX, 290 * proY]
+			},
+			{
+				'宁夏回族自治区': [425 * proX, 290 * proY]
+			},
+			{
+				'新疆维吾尔自治区': [200 * proX, 190 * proY]
+			},
+			{
+				'香港特别行政区': [555 * proX, 535 * proY]
+			},
+			{
+				'台湾省': [655 * proX, 485 * proY]
+			},
+			{
+				'湖南省': [520 * proX, 440 * proY]
+			},
+			{
+				'湖北省': [540 * proX, 400 * proY]
+			},
+			{
+				'天津市': [560 * proX, 260 * proY]
+			},
+			{
+				'河北省': [530 * proX, 285 * proY]
+			},
+			{
+				'山西省': [500 * proX, 295 * proY]
+			},
+			{
+				'内蒙古自治区': [490 * proX, 235 * proY]
+			},
+			{
+				'辽宁省': [620 * proX, 205 * proY]
+			},
+			{
+				'吉林省': [645 * proX, 170 * proY]
+			},
+			{
+				'黑龙江省': [645 * proX, 125 * proY]
+			},
+			{
+				'上海市': [630 * proX, 375 * proY]
+			},
+			{
+				'江苏省': [610 * proX, 370 * proY]
+			},
+			{
+				'浙江省': [615 * proX, 400 * proY]
+			},
+			{
+				'安徽省': [580 * proX, 375 * proY]
+			},
+			{
+				'福建省': [610 * proX, 460 * proY]
+			},
+			{
+				'江西省': [570 * proX, 420 * proY]
+			},
+			{
+				'山东省': [570 * proX, 300 * proY]
+			},
+			{
+				'河南省': [530 * proX, 340 * proY]
+			},
+			{
+				'澳门特别行政区': [535 * proX, 535 * proY]
+			},
+		]
+		var draw = function (x, y, r, start, end, color, type) {
+			var unit = Math.PI / 180;
+			ctx.beginPath();
+			ctx.arc(x, y, r, start * unit, end * unit);
+			ctx[type + 'Style'] = color;
+			ctx.closePath();
+			ctx[type]();
+		}
+		// draw(535 * proX, 535 * proY, r, 0, 360, 'blue', 'fill');
+		//地图描点获取距离
+		var geocoder, marker;
+		if (!geocoder) {
+			geocoder = new AMap.Geocoder({
+				city: "全国", //城市设为北京，默认：“全国”
+			});
+		}
+		var demo1 = document.getElementById('demo1');
+		var demo2 = document.getElementById('demo2');
+		var place1 = [];
+
+		demo1.oninput = function () {
+			map.clearMap(); //清除所有的覆盖物
+			//截取demo1.value中的省份
+			var pl = demo1.value.split(',')[0];
+			var pr = demo2.value.split(',')[0];
+			// console.log(p)
+			geocoder.getLocation(demo1.value, function (status, result) {
+				if (status === 'complete' && result.geocodes.length) {
+					var lnglat1 = result.geocodes[0].location
+					if (!marker) {
+						marker = new AMap.Marker();
+						map.add(marker);
+					}
+					marker.setPosition(lnglat1);
+					map.setFitView(marker);
+					//标记出当前点
+					ctx.clearRect(0, 0, canvasWidth, canvasHeight); //清空画布
+					for (var i = 0; i < data.length; i++) {
+						for (var j in data[i]) {
+							if (j == pl) {
+								place1[0] = data[i][j][0];
+								place1[1] = data[i][j][1];
+								draw(place1[0], place1[1], r, 0, 360, '#D0021B', 'fill');
+							}
+						}
+					}
+					//描点及判断有几个点了
+					if (demo2.value != '目的地') {
+						//连线
+						var place2 = [];
+						for (var i = 0; i < data.length; i++) {
+							for (var j in data[i]) {
+								if (j == pr) {
+									place2[0] = data[i][j][0];
+									place2[1] = data[i][j][1];
+									draw(place2[0], place2[1], r, 0, 360, '#D0021B', 'fill');
+									ctx.moveTo(place1[0], place1[1]);
+									ctx.lineTo(place2[0], place2[1]);
+									ctx.lineWidth = 2;
+									ctx.strokeStyle = "#D0021B";
+									ctx.stroke();
+									localStorage.setItem('place1',place1);
+									localStorage.setItem('place2',place2);
+								}
+							}
+						}
+
+						//地图相关
+						var m1 = new AMap.Marker({
+							map: map,
+							draggable: true,
+							position: new AMap.LngLat(lnglat1.R, lnglat1.Q)
+						});
+						geocoder.getLocation(demo2.value, function (status, result) {
+							if (status === 'complete' && result.geocodes.length) {
+								var lnglat2 = result.geocodes[0].location
+								if (!marker) {
+									marker = new AMap.Marker();
+									map.add(marker);
+								}
+								marker.setPosition(lnglat2);
+								map.setFitView(marker);
+								var m2 = new AMap.Marker({
+									map: map,
+									draggable: true,
+									position: new AMap.LngLat(lnglat2.R, lnglat2.Q)
+								});
+								map.setFitView();
+
+								function computeDis() {
+									var p1 = m1.getPosition();
+									var p2 = m2.getPosition();
+									var textPos = p1.divideBy(2).add(p2.divideBy(2));
+									var distance = Math.round(p1.distance(p2)); //计算距离
+									localStorage.setItem('distance', distance)
+									var path = [p1, p2];
+								}
+								computeDis();
+								m1.on('dragging', computeDis);
+								m2.on('dragging', computeDis);
+							} else {
+								alert(JSON.stringify(result))
+							}
+						});
+					} else {
+						return false;
+					}
+				} else {
+					alert(JSON.stringify(result))
+				}
+			});
+		}
+		demo2.oninput = function () {
+			map.clearMap(); //清除所有的覆盖物
+			//截取demo1.value中的省份
+			var pl = demo1.value.split(',')[0];
+			var pr = demo2.value.split(',')[0];
+			geocoder.getLocation(demo2.value, function (status, result) {
+				if (status === 'complete' && result.geocodes.length) {
+					var lnglat2 = result.geocodes[0].location
+					if (!marker) {
+						marker = new AMap.Marker();
+						map.add(marker);
+					}
+					marker.setPosition(lnglat2);
+					map.setFitView(marker);
+					//标记出当前点
+					ctx.clearRect(0, 0, canvasWidth, canvasHeight); //清空画布
+					var place2 = [];
+					for (var i = 0; i < data.length; i++) {
+						for (var j in data[i]) {
+							if (j == pr) {
+								place2[0] = data[i][j][0];
+								place2[1] = data[i][j][1];
+								draw(place2[0], place2[1], r, 0, 360, '#D0021B', 'fill');
+							}
+						}
+					}
+					if (demo1.value != '出发地') {
+						//连线
+						var place1 = [];
+						for (var i = 0; i < data.length; i++) {
+							for (var j in data[i]) {
+								if (j == pl) {
+									place1[0] = data[i][j][0];
+									place1[1] = data[i][j][1];
+									draw(place1[0], place1[1], r, 0, 360, '#D0021B', 'fill');
+									ctx.moveTo(place1[0], place1[1]);
+									ctx.lineTo(place2[0], place2[1]);
+									ctx.lineWidth = 2;
+									ctx.strokeStyle = "#D0021B";
+									ctx.stroke();
+								}
+							}
+						}
+						var m2 = new AMap.Marker({
+							map: map,
+							draggable: true,
+							position: new AMap.LngLat(lnglat2.R, lnglat2.Q)
+						});
+						geocoder.getLocation(demo1.value, function (status, result) {
+							if (status === 'complete' && result.geocodes.length) {
+								var lnglat1 = result.geocodes[0].location
+								if (!marker) {
+									marker = new AMap.Marker();
+									map.add(marker);
+								}
+								marker.setPosition(lnglat1);
+								map.setFitView(marker);
+								var m1 = new AMap.Marker({
+									map: map,
+									draggable: true,
+									position: new AMap.LngLat(lnglat1.R, lnglat1.Q)
+								});
+								map.setFitView();
+
+								function computeDis() {
+									var p1 = m1.getPosition();
+									var p2 = m2.getPosition();
+									var textPos = p1.divideBy(2).add(p2.divideBy(2));
+									var distance = Math.round(p1.distance(p2)); //计算距离
+									localStorage.setItem('distance', distance);
+									var path = [p1, p2];
+								}
+								computeDis();
+								m1.on('dragging', computeDis);
+								m2.on('dragging', computeDis);
+							} else {
+								alert(JSON.stringify(result))
+							}
+						});
+					} else {
+						return false;
+					}
+				} else {
+					alert(JSON.stringify(result))
+				}
+			});
+		}
+
+		//点击跳转页面及截图
+		//canvas截图
+		var btn = document.getElementById('btn');
+		btn.onclick = function () {
+			if (demo1.value == '出发地' || demo2.value == '目的地') {
+				alert('请选择出发地和目的地');
+			} else {
+				localStorage.setItem('setout', demo1.value);
+				localStorage.setItem('bourn', demo2.value);
+				window.location.href = 'share.html';
+			}
+		}
+	</script>
+</body>
+
+</html>

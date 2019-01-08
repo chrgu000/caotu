@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title> 禁言管理</title>
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <link href="../../css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../plugin/datepicker/jquery.datetimepicker.css" rel="stylesheet">
+    <link href="../../css/common.css" rel="stylesheet">
+    <link href="../../plugin/layer/skin/layer.css" rel="stylesheet">
+    <link href="../../css/animate.css" rel="stylesheet">
+    <link href="../../css/style.css?v=4.1.0" rel="stylesheet">
+
+    <style>
+        /* Additional style to fix warning dialog position */
+
+        #alertmod_table_list_2 {
+            top: 900px !important;
+        }
+        .btitle{padding-left:20px;height:45px;border-bottom:1px solid #bbb; line-height: 37px;}
+        #searchBox{border:1px solid #bbb;padding:25px;}
+        #addNewBtn{float:right;margin-right:20px;margin-bottom:6px;}
+        #questiontype{width:120px;height:30px;font-size:13px;}
+        #tablelistbox .feedurllist img{width:auto;height:auto;max-width: 100px;max-height: 100px;cursor: pointer;}
+        #tablelistbox .isdeal{cursor: pointer;color:#2653bb;}
+        #bigImgBox{display: none;position: fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.7);z-index:99;text-align: center;padding:20px;padding-top:80px;overflow-y: auto;}
+        #bigImgBox img{width:auto;height:auto;max-width: 75%;min-width: 35%;min-height: 35%;}
+        #bigImgBox.show{display: block;}
+        #bigImgBox .close{position: absolute;right:16px;top:7px;font-size:22px;cursor: pointer;color: #eee;z-index:333;}
+        #bigImgBox .close:hover{color:#fff;}
+        #tablelistbox tr,
+        .tablelistbox tr{display: table-row;}
+        #userDyNumber{width:150px;height:45px;font-size:13px;}
+       #silentTime{width:130px;height:30px;padding-left:8px;}
+        .xdsoft_noselect{z-index:99999999;}
+        /*编辑弹框*/
+        #editPopBox2{width:100%;height:100%;padding:10px;background:#fff;text-align: center;padding-bottom:25px;display: none;}
+        #editPopBox2 .editBox{height:55px;margin-top:25px;font-size:14px;}
+        #editPopBox2 .editBox select{margin-right:6px;}
+        #editPopBox2 .btn{margin:1px 3px;}
+    </style>
+
+</head>
+
+<body class="gray-bg">
+
+    <div id="bigImgBox" class="layer-photos-demo">
+        <b class="close">x</b>
+        <img src="" alt=""/>
+    </div>
+<h3 class="btitle">禁言管理</h3>
+    <div style="padding:25px;font-size:16px;">
+        <p>查询用户</p>
+        <div id="searchBox">
+           <!-- 问题类型：
+            <select name="" id="questiontype" class="">
+                <option value="">所有</option>
+                <option value="1">功能问题</option>
+                <option value="2">其他反馈</option>
+            </select>-->
+            段友号：<input type="search" id="userDyNumber" value="" placeholder="搜索段友号" style="margin-right:30px;">
+            <button type="button" class="btn btn-sm btn-primary" id="searchBtn" onclick="searchUserInfo()">搜索段友号</button>
+            用户名：<input type="search" id="userSearchName" value="" placeholder="搜索用户名">
+            <button type="button" class="btn btn-sm btn-primary" id="searchUserNameBtn" onclick="searchUserInfo2()">搜索用户名</button>
+            <button type="button" class="btn btn-sm btn-primary" id="allSilentUserBtn" onclick="searcallsilent()">所有禁言用户</button>
+        </div>
+    </div>
+    <!--搜索用户列表-->
+    <div class="wrapper wrapper-content  animated fadeInRight">
+        <h3 style="padding-left:9px;margin:0;height:30px;line-height: 30px;">搜索用户列表  </h3>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox-content">
+                    <div class="jqGrid_wrapper" id="tablelist">
+                        <!--   <table id="table_list_2"></table>-->
+                        <table  class="table table-striped" id="tablelistbox">
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>段友号</th>
+                                <th>用户ID</th>
+                                <th>用户名</th>
+                                <th>登陆方式</th>
+                                <th>登陆机型</th>
+                                <th>性别</th>
+                                <th>所在地</th>
+                                <th>言论</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tablelistTbody">
+                            <tr v-for="(item,index) in items">
+                                <td class="center">{{index+1}}</td>
+                                <td class="center">{{item.uno}}</td>
+                                <td class="center">{{item.userid}}</td>
+                                <td class="center">{{item.username}}</td>
+                                <td class="center">{{item.usersource}}</td>
+                                <td class="center">{{item.device}}</td>
+                                <td class="center">{{item.usersex ==0?"男":"女"}}</td>
+                                <td class="center">{{item.location}}</td>
+                                <td class="center" v-on:click="silent(item,index)" style="color:#f50d0d;cursor: pointer;">禁言</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                     <!--   <div id="pagerlist">
+                            <div id="pagerbtnlist">
+                                <span class="glyphicon glyphicon-backward gbtn" id="prepagebtn" onclick="prepage()"></span>
+                                <span class="addpagebox">
+                                    <span id="jumppage" onclick="jumppage()">跳转到</span>
+                                    <input type="number" id="addpageinput" value="1" max="" min="1"/>
+                                    共 <span id="allpage">1</span>页
+                                </span>
+                                <span class="glyphicon glyphicon-forward gbtn" id="nextpagebtn" onclick="nextpage()"></span>
+                            </div>
+                            <div id="allcontbox">
+                                <p id="allconts"></p>
+                            </div>
+                        </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--禁言用户列表-->
+    <div class="wrapper wrapper-content  animated fadeInRight">
+        <h3 style="padding-left:9px;margin:0;height:30px;line-height: 30px;">禁言用户列表  </h3>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="ibox-content">
+                    <div class="jqGrid_wrapper" id="tablelist2">
+                        <!--   <table id="table_list_2"></table>-->
+                        <table  class="table table-striped" id="tablelistbox2">
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>段友号</th>
+                                <th>用户ID</th>
+                                <th>用户名</th>
+                                <th>禁言截止时间</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tablelistTbody2">
+                            <tr v-for="(item,index) in items">
+                                <td class="center">{{index+1}}</td>
+                                <td class="center">{{item.uno}}</td>
+                                <td class="center">{{item.userid}}</td>
+                                <td class="center">{{item.username}}</td>
+                                <td class="center">{{item.createtime | time}}</td>
+                                <td class="center" v-on:click="dissilent(item,index)" style="color:#f50d0d;cursor: pointer;">解禁</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <!--   <div id="pagerlist">
+                               <div id="pagerbtnlist">
+                                   <span class="glyphicon glyphicon-backward gbtn" id="prepagebtn" onclick="prepage()"></span>
+                                   <span class="addpagebox">
+                                       <span id="jumppage" onclick="jumppage()">跳转到</span>
+                                       <input type="number" id="addpageinput" value="1" max="" min="1"/>
+                                       共 <span id="allpage">1</span>页
+                                   </span>
+                                   <span class="glyphicon glyphicon-forward gbtn" id="nextpagebtn" onclick="nextpage()"></span>
+                               </div>
+                               <div id="allcontbox">
+                                   <p id="allconts"></p>
+                               </div>
+                           </div>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--禁言操作-->
+    <div id="editPopBox" class="shadePopBox">
+        <div class="editBox">
+            禁言时间：
+            <input type="text" id="silentTime" value="">小时
+        </div>
+        <div>
+            <button type="button" onclick="silentuser('ADD')" class="btn editSureBtn btn-primary">确定</button>
+            <button type="button" class="btn editCancelBtn">取消</button>
+        </div>
+    </div>
+
+    <!--认证操作-->
+    <div id="editPopBox2" class="shadePopBox">
+        <div class="editBox">
+            授权类型：
+            <select name="" id="approvetype">
+                <option value="0">第一页</option>
+            </select>
+        </div>
+        <div>
+            <button type="button" onclick="approve()" class="btn editSureBtn btn-primary">确定</button>
+            <button type="button" class="btn editCancelBtn">取消</button>
+        </div>
+    </div>
+
+<script src="../../js/jquery.min.js?v=2.1.4"></script>
+<script src="../../plugin/layer/layer.js"></script>
+<script src="../../js/vue.js"></script>
+<script src="../../plugin/datepicker/jquery.datetimepicker.full.min.js"></script>
+<script type="text/javascript" src="../../js/index.js"></script>
+
+    <!-- Page-Level Scripts -->
+    <script>
+        /*搜索用户*/
+        var tabledata = new Vue({
+            el: '#tablelistTbody',
+            data: {
+                items:[]
+            },
+            // 在 `methods` 对象中定义方法
+            methods: {
+                silent:function (event) {//编辑
+                    layer.open({
+                        type: 1,
+                        title: '确定禁言该用户吗',
+                        maxmin: false, //开启最大化最小化按钮
+                        area: ['500px', "220px"],
+                        content: $("#editPopBox"),
+                        success: function (layero, index) {
+                            //  console.log(event);
+                            $("#editPopBox").attr("data-userid",event.userid);
+                            // $("#editPopBox").attr("data-id",event.pushid);
+                        }
+                    });
+                },
+                approve:function (event) {//编辑
+                    layer.open({
+                        type: 1,
+                        title: '确定授权该用户吗',
+                        maxmin: false, //开启最大化最小化按钮
+                        area: ['500px', "220px"],
+                        content: $("#editPopBox2"),
+                        success: function (layero, index) {
+                            //  console.log(event);
+                            $("#editPopBox2").attr("data-userid",event.userid);
+                            // $("#editPopBox").attr("data-id",event.pushid);
+                        }
+                    });
+                }
+            }
+        });
+
+        /*禁言用户*/
+        var tabledata2 = new Vue({
+            el: '#tablelistTbody2',
+            data: {
+                items:[]
+            },
+            // 在 `methods` 对象中定义方法
+            methods: {
+                dissilent: function (event,ti) {
+                    layer.confirm('确定解禁该用户吗？', {
+                        btn: ['确定','取消'] //按钮
+                    }, function(index){
+                        $("#editPopBox").attr("data-userid",event.userid);
+                        silentuser("DEL");
+                        layer.close(index);
+                    }, function(index){
+                        layer.close(index);
+                    });
+
+                }
+            }
+        });
+
+
+        $(function(){
+            var date=new Date();
+            $('#silentTime').datetimepicker({
+                value:date,
+                timeFormat: 'Y-m-d H:m', //格式化时间
+                minDate:true
+            });
+            searcallsilent();//所有禁言用户
+            searchapprovetype();//所有授权类型
+        });
+
+
+        /*搜索段友号*/
+        function searchUserInfo(){
+            let uno=$("#userDyNumber").val();
+            var datapost={"uno":uno};
+            //console.log(datapost);
+            datapost=JSON.stringify(datapost);
+            layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000}) ;
+            $.ajax({
+                url : path+'/search/queryUserbyuno.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: datapost,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+//                    console.log("反馈列表：");
+//                    console.log(data);
+                },
+                success:function(diskJson){
+                    layer.closeAll();
+                    console.log("用户列表：");
+                    console.log(diskJson);
+                    /*翻页信息*/
+                    if(diskJson.code=="1000"){
+
+                        tabledata.items=diskJson.data;
+                    }else{
+                        layer.msg(diskJson.data+"!");
+                    }
+
+
+
+                }
+            });
+        }
+
+        /*搜索用户名*/
+        function searchUserInfo2(){
+            let username=$("#userSearchName").val();
+            var datapost={"username":username};
+            //console.log(datapost);
+            datapost=JSON.stringify(datapost);
+            layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000}) ;
+            $.ajax({
+                url : path+'/vest/searchuser.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: datapost,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+//                    console.log("反馈列表：");
+//                    console.log(data);
+                },
+                success:function(diskJson){
+                    layer.closeAll();
+                    console.log("用户名搜索的列表：");
+                    console.log(diskJson);
+                    /*翻页信息*/
+                    if(diskJson.code=="1000"){
+                        let userlist=[diskJson.data];
+                        tabledata.items=userlist;
+                    }else{
+                        layer.msg(diskJson.data+"!");
+                    }
+
+
+
+                }
+            });
+        }
+
+
+        /*禁言用户列表*/
+        function searcallsilent(){
+            var datapost={"YES":"yes"};
+            //console.log(datapost);
+            datapost=JSON.stringify(datapost);
+            layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000}) ;
+            $.ajax({
+                url : path+'/search/queryForbiddenuser.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: datapost,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+//                    console.log("：");
+//                    console.log(data);
+                },
+                success:function(diskJson){
+                    layer.closeAll();
+                    console.log("禁言用户列表：");
+                    console.log(diskJson);
+                    /*翻页信息*/
+                    if(diskJson.code=="1000"){
+
+                        tabledata2.items=diskJson.data;
+                    }
+
+
+
+                }
+            });
+        }
+
+        /*禁言操作*/
+        function silentuser(type){
+            let userid= $("#editPopBox").attr("data-userid");
+            let forbidtime="";
+            if(type=="ADD"){
+                forbidtime=$("#silentTime").val();
+                forbidtime=forbidtime.replace(/\s+/g,"");
+                forbidtime=forbidtime.replace(/\//g, "");
+                forbidtime=parseInt(forbidtime.replace(/:/g, ""))+"00";
+            }
+
+            var datapost={"forbidtime":forbidtime,"userid":userid,"type":type};
+            //console.log(datapost);
+            datapost=JSON.stringify(datapost);
+            $.ajax({
+                url : path+'/search/editForbiddenuser.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: datapost,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+//                    console.log("反馈列表：");
+//                    console.log(data);
+                },
+                success:function(diskJson){
+                    console.log("用户禁言/解禁：");
+                    console.log(diskJson);
+                    if(diskJson.code=="1000"){
+                        if(type=="ADD"){
+                            layer.msg("用户已禁言！！");
+                        }else{
+                            layer.msg("用户已解禁！！");
+                        }
+                        searcallsilent();
+                    }
+                }
+            });
+        }
+
+        /*查询所有认证类型*/
+        function searchapprovetype(){
+            $("#approvetype").empty();
+            var datapost={"YES":"yes"};
+            //console.log(datapost);
+            datapost=JSON.stringify(datapost);
+            $.ajax({
+                url : path+'/config/queryAllAuth.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: datapost,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+//                    console.log("反馈列表：");
+//                    console.log(data);
+                },
+                success:function(diskJson){
+                    console.log("查询所有认证类型：");
+                    console.log(diskJson);
+                    if(diskJson.code=="1000"){
+                        $.each(diskJson.data,function(i,n){
+                            $("#approvetype").append('<option value="'+n.authid+'">'+n.authword+'</option>');
+                        })
+                    }
+                }
+            });
+        }
+
+        /*授权操作*/
+        function approve(){
+            let userid= $("#editPopBox2").attr("data-userid");
+            let authid=$("#approvetype").val();
+            var datapost={"authid":authid,"userid":userid};
+            //console.log(datapost);
+            datapost=JSON.stringify(datapost);
+            $.ajax({
+                url : path+'/config/toUserAuthLogo.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: datapost,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+//                    console.log("反馈列表：");
+//                    console.log(data);
+                },
+                success:function(diskJson){
+                    console.log("用户授权操作：");
+                    console.log(diskJson);
+                    if(diskJson.code=="1000"){
+                        layer.msg("用户授权成功!");
+                    }else{
+                        layer.msg("用户授权失败，请检查!");
+                    }
+                }
+            });
+        }
+
+
+
+
+
+
+    </script>
+
+    
+    
+
+</body>
+
+</html>

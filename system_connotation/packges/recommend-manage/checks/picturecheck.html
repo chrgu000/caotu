@@ -6,7 +6,6 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
     <title> </title>
     <meta name="keywords" content="">
     <meta name="description" content="">
@@ -42,11 +41,14 @@
         #blueimp-gallery .deletebtn:hover{color:#ff698f;}
         #blueimp-gallery .slide canvas{position: absolute;left: 0;  right: 0;  top: 0;  bottom: 0;margin:auto;}
         /*#blueimp-gallery .slides .slide{width:100%;height:100%;}*/
+        #banPageTuen{position: fixed;left:0;bottom:0;width:100%;height:calc(100% - 70px);z-index:9999999;display: none;}
+        #banPageTuen.active{display: block;}
     </style>
 
 </head>
 
 <body class="gray-bg">
+
     <div class="wrapper wrapper-content">
         <div class="row">
             <div class="col-lg-12">
@@ -58,18 +60,20 @@
                         </p>-->
 
                         <div class="lightBoxGallery" >
+                            <div id="banPageTuen"></div>
                             <div id="imgconbox">
                                 <!--<a id="img1box" href="../../../img/p_big1.jpg" title="图片" data-gallery=""><img src="../../../img/p1.jpg"></a>-->
                             </div>
                             <div id="blueimp-gallery" class="blueimp-gallery">
+
                                 <div class="slides"></div>
                                 <h3 class="title"></h3>
                                 <a class="prev">‹</a>
                                 <a class="next">›</a>
-                            <!--    <a class="iconfont rotate leftRotate" data-id="-1">&#xe62a;</a>
-                                <a class="iconfont rotate rightRotate" data-id="1">&#xe622;</a>-->
+                                <a class="iconfont rotate leftRotate" data-id="-1">&#xe62a;</a>
+                                <a class="iconfont rotate rightRotate" data-id="1">&#xe622;</a>
                                 <a class="iconfont deletebtn" onclick="deleteimg()">&#xe65b;</a>
-                              <!--  <a class=" rotateBtn">确定</a>-->
+                                <a class=" rotateBtn">确定</a>
                                 <a class="close">×</a>
                                 <a class="play-pause"></a>
                                 <ol class="indicator"></ol>
@@ -84,8 +88,8 @@
     <div id="imgEditBox">
         <b class="close ">x</b>
     </div>
-
-
+    <canvas id="canvas1" width="200" height="200" style="display: none;"></canvas>
+    <img src="" alt="" id="bas64img" style="display: none;">
 
     <!-- 自定义js -->
     <script src="../../../js/content.js?v=1.0.0"></script>
@@ -107,8 +111,15 @@
                 var path3="/file/downFileByName.do?filelocation=";
                 $("#imgconbox").empty();
                 $.each(nedurl,function(i,n){
+                    if(n.indexOf("https")){
+                       let str1=n.substring(0,4);
+                       let str2=n.substring(4,n.length);
+                       n=str1+"s"+str2;
+                    }
+                  //  let src=n;
+                    cacheExternalImage(n);
                     $("#imgconbox").append('<a data-width="" data-height="" href="'+n+'" title="图片" data-gallery=""><img src="'+n+'"></a>');
-                })
+                });
                 //console.log("视频预览地址");
                 var img = new Image();
                 img.onload = function(){
@@ -133,6 +144,7 @@
         /*1.旋转绘画canvas*/
         $("#blueimp-gallery .rotate").click(function(){
             $("#blueimp-gallery .rotateBtn").addClass("can");
+            $("#banPageTuen").addClass("active");
             var rotetjd=Number($(this).attr("data-id"));
             imgact=Number($(".blueimp-gallery>.indicator li.active").attr("data-index"));
             rotate=rotate+rotetjd*90;
@@ -142,14 +154,9 @@
             var w=$(".blueimp-gallery .slides .slide:nth-child("+(imgact+1)+") img").width();
             var h=$(".blueimp-gallery .slides .slide:nth-child("+(imgact+1)+") img").height();
             var imgsrc=$(".blueimp-gallery .slides .slide:nth-child("+(imgact+1)+") img").attr("src");
-  /*          var ct= (rotate/90)%2;
-            if(ct==0){
-                w=$(".blueimp-gallery .slides .slide:nth-child("+(imgact+1)+") img").width();
-                h=$(".blueimp-gallery .slides .slide:nth-child("+(imgact+1)+") img").height();
-            }else{
-                h=$(".blueimp-gallery .slides .slide:nth-child("+(imgact+1)+") img").width();
-                w=$(".blueimp-gallery .slides .slide:nth-child("+(imgact+1)+") img").height();
-            }*/
+
+            // console.log("imgsrc::");
+            // console.log(imgsrc);
             var cw=0;
             if(w>h){
                 cw=w;
@@ -162,19 +169,22 @@
             var c=document.getElementById("cavasimg"+imgact);
             var ctx=c.getContext("2d");
             var img=new Image();
-            img.crossOrigin="anonymous"; //关键
+            img.crossOrigin="Anonymous"; //关键
             img.src=imgsrc;
-            img.onload = function (){
-                ctx.save();//保存状态
-                ctx.translate(cw/2,cw/2);//设置画布上的(0,0)位置，也就是旋转的中心点
-                ctx.rotate(rotate*Math.PI/180);
-                ctx.drawImage(img,-w/2,-h/2,w,h);//把图片绘制在旋转的中心点，
-                ctx.restore();//恢复状态
-            };
+            console.log(imgsrc);
+            console.log("imgsrc");
+             img.onload = function (){
+                   ctx.save();//保存状态
+                   ctx.translate(cw/2,cw/2);//设置画布上的(0,0)位置，也就是旋转的中心点
+                   ctx.rotate(rotate*Math.PI/180);
+                   ctx.drawImage(img,-w/2,-h/2,w,h);//把图片绘制在旋转的中心点，
+                   ctx.restore();//恢复状态
+               };
+
         });
 
 
-        var movielist=[];//文件流
+
         var changeindex=0;//改变的图片的下标
         /*2.保存按钮保存canvas图片*/
         $("#blueimp-gallery ").delegate(".rotateBtn.can","click",function(){
@@ -191,11 +201,11 @@
         /*保存canvas*/
         function savecanvas(){
             iffilechange=3;//图片旋转
-            cosjurl=[];changeindex=0;
+          // cosjurl=[];changeindex=0;
             $("#blueimp-gallery .rotateBtn.can").removeClass("can");
             var canvasindex=Number($(".blueimp-gallery>.indicator li.active").attr("data-index"));
             var cid=$("#blueimp-gallery .slides .slide:nth-child("+(canvasindex+1)+") canvas").attr("id");
-            movielist=[];
+           // movielist=[];
             changeindex=canvasindex;
             getcanvae(cid);
         }
@@ -203,29 +213,34 @@
         /*3.获取canvas图片流*/
         function getcanvae(cid){
             var ctx = document.getElementById(cid);
-          /*  var canvasw=$(".blueimp-gallery .slides .slide").width();
-            var canvash=$(".blueimp-gallery .slides .slide").height();
-            var w=Number($("#"+cid).attr("width"));
-            var h=Number($("#"+cid).attr("height"));*/
-
-            var dataURL = ctx.toDataURL("image/gif",1.0);
+            var dataURL = ctx.toDataURL("image/png",1.0);
             var file1=convertBase64UrlToBlob(dataURL,"png");
             var x= Math.random(32).toString(36).substr(3,32);
             var date= Date.now().toString(36);
-            file1.name=String(x)+String(date)+".gif";
-            movielist.push(file1);
-            putlistObject(movielist,getcc);
+            let fileName = String(x)+String(date)+".png";
+            var imgMsg = {
+                name : fileName,//获取文件名
+                file:file1,//文件流
+            };
+            runAsync(imgMsg).then(function(data){
+                var onetdk=data.Url.substring(0, data.Url.indexOf('?'));
+                return onetdk;
+            }).then(function(onetdk) {
+                // console.log("onetdk::");
+                // console.log(onetdk);
+                let jsonurl=JSON.parse(contentDatasurllist);
+                jsonurl[changeindex]=onetdk;
+                contentDatasurllist=JSON.stringify(jsonurl);
+               // console.log("contentDatasurllist::");
+               // console.log(contentDatasurllist);
+                $("#banPageTuen").removeClass("active");
+                $(".blueimp-gallery .slides .slide:nth-child("+(changeindex+1)+") img").attr("src",onetdk);
+                $("#imgconbox a:nth-child("+(changeindex+1)+")").attr("href",onetdk);
+                $("#imgconbox a:nth-child("+(changeindex+1)+") img").attr("src",onetdk);
+            });
+           // putlistObject(movielist,getcc);
 
         }
-
-function getcc(){
-    setTimeout(function(){
-            fielchangelist[changeindex].ischange=true;
-            fielchangelist[changeindex].imgurl=cosjurl[0];
-            $("#imgconbox a:nth-child("+(changeindex+1)+")").attr("href",cosjurl[0]);
-            $("#imgconbox a:nth-child("+(changeindex+1)+") img").attr("src",cosjurl[0]);
-    },1000)
-}
 
 
 
@@ -281,6 +296,7 @@ function getcc(){
         $("#blueimp-gallery .close").click(function(){
             rotate=0;
             $("#blueimp-gallery .rotateBtn.can").removeClass("can");
+            $("#banPageTuen").removeClass("active");
         });
 
         /*删除图片-1*/
@@ -289,6 +305,7 @@ function getcc(){
                 btn: ['确定','取消'] //按钮
             }, function(index){
                 deleteimg2();
+                $("#banPageTuen").removeClass("active");
                 layer.close(index);
             }, function(index){
                 layer.close(index);
@@ -304,6 +321,7 @@ function getcc(){
             $(".blueimp-gallery>.indicator li:nth-child("+(imgact+1)+"").remove();
             contentDatasurllist=JSON.parse(contentDatasurllist);
             contentDatasurllist.splice(imgact,1);
+            contentDatasurllist=JSON.stringify(contentDatasurllist);
             layer.msg("删除成功！！");
             $(".blueimp-gallery>.close").click();
 

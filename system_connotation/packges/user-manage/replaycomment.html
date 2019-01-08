@@ -11,6 +11,7 @@
     <meta name="keywords" content="">
     <meta name="description" content="">
     <script src="../../js/vue.js"></script>
+    <link href="../../css/common.css" rel="stylesheet">
 
     <style>
         /* Additional style to fix warning dialog position */
@@ -114,6 +115,15 @@
         .inputFileShow{float: left;width: 110px;height: 110px;overflow: hidden;border: 1px solid #CCCCCC;border-radius: 10px;padding: 5px;margin: 5px;}
         .inputFileShow2{width: 330px;height: 200px;border: 1px solid #CCCCCC;border-radius: 10px;padding: 5px;position: relative;background:#333;}
 
+        #flowwerUserBtn{position: absolute;top:-25px;right:60px;background:#eee;color:#bbb;}
+        #reportUserBtn{position: absolute;top:-25px;right:154px;}
+        #flowwerUserBtn.canfllower{background:#dfdfdf;color:#333;cursor: pointer;}
+
+        #reportEditBox{width:100%;height:100%;padding:15px;overflow: auto;background:#fff;color:#333;font-size:15px;display: none;}
+        #reportEditBox>div{line-height: 46px;}
+        #reportDesc{width:150px;height:30px;}
+        #reportEditBox button{padding:6px 15px;margin:5px 9px;}
+
     </style>
 
 </head>
@@ -135,8 +145,8 @@
                     <!--图片/视频-->
                     <div class="imgMovieShowComBox" v-if="item.commenturl&&item.commenturl.length>0">
                             <span v-for="(itemimg,t) in item.commenturl">
-                                <img v-if="itemimg.type ==3 || itemimg.type ==4" v-bind:src="itemimg.info" alt="">
-                                <video v-else controls="controls" v-bind:src="itemimg.info">您的浏览器不支持</video>
+                                <img v-if="itemimg.type ==3 || itemimg.type ==4" v-bind:src="itemimg.info" alt=""  v-on:click="showimg(item.commenturl,t,1)">
+                                <video v-else controls="controls" v-bind:src="itemimg.info"  v-on:click="showimg(item.commenturl,t,2)">您的浏览器不支持</video>
                             </span>
 
                     </div>
@@ -148,11 +158,12 @@
                                     <img style="width:100%;height:100%;vertical-align: middle;" v-bind:src="itemcon.userheadphoto" alt=""/>
                                 </span>{{itemcon.username}}  回复  {{itemcon.ruusername}}：</span>
                     {{itemcon.commenttext}}
+
                     <!--图片/视频-->
                     <div class="imgMovieShowComBox"  v-if="itemcon.commenturl&&itemcon.commenturl.length>0">
                             <span v-for="(itemimg2,t2) in itemcon.commenturl" >
-                                <img v-if="itemimg2.type ==3 || itemimg2.type ==4" v-bind:src="itemimg2.info" alt="">
-                                 <video v-else controls="controls" v-bind:src="itemimg2.info">您的浏览器不支持</video>
+                                <img v-if="itemimg2.type ==3 || itemimg2.type ==4" v-bind:src="itemimg2.info" alt=""  v-on:click="showimg(itemcon.commenturl,t2,1)">
+                                 <video v-else controls="controls" v-bind:src="itemimg2.info"  v-on:click="showimg(itemcon.commenturl,t2,2)">您的浏览器不支持</video>
                             </span>
                     </div>
                     <!--  <div class="callDoBox">
@@ -194,11 +205,42 @@
             <input type="file" id="commentmovieFile" name="" accept="audio/mp4,video/mp4,application/ogg, audio/ogg"  style="display: none;" value="">
             <button type="button" class="btn btn-default inputfileBtn" id="choosePictureBtn" >选择图片</button>
             <button type="button" class="btn btn-default inputfileBtn" id="chooseMovieBtn">选择视频</button>
+            <button type="button" class="btn btn-default" id="flowwerUserBtn">关注用户</button>
+            <button type="button" class="btn btn-default" id="reportUserBtn" onclick="reportUser()">举报用户</button>
             <button type="button" class="btn btn-sm btn-primary" id="myConmentsEnter" onclick="enterd()">发 送</button>
         </div>
     </div>
 </div>
+<!--评论图片视频点击放大-->
+<div id="faxAllBox">
+    <div class="toptip"><span><b class="pre">1</b>/ <b class="all">1</b></span><b class="iconfont close" onclick="closeimg()">X</b></div>
+    <span class="runLeftBtn runBtn" onclick="turnleftfun()">《</span>
+    <span class="runRightBtn runBtn" onclick="turnrightfun()">》</span>
+    <ul>
 
+    </ul>
+</div>
+
+<!--举报用户u-->
+<div id="reportEditBox" data-cid="">
+    <div>被举报用户：<span class="realuser" data-userid=""></span></div>
+    <div>
+        举报原因：
+        <select name="" id="reportDesc">
+            <option value="广告">广告</option>
+            <option value="低俗色情">低俗色情</option>
+            <option value="攻击歧视">攻击歧视</option>
+            <option value="涉政">涉政</option>
+            <option value="血腥暴力">血腥暴力</option>
+            <option value="赌博">赌博</option>
+            <option value="其他">其他</option>
+        </select>
+    </div>
+    <div style="text-align: center;margin-top:25px;">
+        <button type="button" class="btn" id="sureReport" onclick="reportUser2()">确定举报</button>
+        <button type="button" class="btn" id="cancelReport">取消</button>
+    </div>
+</div>
 <!-- Page-Level Scripts -->
 <script src="../../js/jquery.min.js?v=2.1.4"></script>
 <script src="../../plugin/datepicker/jquery.datetimepicker.full.min.js"></script>
@@ -222,6 +264,33 @@
         methods: {
             backcalltalk:function(event,i,d){
 
+            },
+            showimg: function (event,i,type) {
+                  //console.log(type);
+                // //console.log(i);
+                /*------自定义的图片左右切换-----------*/
+                $("#faxAllBox").addClass("show");
+                $("#faxAllBox ul").empty();
+                $("#faxAllBox .toptip b.all").html(event.length);
+                $("#faxAllBox .toptip b.pre").html(i+1);
+                var w=$(window).width();
+                var w2=w*event.length+"px";
+                $("#faxAllBox ul").css("width",w2);
+                var stw='width:'+w+"px";
+                $.each(event,function(c,t){
+                    if(type==1){
+                        if(c==i){
+                            $("#faxAllBox ul").append('<li style="'+stw+'" class="show" data-type="'+(c+1)+'"><div class="simgbox"><span class="simgspan"><img src="'+ t.info+'" alt=""/></span></div> </li>');
+                        }else{
+                            $("#faxAllBox ul").append('<li style="'+stw+'" data-type="'+(c+1)+'"><div class="simgbox"><span class="simgspan"><img src="'+ t.info+'" alt=""/></span></div> </li>');
+                        }
+                    }else{
+                        $("#faxAllBox ul").append('<li style="'+stw+'" class="show" data-type="'+(c+1)+'"><div class="simgbox movieShowBox"><video src="'+ t.info+'" controls="controls"></video></div> </li>');
+                    }
+
+                })
+
+
             }
         }
     });
@@ -230,19 +299,135 @@
     var itemdatas="";
     /*获取下载地址*/
     function geturl(urldatas,iuserid,iusername){
-        console.log("urldatas::");
-        console.log(urldatas);
+        // console.log("urldatas::");
+        // console.log(urldatas);
         if(urldatas.commenturl && urldatas.commenturl !="" && typeof urldatas.commenturl == 'string'){
             urldatas.commenturl=JSON.parse(urldatas.commenturl);
         }
-
+        $("#talkAboutBox").attr("data-fllowerid",urldatas.userid);
+        $("#talkAboutBox").attr("data-replayfirst",urldatas.replyfirst);
         itemdatas=urldatas;
         let items=[urldatas];
         usertalk.items=items;
-        $("#myNameSelect").append('<option value="'+iuserid+'"><span class="myname">'+iusername+'</span></option>')
-
+        getpush();//马甲用户列表获取
+        isfllower();//NH马甲是否已关注某用户
+        $("#reportEditBox").attr("data-cid",urldatas.commentid);
+        $("#reportEditBox .realuser").attr("data-userid",urldatas.userid).html(urldatas.username);
     }
 
+    $("#myNameSelect").change(function(){
+        isfllower();
+    });
+    /*NH马甲是否已关注某用户*/
+    function isfllower(){
+        let createuser=$("#myNameSelect").val();
+        let followid=  $("#talkAboutBox").attr("data-fllowerid");
+        var tjdatas={"followid":followid,"userid":createuser};
+        tjdatas=JSON.stringify(tjdatas);
+        $.ajax({
+            url : path2+'/note/isfollowuser.do',
+            cache:true,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:false,
+            data: tjdatas,
+            //data: {taglevel:3,pageno:1,pagesize:999},
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+                //////console.log("马甲用户列表失败：");
+                //////console.log(data);
+            },
+            success:function(diskJson){
+                //console.log("NH马甲是否已关注某用户：");
+                //console.log(diskJson);
+                if(diskJson.data.isfollow==1){
+                    $("#flowwerUserBtn").html("已关注").removeClass("canfllower");
+                }else{
+                    $("#flowwerUserBtn").html("关注").addClass("canfllower");
+                }
+
+
+            }
+        });
+    }
+
+    //NH马甲关注用户
+    $("#flowwerUserBtn").click(function(){
+        if($("#flowwerUserBtn").hasClass("canfllower")){
+            let createuser=$("#myNameSelect").val();
+            let followid=  $("#talkAboutBox").attr("data-fllowerid");
+            var tjdatas={"followid":followid,"userids":createuser};
+            //console.log(tjdatas);
+            tjdatas=JSON.stringify(tjdatas);
+            $.ajax({
+                url : path2+'/vest/setFollow.do',
+                cache:true,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:false,
+                data: tjdatas,
+                //data: {taglevel:3,pageno:1,pagesize:999},
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    //////console.log("马甲用户列表失败：");
+                    //////console.log(data);
+                },
+                success:function(diskJson){
+                    //console.log("NH马甲关注用户：");
+                    //console.log(diskJson);
+                    if(diskJson.code==1000){
+                        $("#flowwerUserBtn").html("已关注").removeClass("canfllower");
+                    }else{
+                        layer.msg("关注失败，请检查！！");
+                    }
+
+
+                }
+            });
+        }
+
+    });
+
+
+    /*马甲用户列表获取*/
+    function getpush(){
+        var createuser=userdatas.data.userid;
+        var tjdatas={"followid":"","type":1,"userid":createuser};
+        tjdatas=JSON.stringify(tjdatas);
+        $.ajax({
+            url : path2+'/vest/getAllVestuserList.do',
+            cache:true,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:false,
+            data: tjdatas,
+            //data: {taglevel:3,pageno:1,pagesize:999},
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+                //////console.log("马甲用户列表失败：");
+                //////console.log(data);
+            },
+            success:function(diskJson){
+                ////console.log("马甲用户列表获取：");
+                ////console.log(diskJson);
+                $("#myNameSelect").empty();
+                if(diskJson.data.length >0){
+                    $.each(diskJson.data,function(i,n){
+                        if(n.isused==1){
+                            $("#myNameSelect").append(' <option  data-head="'+n.userheadphoto+'" value="'+ n.userid+'">'+ n.username+'</option>');
+                        }
+
+                    })
+                }
+
+
+
+            }
+        });
+    }
 
     /*发送*/
     function enterd(){
@@ -272,8 +457,7 @@
             var commentid=genID(22);//评论ID
             var contentid=itemdatas.contentid;//内容ID
             var createtime=getmytime();
-
-            usertalk.items.push( { "commentid":commentid,"userid":userid,"replyuser":"","replyusername":"","commentreply":1,"userimg":userHead,"username":userName,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":"","replyfirst":commentid,"createtime":createtime,recall:[],"commenturl":commenturl,"commenturltype":commenturltype});
+            usertalk.items.push( { "commentid":commentid,"userid":userid,"replyuser":"","replyusername":"","commentreply":1,"userheadphoto":userHead,"username":userName,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":"","replyfirst":commentid,"createtime":createtime,recall:[],"commenturl":commenturl,"commenturltype":commenturltype});
          /*   if(lvty ==0){
                 usertalk.items.push( { "commentid":commentid,"userid":userid,"replyuser":"","replyusername":"","commentreply":1,"userimg":userHead,"userName":userName,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":"","replyfirst":commentid,"createtime":createtime,recall:[],"commenturl":commenturl,"commenturltype":commenturltype});
             }else if(lvty ==1){
@@ -288,16 +472,21 @@
                 var replyfirst =usertalk.items[index].commentid;
                 usertalk.items[index].recall.push({ "commentid":commentid,"userid":userid,"replyuser":replyuser,"replyusername":replyusername,"commentreply":0,"userimg":userHead,"userName":userName,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":replycomment,"replyfirst":replyfirst,"createtime":createtime,"commenturl":commenturl,"commenturltype":commenturltype});
             }*/
-         //console.log(usertalk.items);
-            let replyfirst=itemdatas.replyfirst;
+         ////console.log(usertalk.items);
+            let replyfirst=itemdatas.commentid;
+            if(itemdatas.commentreply==0){
+                replyfirst=itemdatas.replyfirst;
+            }
+            // console.log("replyfirst::");
+            // console.log(replyfirst);
             let replyid=itemdatas.commentid;
             let replyuid=itemdatas.userid;
 
             var postdata={"commenturl":commenturl,"contentid":contentid,"replyfirst":replyfirst,"replyid":replyid,"replyuid":replyuid,"text":text,"userid":userid};
-
+            console.log(postdata);
             setTimeout(function(){
                 postreplay(postdata);//提交数据
-            },1000);
+            },1500);
 
             $("#commontsSrBox").attr("data-type",0);
             $("#myComments").val("");
@@ -314,8 +503,8 @@
     function postreplay(postdata){
 
         postdata=JSON.stringify(postdata);
-        // console.log("postdata::");
-        // console.log(postdata);
+        // //console.log("postdata::");
+        // //console.log(postdata);
         $.ajax({
             url : path2+'/note/replyComment.do',
             cache:false,//false就不会从浏览器缓存中加载请求信息了
@@ -328,19 +517,73 @@
                 layer.msg("服务器未响应,请稍后再试!");
                 $("#myConmentsEnter").removeAttr("disabled");
                 layer.msg("发送失败，请重试。。。。");
-                //console.log("获取失败：");
-                //console.log(data);
+                ////console.log("获取失败：");
+                ////console.log(data);
             },
             success:function(diskJson){
                 layer.msg("发送成功。。。。");
-                console.log("NH马甲回复评论：");
-                console.log(diskJson);
+                //console.log("NH马甲回复评论：");
+                //console.log(diskJson);
                 $("#myConmentsEnter").removeAttr("disabled");
 
             }
         });
     }
 
+    /*举报用户*/
+    function reportUser(){
+        layer.open({
+            type: 1,
+            title: '举报用户',
+            maxmin: false, //开启最大化最小化按钮
+            area: ['500px', "300px"],
+            content: $("#reportEditBox"),
+            success: function (layero, index) {
+
+            }
+        });
+
+    }
+
+    function reportUser2(){
+        let cid=$("#reportEditBox").attr("data-cid");
+        let userid= $("#myNameSelect").val();
+        let desc=$("#reportDesc").val();
+        var postdata={"cid":cid,"desc":desc,"userid":userid};
+        postdata=JSON.stringify(postdata);
+        // //console.log("postdata::");
+        // //console.log(postdata);
+        $.ajax({
+            url : path2+'/note/reportCmt.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:false,
+            data: postdata,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+                $("#myConmentsEnter").removeAttr("disabled");
+                layer.msg("举报失败，请重试。。。。");
+                ////console.log("获取失败：");
+                ////console.log(data);
+            },
+            success:function(diskJson){
+                // console.log("举报评论：");
+                // console.log(diskJson);
+                if(diskJson.code ==1000){
+                    layer.msg("举报成功！！")
+                }else{
+                    layer.msg("举报失败，请重试。。。。");
+                }
+
+            }
+        });
+    }
+
+    $("#cancelReport").click(function(){
+        layer.closeAll();
+    })
 
 
 </script>

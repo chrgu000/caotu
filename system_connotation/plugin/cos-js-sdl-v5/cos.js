@@ -211,6 +211,7 @@ function muchlist(file){
 
 //es6Promise
 function runAsync(file){
+    console.log(444);
     var p = new Promise(function(resolve, reject){
         // 创建测试文件
         // var filename = file.name;

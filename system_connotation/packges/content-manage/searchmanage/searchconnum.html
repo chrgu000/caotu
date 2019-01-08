@@ -1,0 +1,124 @@
+
+
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox-content">
+            <div class="jqGrid_wrapper" id="tablelist">
+                <!--   <table id="table_list_2"></table>-->
+                <table  class="table table-striped" id="tablelistbox">
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>内容ID</th>
+                        <th>文字描述</th>
+                        <th>内容尺寸</th>
+                        <th>发布人</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody id="tablelistTbody">
+                    <tr v-for="(item,index) in items" :data-id="item.contentid">
+                        <td class="center">{{index+1}}</td>
+                        <td class="">{{item.contentid }}</td>
+                        <td class="">{{item.contenttitle }}</td>
+                        <td class="">{{item.contenttext }}</td>
+                        <td class="center">{{item.contentuid}}</td>
+                        <td class="center">
+                            <button type="button" class="btn btn-danger deletebtn" v-on:click="greet(item.contentid)">删除</button>
+                            <button type="button" class="btn btn-default" v-on:click="detail(item)">详情</button>
+                        </td>
+                    </tr>
+
+                    </tbody>
+                </table>
+                <div id="pagerlist">
+                    <div id="pagerbtnlist">
+                        <span class="glyphicon glyphicon-backward gbtn" id="prepagebtn" onclick="prepage(getcheck)"></span>
+                        <span class="addpagebox">
+                                    <span id="jumppage" onclick="jumppage(getcheck)">跳转到</span>
+                                    <input type="number" id="addpageinput" value="1" max="" min="1"/>
+                                    共 <span id="allpage">1</span>页
+                                </span>
+                        <span class="glyphicon glyphicon-forward gbtn" id="nextpagebtn" onclick="nextpage(getcheck)"></span>
+                    </div>
+                    <div id="allcontbox">
+                        <p id="allconts"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var tabledata = new Vue({
+        el: '#tablelistTbody',
+        data: {
+            items:[]
+        },
+        // 在 `methods` 对象中定义方法
+        methods: {
+            greet: function (event) {
+                layer.confirm('确定删除该内容吗？', {
+                    btn: ['确定','取消'] //按钮
+                }, function(index){
+                    deletesens(event);
+                    layer.close(index);
+                }, function(index){
+                    layer.close(index);
+                });
+
+            },
+            detail:function(event){
+                repoterdetail2(event)
+            }
+        }
+    });
+    $(function(){
+        getcheck(1);
+    });
+
+    function getcheck(pageno){
+        var uno=$("#dfUserNum").val();
+        if(uno==""){
+            layer.msg("请输入段友号！！")
+        }else{
+            layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000}) ;
+            var datapost={"uno":uno,"pageno":pageno,"pagesize":10};
+//            console.log("datapost::");
+//            console.log(datapost);
+            datapost=JSON.stringify(datapost);
+            $.ajax({
+                url : path+'/usercheck/getcontentbyuno.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: datapost,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+//                    console.log("获取失败：");
+//                    console.log(data);
+                },
+                success:function(diskJson){
+                    layer.closeAll();
+                    console.log("neir ：");
+                    console.log(diskJson);
+                    /*翻页信息*/
+                    if(diskJson.code =="1000"){
+                        tabledata.items=diskJson.data.ContentList;
+                        pageinfo3(pageno,diskJson.data.TotalCount,10);//翻页控件信息
+                    }else{
+                        layer.msg("数据有误请重试!");
+                    }
+
+
+                }
+            });
+        }
+
+    }
+
+
+</script>

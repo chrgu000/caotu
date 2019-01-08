@@ -165,7 +165,7 @@
                 // console.log("查看内容详情接口：");
                 // console.log(diskJson);
                 if(diskJson.code =="1000"){
-                    repoterdetail2(diskJson.data[0]);
+                    repoterdetail2(diskJson.data.contentlist[0]);
 
                 }else{
                     layer.msg("数据有误请重试!");

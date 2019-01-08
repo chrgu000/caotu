@@ -33,6 +33,7 @@
         #tablelistTbody td img{width:auto;height:auto;max-height: 80px;max-width: 80px;}
         #lookedMajia{padding:15px;border-bottom:1px dashed #ccc;}
         #lookedMajia span{display: inline-block;padding:4px;margin:4px;}
+        #tablelistTbody tr.hasnews{background:#802424;color:#fff;}
     </style>
 
 </head>
@@ -42,6 +43,7 @@
     <div id="contentPageBox">
         <button type="button" class="btn btn-sm btn-primary" id="createLabel">新增马甲</button>
         <button type="button" class="btn btn-sm btn-primary" id="chooseMajia">选择马甲</button>
+        <button type="button" class="btn btn-sm btn-primary" style="margin-top:10px;" id="createmelon">吃瓜</button>
         <div class="wrapper wrapper-content  animated fadeInRight">
             <div class="row">
                 <div class="col-sm-12">
@@ -66,8 +68,8 @@
                                 </tr>
                                 </thead>
                                 <tbody id="tablelistTbody">
-                                    <tr v-for="(item,index) in items">
-                                        <td class="center">{{index+1}}</td>
+                                    <tr v-for="(item,index) in items" v-bind:class="item.notecount>0?hasnews:0">
+                                        <td class="center" >{{index+1}}</td>
                                         <td class="center">{{item.username}}</td>
                                         <td class="center"><img v-bind:src="item.userheadphoto" alt="头像"></td>
                                         <td class="center">{{item.usersex == "0" ? "男" :"女"}}</td>
@@ -141,6 +143,7 @@
         var majiadata = new Vue({
             el: '#tablelistTbody',
             data: {
+                hasnews:"hasnews",
                 items:""
             },
             // 在 `methods` 对象中定义方法
@@ -162,7 +165,7 @@
                             lookmajia(events.userid);
                         }
                     });
-                },//关注我
+                },
                 messageinfo:function(events){//消息
                     let datapage=$("#addpageinput").val();
                     $("#contentPageBox").load("commentmanage/commenttablelist.html",function(){
@@ -459,7 +462,11 @@
             });
         }
 
+        //吃瓜
+        $("#createmelon").click(function(){
+            $("#contentPageBox").load("eatmelon/eatmelon.html");
 
+        });
 
     </script>
 

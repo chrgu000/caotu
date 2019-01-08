@@ -40,7 +40,7 @@
             <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
                 <div class="navbar-header">
                     <a class="navbar-minimalize minimalize-styl-2 btn btn-info " href="#"><i class="fa fa-bars"></i> </a>
-                    <h3 class="headerTitle"><img class="logo" src="img/logo.png" alt=""/>内含段子运营管理后台</h3>
+                    <h3 class="headerTitle"><img class="logo" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/logo280.png" alt=""/>内含段子运营管理后台</h3>
                 </div>
                 <ul class="nav navbar-top-links navbar-right" id="userInfoTop" v-cloak>
                     <li class="dropdown">
@@ -177,9 +177,12 @@
         </div>
         <!--右侧部分结束-->
     </div>
+    <!--消息提示音-->
+    <audio src="img/newspop.mp3" id="newspopmusic"></audio>
 
     <!-- 全局js -->
-
+    <canvas id="canvas1" width="200" height="200" style="display: none;"></canvas>
+    <img src="" alt="" id="bas64img" style="display: none;">
     <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
     <script src="js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
     <script src="js/plugins/layer/layer.min.js"></script>
@@ -198,39 +201,29 @@
        var userinfotop = new Vue({
            el: '#userInfoTop',
            data: {
-               info: {username:"",userheadimg:"/*img/a1.jpg*/",newsNum:"",iscode:""}
+               info: {username:"",userheadimg:"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/shareNhdz/logo280.png",newsNum:"",iscode:""}
            }
        });
 
        $(function(){
            sestop();
+           ishavenote();
            if(userdatas && userdatas.code && userdatas.code=="1000"){
                var datas=userdatas.data.userrolelist;
-              // console.log(datas);
+               // console.log(datas);
                $.each(datas,function(i,n){
                    $("#"+ n.rolepid).append(' <li><a data-id="'+ n.roleid+'" class="J_menuItem" href="'+ n.rolepath+'.html">'+ n.rolename+'</a> </li>')
                });
-             //反馈消息
-               //$("#upstage5").append(' <li><a data-id="009" class="J_menuItem" href="system-manage/feedbackinform.html">反馈消息</a> </li>');
-//               //举报信息
-        //   $("#upstage5").append(' <li><a data-id="006" class="J_menuItem" href="system-manage/reportinform.html">举报信息</a> </li>');
-//               //敏感词
-             //  $("#upstage5").append(' <li><a data-id="056" class="J_menuItem" href="system-manage/sensitive.html">敏感词管理</a> </li>');
 
-//              // 系统通知
-//               $("#upstage2").append(' <li><a data-id="010" class="J_menuItem" href="content-manage/sysinform/sysinformindex.html">系统通知</a> </li>');
-//             //  吃瓜用户管理
-//               $("#upstage4").append(' <li><a data-id="011" class="J_menuItem" href="user-manage/melonusermanage.html">吃瓜管理</a> </li>');
-               //推送管理
-//               $("#upstage2").append(' <li><a data-id="013" class="J_menuItem" href="content-manage/pushmanagement.html">推送管理</a> </li>');
-               //内容管理——UGC内容审核
-             //   $("#upstage2").append(' <li><a data-id="027" class="J_menuItem" href="content-manage/checks-ugc/checksconts.html">UGC内容审核</a> </li>');
-              // //内容管理——运营内容管理
-          //   $("#upstage2").append(' <li><a data-id="028" class="J_menuItem" href="content-manage/checks-operation/aoperation.html">运营内容管理</a> </li>');
-               // //推荐管理——推荐队列
-               // $("#upstage6").append(' <li><a data-id="019" class="J_menuItem" href="recommend-manage/recomendQueue/recommendarry.html">推荐队列</a> </li>');
-//               //推荐管理——推荐权重
- //             $("#upstage6").append(' <li><a data-id="016" class="J_menuItem" href="recommend-manage/weightset.html">权重设置</a> </li>');
+               // // 用户管理——段友守护者
+               // $("#upstage4").append(' <li><a data-id="044" class="J_menuItem" href="user-manage/dfdefender/dfdefender.html">段友守护者</a> </li>');
+               // //内容管理——抽查内容管理
+               // $("#upstage2").append(' <li><a data-id="024" class="J_menuItem" href="content-manage/dfdefender/dfdefender.html">段友守护者—抽查内容管理</a> </li>');
+               // //内容管理——段友守护者内容审核
+               // $("#upstage2").append(' <li><a data-id="025" class="J_menuItem" href="content-manage/checks-dfdefencons/checksconts.html">段友守护者内容审核</a> </li>');
+               // //内容管理——搜索管理
+               // $("#upstage2").append(' <li><a data-id="026" class="J_menuItem" href="content-manage/searchmanage/searchmanageindex.html">搜索管理</a> </li>');
+
            }
 
        });
@@ -270,6 +263,46 @@
            sestop();
            return false;
        });
+
+       //NH是否有未读消息
+       setInterval(function(){
+           ishavenote();
+       },300000);
+
+       function ishavenote(){
+           let userid=userdatas.data.userid;
+           var tjdatas={"userid":userid};
+           tjdatas=JSON.stringify(tjdatas);
+           $.ajax({
+               url : path2+'/note/ishavenote.do',
+               cache:true,//false就不会从浏览器缓存中加载请求信息了
+               type:"POST",
+               contentType: "application/json",
+               dataType:"JSON",
+               async:false,
+               data: tjdatas,
+               //data: {taglevel:3,pageno:1,pagesize:999},
+               error: function(data){
+                   layer.msg("服务器未响应,请稍后再试!");
+                   //////console.log("马甲用户列表失败：");
+                   //////console.log(data);
+               },
+               success:function(diskJson){
+                   // console.log("NH是否有未读消息：");
+                   // console.log(diskJson);
+                   if(diskJson.data.ishavenote ==1){
+                       userinfotop.info.newsNum="新消息！";
+                       $("#newspopmusic").get(0).play();
+                   }else{
+                      userinfotop.info.newsNum="";
+                     //  $("#newspopmusic").get(0).play();
+                   }
+
+
+               }
+           });
+       }
+
 
     </script>
 </body>

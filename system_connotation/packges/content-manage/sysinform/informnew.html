@@ -20,7 +20,8 @@
     #contenDetailBox input{width:100%;}
     .chooseDiv{display: none;}
     .chooseDiv.show{display: block;}
-    #oneUser{width:220px;color:#ccc;}
+    #oneUser,#oneUser2{width:220px;color:#ccc;}
+    #oneUser2{margin-left:130px;}
     #searchUserbtn{background:#0086b3;color:#fff;}
     #searchUserbtn:hover{background:#7266ba;}
 </style>
@@ -32,8 +33,8 @@
 
     <div class="lineBox">
         <span class="lineTitle">内容：</span>
-        <textarea class="repead" rows="1" cols="20" id="contentText" maxlength="140"></textarea>
-        <i class="must" style="position: absolute;bottom:0;left:440px;">*在140字以内</i>
+        <textarea class="repead" rows="1" cols="20" id="contentText" maxlength="300"></textarea>
+        <i class="must" style="position: absolute;bottom:0;left:440px;">*在300字以内</i>
     </div>
     <div class="lineBox">
         <span class="lineTitle">发布者(马甲账号)：</span>
@@ -51,10 +52,14 @@
         <span class="lineTitle">全体：</span>
         <input type="checkbox" checked="checked" data-id="" id="allUser" value=""/>
     </div>
-    <div class="lineBox">
+    <div class="lineBox" id="userInfosBox" data-userid="">
         <span class="lineTitle">单个：</span>
         <input type="text" id="oneUser" class="repead" data-id="" value="" placeholder="输入用户昵称"/>
         <button class="btn" type="button" id="searchUserbtn" onclick="searchmajia()">搜索匹配</button>
+        <div style="margin-top:5px;">
+            <input type="text" id="oneUser2" class="repead" data-id="" value="" placeholder="输入段友号"/>
+            <button class="btn" type="button" id="searchUserNumbtn" onclick="searchmajia2()">搜索匹配</button>
+        </div>
     </div>
     <div class="lineBox">
         <span class="lineTitle">推送时间：</span>
@@ -145,13 +150,47 @@
 //                console.log(diskJson);
                 if(diskJson.code=="1000" && diskJson.data){
                     layer.msg("匹配成功！！");
-                    $("#oneUser").attr("data-id",diskJson.data.userid).css("color","#333");
+                    $("#userInfosBox").attr("data-userid",diskJson.data.userid);
+                    $("#oneUser").css("color","#333");
                 }else{
                     $("#oneUser").attr("data-id","").css("color","#ccc");
                     layer.msg("该用户不存在，请重新搜索！！")
                 }
 
 
+            }
+        });
+    }
+
+    /*搜索用户*/
+    function searchmajia2(){
+        var uno=$("#oneUser2").val();
+        var datapost={"uno":uno};
+        datapost=JSON.stringify(datapost);
+        $.ajax({
+            url : path+'/search/queryUserbyuno.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+
+            },
+            success:function(diskJson){
+                console.log("用户列表获取：");
+                console.log(diskJson);
+                if(diskJson.code=="1000" && diskJson.data.length>0){
+                    layer.msg("匹配成功！！");
+                    $("#userInfosBox").attr("data-userid",diskJson.data[0].userid);
+                    $("#oneUser2").css("color","#333");
+                }else{
+                    $("#userInfosBox").attr("data-userid","");
+                    $("#oneUser2").css("color","#ccc");
+                    layer.msg("该用户不存在，请重新搜索！！")
+                }
             }
         });
     }
@@ -165,22 +204,36 @@
         var dva=$(this).val();
         if(dva==""){
             layer.msg("消息内容不能为空！！")
-        }else if(dva.length >140){
+        }else if(dva.length >300){
             layer.msg("标题在300字以内！！")
         }
     });
     /*指定人*/
     $("#allUser").click(function(){
         if($("input[type='checkbox']").is(':checked')){
-            $("#oneUser").val("").attr("data-id","");
+            $("#oneUser").val("");
+            $("#oneUser2").val("");
+            $("#userInfosBox").attr("data-userid","");
         }
     });
     $("#oneUser").focus(function(){
         $("#allUser").attr("checked",false);
+        $("#oneUser2").val("");
+        $("#userInfosBox").attr("data-userid","");
     });
     $("#oneUser").keydown(function(){
-        $("#oneUser").attr("data-id","").css("color","#ccc");
-    })
+        $("#oneUser").css("color","#ccc");
+        $("#userInfosBox").attr("data-userid","");
+    });
+    $("#oneUser2").focus(function(){
+        $("#allUser").attr("checked",false);
+        $("#oneUser").val("");
+        $("#userInfosBox").attr("data-userid","");
+    });
+    $("#oneUser2").keydown(function(){
+        $("#oneUser2").css("color","#ccc");
+        $("#userInfosBox").attr("data-userid","");
+    });
 /*推送时间*/
     $("#pushNow").click(function(){
         if($("#pushNow").is(':checked')){
@@ -209,8 +262,8 @@
         if(pushcontent==""){
             layer.msg("消息内容不能为空！！");
             return false;
-        }else if(pushcontent.length >140){
-            layer.msg("标题在140字以内！！");
+        }else if(pushcontent.length >300){
+            layer.msg("标题在300字以内！！");
             return false;
         }
         var createuser=userdatas.data.userid;//创建人id
@@ -218,7 +271,7 @@
         if($("#allUser").is(':checked')){
             pushuserid="";
         }else{
-            var pushduser= $.trim($("#oneUser").attr("data-id"));
+            var pushduser= $.trim($("#userInfosBox").attr("data-userid"));
             if(pushduser==""){
                 layer.msg("用户不存在请重新搜索匹配！！");
                 return false;
@@ -293,7 +346,8 @@
 
     /*重置*/
     function replay(){
-        $(".repead").val("")
+        $(".repead").val("");
+        $("#userInfosBox").attr("data-userid","");
     }
 </script>
 

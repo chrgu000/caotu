@@ -195,13 +195,19 @@
                             //console.log(data);
                         },
                         success:function(diskJson){
-                            layer.msg("创建成功!");
-                            $("#userName").val("");
-                            $("#upfileshowbox .fontshow").removeClass("hide");
-                            $("#fileimg").attr("src","");
-                            majiafilse = "";
-                            //console.log("创建马甲：");
-                            //console.log(diskJson);
+                            // console.log("创建马甲：");
+                            // console.log(diskJson);
+                            if(diskJson.code ==1000){
+                                layer.msg("创建成功!");
+                                $("#userName").val("");
+                                $("#upfileshowbox .fontshow").removeClass("hide");
+                                $("#fileimg").attr("src","");
+                                majiafilse = "";
+                            }else{
+                                layer.msg("创建失败，请检查是否存在该用户!");
+                            }
+
+
 
                         }
                     });
