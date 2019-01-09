@@ -90,17 +90,18 @@ video::-webkit-media-controls {
     overflow: hidden !important;
 }
 video::-webkit-media-controls-enclosure {
-    width: calc(100% + 30px);
+    width: calc(100% + 32px);
     margin-left: auto;
 }
 
 
-@media (max-width: 410px) {
+@media (max-width: 360px) {
     video::-webkit-media-controls-enclosure {
-        width: calc(100% + 12px);
+        width: calc(100% + 15px);
         margin-left: auto;
     }
 }
+
 
 @media (min-width: 768px) {
     .conntentsBox{width:65%;margin: 0 auto;}

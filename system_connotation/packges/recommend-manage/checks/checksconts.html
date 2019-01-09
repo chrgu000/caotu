@@ -460,6 +460,8 @@
 
     /*获取审核类型加载视频/图片页面*/
     function getchecktype(contsdatas){
+        console.log("contsdatas::");
+        console.log(contsdatas);
         //根据iframe的id获取对象
         layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:1000}) ;
        //console.log("contsdatas::");
@@ -494,9 +496,40 @@
         });
 
         /*视频/图片右侧信息*/
-        let contitle=filteremoji(contsdatas.contenttitle);
-        $("#mainConTitle").val(contitle);
-        $("#mainCont .contitleTip").html(contsdatas.contenttitle.length+"/字");
+        if(contsdatas.contenttitle && contsdatas.contenttitle !=""){
+            let contile=$.trim(contsdatas.contenttitle);
+            // let contile2=filteremoji(contile);
+            if(contile!="" ){
+                $("#mainConTitle").attr("readonly","readonly");
+                $("#mainCont .contitleTip").html(contsdatas.contenttitle.length+"/字");
+                $("#mainConTitle").val(contile);
+            }else{
+                $("#mainConTitle").removeAttr("readonly");
+                $("#mainCont .contitleTip").html("0/字");
+                $("#mainConTitle").val("");
+            }
+
+        }else{
+            $("#mainConTitle").removeAttr("readonly");
+            $("#mainCont .contitleTip").html("0/字");
+            $("#mainConTitle").val("");
+        }
+
+        /*标签处理*/
+        $("#detailCon .searchMenu .searchTag").val("").attr("data-val","").removeAttr("disabled");
+        if(contsdatas.contenttag && contsdatas.contenttag !=""){
+            let conlstag=contsdatas.contenttag.split(";");//临时加的
+            // console.log("conlstag::");
+            // console.log(conlstag);
+            let tagshow=[];
+            $.each(conlstag,function(i,n){
+                // console.log(n);
+                let sname=$("#checkTagul1 li[data-val="+n +"]").html();
+                tagshow.push(sname);
+                $("#checkTagSearch"+(i+1)).val(sname ).attr("data-val",n ).attr("disabled","disabled");
+            });
+        }
+
         $("#mainCont").attr("data-id",contsdatas.contentid);
         let createuser=userdatas.data.userid;
         let createuserName=userdatas.data.username;

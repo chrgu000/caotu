@@ -23,20 +23,44 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="14" column="23" selection-start-line="14" selection-start-column="23" selection-end-line="14" selection-end-column="23" />
+            <state relative-caret-position="110">
+              <caret line="5" column="44" selection-start-line="5" selection-start-column="44" selection-end-line="5" selection-end-column="44" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="checkedlist.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/packges/recommend-manage/alternativeQueue/checkedlist.html">
+      <file leaf-file-name="checkedlistinnh.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/packges/recommend-manage/alternativeQueue/checkedlistinnh.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="297">
-              <caret line="349" lean-forward="true" selection-start-line="349" selection-end-line="349" />
+            <state relative-caret-position="24">
+              <caret line="143" lean-forward="true" selection-start-line="143" selection-end-line="144" />
+              <folding>
+                <element signature="n#div#2;n#!!top" />
+                <element signature="e#10434#12695#0" />
+                <element signature="e#15188#15533#0" />
+                <element signature="e#15567#16517#0" />
+                <element signature="e#16563#17676#0" />
+                <element signature="e#17735#18990#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="recomend.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/packges/recommend-manage/cookyQueue/recomend.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="111">
+              <caret line="73" selection-start-line="73" selection-end-line="94" selection-end-column="6" />
+              <folding>
+                <element signature="n#div#1;n#!!top" />
+                <element signature="e#7906#8251#0" />
+                <element signature="e#8285#9235#0" />
+                <element signature="e#9281#10394#0" />
+                <element signature="e#10453#11708#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -53,12 +77,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>btnRight</find>
-      <find>movieCoverChangeBox</find>
-      <find>contenttitle</find>
-      <find>givht</find>
-      <find>mainConTitle</find>
-      <find>contenttag</find>
       <find>contentdetail</find>
       <find>.contentlist[0]</find>
       <find>../../</find>
@@ -78,11 +96,17 @@
       <find>getcheckdata</find>
       <find>getchecktype</find>
       <find>commenturl</find>
-      <find>repoterdetail2</find>
       <find>commentSectionBox</find>
       <find>ispass</find>
-      <find>reportdetail</find>
       <find>contsdatas</find>
+      <find>repoterdetail2</find>
+      <find>reportdetail</find>
+      <find>editPopBox</find>
+      <find>getrubbigsetpige</find>
+      <find>editcontpage</find>
+      <find>editPageSelect</find>
+      <find>redact</find>
+      <find>contentToBakQueen</find>
     </findStrings>
     <replaceStrings>
       <replace>话题</replace>
@@ -105,13 +129,7 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/css/common.css" />
-        <option value="$PROJECT_DIR$/packges/recommend-manage/cookyQueue/recommendarry.html" />
-        <option value="$PROJECT_DIR$/packges/system-manage/report/recomentmovie.html" />
-        <option value="$PROJECT_DIR$/packges/system-manage/report/recommentpicture.html" />
-        <option value="$PROJECT_DIR$/packges/system-manage/report/reportmovie.html" />
         <option value="$PROJECT_DIR$/packges/system-manage/report/reportpicture.html" />
-        <option value="$PROJECT_DIR$/packges/recommend-manage/checks/checksconts.html" />
         <option value="$PROJECT_DIR$/packges/system-manage/report/recomentdetail.html" />
         <option value="$PROJECT_DIR$/packges/data-analysis/user-attributeanalisis.html" />
         <option value="$PROJECT_DIR$/packges/data-analysis/user-analiysis.html" />
@@ -124,7 +142,6 @@
         <option value="$PROJECT_DIR$/packges/user-manage/newuser.html" />
         <option value="$PROJECT_DIR$/packges/user-manage/dfdefender/dfdefender.html" />
         <option value="$PROJECT_DIR$/packges/recommend-manage/recomendQueue/recomendRecord.html" />
-        <option value="$PROJECT_DIR$/packges/recommend-manage/alternativeQueue/recomend.html" />
         <option value="$PROJECT_DIR$/packges/user-manage/dfdefender/informlist.html" />
         <option value="$PROJECT_DIR$/packges/content-manage/dfdefender/informlist.html" />
         <option value="$PROJECT_DIR$/packges/content-manage/dfdefender/dfdefender.html" />
@@ -156,6 +173,13 @@
         <option value="$PROJECT_DIR$/packges/content-manage/checks-dfdefencons/checksconts.html" />
         <option value="$PROJECT_DIR$/js/index.js" />
         <option value="$PROJECT_DIR$/packges/recommend-manage/alternativeQueue/checkedlist.html" />
+        <option value="$PROJECT_DIR$/packges/recommend-manage/alternativeQueue/recommendarry.html" />
+        <option value="$PROJECT_DIR$/packges/recommend-manage/picturecheck.html" />
+        <option value="$PROJECT_DIR$/packges/recommend-manage/recomovie3.html" />
+        <option value="$PROJECT_DIR$/packges/recommend-manage/recopicture3.html" />
+        <option value="$PROJECT_DIR$/packges/recommend-manage/alternativeQueue/recomend.html" />
+        <option value="$PROJECT_DIR$/packges/recommend-manage/checks/checksconts.html" />
+        <option value="$PROJECT_DIR$/packges/recommend-manage/alternativeQueue/checkedlistinnh.html" />
       </list>
     </option>
   </component>
@@ -202,6 +226,13 @@
               <item name="packges" type="462c0819:PsiDirectoryNode" />
               <item name="recommend-manage" type="462c0819:PsiDirectoryNode" />
               <item name="alternativeQueue" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="system_connotation" type="b2602c69:ProjectViewProjectNode" />
+              <item name="system_connotation" type="462c0819:PsiDirectoryNode" />
+              <item name="packges" type="462c0819:PsiDirectoryNode" />
+              <item name="recommend-manage" type="462c0819:PsiDirectoryNode" />
+              <item name="cookyQueue" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -306,18 +337,18 @@
       <workItem from="1546493650652" duration="22767000" />
       <workItem from="1546823970726" duration="1137000" />
       <workItem from="1546831822547" duration="6716000" />
-      <workItem from="1546938521430" duration="595000" />
+      <workItem from="1546938521430" duration="13520000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="767087000" />
+    <option name="totallyTimeSpent" value="780012000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2359015" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.20730738" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.3291592" />
@@ -379,67 +410,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/packges/user-manage/newuser.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="207" column="29" lean-forward="true" selection-start-line="207" selection-start-column="29" selection-end-line="207" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/inputmultiple.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2717">
-          <caret line="341" column="46" lean-forward="true" selection-start-line="341" selection-start-column="46" selection-end-line="341" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/packges/recommend-manage/checks/checksconts.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="138">
-          <caret line="469" column="37" lean-forward="true" selection-start-line="469" selection-start-column="37" selection-end-line="469" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/packges/user-manage/majiauser.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="377">
-          <caret line="175" column="23" lean-forward="true" selection-start-line="170" selection-start-column="19" selection-end-line="175" selection-end-column="23" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/packges/recommend-manage/recomendQueue/recommendarry.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-869" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/packges/recommend-manage/recomovie.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="13" lean-forward="true" selection-start-line="13" selection-end-line="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/packges/recommend-manage/alternativeQueue/recomend.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="530" column="39" lean-forward="true" selection-start-line="530" selection-start-column="39" selection-end-line="530" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/packges/recommend-manage/detaillist.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
-          <caret line="73" column="29" lean-forward="true" selection-start-line="73" selection-start-column="29" selection-end-line="73" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/packges/user-manage/dfdefender/informlist.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="110" column="51" lean-forward="true" selection-start-line="110" selection-start-column="49" selection-end-line="110" selection-end-column="51" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/packges/content-manage/dfdefender/informlist.html" />
     <entry file="file://$PROJECT_DIR$/packges/content-manage/deletemanage.html" />
     <entry file="file://$PROJECT_DIR$/packges/content-manage/searchmanage/deletemanage.html" />
@@ -520,13 +490,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/packges/recommend-manage/temporaryQueue/checkedlist.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="495" column="14" lean-forward="true" selection-start-line="495" selection-start-column="14" selection-end-line="495" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/packges/recommend-manage/cookyQueue/unrecomend.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="231">
@@ -534,31 +497,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/packges/content-manage/checks-operation/aoperation.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-657">
-          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/packges/recommend-manage/cookyQueue/checkedlist.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="502" column="63" selection-start-line="502" selection-start-column="63" selection-end-line="502" selection-end-column="63" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/packges/content-manage/checks-operation/checksconts.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-17365">
           <caret line="42" column="53" lean-forward="true" selection-start-line="42" selection-start-column="53" selection-end-line="42" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/packges/content-manage/checks-operation/aoperationlist.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="180" column="32" selection-start-line="180" selection-start-column="32" selection-end-line="180" selection-end-column="32" />
         </state>
       </provider>
     </entry>
@@ -573,13 +515,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="160">
           <caret line="26" column="100" selection-start-line="26" selection-start-column="95" selection-end-line="26" selection-end-column="100" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/packges/content-manage/searchmanage/searchconid.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="248">
-          <caret line="48" column="34" selection-start-line="48" selection-start-column="34" selection-end-line="48" selection-end-column="34" />
         </state>
       </provider>
     </entry>
@@ -601,13 +536,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="182">
           <caret line="304" column="22" lean-forward="true" selection-start-line="304" selection-start-column="22" selection-end-line="304" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/packges/recommend-manage/cookyQueue/recomend.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="291" column="62" selection-start-line="291" selection-start-column="48" selection-end-line="291" selection-end-column="62" />
         </state>
       </provider>
     </entry>
@@ -658,13 +586,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/packges/content-manage/searchmanage/searchmanageindex.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="202" column="53" selection-start-line="202" selection-start-column="53" selection-end-line="202" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/packges/content-manage/searchmanage/searchconname.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="116">
@@ -696,13 +617,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/packges/content-manage/checks-dfdefencons/checksconts.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="622" column="34" lean-forward="true" selection-start-line="622" selection-start-column="13" selection-end-line="622" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/packges/content-manage/checks-ugc/checksconts.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1247">
@@ -720,17 +634,174 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/index.js">
+    <entry file="file://$PROJECT_DIR$/packges/recommend-manage/alternativeQueue/recommendarry.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
-          <caret line="14" column="23" selection-start-line="14" selection-start-column="23" selection-end-line="14" selection-end-column="23" />
+        <state>
+          <caret line="15" column="50" lean-forward="true" selection-start-line="15" selection-start-column="50" selection-end-line="15" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packges/recommend-manage/temporaryQueue/checkedlist.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="385">
+          <caret line="329" column="58" lean-forward="true" selection-start-line="329" selection-start-column="58" selection-end-line="329" selection-end-column="58" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packges/content-manage/searchmanage/searchconid.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="57" column="25" selection-start-line="57" selection-start-column="25" selection-end-line="57" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packges/content-manage/searchmanage/searchmanageindex.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="861">
+          <caret line="146" selection-start-line="146" selection-end-line="205" selection-end-column="5" />
+          <folding>
+            <element signature="e#4806#6097#0" />
+            <element signature="e#6156#6732#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packges/recommend-manage/recomovie.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="21" column="43" selection-start-line="21" selection-start-column="43" selection-end-line="21" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packges/recommend-manage/picturecheck.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3168">
+          <caret line="195" column="33" lean-forward="true" selection-start-line="195" selection-start-column="33" selection-end-line="195" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packges/recommend-manage/moveicheck.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="18" column="34" lean-forward="true" selection-start-line="18" selection-start-column="34" selection-end-line="18" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packges/recommend-manage/recomovie3.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="192" column="12" lean-forward="true" selection-start-line="192" selection-start-column="12" selection-end-line="192" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packges/recommend-manage/recopicture3.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="282">
+          <caret line="16" column="9" lean-forward="true" selection-start-line="16" selection-start-column="9" selection-end-line="16" selection-end-column="9" />
+          <folding>
+            <element signature="n#style#0;n#span#0;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#2;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#span#0;n#span#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#img#0;n#span#0;n#span#0;n#div#1;n#div#0;n#div#0;n#div#1;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packges/recommend-manage/alternativeQueue/recomend.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="419">
+          <caret line="228" column="46" lean-forward="true" selection-start-line="228" selection-start-column="46" selection-end-line="228" selection-end-column="46" />
+          <folding>
+            <element signature="n#div#3;n#!!top" />
+            <element signature="e#11087#11640#0" />
+            <element signature="e#11674#12956#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packges/recommend-manage/checks/checksconts.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="37">
+          <caret line="856" column="35" lean-forward="true" selection-start-line="856" selection-start-column="35" selection-end-line="856" selection-end-column="35" />
+          <folding>
+            <element signature="e#24703#25756#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packges/content-manage/checks-dfdefencons/checksconts.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="257">
+          <caret line="623" column="39" selection-start-line="623" selection-start-column="39" selection-end-line="623" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packges/content-manage/checks-operation/aoperation.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="213">
+          <caret line="19" column="64" lean-forward="true" selection-start-line="19" selection-start-column="64" selection-end-line="19" selection-end-column="64" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packges/content-manage/checks-operation/aoperationlist.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="183">
+          <caret line="151" column="9" lean-forward="true" selection-start-line="151" selection-start-column="9" selection-end-line="151" selection-end-column="9" />
+          <folding>
+            <element signature="e#5776#7025#0" />
+            <element signature="e#7085#7942#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packges/recommend-manage/cookyQueue/checkedlist.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="504" column="22" lean-forward="true" selection-start-line="504" selection-start-column="22" selection-end-line="504" selection-end-column="22" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/packges/recommend-manage/alternativeQueue/checkedlist.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="297">
-          <caret line="349" lean-forward="true" selection-start-line="349" selection-end-line="349" />
+        <state relative-caret-position="11">
+          <caret line="335" column="17" selection-start-line="335" selection-start-column="17" selection-end-line="335" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packges/recommend-manage/cookyQueue/recomend.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="111">
+          <caret line="73" selection-start-line="73" selection-end-line="94" selection-end-column="6" />
+          <folding>
+            <element signature="n#div#1;n#!!top" />
+            <element signature="e#7906#8251#0" />
+            <element signature="e#8285#9235#0" />
+            <element signature="e#9281#10394#0" />
+            <element signature="e#10453#11708#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packges/recommend-manage/alternativeQueue/checkedlistinnh.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="24">
+          <caret line="143" lean-forward="true" selection-start-line="143" selection-end-line="144" />
+          <folding>
+            <element signature="n#div#2;n#!!top" />
+            <element signature="e#10434#12695#0" />
+            <element signature="e#15188#15533#0" />
+            <element signature="e#15567#16517#0" />
+            <element signature="e#16563#17676#0" />
+            <element signature="e#17735#18990#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="110">
+          <caret line="5" column="44" selection-start-line="5" selection-start-column="44" selection-end-line="5" selection-end-column="44" />
         </state>
       </provider>
     </entry>

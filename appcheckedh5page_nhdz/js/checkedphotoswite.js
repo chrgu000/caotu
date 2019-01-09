@@ -372,10 +372,10 @@ $(function () {
                     $("#photo_box>div>div").empty();
                     $("#photo_box>div>div").append('<div id="ind-0" class="contsDetailBox"><div class="" style="text-align: center;width:100%;padding-top:14%;"><img style="width:55%;height:auto;" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/appcheckedh5page_nhdz/lackbanner.png" alt=""><p>去刷刷段子放松下吧</p></div></div>');
                     //  $("#photo_box>div>div").append('<div id="ind-0" class="contsDetailBox" ><div class="contsBox"><img style="width:55%;height:auto;" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/appcheckedh5page_nhdz/lackbanner.png" alt=""><p>去刷刷段子放松下吧</p></div></div>');
-
+                    let ua = navigator.userAgent;
                     if(ua.match(/iPhone|iPod|iPad/i) != null){
                         try {
-                            window.webkit.messageHandlers.closeapp();
+                            window.webkit.messageHandlers.closeapp.postMessage(null);//调用ios方法
                         } catch (e) {
                             console.log(e)
                         }//iphone代码
@@ -425,7 +425,7 @@ $(function () {
         let conts="";
         if(checklist.contenttype ==1 || checklist.contenttype ==2){
 
-            conts=' <div class="videoBox"><video id="video" x5-video-player-type="h5" x5-video-player-fullscreen="true" x5-video-orientation="portraint"  controlslist="nodownload" autoplay controls="controls" height="100%" width="100%" poster="'+checklist.contenturllist[0]+'"><source src="'+checklist.contenturllist[1]+'">Your browser does not support the video tag</video></div>';
+            conts=' <div class="videoBox"><video id="video"   controlslist="nodownload" autoplay controls="controls" height="100%" width="100%" poster="'+checklist.contenturllist[0]+'"><source src="'+checklist.contenturllist[1]+'">Your browser does not support the video tag</video></div>';
         }else if(checklist.contenttype ==3){
             let ulhtml='';
             if(checklist.contenturllist.length==1){
