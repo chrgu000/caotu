@@ -275,6 +275,7 @@
         if(pagenow>1){
             letprepage=pagenow-1;
             getRecondList(letprepage);
+            getalterlist(letprepage);
             $("#temporaryPageChoose").val(letprepage);
         }
     });
@@ -285,6 +286,7 @@
         if(pagenow <=largepage){
             let nextpage=pagenow+1;
             getRecondList(nextpage);
+            getalterlist(nextpage);
             $("#temporaryPageChoose").val(nextpage)
         }
     });
@@ -408,8 +410,8 @@
             },
             success:function(diskJson){
                 layer.closeAll();
-              //console.log("获取备选内容列表：");
-               //console.log(diskJson);
+              // console.log("获取备选内容列表：");
+              //  console.log(diskJson);
                 if(diskJson.code =="1000"){
                    // pageinfo3(pageno,diskJson.data,10);//翻页控件信息
                     tabledata.items=diskJson.data;

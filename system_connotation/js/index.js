@@ -2,13 +2,13 @@
  //
  // const path="http://192.168.1.111:8080/NHDZBUSINESS";//老冯
  // const path2="http://192.168.1.111:8080/NHDZBUSINESS";//老冯
-const path="http://192.168.1.114:8868/NHDZBUSINESS";//测试服务器
-const path2="http://192.168.1.114:8868/NHDZBUSINESS";//测试服务器
+// const path="http://192.168.1.114:8868/NHDZBUSINESS";//测试服务器
+// const path2="http://192.168.1.114:8868/NHDZBUSINESS";//测试服务器
 
 
 /*线上*/
-// const path="http://192.168.1.114:8878/NHDZBUSINESS";
-// const path2="http://192.168.1.114:8878/NHDZBUSINESS";
+const path="http://192.168.1.114:8878/NHDZBUSINESS";
+const path2="http://192.168.1.114:8878/NHDZBUSINESS";
 
 var userdatas=getload();
 /*console.log("用户信息userdatas：");
@@ -24,7 +24,6 @@ $(document).ajaxSuccess(function(event,xhr,options){
             setTimeout(function(){
                 window.location.href="login.html";
             },1000)
-
         }
     }
 });
@@ -520,7 +519,5 @@ function cacheExternalImage(url){
          }else if(days>6){
              layer.msg("选择的时间不能晚于7天！！")
          }
-
-
      }
  });*/

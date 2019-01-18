@@ -105,7 +105,8 @@
                                 <td class="center">{{item.device}}</td>
                                 <td class="center">{{item.usersex ==0?"男":"女"}}</td>
                                 <td class="center">{{item.location}}</td>
-                                <td class="center" v-on:click="silent(item,index)" style="color:#f50d0d;cursor: pointer;">禁言</td>
+                                <td v-if="item.jyed==0" class="center" v-on:click="silent(item,index)" style="color:#f50d0d;cursor: pointer;">禁言</td>
+                                <td v-else class="center" v-on:click="dissilent(item,index)" style="color:#f50d0d;cursor: pointer;">解禁</td>
                             </tr>
                             </tbody>
                         </table>
@@ -222,7 +223,7 @@
             },
             // 在 `methods` 对象中定义方法
             methods: {
-                silent:function (event) {//编辑
+                silent:function (event,ti) {//编辑
                     layer.open({
                         type: 1,
                         title: '确定禁言该用户吗',
@@ -230,8 +231,9 @@
                         area: ['500px', "220px"],
                         content: $("#editPopBox"),
                         success: function (layero, index) {
-                            //  console.log(event);
+                            //  //console.log(event);
                             $("#editPopBox").attr("data-userid",event.userid);
+                            $("#editPopBox").attr("data-index",ti);
                             // $("#editPopBox").attr("data-id",event.pushid);
                         }
                     });
@@ -244,11 +246,24 @@
                         area: ['500px', "220px"],
                         content: $("#editPopBox2"),
                         success: function (layero, index) {
-                            //  console.log(event);
+                            //  //console.log(event);
                             $("#editPopBox2").attr("data-userid",event.userid);
                             // $("#editPopBox").attr("data-id",event.pushid);
                         }
                     });
+                },
+                dissilent: function (event,ti) {
+                    layer.confirm('确定解禁该用户吗？', {
+                        btn: ['确定','取消'] //按钮
+                    }, function(index){
+                        $("#editPopBox").attr("data-userid",event.userid);
+                        $("#editPopBox").attr("data-index",ti);
+                        silentuser("DEL");
+                        layer.close(index);
+                    }, function(index){
+                        layer.close(index);
+                    });
+
                 }
             }
         });
@@ -266,6 +281,7 @@
                         btn: ['确定','取消'] //按钮
                     }, function(index){
                         $("#editPopBox").attr("data-userid",event.userid);
+                        $("#editPopBox").attr("data-index",ti);
                         silentuser("DEL");
                         layer.close(index);
                     }, function(index){
@@ -293,7 +309,7 @@
         function searchUserInfo(){
             let uno=$("#userDyNumber").val();
             var datapost={"uno":uno};
-            //console.log(datapost);
+            ////console.log(datapost);
             datapost=JSON.stringify(datapost);
             layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000}) ;
             $.ajax({
@@ -306,17 +322,27 @@
                 data: datapost,
                 error: function(data){
                     layer.msg("服务器未响应,请稍后再试!");
-//                    console.log("反馈列表：");
-//                    console.log(data);
+//                    //console.log("反馈列表：");
+//                    //console.log(data);
                 },
                 success:function(diskJson){
                     layer.closeAll();
-                    console.log("用户列表：");
-                    console.log(diskJson);
+                    //console.log("用户列表：");
+                    //console.log(diskJson);
                     /*翻页信息*/
                     if(diskJson.code=="1000"){
-
+                        $.each(diskJson.data,function(c,t){
+                            let uid=t.userid;
+                            let jyed=0;
+                            $.each(tabledata2.items,function(i,n){
+                                if(n.userid==uid){
+                                    jyed=1
+                                }
+                            });
+                            diskJson.data[c].jyed=jyed;
+                        });
                         tabledata.items=diskJson.data;
+                        //console.log(tabledata.items);
                     }else{
                         layer.msg(diskJson.data+"!");
                     }
@@ -331,7 +357,7 @@
         function searchUserInfo2(){
             let username=$("#userSearchName").val();
             var datapost={"username":username};
-            //console.log(datapost);
+            ////console.log(datapost);
             datapost=JSON.stringify(datapost);
             layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000}) ;
             $.ajax({
@@ -344,15 +370,16 @@
                 data: datapost,
                 error: function(data){
                     layer.msg("服务器未响应,请稍后再试!");
-//                    console.log("反馈列表：");
-//                    console.log(data);
+//                    //console.log("反馈列表：");
+//                    //console.log(data);
                 },
                 success:function(diskJson){
                     layer.closeAll();
-                    console.log("用户名搜索的列表：");
-                    console.log(diskJson);
+                    //console.log("用户名搜索的列表：");
+                    //console.log(diskJson);
                     /*翻页信息*/
                     if(diskJson.code=="1000"){
+
                         let userlist=[diskJson.data];
                         tabledata.items=userlist;
                     }else{
@@ -369,7 +396,7 @@
         /*禁言用户列表*/
         function searcallsilent(){
             var datapost={"YES":"yes"};
-            //console.log(datapost);
+            ////console.log(datapost);
             datapost=JSON.stringify(datapost);
             layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000}) ;
             $.ajax({
@@ -382,13 +409,13 @@
                 data: datapost,
                 error: function(data){
                     layer.msg("服务器未响应,请稍后再试!");
-//                    console.log("：");
-//                    console.log(data);
+//                    //console.log("：");
+//                    //console.log(data);
                 },
                 success:function(diskJson){
                     layer.closeAll();
-                    console.log("禁言用户列表：");
-                    console.log(diskJson);
+                    //console.log("禁言用户列表：");
+                    //console.log(diskJson);
                     /*翻页信息*/
                     if(diskJson.code=="1000"){
 
@@ -413,7 +440,7 @@
             }
 
             var datapost={"forbidtime":forbidtime,"userid":userid,"type":type};
-            //console.log(datapost);
+            ////console.log(datapost);
             datapost=JSON.stringify(datapost);
             $.ajax({
                 url : path+'/search/editForbiddenuser.do',
@@ -425,17 +452,22 @@
                 data: datapost,
                 error: function(data){
                     layer.msg("服务器未响应,请稍后再试!");
-//                    console.log("反馈列表：");
-//                    console.log(data);
+//                    //console.log("反馈列表：");
+//                    //console.log(data);
                 },
                 success:function(diskJson){
-                    console.log("用户禁言/解禁：");
-                    console.log(diskJson);
+                    //console.log("用户禁言/解禁：");
+                    //console.log(diskJson);
                     if(diskJson.code=="1000"){
+                        let index=$("#editPopBox").attr("data-index");
+                        //console.log("index");
+                        //console.log(index);
                         if(type=="ADD"){
                             layer.msg("用户已禁言！！");
+                            tabledata.items[index].jyed=1;
                         }else{
                             layer.msg("用户已解禁！！");
+                            tabledata.items[index].jyed=0;
                         }
                         searcallsilent();
                     }
@@ -447,7 +479,7 @@
         function searchapprovetype(){
             $("#approvetype").empty();
             var datapost={"YES":"yes"};
-            //console.log(datapost);
+            ////console.log(datapost);
             datapost=JSON.stringify(datapost);
             $.ajax({
                 url : path+'/config/queryAllAuth.do',
@@ -459,12 +491,12 @@
                 data: datapost,
                 error: function(data){
                     layer.msg("服务器未响应,请稍后再试!");
-//                    console.log("反馈列表：");
-//                    console.log(data);
+//                    //console.log("反馈列表：");
+//                    //console.log(data);
                 },
                 success:function(diskJson){
-                    console.log("查询所有认证类型：");
-                    console.log(diskJson);
+                    //console.log("查询所有认证类型：");
+                    //console.log(diskJson);
                     if(diskJson.code=="1000"){
                         $.each(diskJson.data,function(i,n){
                             $("#approvetype").append('<option value="'+n.authid+'">'+n.authword+'</option>');
@@ -479,7 +511,7 @@
             let userid= $("#editPopBox2").attr("data-userid");
             let authid=$("#approvetype").val();
             var datapost={"authid":authid,"userid":userid};
-            //console.log(datapost);
+            ////console.log(datapost);
             datapost=JSON.stringify(datapost);
             $.ajax({
                 url : path+'/config/toUserAuthLogo.do',
@@ -491,12 +523,12 @@
                 data: datapost,
                 error: function(data){
                     layer.msg("服务器未响应,请稍后再试!");
-//                    console.log("反馈列表：");
-//                    console.log(data);
+//                    //console.log("反馈列表：");
+//                    //console.log(data);
                 },
                 success:function(diskJson){
-                    console.log("用户授权操作：");
-                    console.log(diskJson);
+                    //console.log("用户授权操作：");
+                    //console.log(diskJson);
                     if(diskJson.code=="1000"){
                         layer.msg("用户授权成功!");
                     }else{

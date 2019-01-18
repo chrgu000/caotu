@@ -15,6 +15,7 @@ const path2="https://dev.api.toutushare.com/NHDZSEVER";//测试
 
 
 
+
 /*随机字符串*/
 function randomString(len) {
     len = len || 16;

@@ -22,7 +22,7 @@ window.onload=function() {
             isovers();
             clearInterval(onl);
             $("#drumpMoon").css({"display":"block"});
-           // isphone();
+            // isphone();
         }
     },500);
 };

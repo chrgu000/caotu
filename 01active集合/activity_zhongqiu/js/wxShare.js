@@ -3,7 +3,7 @@
  */
 /*var $wx_account = wxdata.wx_account, // 自定义数据，见wxShare_data.js
     $wx_share = wxdata.wx_share;   // 自定义数据  ，见wxShare_data.js*/
-var wxlist={"appId":"wx5527fcd602603a18","timestamp":"","nonceStr":"","signature":""};
+var wxlist={"appId":"wx7209465a9ddef7e2","timestamp":"","nonceStr":"","signature":""};
 var wxfxxinfo={"imgUrl":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/active/sharicon.png",
     "link" : "https://cdn.toutushare.com/activity_zhongqiu/active.html",
     "desc" : "中秋专属月相",   // 分享描述
@@ -13,6 +13,7 @@ var wxfxxinfo={"imgUrl":"https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/ac
 $(function(){
     var phonetype=phoneType();
     if(phonetype ==1){
+        console.log(111);
         gettiken();//获取微信token
     }
 })
@@ -32,8 +33,8 @@ function gettiken(){
             //console.log(data);
         },
         success:function(diskJson){
-                ////console.log("token:");
-                ////console.log(diskJson);
+                console.log("token:");
+                console.log(diskJson);
             if(diskJson.code =="1000"){
                 var jsapi_ticket=diskJson.data;
                 var noncestr=randomString(16);//随机字符串

@@ -505,7 +505,7 @@ function postcheckdata(ispass){
         }
         setTimeout(function(){
             iscanclick=0;
-        },1000)
+        },2000)
 
     });
     /*不通过按钮*/
@@ -519,7 +519,7 @@ function postcheckdata(ispass){
         }
         setTimeout(function(){
             iscanclick=0;
-        },1000)
+        },2000)
 
     });
     /*通过按钮*/
@@ -533,7 +533,7 @@ function postcheckdata(ispass){
         }
         setTimeout(function(){
             iscanclick=0;
-        },1000)
+        },2000)
 
     });
 

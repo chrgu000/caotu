@@ -58,7 +58,7 @@
                                 <td class="center">{{index+1}}</td>
                                 <td class="">{{item.contenttitle}}</td>
                                 <td class="center">
-                                    {{item.createtime}}
+                                    {{item.tagshow | time}}
                                 </td>
                                 <td class="center">
                                     <button type="button" class="btn btn-default" v-on:click="detail(item)">详情</button>

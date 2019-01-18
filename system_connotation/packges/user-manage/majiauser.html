@@ -34,6 +34,11 @@
         #lookedMajia{padding:15px;border-bottom:1px dashed #ccc;}
         #lookedMajia span{display: inline-block;padding:4px;margin:4px;}
         #tablelistTbody tr.hasnews{background:#802424;color:#fff;}
+        #newsList{position: relative;}
+        #newsList .news{position: absolute;right:-2px;top:-2px;background:#ec1212;color:#fff;font-size:11px;display: inline-block;;width:10px;height:10px;display: none;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            border-radius: 5px;}
     </style>
 
 </head>
@@ -44,6 +49,7 @@
         <button type="button" class="btn btn-sm btn-primary" id="createLabel">新增马甲</button>
         <button type="button" class="btn btn-sm btn-primary" id="chooseMajia">选择马甲</button>
         <button type="button" class="btn btn-sm btn-primary" style="margin-top:10px;" id="createmelon">吃瓜</button>
+        <button type="button" class="btn btn-sm btn-primary" style="margin-top:10px;" id="newsList">消息 <b CLASS="news"></b></button>
         <div class="wrapper wrapper-content  animated fadeInRight">
             <div class="row">
                 <div class="col-sm-12">
@@ -63,7 +69,7 @@
                                     <th>最新发布信息时间</th>
                                     <th>创建时间</th>
                                     <th>操作</th>
-                                    <th>消息</th>
+                                  <!--  <th>消息</th>-->
                                     <th>创建人</th>
                                 </tr>
                                 </thead>
@@ -79,7 +85,7 @@
                                         <td class="center">{{item.lastcontenttime | time}}</td>
                                         <td class="center">{{item.createtime | time}}</td>
                                         <td class="center lookmeitem" v-on:click="lookMe(item,index)">关注我</td>
-                                        <td class="center lookmeitem" @click="messageinfo(item)">{{item.notecount}}条</td>
+                                       <!-- <td class="center lookmeitem" @click="messageinfo(item)">{{item.notecount}}条</td>-->
                                         <td class="center">{{item.createuser}}</td>
                                     </tr>
 
@@ -254,7 +260,7 @@
             allotmajia.username=userdatas.data.username;//选择马甲
             lookmemajia.userid=userdatas.data.userid;//关注我
             lookmemajia.username=userdatas.data.username;//关注我
-
+            ishavenews();
         });
 
         //马甲管理列表
@@ -460,13 +466,62 @@
                     }
                 }
             });
-        }
+        };
 
         //吃瓜
         $("#createmelon").click(function(){
             $("#contentPageBox").load("eatmelon/eatmelon.html");
 
         });
+        //消息
+        $("#newsList").click(function(){
+            $("#contentPageBox").load("commentmanage/commenttablelist.html",function(){
+               /* $("#backmajiauser").attr("data-id",datapage);
+                $("#tablelistbox").attr("data-id",events.userid).attr("data-name",events.username);
+
+                getcheck(1);*/
+            });
+
+        });
+
+
+        //NH是否有未读消息
+        setInterval(function(){
+            ishavenews();
+        },50000);
+        /*是否有新消息*/
+        function ishavenews(){
+            let userid=userdatas.data.userid;
+            var tjdatas={"userid":userid};
+            tjdatas=JSON.stringify(tjdatas);
+            $.ajax({
+                url : path2+'/note/ishavenote.do',
+                cache:true,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:false,
+                data: tjdatas,
+                //data: {taglevel:3,pageno:1,pagesize:999},
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    //////console.log("马甲用户列表失败：");
+                    //////console.log(data);
+                },
+                success:function(diskJson){
+                    // console.log("NH是否有未读消息：");
+                    // console.log(diskJson);
+                    if(diskJson.data.ishavenote ==1){
+                      $("#newsList .news").css("display","block");
+                    }else{
+                        $("#newsList .news").css("display","none");
+                    }
+
+
+                }
+            });
+        }
+
 
     </script>
 

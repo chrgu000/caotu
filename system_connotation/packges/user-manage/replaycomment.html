@@ -298,7 +298,7 @@
     /*获取下载地址*/
     var itemdatas="";
     /*获取下载地址*/
-    function geturl(urldatas,iuserid,iusername){
+    function geturl(urldatas){
         // console.log("urldatas::");
         // console.log(urldatas);
         if(urldatas.commenturl && urldatas.commenturl !="" && typeof urldatas.commenturl == 'string'){
@@ -483,7 +483,7 @@
             let replyuid=itemdatas.userid;
 
             var postdata={"commenturl":commenturl,"contentid":contentid,"replyfirst":replyfirst,"replyid":replyid,"replyuid":replyuid,"text":text,"userid":userid};
-            console.log(postdata);
+            // console.log(postdata);
             setTimeout(function(){
                 postreplay(postdata);//提交数据
             },1500);

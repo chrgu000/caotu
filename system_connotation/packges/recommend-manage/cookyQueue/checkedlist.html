@@ -178,6 +178,7 @@
 <script>
     $(function(){
         var date=new Date();
+
         $('#endTime').datetimepicker({
             value:date,
             timeFormat: 'Y-m-d H:m', //格式化时间
@@ -188,9 +189,11 @@
             timeFormat: 'Y-m-d H:m', //格式化时间
             maxDate:true
         });
-
+        var day3 = new Date();
+        day3.setTime(day3.getTime()+24*60*60*1000);
+        var s3 = day3.getFullYear()+"-" + (day3.getMonth()+1) + "-" + day3.getDate();
         $('#pushtime').datetimepicker({
-            value:date,
+            value:s3,
             format:'Y-m-d',
             timepicker:false,//关闭时间选项
             minDate:true
@@ -209,7 +212,7 @@
             var stime = Date.parse(new Date());
             var usedTime = chodat - stime;  //两个时间戳相差的毫秒数
             var days=Math.floor(usedTime/(24*3600*1000));
-            if(days<-1){
+            if(days<=-1){
                 layer.msg("选择的时间不能早于当天！！");
 
             }else if(days>6){

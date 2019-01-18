@@ -1,5 +1,5 @@
 
-
+<!--所有马甲的消息列表-->
     <style>
         /* Additional style to fix warning dialog position */
 
@@ -38,6 +38,7 @@
                                 <thead>
                                 <tr>
                                     <th>序号</th>
+                                    <th>马甲账号</th>
                                     <th>评论者</th>
                                     <th>评论者ID</th>
                                     <th>评论内容</th>
@@ -48,6 +49,7 @@
                                 <tbody id="tablelistTbody">
                                     <tr v-for="(item,index) in items" v-bind:data-id="item.commentid">
                                         <td class="center">{{index+1}}</td>
+                                        <td class="center">{{item.majiaUser.username}}</td>
                                         <td class="center">{{item.username}}</td>
                                         <td class="center">{{item.userid}}</td>
                                         <td class="center">{{item.commenttext}}</td>
@@ -107,19 +109,22 @@
                             let iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
                             let userid=$("#tablelistbox").attr("data-id");
                             let username=$("#tablelistbox").attr("data-name");
-                            iframeWin.geturl(events,userid,username);
+                            iframeWin.geturl(events);
                         }
                     });
                 }
             }
         });
 
+        $(function(){
+            getcheck(1);
+        });
 
-        //马甲管理列表
+        //消息管理列表
         function getcheck(pageno){
             layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000}) ;
-            var userid= $("#tablelistbox").attr("data-id");
-            var postdata={"userid":userid,"pageno":pageno,"pagesize":10};
+            var userid=userdatas.data.userid;
+            var postdata={"userid":userid,"pageno":pageno,"pagesize":15};
             postdata=JSON.stringify(postdata);
             $.ajax({
                 url : path2+'/note/cmtNoteList.do',
@@ -137,8 +142,8 @@
                 },
                 success:function(diskJson){
                     layer.closeAll();
-                    // console.log("马甲用户消息列表：");
-                    // console.log(diskJson);
+                    console.log("马甲用户消息列表：");
+                    console.log(diskJson);
 
                     /*翻页信息*/
                     pageinfo3(pageno,diskJson.data.count,10);//翻页控件信息
