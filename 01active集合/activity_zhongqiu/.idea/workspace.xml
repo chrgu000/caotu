@@ -26,7 +26,7 @@
       <file leaf-file-name="active.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/active.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2365">
+            <state relative-caret-position="220">
               <caret line="10" column="46" selection-start-line="10" selection-start-column="46" selection-end-line="10" selection-end-column="46" />
             </state>
           </provider>
@@ -35,17 +35,17 @@
       <file leaf-file-name="common.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/css/common.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="275">
+            <state relative-caret-position="1386">
               <caret line="63" column="50" lean-forward="true" selection-start-line="63" selection-start-column="50" selection-end-line="63" selection-end-column="50" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="active.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="active.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/active.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="79" selection-start-line="79" selection-end-line="116" selection-end-column="1" />
+            <state relative-caret-position="566">
+              <caret line="472" column="23" lean-forward="true" selection-start-line="472" selection-start-column="6" selection-end-line="472" selection-end-column="23" />
               <folding>
                 <element signature="n#!!block;n#startis#0" />
                 <element signature="n#!!block;n#magnitude#0" />
@@ -66,14 +66,15 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="wxShare.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="wxShare.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/wxShare.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2508">
-              <caret line="116" column="20" selection-start-line="116" selection-start-column="16" selection-end-line="116" selection-end-column="20" />
+            <state relative-caret-position="208">
+              <caret line="257" lean-forward="true" selection-start-line="257" selection-end-line="257" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <element signature="n#!!block;n#getweixininfo#0" />
+                <element signature="n#!!block;n#getBase64Image#0" />
               </folding>
             </state>
           </provider>
@@ -214,17 +215,19 @@
       <workItem from="1547438166732" duration="1496000" />
       <workItem from="1547456349535" duration="438000" />
       <workItem from="1547779776951" duration="3700000" />
+      <workItem from="1548141368845" duration="900000" />
+      <workItem from="1548207268246" duration="164000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="25567000" />
+    <option name="totallyTimeSpent" value="26631000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24305004" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24225576" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.3291592" />
@@ -281,6 +284,7 @@
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <element signature="n#!!block;n#getweixininfo#0" />
+            <element signature="n#!!block;n#getBase64Image#0" />
           </folding>
         </state>
       </provider>
@@ -330,6 +334,7 @@
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <element signature="n#!!block;n#getweixininfo#0" />
+            <element signature="n#!!block;n#getBase64Image#0" />
           </folding>
         </state>
       </provider>
@@ -372,6 +377,7 @@
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <element signature="n#!!block;n#getweixininfo#0" />
+            <element signature="n#!!block;n#getBase64Image#0" />
           </folding>
         </state>
       </provider>
@@ -627,38 +633,39 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/wxShare.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2508">
-          <caret line="116" column="20" selection-start-line="116" selection-start-column="16" selection-end-line="116" selection-end-column="20" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="n#!!block;n#getweixininfo#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/active.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2365">
+        <state relative-caret-position="220">
           <caret line="10" column="46" selection-start-line="10" selection-start-column="46" selection-end-line="10" selection-end-column="46" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/css/common.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
+        <state relative-caret-position="1386">
           <caret line="63" column="50" lean-forward="true" selection-start-line="63" selection-start-column="50" selection-end-line="63" selection-end-column="50" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/active.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="79" selection-start-line="79" selection-end-line="116" selection-end-column="1" />
+        <state relative-caret-position="566">
+          <caret line="472" column="23" lean-forward="true" selection-start-line="472" selection-start-column="6" selection-end-line="472" selection-end-column="23" />
           <folding>
             <element signature="n#!!block;n#startis#0" />
             <element signature="n#!!block;n#magnitude#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/wxShare.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="208">
+          <caret line="257" lean-forward="true" selection-start-line="257" selection-end-line="257" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+            <element signature="n#!!block;n#getweixininfo#0" />
+            <element signature="n#!!block;n#getBase64Image#0" />
           </folding>
         </state>
       </provider>
