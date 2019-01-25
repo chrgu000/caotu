@@ -1,0 +1,575 @@
+
+
+    <!--内含公民卡列表-->
+    <style>
+        #createLabel{margin-top:10px;margin-left:30px;}
+        #tablelistbox .btn{color:#5a656d;}
+        #tablelistbox .btn:hover{color:#fff;background:#0088cc;}
+        #tablelistbox  .lookmeitem{color:#0a6aa1;cursor: pointer;}
+        .popShadeBox{width:100%;margin:0 auto;height:100%;border:1px solid #ddd;background:#fff;padding:30px;display: none;}
+        .popShadeBox .popBox{width:100%;overflow-y: auto;padding:6px;border:1px solid #ddd;}
+        .popShadeBox .popBox label{cursor: pointer;margin:15px;}
+        .popShadeBox .popBox input{vertical-align: sub;margin-right:3px;cursor: pointer;}
+        .popShadeBox .suredbtn{float:right;margin-right:3px;background:#52b5dc;color:#fff;margin-bottom:10px;}
+        #tablelistTbody td img{width:auto;height:auto;max-height: 80px;max-width: 80px;}
+        #lookedMajia span{display: inline-block;padding:4px;margin:4px;}
+        #tablelistTbody tr.hasnews{background:#802424;color:#fff;}
+
+        .allotShowBox{width:100%;padding:30px;background:#fff;display: none;height:100%;position: relative;}
+        .allotShowBox .lineBox{width:100%;margin:5px 0;position: relative;}
+        .allotShowBox .lineTitle{display: inline-block;width:100px;text-align: right;margin-right:3px;}
+        .allotShowBox input,
+        .allotShowBox select{width:150px;height:28px;padding-left:7px;}
+        #userNumberSelect, #userNumberSelect4{width:150px;position: absolute;left:106px;top:27px;display: none;z-index:50; border:1px solid #333;background:#ccc;color:#fff;height:180px;overflow-y: auto;}
+        #userNumberSelect li,
+        #userNumberSelect4 li{height:24px;line-height: 24px;padding-left:3px;cursor: pointer;}
+        #userNumberSelect li:hover,
+        #userNumberSelect4 li:hover{background:#0a6aa1;}
+        #userHaderShowBox{position: absolute;right:5px;top:25px;width:100px;text-align: center;padding:5px;font-size:12px;color:#333;display: none;}
+        #userHaderShowBox img{width:100%;height:auto;}
+
+        .xdsoft_datetimepicker{z-index:999999999;}
+    </style>
+
+
+
+    <div id="contentPageBox">
+        <button type="button" class="btn btn-sm btn-primary" id="createLabel">批量授权</button>
+        <button type="button" class="btn btn-sm btn-primary" id="cancelLabel" style="margin-top:10px;">取消授权</button>
+        <div class="wrapper wrapper-content  animated fadeInRight">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox-content">
+                        <div class="jqGrid_wrapper" id="tablelist">
+                            <!--   <table id="table_list_2"></table>-->
+                            <table  class="table table-striped" id="tablelistbox">
+                                <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>公民卡类型</th>
+                                    <th>马甲数量</th>
+                                    <th>用户数量</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody id="tablelistTbody">
+                                    <tr v-for="(item,index) in items" v-bind:data-id="item.cardid">
+                                        <td class="center" >{{index+1}}</td>
+                                        <td class="center">{{item.cardname}}</td>
+                                        <td class="center">{{item.overtime}}</td>
+                                        <td class="center">{{item.gettime}}</td>
+                                        <td class="center"><button type="button" @click="allot(item)" class="btn">分公民卡</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div id="pagerlist">
+                                <div id="pagerbtnlist">
+                                    <span class="glyphicon glyphicon-backward gbtn" id="prepagebtn" onclick="prepage()"></span>
+                                <span class="addpagebox">
+                                    <span id="jumppage" onclick="jumppage()">跳转到</span>
+                                    <input type="number" id="addpageinput" value="1" max="" min="1"/>
+                                    共 <span id="allpage">1</span>页
+                                </span>
+                                    <span class="glyphicon glyphicon-forward gbtn" id="nextpagebtn" onclick="nextpage()"></span>
+                                </div>
+                                <div id="allcontbox">
+                                    <p id="allconts"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--分公民卡-->
+    <div id="headerAllotBox" class="allotShowBox">
+        <div class="lineBox">
+            <span class="lineTitle">段友号：</span>
+            <input style="" type="text" data-value="" id="userNumber" value="" placeholder="请输入段友号">
+            <ul id="userNumberSelect"></ul>
+            <p id="userheaderTips"></p>
+        </div>
+        <div class="lineBox">
+            <span class="lineTitle">公民卡类型：</span>
+            <select name="" id="userHeaderSelect">
+
+            </select>
+        </div>
+        <div class="lineBox">
+            <span class="lineTitle">开始时间：</span>
+            <input type="text" id="startTime" value="" >
+        </div>
+        <div class="lineBox">
+            <span class="lineTitle">结束时间：</span>
+            <input type="text" id="endTime" value="" disabled>
+        </div>
+        <div style="text-align: center;margin-top:30px;">
+            <button type="button" class="btn" id="sureHeaderBtn" onclick="sureAllot()">确定</button>
+            <button type="button" class="btn" id="cancelHeaderBtn" onclick="layerclose()">取消</button>
+        </div>
+
+    </div>
+
+    <!--批量分公民卡-->
+    <div id="headerAllotBox2" class="allotShowBox">
+        <div class="lineBox">
+            <span class="lineTitle">起始段友号：</span>
+            <input style="" type="text" data-value="" id="userNumber2" value="" placeholder="请输入起始段友号">
+        </div>
+        <div class="lineBox">
+            <span class="lineTitle">结束段友号：</span>
+            <input style="" type="text" data-value="" id="userNumber3" value="" placeholder="请输入结束段友号">
+        </div>
+        <div class="lineBox">
+            <span class="lineTitle">公民卡类型：</span>
+            <select name="" id="userHeaderSelect2">
+
+            </select>
+        </div>
+        <div class="lineBox">
+            <span class="lineTitle">开始时间：</span>
+            <input type="text" id="startTime2" value="" >
+        </div>
+        <div class="lineBox">
+            <span class="lineTitle">结束时间：</span>
+            <input type="text" id="endTime2" value="" disabled="disabled">
+        </div>
+        <div style="text-align: center;margin-top:30px;">
+            <button type="button" class="btn" id="sureHeaderBtn2" onclick="sureAllot2()">确定</button>
+            <button type="button" class="btn" id="cancelHeaderBtn2" onclick="layerclose()">取消</button>
+        </div>
+
+    </div>
+
+    <!--取消授权-->
+    <div id="headerAllotBox3" class="allotShowBox">
+        <div class="lineBox">
+            <span class="lineTitle">段友号：</span>
+            <input style="" type="text" data-value="" id="userNumber4" value="" placeholder="请输入段友号">
+            <ul id="userNumberSelect4"></ul>
+            <p id="userheaderTips4"></p>
+        </div>
+        <div style="text-align: center;margin-top:30px;">
+            <button type="button" class="btn" id="sureHeaderBtn3" onclick="sureAllot3()">确定</button>
+            <button type="button" class="btn" id="cancelHeaderBtn3" onclick="layerclose()">取消</button>
+        </div>
+
+    </div>
+    <!-- 全局js -->
+    <!-- Page-Level Scripts -->
+    <script>
+
+
+        var majiadata = new Vue({
+            el: '#tablelistTbody',
+            data: {
+                hasnews:"hasnews",
+                items:""
+            },
+            // 在 `methods` 对象中定义方法
+            methods: {
+                allot:function(event){
+                    //console.log(event);
+                    layer.open({
+                        type: 1,
+                        title: '分配公民卡',
+                        shadeClose: true,
+                        maxmin: true, //开启最大化最小化按钮
+                        shade: 0.6,
+                        area: ['490px', '300px'],
+                        content: $("#headerAllotBox"), //iframe的url
+                        success: function (layero, index) {
+                            $("#userHeaderSelect").empty().append('<option value="'+event.cardid+'">'+event.cardname+'</option>')
+                            $("#userNumber").val("");
+
+                        }
+                    });
+                }
+
+            }
+        });
+
+        $(function(){
+            var date = new Date();
+            $('#startTime').datetimepicker({
+                value:date,
+                format:'Y-m-d',
+                minDate:true,
+                timepicker:false//关闭时间选项
+            });
+            $('#endTime').datetimepicker({
+                value:date,
+                format:'Y-m-d',
+                minDate:true,
+                timepicker:false//关闭时间选项
+            });
+            $('#startTime2').datetimepicker({
+                value:date,
+                format:'Y-m-d',
+                minDate:true,
+                timepicker:false//关闭时间选项
+            });
+            $('#endTime2').datetimepicker({
+                value:date,
+                format:'Y-m-d',
+                minDate:true,
+                timepicker:false//关闭时间选项
+            });
+
+            getcheck(1);//公民卡首页
+            getallcitized();
+            let sdate=$('#startTime').val();
+            sdate=sdate.split("-");
+            let syear=Number(sdate[0]);
+            edate=syear+1+"-"+sdate[1]+"-"+sdate[2];
+            $("#endTime").val(edate);
+        });
+
+        $('#startTime').datetimepicker({
+            onSelectDate: function(dateText, inst) {
+                let sdate=$('#startTime').val();
+                sdate=sdate.split("-");
+                let syear=Number(sdate[0]);
+                edate=syear+1+"-"+sdate[1]+"-"+sdate[2];
+                $("#endTime").val(edate);
+            }
+        });
+        $('#startTime2').datetimepicker({
+            onSelectDate: function(dateText, inst) {
+                let sdate=$('#startTime2').val();
+                sdate=sdate.split("-");
+                let syear=Number(sdate[0]);
+                edate=syear+1+"-"+sdate[1]+"-"+sdate[2];
+                $("#endTime2").val(edate);
+            }
+        });
+
+        //查询所有公民卡
+        function getcheck(pageno){
+           var userid=userdatas.data.userid;
+            layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000}) ;
+            var postdata={"pageno":pageno,"pagesize":10};
+            postdata=JSON.stringify(postdata);
+            $.ajax({
+                url : path2+'/cardcontrol/queryCardNum.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: postdata,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    ////console.log("查询所有公民卡信息：");
+                    ////console.log(data);
+                },
+                success:function(diskJson){
+                    layer.closeAll();
+                   console.log("查询所有公民卡信息：");
+                   console.log(diskJson);
+
+                    /*翻页信息*/
+                    pageinfo3(pageno,diskJson.data.totalCount,10);//翻页控件信息
+                    majiadata.items=diskJson.data.cardList;
+                   // allotmajia.items=diskJson.data.rows;
+                }
+            });
+        }
+
+        //一次性查询所有公民卡
+        function getallcitized(){
+            var postdata={"YES":"YES"};
+            postdata=JSON.stringify(postdata);
+            $.ajax({
+                url : path2+'/cardcontrol/queryCardInfo.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: postdata,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    ////console.log("查询所有公民卡信息：");
+                    ////console.log(data);
+                },
+                success:function(diskJson){
+                    console.log("一次性查询所有公民卡：");
+                    console.log(diskJson);
+                    /*翻页信息*/
+                    $("#userHeaderSelect2").empty();
+                    if(diskJson.code ==1000){
+                        if(diskJson.data.UserCardList && diskJson.data.UserCardList.length>0){
+                            $.each(diskJson.data.UserCardList,function(i,n){
+                                $("#userHeaderSelect2").append('<option value="'+n.cardid+'">'+n.cardname+'</option>')
+                            })
+                        }
+                    }
+
+                }
+            });
+        }
+
+
+        /*判断段友号是否存在*/
+        $("#userNumber").keyup(function(){
+            usernumishas(1);
+        });
+        $("#userNumber").keydown(function(){
+            $("#userNumber").attr("data-value","");
+            $("#userHaderShowBox").css("display","none");
+            if (event.keyCode == 13) {
+                usernumishas(1);
+            }
+        });
+        $("#userNumber").blur(function(){
+            setTimeout(function(){
+                $("#userNumberSelect").css("display","none");
+            },500)
+        });
+        $("#userNumberSelect").delegate("li","click",function(){
+            let txt=$(this).html();
+            let dataval=$(this).attr("data-value");
+            $("#userNumber").val(txt).attr("data-value",dataval);
+        });
+
+        //段友号匹配搜索
+        function usernumishas(type) {
+            let uno=$("#userNumber").val();
+            if(type==2){
+                uno=$("#userNumber4").val();
+            }
+            if(uno ==""){
+                layer.msg("请输入段友号匹配搜索！！");
+                return false;
+            }
+            let postdata={"uno":uno};
+            postdata=JSON.stringify(postdata);
+            $.ajax({
+                url : path2+'/search/queryUserbyuno.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: postdata,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    ////console.log("查询所有头套信息：");
+                    ////console.log(data);
+                },
+                success:function(datalist){
+                    //console.log("datalist::");
+                    //console.log(datalist);
+                    if(datalist.code==1000 && datalist.data){
+                        if(datalist.data.length >0){
+                            if(type==1){
+                                $("#userNumberSelect").empty();
+                                $.each(datalist.data,function(i,n){
+                                    $("#userNumberSelect").append('<li data-value="'+n.uno+'">'+n.uno+'('+n.username+')</li>')
+                                    $("#userNumberSelect").css("display","block");
+                                })
+                            }else{
+                                $("#userNumberSelect4").empty();
+                                $.each(datalist.data,function(i,n){
+                                    $("#userNumberSelect4").append('<li data-value="'+n.userid+'">'+n.uno+'('+n.username+')</li>')
+                                    $("#userNumberSelect4").css("display","block");
+                                })
+                            }
+
+                        }
+                    }
+                }
+            })
+        }
+
+
+
+        /*单独公民卡分配*/
+        function sureAllot(){
+            let startuno= $("#userNumber").attr("data-value");
+            let enduno= $("#userNumber").attr("data-value");
+            if(enduno ==""){
+                layer.msg("请输入段友号！！");
+                return false;
+            }
+            let cardid=$("#userHeaderSelect").val();
+            let starttime=$("#startTime").val();
+            let endtime=$("#endTime").val();
+            starttime=starttime.replace(/-/g, "");//
+            starttime=starttime+"000000";
+            endtime=endtime.replace(/-/g, "");//
+            endtime=endtime+"000000";
+            let postdata={"startuno":startuno,"enduno":enduno,"cardid":cardid,"starttime":starttime,"endtime":endtime};
+            console.log("postdata::");
+            console.log(postdata);
+            sureAllotPost(postdata)
+        }
+
+        /*批量授权公民卡*/
+        $("#createLabel").click(function(){
+            layer.open({
+                type: 1,
+                title: '批量授权公民卡',
+                shadeClose: true,
+                maxmin: true, //开启最大化最小化按钮
+                shade: 0.6,
+                area: ['490px', '420px'],
+                content: $("#headerAllotBox2"), //iframe的url
+                success: function (layero, index) {
+                    $("#userNumber2").val("");
+
+                }
+            });
+        });
+
+        /*批量公民卡分配*/
+        function sureAllot2(){
+            let startuno= Number($("#userNumber2").val());
+            let enduno= Number($("#userNumber3").val());
+            console.log(startuno);
+            console.log(enduno);
+            if(startuno ==""){
+                layer.msg("请输入起始段友号！！");
+                return false;
+            }
+            if(enduno ==""){
+                layer.msg("请输入结束段友号！！");
+                return false;
+            }
+            if((enduno -startuno)>1000){
+                layer.msg("一次最多只能分配1000个段友号！！");
+                return false;
+            }
+            startuno=String($("#userNumber2").val());
+            enduno=String($("#userNumber3").val());
+            let cardid=$("#userHeaderSelect2").val();
+            let starttime=$("#startTime2").val();
+            let endtime=$("#endTime2").val();
+            starttime=starttime.replace(/-/g, "");//
+            starttime=starttime+"000000";
+            endtime=endtime.replace(/-/g, "");//
+            endtime=endtime+"000000";
+            let postdata={"startuno":startuno,"enduno":enduno,"cardid":cardid,"starttime":starttime,"endtime":endtime};
+            // console.log("postdata::");
+            // console.log(postdata);
+            sureAllotPost(postdata)
+        }
+
+
+        /*公民卡分配提交数据*/
+        function sureAllotPost(postdata){
+            postdata=JSON.stringify(postdata);
+            $.ajax({
+                url : path2+'/cardcontrol/toVestUserCard.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: postdata,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    ////console.log("查询所有头套信息：");
+                    ////console.log(data);
+                },
+                success:function(datalist){
+                    console.log("分配公民卡::");
+                    console.log(datalist);
+                    if(datalist.code==1000 ){
+                        layer.msg("已成功授权"+datalist.data.successCount+"个马甲账号！！");
+                    }else if(datalist.code==2000 ){
+                        layer.msg("已成功授权"+datalist.data.successCount+"个马甲账号！！");
+                    }else{
+                        layer.msg("分配失败，请检查！！");
+                    }
+                }
+            })
+        }
+
+
+        /*取消授权*/
+        $("#cancelLabel").click(function(){
+            layer.open({
+                type: 1,
+                title: '取消授权',
+                shadeClose: true,
+                maxmin: true, //开启最大化最小化按钮
+                shade: 0.6,
+                area: ['420px', '260px'],
+                content: $("#headerAllotBox3"), //iframe的url
+                success: function (layero, index) {
+                    $("#userNumber4").val("");
+                }
+            });
+        });
+
+        /*判断段友号是否存在*/
+        $("#userNumber4").keyup(function(){
+            usernumishas(2);
+        });
+        $("#userNumber4").keydown(function(){
+            $("#userNumber4").attr("data-value","");
+            if (event.keyCode == 13) {
+                usernumishas(2);
+            }
+        });
+        $("#userNumber4").blur(function(){
+            setTimeout(function(){
+                $("#userNumberSelect4").css("display","none");
+            },500)
+        });
+        $("#userNumberSelect4").delegate("li","click",function(){
+            let txt=$(this).html();
+            let dataval=$(this).attr("data-value");
+            $("#userNumber4").val(txt).attr("data-value",dataval);
+        });
+
+        function sureAllot3(){
+            let checkuid=userdatas.data.userid;
+            let userid=$("#userNumber4").attr("data-value");
+            let postdata={"checkuid":checkuid,"userid":userid};
+            postdata=JSON.stringify(postdata);
+            $.ajax({
+                url : path2+'/cardcontrol/delUserCard.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: postdata,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    ////console.log("查询所有头套信息：");
+                    ////console.log(data);
+                },
+                success:function(datalist){
+                    // console.log("取消授权公民卡::");
+                    // console.log(datalist);
+                    if(datalist.code==1000 ){
+                        layer.msg("取消成功！！");
+                    }else{
+                        layer.msg("取消失败，请检查！！");
+                    }
+                }
+            })
+        }
+
+        /*关闭所有layer弹框*/
+        function layerclose(){
+            layer.closeAll();
+        }
+
+
+
+
+
+
+
+
+    </script>
+
+    
+    

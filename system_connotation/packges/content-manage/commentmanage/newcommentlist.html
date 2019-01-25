@@ -1,0 +1,222 @@
+
+
+
+
+    <style>
+        /* Additional style to fix warning dialog position */
+        .labelBox{width:80%;min-width:370px;margin:0 auto;padding:40px 20px;border:1px solid #bbb;margin-top:50px;min-height: 450px;}
+        .lineBox{width:100%;margin:20px 0;}
+        .lineBox .lineTitle{display:inline-block;width:120px;margin-right:6px;text-align: right;}
+        .lineBox input,
+        .lineBox select{width:200px;height:30px;padding-left:7px;}
+        .page-container{width:180px;height:120px;border:1px dashed #bbb;margin-left:130px;margin-top:-20px;position: relative;}
+        .labelLevelBox select,
+        .labelLevelBox input{width:110px;border:1px solid #bbb;
+            -webkit-border-radius: 3px;
+            -moz-border-radius: 3px;
+            border-radius: 3px;}
+
+        .distpicker .form-group{float: left;}
+        .distpicker .form-group select{height:35px;}
+        #uploader .filelist li{width:100%;height:100%;margin:0;}
+        #uploader .filelist li p.imgWrap{width:100%;height:100%;}
+        #uploader .filelist li img{height:100%;width:auto;}
+        #uploader .filelist li p.title{display: none;}
+
+
+        #addcommentBox{width:100%;padding:30px;height:100%;margin-top:50px;}
+        #myCommentsText{vertical-align: middle;width:80%;padding:15px;}
+        #commentUrlShowBox{}
+        .showBoxJH{width:100%;overflow: hidden;margin:5px 0;}
+        .showUrlBox{width:49%;max-height: 450px;overflow-y: auto;float:left;border:1px solid #a9a9a9;padding:10px;}
+
+    </style>
+
+
+    
+   <div class="labelBox">
+       <button type="button" id="backHtml" class="btn btn-warning">返回》</button>
+       <div id="addcommentBox" data-id="">
+           <div>
+               选择标签：
+               <select name="" id="tagSelectAll">
+
+               </select>
+           </div>
+           <div class="showBoxJH">
+               <div id="commentUrlShowBox" class="showUrlBox" style="margin-right:10px;">
+
+               </div>
+               <div id="commentUrlShowBox2" class="showUrlBox">
+                   <div class="inputFileShow" v-for="(item,index) in items">
+                       <div v-if="item.commentliburl[0].type==3 || item.commentliburl[0].type==4" class="delete">delete</div><div class="result"><img v-bind:src="item.commentliburl[0].info" alt=""/></div>
+                   </div>
+
+               </div>
+           </div>
+
+           <div class="buttonBox" style="margin-left:80px;">
+               <input type="file" id="commentimgFile" name="" multiple="multiple" accept="image/png,image/gif,image/jpg,image/jpeg"  value="" style="display: none;">
+               <input type="file" id="commentmovieFile" name="" multiple="multiple" accept="audio/mp4,video/mp4,application/ogg, audio/ogg" style="display: none;" value="">
+               <input type="file" id="commenttextFile" name="" multiple="multiple" accept=".doc,.docx,.pdf,.txt" style="display: none;" value="">
+               <button type="button" class="btn btn-default inputfileBtn" id="choosePictureBtn" >选择图片</button>
+               <button type="button" class="btn btn-default inputfileBtn" id="chooseMovieBtn">选择视频</button>
+               <button type="button" class="btn btn-default inputfileBtn" id="choosetextBtn">选择文字</button>
+           </div>
+           <div class="buttonBox" style="margin-left:120px;margin-top:20px;">
+               <button onclick="subCommentbatch()" type="button" class="btn btn-file" id="postCommentBtn">提 交 评 论</button>
+               <button onclick="clearall()" type="button" class="btn btn-file" id="clearAll">清空已选图片/视频/文案</button>
+           </div>
+       </div>
+   </div>
+
+    <!-- 全局js -->
+    <script src="../../../js/jquery.min.js?v=2.1.4"></script>
+   <script src="../../../plugin/cos-js-sdl-v5/cos-js-sdk-v5.min.js"></script>
+   <script src="../../../plugin/cos-js-sdl-v5/cos.js"></script>
+   <script src="../../../plugin/layer/layer.js"></script>
+    <script src="../../../js/inputmultiplecommentbatch.js"></script>
+   <script type="text/javascript" src="../../../js/index.js"></script>
+    <!-- Page-Level Scripts -->
+    <script>
+        /*推荐列表*/
+        var commentlistvue = new Vue({
+            el: '#commentUrlShowBox2',
+            data: {
+                items:[]
+            },
+            // 在 `methods` 对象中定义方法
+            methods: {
+                detail:function(event){
+
+                }
+            }
+        });
+
+        $(function(){
+            getlabellist();
+        });
+
+
+
+        /*标签列表获取*/
+        function getlabellist(){
+            var datapost={"taglevel":2,"pageno":1,"pagesize":999,"tagname":""};
+            datapost=JSON.stringify(datapost);
+            $.ajax({
+                url : path2+'/tag/taglist.do',
+                cache:true,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:false,
+                data: datapost,
+                //data: {taglevel:3,pageno:1,pagesize:999},
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    ////console.log("标签列表获取失败：");
+                    ////console.log(data);
+                },
+                success:function(diskJson){
+                   console.log("标签列表获取：");
+                   console.log(diskJson);
+                   if(diskJson.code==1000){
+                       $("#tagSelectAll").empty();
+                       if(diskJson.data.rows.length>0){
+                           $.each(diskJson.data.rows,function(i,n){
+                               $("#tagSelectAll").append(' <option value="'+n.tagid+'">'+n.tagname+'</option>');
+                           })
+                       }
+                   }
+
+
+                }
+            });
+        }
+
+
+
+        /*提交评论*/
+        function subCommentbatch(){
+
+            layer.confirm('确定提交该批次评论吗？', {
+                btn: ['确定','取消'] //按钮
+            }, function(index){
+                //console.log(recondlist.chooselistnum);
+                $("#postCommentBtn").attr("disabled","disabled");
+                if(dataArr.length >0){
+                  send();
+
+                }
+
+                layer.close(index);
+            }, function(index){
+                layer.close(index);
+            });
+
+        }
+
+        /*提交评论*/
+        function subCommentbatch2(postdata){
+
+            postdata=JSON.stringify(postdata);
+            $.ajax({
+                url : path2+'/commentlib/insetcmtlib.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:false,
+                data: postdata,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    ////console.log("查询所有评论信息：");
+                    ////console.log(data);
+                },
+                success:function(diskJson){
+                    console.log("提交评论：");
+                    console.log(diskJson);
+                    if(diskJson.code == 1000){
+
+
+
+                    }else{
+                        layer.msg("提交失败！！")
+                    }
+
+                }
+            });
+        }
+
+        /*清空*/
+        function clearall(){
+            oInput.value = "";   // 先将oInput值清空，否则选择图片与上次相同时change事件不会触发
+            //清空已选图片
+            imgmovurl=[];
+            moviefilecover="";//视频封面
+            picfilecover=[];//图片封面
+            $('#commentUrlShowBox').empty();
+            $('#commentUrlShowBox2').empty();
+            dataArr = [];
+            commentimgisize = [];
+            index = 0;
+            $("#chooseMovieBtn").removeAttr("disabled").css("color","#333");
+            $("#choosePictureBtn").removeAttr("disabled").css("color","#333");
+            $("#choosetextBtn").removeAttr("disabled").css("color","#333");
+
+        }
+        /*重置*/
+        $("#replay").click(function(){
+
+        });
+
+        /*返回*/
+        $("#backHtml").click(function(){
+            $("#contentPageBox").load("commentlist.html",function(){
+
+            });
+        })
+    </script>
+
+    
+    

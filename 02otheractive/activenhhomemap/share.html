@@ -1,0 +1,859 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta content="telephone=no" name="format-detection">
+    <meta content="email=no" name="format-detection">
+    <meta itemprop="name" content="滴~滴滴，点亮段友回家的旅途" />
+    <!-- 分享显示的缩略图-->
+    <meta itemprop="image" content="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/activeallimgs/activemap/sharelogo.png" />
+    <!-- 分享显示的简介-->
+    <meta name="description" itemprop="description" content="内含的不只是段子" />
+    <script>
+        goBack();
+
+        function goBack() {
+            if ((navigator.userAgent.indexOf('MSIE') >= 0) && (navigator.userAgent.indexOf('Opera') < 0)) { // IE
+                if (history.length > 0) {
+                    console.log('正常进入');
+
+                    // window.history.go(-1);
+                } else {
+                    console.log('跳首页');
+
+                    window.location.href = "tlrindex.html";
+                }
+            } else { //非IE浏览器
+                if (navigator.userAgent.indexOf('Firefox') >= 0 ||
+                    navigator.userAgent.indexOf('Opera') >= 0 ||
+                    navigator.userAgent.indexOf('Safari') >= 0 ||
+                    navigator.userAgent.indexOf('Chrome') >= 0 ||
+                    navigator.userAgent.indexOf('WebKit') >= 0) {
+
+                    if (window.history.length > 1) {
+                        console.log('正常进入');
+
+                    } else {
+                        console.log('跳首页');
+
+                        window.location.href = "tlrindex.html";
+                    }
+                } else { //未知的浏览器
+                    if (window.history.length > 1) {
+                        console.log('正常进入');
+
+                    } else {
+                        console.log('跳首页');
+
+                        window.location.href = "tlrindex.html";
+                    }
+                }
+            }
+        }
+    </script>
+    <title>滴~滴滴，点亮段友回家的旅途</title>
+
+    <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <script type="application/javascript" src="https://ctkj-1256675270.file.myqcloud.com/jquery.min.js"></script>
+    <script src="js/cos-js-sdl-v5/cos-js-sdk-v5.min.js"></script>
+    <script src="js/cos-js-sdl-v5/cos.js"></script>
+    <script src="js/sha1.js"></script>
+    <script src="js/wxShare.js"></script>
+    <script src="js/rem.js"></script>
+    <script src="js/html2canvas.js"></script>
+    <!--    <script src="https://cdn.bootcss.com/html2canvas/0.5.0-beta4/html2canvas.js"></script>-->
+
+
+
+
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+            -webkit-touch-callout: none;
+            /*系统默认菜单被禁用*/
+
+            -webkit-user-select: none;
+            /*webkit浏览器*/
+
+            -khtml-user-select: none;
+            /*早期浏览器*/
+
+            -moz-user-select: none;
+            /*火狐*/
+
+            -ms-user-select: none;
+            /*IE10*/
+
+            user-select: none;
+
+        }
+
+        html,
+        body {
+            margin: 0 auto;
+            width: 100%;
+            min-height: 100%;
+        }
+
+        body {
+            font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+            background-image: url(images/final_bg.png);
+        }
+
+        .page {
+            width: 100%;
+            height: 100%;
+            padding-top: 0.2rem;
+        }
+
+        .share {
+            width: 100%;
+            height: 10.58rem;
+            position: relative;
+            background-image: url(images/paper.png);
+            background-position: center 0;
+            background-repeat: no-repeat;
+            background-size: 100% auto;
+            padding-top: 50px;
+        }
+
+        .title {
+            margin-left: 1.06rem;
+            font-size: 0.6rem;
+            color: #902C28;
+            font-weight: 700;
+        }
+
+        .rank {
+            font-size: 0.29rem;
+            color: #902C28;
+            font-weight: 700;
+            position: absolute;
+            left: 1.06rem;
+        }
+
+        .two {
+            top: 1.96rem;
+        }
+
+        .num {
+            font-size: 0.5rem;
+        }
+
+        .three {
+            top: 2.66rem;
+        }
+
+        .four {
+            top: 3.08rem;
+        }
+
+        .map {
+            width: 5.3rem;
+            height: 2.66rem;
+            background-image: url(images/red_bg.png);
+            position: absolute;
+            left: 1.12rem;
+            top: 3.96rem;
+            background-position: center 0;
+            background-repeat: no-repeat;
+            background-size: 100% auto;
+        }
+
+        .city {
+            position: absolute;
+            top: 4.36rem;
+            font-size: 0.36rem;
+            font-weight: 700;
+            color: #000;
+        }
+
+        .left {
+            left: 1.28rem;
+        }
+
+        .right {
+            left: 4.56rem;
+        }
+
+        .arrow {
+            width: 1.08rem;
+            height: 0.18rem;
+            position: absolute;
+            left: 3.22rem;
+            top: 7.62rem;
+            background-image: url(images/goto.png);
+            background-position: center 0;
+            background-repeat: no-repeat;
+            background-size: 100% auto;
+        }
+
+        .distance {
+            position: absolute;
+            top: 4.7rem;
+            /* left: 50%;
+            transform: translate(-50%, 0); */
+            left: 2.94rem;
+            font-size: 0.32rem;
+            color: #4A5155;
+            font-weight: 700;
+        }
+
+        .footer {
+            position: absolute;
+            left: 1.06rem;
+            top: 9.12rem;
+            font-size: 0.2rem;
+            color: #902C28;
+        }
+
+        .code {
+            width: 1.45rem;
+            height: 1.45rem;
+            position: absolute;
+            left: 4.8rem;
+            top: 7.5rem;
+        }
+
+        .code img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .logo {
+            width: 0.38rem;
+            height: 0.38rem;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-position: center 0;
+            background-repeat: no-repeat;
+            background-size: 100% auto;
+        }
+
+        .foot_btn {
+            width: 100%;
+            position: absolute;
+            top: 10.7rem;
+            left: 0;
+            margin-top: 0.3rem;
+        }
+
+        .btn {
+            height: 1.46rem;
+            width: 3.52rem;
+            position: absolute;
+            top: 0;
+            background-position: center 0;
+            background-repeat: no-repeat;
+            background-size: 100% auto;
+        }
+
+        .wydl {
+            left: 0;
+            background-image: url(images/wydl_button.png);
+            cursor: pointer;
+        }
+
+        .hhdy {
+            right: 0;
+            background-image: url(images/hhdy_button.png);
+            cursor: pointer;
+        }
+
+        .save {
+            position: absolute;
+            top: 10.5rem;
+            left: 2.02rem;
+            font-size: 0.28rem;
+            color: #fff;
+            text-align: center;
+        }
+
+        .mask {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, .9);
+            z-index: 90;
+            display: none;
+        }
+
+        .mask_bg {
+            width: 3.74rem;
+            height: 2.96rem;
+            position: absolute;
+            top: 0.32rem;
+            right: 0.4rem;
+            background-image: url(images/share_guide.png);
+            background-position: center 0;
+            background-repeat: no-repeat;
+            background-size: 100% auto;
+        }
+
+        .pic {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 666;
+            display: none;
+        }
+
+        #canvas {
+            z-index: 666;
+        }
+
+        #screenShotImg {
+            display: none;
+        }
+
+        .aud {
+            width: 0.68rem;
+            height: 0.66rem;
+            position: absolute;
+            background-image: url(images/radio.png);
+            background-position: center 0;
+            background-repeat: no-repeat;
+            background-size: 100% auto;
+            top: 0.4rem;
+            right: 0.2rem;
+            cursor: pointer;
+        }
+
+        #showimg {
+            display: none;
+            width: 100%;
+            height: auto;
+        }
+
+        .jubao {
+            position: absolute;
+            top: 0.1rem;
+            right: 0.2rem;
+            cursor: pointer;
+            font-size: 0.28rem;
+            font-weight: 700;
+            color: #fff;
+            z-index: 10;
+        }
+
+        .dialog {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #EFEFF3;
+            z-index: 10;
+            display: none;
+        }
+
+        #result {
+            display: none;
+        }
+
+        .close {
+            width: 6.9rem;
+            height: 1rem;
+            position: absolute;
+            top: 5.3rem;
+            left: 0.3rem;
+            cursor: pointer;
+        }
+
+        .soleng {
+            margin-top: 0.7rem;
+            font-size: 0.24rem;
+            color: #fff;
+            text-align: center;
+        }
+        .new_final {
+            width: 5.7rem;
+            height: 3.24rem;
+            position: absolute;
+            top: 3.48rem;
+            left: 0.76rem;
+
+        }
+        .final_logo {
+            width: 1.94rem;
+            height: 1rem;
+            position: absolute;
+            top: 7.72rem;
+            left: 0.98rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <img src="" alt="" id="showimg">
+        <div class="mask">
+            <div class="mask_bg"></div>
+        </div>
+        <div class="share" id="share">
+            <p class="title" id="title">内含段友</p>
+            <p class="rank two">你是第 <span class="num" id="num"></span> 位</p>
+            <p class="rank three">踏上回家旅途的段友</p>
+            <!-- <p class="rank four">你的旅途长度超过了全国 <span class="num" id="per"></span>的段友</p> -->
+            <!-- <div class="map" id="map">
+                <canvas id="canvas"></canvas>
+            </div> -->
+            <img src="images/new_final_bg.png" alt="" class="new_final">
+            <span class="city left" id="city_lf">浙江杭州</span>
+            <span class="city right" id="city_rg">北京东城</span>
+            <!-- <span class="arrow"></span> -->
+            <p class="distance"><span id="dist">1888</span>公里</p>
+            <!-- <p class="footer" style="top:8.8rem">内含段友</p> -->
+            <!-- <p class="footer">内含的不只是段子</p> -->
+            <img src="images/final_logo.png" alt="" class="final_logo">
+            <div class="code">
+                <img src="images/erweima.png" alt="">
+                <!-- <div class="logo"></div> -->
+            </div>
+        </div>
+        <p class="save">长按上图保存 分享到朋友圈</p>
+        <div class="foot_btn">
+            <div class="wydl btn"></div>
+            <div class="hhdy btn" id="hhdy"></div>
+        </div>
+        <!-- <p class="soleng">内含段友APP送你一张回家车票</p> -->
+        <div class="jietu"></div>
+        <div class="jubao">举报</div>
+        <div class='dialog'>
+            <img src="images/jubao1.png" alt="" width="100%" id="list">
+            <img src="images/jubao2.png" alt="" width="100%" id="result">
+            <div class="close"></div>
+        </div>
+        <!-- <div class="aud"></div> -->
+        <!-- <audio style="display:none; height: 0" id="bg-music" preload="auto" src="static/bg.mp3" loop="loop"></audio> -->
+    </div>
+
+    <script src="js/shareapp.js"></script>
+    <script>
+        //背景音乐
+        // $(document).ready(function () {
+        //     autoPlayMusic();
+        //     audioAutoPlay();
+        // });
+
+        // function audioAutoPlay() {
+        //     var audio = document.getElementById('bg-music');
+        //     audio.play();
+        //     document.addEventListener("WeixinJSBridgeReady", function () {
+        //         audio.play();
+        //     }, false);
+        // }
+        // 音乐播放
+        // function autoPlayMusic() {
+        //     // 自动播放音乐效果，解决浏览器或者APP自动播放问题
+        //     function musicInBrowserHandler() {
+        //         musicPlay(true);
+        //         document.body.removeEventListener('touchstart', musicInBrowserHandler);
+        //     }
+        //     document.body.addEventListener('touchstart', musicInBrowserHandler);
+        //     // 自动播放音乐效果，解决微信自动播放问题
+        //     function musicInWeixinHandler() {
+        //         musicPlay(true);
+        //         document.addEventListener("WeixinJSBridgeReady", function () {
+        //             musicPlay(true);
+        //         }, false);
+        //         document.removeEventListener('DOMContentLoaded', musicInWeixinHandler);
+        //     }
+        //     document.addEventListener('DOMContentLoaded', musicInWeixinHandler);
+        // }
+
+        // function musicPlay(isPlay) {
+        //     var media = document.querySelector('#bg-music');
+        //     if (isPlay && media.paused) {
+        //         media.play();
+        //     }
+        //     if (!isPlay && !media.paused) {
+        //         media.pause();
+        //     }
+        // }
+        // $('.aud').on('click', function () {
+        //     var audio = document.querySelector('#bg-music');
+        //     if (audio !== null) {
+        //         if (audio.paused) {
+        //             audio.play(); // 播放 
+        //         } else {
+        //             audio.pause(); // 暂停
+        //         }
+        //     }
+        // })
+        //获取公里数
+        var distance = localStorage.getItem('distance');
+        distance = Math.round(distance / 1000);
+        // console.log(distance)
+        var dist = document.getElementById('dist');
+        dist.innerText = distance;
+
+        //获取城市
+        var city_lf = document.getElementById('city_lf');
+        var city_rg = document.getElementById('city_rg');
+        var lf = localStorage.getItem('setout');
+        var rg = localStorage.getItem('bourn');
+        city_lf.innerText = lf.split(',')[0].substr(0, 2) + lf.split(',')[1].substr(0, 2);
+        city_rg.innerText = rg.split(',')[0].substr(0, 2) + rg.split(',')[1].substr(0, 2);
+
+        //名字转换
+        var title = document.getElementById('title');
+        title.innerText = localStorage.getItem('user');
+
+        // 公里百分比计算
+        var per = document.getElementById('per');
+        var disper;
+        if (distance >= 0 && distance < 100) {
+            disper = '1%';
+        } else if (distance >= 100 && distance < 500) {
+            disper = ((distance - 100) / 400 * 50).toFixed(0) + '%';
+        } else if (distance >= 500 && distance < 1000) {
+            disper = ((distance - 500) / 500 * 20 + 50).toFixed(0) + '%';
+        } else if (distance >= 1000 && distance < 2000) {
+            disper = ((distance - 1000) / 1000 * 10 + 70).toFixed(0) + '%';
+        } else if (distance >= 2000 && distance < 3000) {
+            disper = ((distance - 2000) / 1000 * 10 + 80).toFixed(0) + '%';
+        } else if (distance >= 3000 && distance < 4000) {
+            disper = ((distance - 3000) / 1000 * 10 + 90).toFixed(0) + '%';
+        } else {
+            disper = '99%';
+        }
+        console.log(disper)
+        wxfxxinfo.desc = "旅途长度超过了全国" + disper + "的段友，你呢？";
+        sharewxjson.content = wxfxxinfo.desc;
+        $('meta[itemprop="description"]').attr('content', "旅途长度超过了全国" + disper + "的段友，你呢？");
+        //排名统计
+        let tjdatas = {
+            "pagestr": "ALLINTLR",
+            "needcount": "YES"
+        };
+        //console.log(tjdatas);
+        tjdatas = JSON.stringify(tjdatas);
+        $.ajax({
+            url: path2 + '/activepage/countactive.do',
+            cache: false, //false就不会从浏览器缓存中加载请求信息了
+            type: "POST",
+            contentType: "application/json",
+            dataType: "JSON",
+            async: false,
+            data: tjdatas,
+            error: function (data) {
+                /*  layer.msg("服务器未响应,请稍后再试!");*/
+                //console.log("获取失败：");
+                //console.log(data);
+            },
+            success: function (diskJson) {
+                console.log("统计:");
+                console.log(diskJson);
+                if (diskJson.code == "1000") {
+                    document.getElementById('num').innerText = diskJson.data;
+                    // num = JSON.parse(ajax.responseText).data;
+                    wxfxxinfo.title = "我是第" + diskJson.data + "位点亮回家旅途的段友"
+                    $('meta[itemprop="name"]').attr('content', "我是第" + diskJson.data +
+                        "位点亮回家旅途的段友");
+                    $('meta[property="og:title"]').attr('content', wxfxxinfo.title);
+                    $(document).attr('title',wxfxxinfo.title);
+                    sharewxjson.title = wxfxxinfo.title;
+                    wxjsonstring = JSON.stringify(sharewxjson);
+                    //  let cc=setShareContent();
+                    // console.log("cc:::")
+                    // console.log(cc)
+                    wxpz(wxfxxinfo);
+                    var ua = navigator.userAgent;
+                    if (ua.match(/Android/i) != null){
+                        getShare(wxjsonstring);
+                    }
+                } else {
+
+                    /*  layer.msg("网络异常，请重试！！")*/
+                }
+
+            }
+        });
+
+
+        /*        var ajax = new XMLHttpRequest();
+                ajax.open('post', 'https://dev.api.toutushare.com/NHDZSEVER/activepage/countactive.do');
+                ajax.setRequestHeader("Content-type", "application/json");
+                var data = {
+                    needcount: 'YES',
+                    pagestr: 'ALLINTLR'
+                }
+                data = JSON.stringify(data);
+                ajax.send(data);
+                ajax.onreadystatechange = function () {
+                    if (ajax.readyState == 4 && ajax.status == 200) {
+                        // console.log(JSON.parse(ajax.responseText));
+                        document.getElementById('num').innerText = JSON.parse(ajax.responseText).data;
+                        // num = JSON.parse(ajax.responseText).data;
+                        wxfxxinfo.title = "我是第" + JSON.parse(ajax.responseText).data + "位点亮回家旅途的段友"
+                        $('meta[itemprop="name"]').attr('content', "我是第" + JSON.parse(ajax.responseText).data +
+                            "位点亮回家旅途的段友");
+                        wxpz(wxfxxinfo);
+                    }
+                }*/
+
+        //复制路径
+
+        // var clientWidth = document.documentElement.clientWidth;
+        // var clientHeight = document.documentElement.clientHeight;
+        // width = parseInt(clientWidth * (530 / 750));
+        // height = parseInt(266 / 530 * width);
+        // var canvas = document.querySelector('#canvas');
+        // var ctx = canvas.getContext('2d');
+        // canvas.setAttribute('width', width + 'px');
+        // canvas.setAttribute('height', height + 'px');
+        // var draw = function (x, y, r, start, end, color, type) {
+        //     var unit = Math.PI / 180;
+        //     ctx.beginPath();
+        //     ctx.arc(x, y, r, start * unit, end * unit);
+        //     ctx[type + 'Style'] = color;
+        //     ctx.closePath();
+        //     ctx[type]();
+        // }
+        // var r = 8 * width / 750;
+        // var place1 = localStorage.getItem('place1').split(',');
+        // var place2 = localStorage.getItem('place2').split(',');
+
+        // place1[0] = place1[0] * (310 / 750) + (110 / 530 * width);
+        // place1[1] = place1[1] * (266 / 610);
+        // place2[0] = place2[0] * (310 / 750) + (110 / 530 * width);
+        // place2[1] = place2[1] * (266 / 610);
+        // draw(place1[0], place1[1], r, 0, 360, '#D0021B', 'fill');
+        // draw(place2[0], place2[1], r, 0, 360, '#D0021B', 'fill');
+        // ctx.moveTo(place1[0], place1[1]);
+        // ctx.lineTo(place2[0], place2[1]);
+        // ctx.lineWidth = 1;
+        // ctx.strokeStyle = "#D0021B";
+        // ctx.stroke();
+        // //canvas转化成png
+        // function convertCanvasToImage(canvas) {
+        //     var image = new Image();
+        //     image.src = canvas.toDataURL("image/png");
+        //     $('#canvas').hide();
+        //     $('#map').append(image)
+        // }
+        // convertCanvasToImage(canvas);
+        //呼唤段友按钮
+
+        $('#hhdy').on('click', function () {
+            $('.mask').css('display', 'block');
+        })
+        $('.mask').on('click', function () {
+            $('.mask').css('display', 'none');
+        })
+        //我要点亮按钮
+        $('.wydl').on('click', function () {
+            let againdata = {
+				"pagestr": "AGAINTLR",
+				"needcount": "NO"
+			};
+            againdata = JSON.stringify(againdata);
+			$.ajax({
+				url: path2 + '/activepage/countactive.do',
+				cache: false, //false就不会从浏览器缓存中加载请求信息了
+				type: "POST",
+				contentType: "application/json",
+				dataType: "JSON",
+				async: false,
+				data: againdata,
+				error: function (data) {
+					/*  layer.msg("服务器未响应,请稍后再试!");*/
+					//console.log("获取失败：");
+					//console.log(data);
+				},
+				success: function (diskJson) {
+					if (diskJson.code == "1000") {
+					
+					} else {
+						/*  layer.msg("网络异常，请重试！！")*/
+					}
+
+				}
+            });
+            setTimeout(() => {
+                window.location.href = 'tlrindex.html'   
+            }, 500);
+        })
+
+        //页面转化成图片
+        /**
+         * 截图功能
+         * targetDom 要克隆的目标dom元素
+         * cb 回调函数
+         */
+
+        setTimeout(function () {
+            getcanvasimg();
+        }, 500);
+
+        function getcanvasimg() {
+            // console.log("截图");
+            var cntElem = $('#share')[0];
+            var shareContent = cntElem; //需要截图的包裹的（原生的）DOM 对象
+            var width = shareContent.offsetWidth; //获取dom 宽度
+            var height = shareContent.offsetHeight; //获取dom 高度
+            var canvas = document.createElement("canvas"); //创建一个canvas节点
+            var scale = 4; //定义任意放大倍数 支持小数
+            canvas.width = width * scale; //定义canvas 宽度 * 缩放
+            canvas.height = height * scale; //定义canvas高度 *缩放
+            canvas.getContext("2d").scale(scale, scale); //获取context,设置scale
+            var opts = {
+                scale: scale, // 添加的scale 参数
+                canvas: canvas, //自定义 canvas
+                // logging: true, //日志开关，便于查看html2canvas的内部执行流程
+                width: width, //dom 原始宽度
+                height: height,
+                useCORS: true // 【重要】开启跨域配置
+            };
+
+            html2canvas(shareContent, opts).then(function (canvas) {
+                var context = canvas.getContext('2d');
+                // 【重要】关闭抗锯齿
+                context.mozImageSmoothingEnabled = false;
+                context.webkitImageSmoothingEnabled = false;
+                context.msImageSmoothingEnabled = false;
+                context.imageSmoothingEnabled = false;
+
+                // 【重要】默认转化的格式为png,也可设置为其他格式
+
+                var dataUrl = canvas.toDataURL("image/png");
+                $('#share').hide();
+                $('#showimg').attr("src", dataUrl).css({
+                    "display": "block"
+                });
+                posttenxun(dataUrl)
+            });
+
+
+        }
+
+
+        var longClick = 0;
+        $("#showimg").on({
+            touchstart: function (e) {
+                // 长按事件触发
+                timeOutEvent = setTimeout(function () {
+                    timeOutEvent = 0;
+                    // alert('你长按了');
+                    let appdata = localStorage.userinfolist;
+                    appdata = JSON.parse(appdata);
+                    let title = "分享title";
+                    let desc = "分享desc";
+                    // alert(appdata.apptype);
+                    // alert(appdata.userid);
+                    if (appdata.apptype != "web") {
+                        let share = {
+                            "webType": "1", //类型
+                            "title": title, //分析的title名
+                            "url": postappimgurl, //分享的链接
+                            "content": desc, //描述
+                            "icon": ""
+                        };
+                        share = JSON.stringify(share);
+
+                        // alert(appdata.apptype);
+                        if (appdata.apptype == "Android") {
+                            // alert("Android::");
+                            window.android.shareweb(share);
+                        } else if (appdata.apptype == "IOS") {
+                            // alert("ios::");
+                            // e.preventDefault();
+                            window.webkit.messageHandlers.shareweb.postMessage(share); //调用ios方法
+                        }
+                    }
+                }, 400);
+                //长按400毫秒
+            },
+            touchmove: function () {
+                clearTimeout(timeOutEvent);
+                timeOutEvent = 0;
+                // alert("移动了");
+            },
+            touchend: function () {
+                clearTimeout(timeOutEvent);
+                if (timeOutEvent != 0) {
+                    // 点击事件
+                    // alert('你点击了');
+                }
+                return false;
+            }
+        })
+        //激活微信分享
+
+
+        //监听页面是否激活
+        // var hiddenProperty = 'hidden' in document ? 'hidden' :
+        // 	'webkitHidden' in document ? 'webkitHidden' :
+        // 	'mozHidden' in document ? 'mozHidden' :
+        // 	null;
+        // var visibilityChangeEvent = hiddenProperty.replace(/hidden/i, 'visibilitychange');
+        // var onVisibilityChange = function () {
+        // 	var audio = document.querySelector('#bg-music');
+        // 	if (!document[hiddenProperty]) {
+        // 		console.log('页面激活');
+        // 		audio.play(); // 播放 
+        // 	} else {
+        // 		console.log('页面隐藏')
+        // 		audio.pause()
+        // 	}
+        // }
+        // document.addEventListener(visibilityChangeEvent, onVisibilityChange);
+
+        //举报按钮
+        $('.jubao').on('click', function () {
+            $('.dialog').css('display', 'block');
+            $('.jubao').css('display', 'none');
+            let jubaodata = {
+				"pagestr": "JUBAOTLR",
+				"needcount": "NO"
+			};
+            jubaodata = JSON.stringify(jubaodata);
+			$.ajax({
+				url: path2 + '/activepage/countactive.do',
+				cache: false, //false就不会从浏览器缓存中加载请求信息了
+				type: "POST",
+				contentType: "application/json",
+				dataType: "JSON",
+				async: false,
+				data: jubaodata,
+				error: function (data) {
+					/*  layer.msg("服务器未响应,请稍后再试!");*/
+					//console.log("获取失败：");
+					//console.log(data);
+				},
+				success: function (diskJson) {
+					if (diskJson.code == "1000") {
+					
+					} else {
+						/*  layer.msg("网络异常，请重试！！")*/
+					}
+
+				}
+			});
+        })
+        $('#list').on('click', function () {
+            $('#result').css('display', 'block');
+            $('#list').css('display', 'none')
+        })
+        $('.close').on('click', function () {
+            $('.dialog').css('display', 'none');
+            $('.jubao').css('display', 'block');
+        })
+    </script>
+
+
+</body>
+
+</html>

@@ -23,11 +23,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="active.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="active.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/active.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="10" column="46" selection-start-line="10" selection-start-column="46" selection-end-line="10" selection-end-column="46" />
+            <state relative-caret-position="182">
+              <caret line="79" column="337" selection-start-line="79" selection-start-column="144" selection-end-line="79" selection-end-column="337" />
             </state>
           </provider>
         </entry>
@@ -44,7 +44,7 @@
       <file leaf-file-name="active.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/active.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="566">
+            <state relative-caret-position="9042">
               <caret line="472" column="23" lean-forward="true" selection-start-line="472" selection-start-column="6" selection-end-line="472" selection-end-column="23" />
               <folding>
                 <element signature="n#!!block;n#startis#0" />
@@ -66,15 +66,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="wxShare.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="wxShare.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/wxShare.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="208">
-              <caret line="257" lean-forward="true" selection-start-line="257" selection-end-line="257" />
+            <state relative-caret-position="205">
+              <caret line="233" column="34" lean-forward="true" selection-start-line="233" selection-start-column="34" selection-end-line="233" selection-end-column="34" />
               <folding>
                 <element signature="n#!!doc" expanded="true" />
                 <element signature="n#!!block;n#getweixininfo#0" />
-                <element signature="n#!!block;n#getBase64Image#0" />
               </folding>
             </state>
           </provider>
@@ -131,6 +130,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -152,12 +152,11 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../activity_goodbye2018" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
@@ -217,26 +216,28 @@
       <workItem from="1547779776951" duration="3700000" />
       <workItem from="1548141368845" duration="900000" />
       <workItem from="1548207268246" duration="164000" />
+      <workItem from="1548338665927" duration="1217000" />
+      <workItem from="1548379851180" duration="660000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="26631000" />
+    <option name="totallyTimeSpent" value="28508000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24225576" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24146147" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.3291592" />
-      <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -284,7 +285,6 @@
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <element signature="n#!!block;n#getweixininfo#0" />
-            <element signature="n#!!block;n#getBase64Image#0" />
           </folding>
         </state>
       </provider>
@@ -334,7 +334,6 @@
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <element signature="n#!!block;n#getweixininfo#0" />
-            <element signature="n#!!block;n#getBase64Image#0" />
           </folding>
         </state>
       </provider>
@@ -377,7 +376,6 @@
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <element signature="n#!!block;n#getweixininfo#0" />
-            <element signature="n#!!block;n#getBase64Image#0" />
           </folding>
         </state>
       </provider>
@@ -633,13 +631,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/active.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="10" column="46" selection-start-line="10" selection-start-column="46" selection-end-line="10" selection-end-column="46" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/css/common.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1386">
@@ -649,7 +640,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/active.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="566">
+        <state relative-caret-position="9042">
           <caret line="472" column="23" lean-forward="true" selection-start-line="472" selection-start-column="6" selection-end-line="472" selection-end-column="23" />
           <folding>
             <element signature="n#!!block;n#startis#0" />
@@ -660,13 +651,19 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/wxShare.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="208">
-          <caret line="257" lean-forward="true" selection-start-line="257" selection-end-line="257" />
+        <state relative-caret-position="205">
+          <caret line="233" column="34" lean-forward="true" selection-start-line="233" selection-start-column="34" selection-end-line="233" selection-end-column="34" />
           <folding>
             <element signature="n#!!doc" expanded="true" />
             <element signature="n#!!block;n#getweixininfo#0" />
-            <element signature="n#!!block;n#getBase64Image#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/active.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="79" column="337" selection-start-line="79" selection-start-column="144" selection-end-line="79" selection-end-column="337" />
         </state>
       </provider>
     </entry>

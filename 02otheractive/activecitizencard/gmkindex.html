@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>你的内含公民卡正在派送中...</title>
+    <meta itemprop="name" content="你的内含公民卡正在派送中..." />
+    <!-- 分享显示的缩略图-->
+    <meta itemprop="image" content="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/activeallimgs/gmksharelogo.png" />
+    <!-- 分享显示的简介-->
+    <meta name="description" itemprop="description" content="领取段友专属公民卡，亮出你的身份" />
+    <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <script type="application/javascript" src="https://ctkj-1256675270.file.myqcloud.com/jquery.min.js"></script>
+    <script src="js/rem.js"></script>
+    <script src="js/sha1.js"></script>
+    <script src="js/appget.js"></script>
+    <script src="js/wxShare.js"></script>
+    <script src="https://cdn.bootcss.com/sweetalert/2.1.2/sweetalert.min.js"></script>
+    <script>
+
+
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+        p {
+            -webkit-margin-before: 0;
+            -webkit-margin-after: 0;
+            -webkit-margin-start: 0px;
+            -webkit-margin-end: 0px;
+            margin-inline-start: 0;
+        }
+
+        .page {
+            width: 100%;
+            height: 100%;
+        }
+
+        .bg {
+            width: 100%;
+            height: 100%;
+            background-color: #FFC400;
+            display: block;
+        }
+
+        .bgimg {
+            width: 100%;
+            height: 9.46rem;
+            display: block;
+        }
+
+        .iwant {
+            width: 4.14rem;
+            height: 1.42rem;
+            margin: 0.1rem auto 0;
+            background-image: url(images/Group.png);
+            background-position: center 0;
+            background-repeat: no-repeat;
+            background-size: 100% auto;
+            cursor: pointer;
+        }
+
+        .bg p {
+            margin-top: 0.1rem;
+            text-align: center;
+            font-size: 0.24rem;
+            color: #251D1F;
+        }
+
+        .mask {
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, .5);
+            position: absolute;
+            top:0;
+            z-index: 20;
+            display: none;
+        }
+
+        .huode_kezi {
+            width: 7.44rem;
+            height: 9.04rem;
+            margin: 1rem auto 0;
+            position: relative;
+            display: none;
+        }
+
+        .huode {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .selection {
+            width: 3.94rem;
+            height: 1.22rem;
+            background-image: url(images/huode_button.png);
+            background-position: center 0;
+            background-repeat: no-repeat;
+            background-size: auto 100%;
+            position: absolute;
+            left: 50%;
+            top: 7rem;
+            transform: translateX(-50%);
+        }
+
+        .aud {
+            width: 0.68rem;
+            height: 0.66rem;
+            position: absolute;
+            display: block;
+            top: 0.2rem;
+            left: 0.2rem;
+            cursor: pointer;
+            z-index: 30;
+        }
+
+        .jubao {
+            position: absolute;
+            top: 0.1rem;
+            right: 0.2rem;
+            cursor: pointer;
+            font-size: 0.28rem;
+            font-weight: 700;
+            color: #000;
+            z-index: 20;
+        }
+        .close {
+			width: 6.9rem;
+			height: 1rem;
+			position: absolute;
+			top: 5.3rem;
+			left: 0.3rem;
+			cursor: pointer;
+		}
+        .dialog {
+			position: fixed;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			background-color: #EFEFF3;
+			z-index: 10;
+			display: none;
+		}
+        .swal-overlay .swal-modal {
+            width: 6rem;
+        }
+
+        .swal-button-container .swal-button {
+            background-color: #f97c7c;
+            padding: 0.06rem 0.2rem;
+        }
+
+        #music{
+            width: 35px;
+            height:35px;
+            position: absolute;
+            top: 2%;
+            left: 3%;
+            z-index: 9;
+        }
+        #music img{width:100%;height:auto;cursor: pointer;vertical-align: super;}
+        #wantGet{display: inline-block;width:100%;height:100%;}
+    </style>
+    <link rel="stylesheet" href="css/ladder.css">
+    <link rel="stylesheet" href="css/getcard.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link href="https://cdn.bootcss.com/sweetalert/1.1.3/sweetalert.min.css" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- <div id="show" style="position: fixed;left: 0.1rem;top: 0.1rem;z-index: 9999;font-size: 0.32rem;word-wrap:break-word;width: 6rem;">111</div>-->
+
+    <div class="page">
+        <div class="bg">
+            <div class="jubao">举报</div>
+            <img class="bgimg" src="images/index_bg.png" alt="">
+            <div class="iwant"><a href="" id="wantGet"></a></div>
+            <p>已有12783位段友领取公民卡</p>
+            <p>下载内含段友APP，搜索“段子哥”关注并领取”</p>
+        </div>
+        <div class="ladder">
+            <img class="game" src="images/louti_1.png" alt="">
+            <div class="sixhour"><span class="hour"></span>h/6h</div>
+            <div class="sevendate"><span class="date"></span>天/7天</div>
+            <div class="btn" id="getBtns"></div>
+        </div>
+        <div class='dialog'>
+            <img src="images/jubao1.png" alt="" width="100%" id="list">
+            <img src="images/jubao2.png" alt="" width="100%" id="result" style="display:none;">
+            <div class="close"></div>
+        </div>
+        <div class="mask">
+            <div class="huode_kezi">
+                <img class="huode" src="images/huode_bg.png" alt="">
+                <div class="selection"></div>
+            </div>
+        </div>
+        <div class="getcard">
+            <div class="title"></div>
+            <div id="slide" class="slide" class="index-slide" alt="star">
+                <!-- 轮播图片数量可自行增减 -->
+                <!-- 公民卡渲染 -->
+                <div class="slide-bt"></div>
+            </div>
+
+            <button class="get"></button>
+            <p class="footer">领取表示您已同意<span class="rules">《内含公民守则》</span></p>
+            <p>注：亲爱的段友，领取后则无法更改哦</p>
+            <div class="nh_rules">
+                <img src="images/shouze_bg.png" alt="" width="100%" style="display:block">
+                <img src="images/rules.png" alt="" width="100%" style="display:block">
+                <div class="iknow_btn"></div>
+            </div>
+        </div>
+
+        <!--音乐按钮-->
+        <div id="music">
+            <img class="musicimg" src="images/radio.png"/>
+
+        </div>
+
+    </div>
+    <!-- 埋点 -->
+    <div style="display:none">
+        <script type="text/javascript" src="https://s5.cnzz.com/z_stat.php?id=1276057060&web_id=1276057060"></script>
+    </div>
+    <script src="js/slide.js"></script>
+    <script>
+
+
+        window.onload=function() {
+            $("#music").append('<audio src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/activeallimgs/activegmk/bgmusic.mp3" id="bg-music" autoplay  loop="loop"></audio>');
+            autoPlayMusic();
+            permanent("GMKPAGE1", "NO");//统计
+            if (userinfolist.apptype == 'web') {
+                //不在app内
+                $("#wantGet").attr("href","isshare.html");
+            }
+        };
+
+
+
+        // 各种浏览器兼容
+        document.addEventListener("visibilitychange", handleVisibilityChange, false);
+
+        function handleVisibilityChange() {
+            if (document.hidden) {
+                $("#bg-music").get(0).pause();
+                $("#music .musicimg").attr("src","images/silence.png");
+                musicplay=false;
+            } else  {
+                $("#music .musicimg").attr("src","images/radio.png");
+                $("#bg-music").get(0).play();
+                musicplay=true;
+            }
+        }
+
+        //音乐开关
+        var musicplay=true;//播放开关
+
+        $("#music").click(function () {
+            if (musicplay) {
+                $("#music .musicimg").attr("src","images/silence.png");
+                $("#bg-music").get(0).pause();
+                permanent("GMKMUTE", "NO");//统计
+                musicplay=false;
+            }else{
+                $("#music .musicimg").attr("src","images/radio.png");
+                $("#bg-music").get(0).play();
+                musicplay=true;
+            }
+        });
+        // 音乐播放
+        function autoPlayMusic() {
+            // 自动播放音乐效果，解决浏览器或者APP自动播放问题
+            function musicInBrowserHandler() {
+                musicPlay(true);
+                document.body.removeEventListener('touchstart', musicInBrowserHandler);
+            }
+            document.body.addEventListener('touchstart', musicInBrowserHandler);
+
+            // 自动播放音乐效果，解决微信自动播放问题
+            function musicInWeixinHandler() {
+                musicPlay(true);
+                document.addEventListener("WeixinJSBridgeReady", function () {
+                    musicPlay(true);
+                }, false);
+                document.removeEventListener('DOMContentLoaded', musicInWeixinHandler);
+            }
+            document.addEventListener('DOMContentLoaded', musicInWeixinHandler);
+        }
+        function musicPlay(isPlay) {
+            var media = document.querySelector('#bg-music');
+            if (isPlay && media.paused) {
+                media.play();
+            }
+            if (!isPlay && !media.paused) {
+                media.pause();
+            }
+        }
+
+
+
+        // $('#show').text(localStorage.getItem('ctcardData'));
+        //举报
+        $('.jubao').on('click', function () {
+            $('.aud').css('display', 'none');
+            $('.dialog').css('display', 'block');
+            $('.jubao').css('display', 'none');
+            permanent("GMKJUBAO", "NO");
+        })
+        $('#list').on('click', function () {
+            $('#result').css('display', 'block');
+            $('#list').css('display', 'none')
+        })
+        $('.close').on('click', function () {
+            $('.dialog').css('display', 'none');
+            $('.jubao').css('display', 'block');
+            $('.aud').css('display', 'block');
+        })
+
+        //内含公民守则
+        $('.rules').on('click', function () {
+            $('.nh_rules').css('display', 'block');
+        })
+        $('.iknow_btn').on('click', function () {
+            $('.nh_rules').css('display', 'none');
+        })
+
+        //分享
+        wxpz(wxfxxinfo);
+        var ua = navigator.userAgent;
+        if (ua.match(/Android/i) != null) {
+            getShare(wxjsonstring);
+        }
+
+        //埋点统计
+        function permanent(pagestr, needcount) {
+            var tjdatas = {
+                "pagestr": pagestr,
+                "needcount": needcount
+            };
+            //console.log(tjdatas);
+            tjdatas = JSON.stringify(tjdatas);
+            $.ajax({
+                url: path+ '/activepage/countactive.do',
+                cache: false, //false就不会从浏览器缓存中加载请求信息了
+                type: "POST",
+                contentType: "application/json",
+                dataType: "JSON",
+                async: false,
+                data: tjdatas,
+                error: function (data) {
+                    /*  layer.msg("服务器未响应,请稍后再试!");*/
+                    //console.log("获取失败：");
+                    //console.log(data);
+                },
+                success: function (diskJson) {
+                    //console.log("统计:");
+                    //console.log(diskJson);
+                    if (diskJson.code == "1000") {
+
+                    } else {
+
+                        /*  layer.msg("网络异常，请重试！！")*/
+                    }
+
+                }
+            });
+        }
+
+
+
+        $('.aud').click(function (e) {
+            e.preventDefault();
+            if ($('#bg-music')[0].paused) {
+                $('#bg-music')[0].play();
+                $('.aud').attr('src', 'images/silence.png')
+            } else {
+                $('#bg-music')[0].pause();
+                $('.aud').attr('src', 'images/radio.png')
+            }
+            permanent("GMKMUTE", "NO");
+        });
+        $('#bg-music').bind('ended', function () { //音乐循环
+            $('#bg-music')[0].play();
+        });
+
+        //监听页面是否激活
+        var hiddenProperty = 'hidden' in document ? 'hidden' :
+            'webkitHidden' in document ? 'webkitHidden' :
+            'mozHidden' in document ? 'mozHidden' :
+            null;
+        var visibilityChangeEvent = hiddenProperty.replace(/hidden/i, 'visibilitychange');
+        var onVisibilityChange = function () {
+            var audio = document.querySelector('#bg-music');
+            if (!document[hiddenProperty]) {
+                audio.play(); // 播放
+            } else {
+                audio.pause()
+            }
+        }
+        document.addEventListener(visibilityChangeEvent, onVisibilityChange);
+
+        //我要领取跳转
+        $('.iwant').on('click', function () {
+            // 判断是否在app内
+            if (userinfolist.apptype == 'web') {
+                //不在app内
+                $("#wantGet").attr("href","isshare.html");
+            } else if (userinfolist.userid == "") {
+               // $("#wantGet").remove();
+                var ua = navigator.userAgent;
+                if (ua.match(/Android/i) != null) {
+                    window.android.weblogin(); //唤起登录(安卓)
+                } else {
+                    window.webkit.messageHandlers.weblogin.postMessage({}); //唤起登录(ios)
+                }
+            }else{
+              //  $("#wantGet").remove();
+
+            }
+            var ctcardData = JSON.parse(localStorage.getItem('ctcardData'));
+            if (ctcardData.CardInfo) {
+               // $("#wantGet").attr("href","mycard.html");
+               location.href = 'mycard.html'
+            } else {
+                $('.bg').fadeOut(500);
+                $('.ladder').fadeIn(1000, permanent("GMKPAGE2", "NO"));
+                if ($('.game').attr('src') == 'images/louti_3.png') {
+                    $('.btn').on('click', function () {
+                        $('.mask').css('display', 'block');
+                        $('.huode_kezi').fadeIn(500);
+                    })
+                }
+            }
+
+        });
+
+        //渲染公民卡
+        var imgurl = JSON.parse(localStorage.getItem('dataurl'));
+
+        var str = '';
+        for (var i = 0; i < imgurl.length; i++) {
+            // datalist.list.push({src:res.data[i].cardurljson.styleurl})
+            str += '<div class="img" data-cardid="' + imgurl[i].cardid + '">' +
+                '<div class="userinfo">' +
+                '<img src="images/11.jpg" alt="" class="userphone">' +
+                '<p class="name"></p>' +
+                '<p>性别<span class="sex"></span></p>' +
+                '<p>段友号<span class="dyh"></span></p>' +
+                '<p>有效期<span class="indate"></span></p>' +
+                '<img src="images/erweima.png" alt="" class="erweima">' +
+                '<img src="images/scancode.png" alt="" class="scancode">' +
+                '</div>' +
+                '<img src="' + imgurl[i].src + '"/>' +
+                '</div>'
+        }
+        $('#slide').prepend(str);
+
+        //用户选择卡片样式
+        $('.selection').on('click', function () {
+            $('.mask').css('display', 'none');
+            $('.ladder').css('display', 'none');
+            $('.getcard').fadeIn(500, permanent("GMKPAGE3", "NO"));
+        });
+
+        //确认选择卡片
+        $('.get').on('click', function () {
+            var cardid = $('.img3').data('cardid');
+            var data = {
+                "cardid": cardid,
+                "codea": userinfolist.appticket,
+                "codeb": userinfolist.userid,
+                "codec": "gmkindex.html",
+            };
+            data = JSON.stringify(data);
+            $.ajax({
+                url: path + '/webcard/webUserGetCard.do',
+                cache: false, //false就不会从浏览器缓存中加载请求信息了
+                type: "POST",
+                contentType: "application/json",
+                dataType: "JSON",
+                async: true,
+                data: data,
+                error: function (data) {
+                    // $('#show').text(JSON.stringify(data));
+                },
+                success: function (res) {
+                    // $('#show').text(JSON.stringify(res));
+                    if (res.code == "1000") {
+                        $('.getcard').fadeOut(1000);
+                        setTimeout(() => {
+                            location.href = 'mycard.html';
+                        }, 1000);
+                    } else if (res.code == '3838') {
+                        swal("由于您违反内含社区公约，公民卡已被收回，无法再次领取");
+                    } else {
+
+                    }
+                }
+            })
+        })
+
+        //获取公民卡上的个人信息
+        var carduserinfo = JSON.parse(localStorage.getItem('carduserinfo'));
+
+        var myDate = new Date();
+        var month = myDate.getMonth();
+        if (month <= 8) {
+            month = '0' + (month + 1);
+        } else {
+            month = month + 1;
+        }
+        var gety = ctcardData.CardInfo.gettime.substr(0, 4);
+        var getm = ctcardData.CardInfo.gettime.substr(4, 2);
+        var getd = ctcardData.CardInfo.gettime.substr(6, 2);
+        var overy = ctcardData.CardInfo.overtime.substr(0, 4);
+        var overm = ctcardData.CardInfo.overtime.substr(4, 2);
+        var overd = ctcardData.CardInfo.overtime.substr(6, 2);
+        $('.name').text(carduserinfo.username);
+        if (carduserinfo.usersex == '0') {
+            $('.sex').text('男');
+        } else if (carduserinfo.usersex == '1') {
+            $('.sex').text('女');
+        } else {
+            $('.sex').text('保密');
+        }
+        $('.dyh').text(carduserinfo.uno);
+        $('.indate').text(myDate.getFullYear() + '.' + month + '.' + myDate.getDate() + '-' + (myDate.getFullYear() +
+            1) + '.' + month + '.' + myDate.getDate());
+        $('.userphone').attr('src', carduserinfo.userheadphoto);
+
+
+
+
+
+
+    </script>
+</body>
+
+</html>

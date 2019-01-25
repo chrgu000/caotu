@@ -1,0 +1,192 @@
+.getcard {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top:0;
+    left:0;
+    background-color: #f9f6f6;
+    /* padding-top: 1rem; */
+    display: none;
+    z-index: 96;
+}
+.title {
+    width: 4.16rem;
+    height: 0.58rem;
+    margin: 0.9rem auto 0;
+    background-image: url(../images/title.png);
+    background-position: center 0;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+}
+.slide{
+    width: 100%;
+    height: 4.8rem;
+    overflow: hidden;
+    position: relative;
+
+}
+.slide .img{
+    overflow: hidden;
+    position: absolute;
+    transition: width 0.4s,height 0.4s,top 0.4s,left 0.4s,z-index 0.4s;
+}
+.slide .img img{
+    width: calc(100% - 14px);
+    height: calc(100% - 14px);
+    margin: 0.07rem;
+}
+.slide .img1{
+    width: 40%;
+    height: 40%;
+    top: 30%;
+    left: -50%;
+    z-index: 1;
+}
+.slide .img2{
+    width: 60%;
+    height: 60%;
+    top: 20%;
+    left: -20%;
+    z-index: 2;
+}
+.slide .img3{
+    width: 80%;
+    height: 80%;
+    top: 10%;
+    left: 10%;
+    z-index: 3;
+}
+.slide .img4{
+    width: 60%;
+    height: 60%;
+    top: 20%;
+    left: 60%;
+    z-index: 2;
+}
+.slide .img5{
+    width: 40%;
+    height: 40%;
+    top: 30%;
+    left: 110%;
+    z-index: 1;
+}
+.slide-bt{
+    position: absolute;
+    width: 6rem;
+    left: 50%;
+    margin-left: -3rem;
+    bottom: 0;
+    z-index: 10;
+}
+.slide-bt span{
+    width: 0.4rem;
+    height: 0.08rem;
+    background: #fff;
+    float: left;
+    margin: 0 0.1rem;
+    border-radius: 0.05rem;
+}
+.slide .slide-bt .on{
+    background: #5757FF;
+}
+.get {
+    width: 3.78rem;
+    height: 1.06rem;
+    background-image: url(../images/lingqu_button.png);
+    background-position: center 0;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    margin: 0;
+    padding: 0;
+    border: 1px solid transparent;
+    outline: none;
+    background-color: #fff;
+    border-radius: 0.5rem;
+    margin-top: 1.6rem;
+    margin-left: 1.86rem;
+}
+.footer {
+    margin-top: 2rem;
+    
+}
+.getcard p {
+    text-align: center;
+    font-size: 0.28rem;
+    color: #828393;
+}
+.rules {
+    color: #FF698F;
+}
+.userinfo {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 5;
+}
+.slide .img .userphone {
+    width: 0.82rem;
+    height: 0.82rem;
+    margin-top: 0.4rem;
+    margin-left: 0.62rem;
+    display: block;
+    border-radius: 0.1rem;
+}
+.userinfo p {
+    font-size: 0.18rem;
+    text-align: left;
+    margin-left: 0.62rem;
+    color: #FFED7D;
+    font-family: 'KAITI';
+    line-height: 0.4rem;
+    text-shadow: 1px 1px 1px rgba(0,0,0,.5);
+}
+.userinfo p span {
+    color: #fff;
+    margin-left: 1em;
+}
+.userinfo .name {
+    font-size: 0.32rem;
+    font-weight: 700;
+    color: #fff;
+    font-family: "Microsoft YaHei";
+    margin-top: 0.1rem;
+}
+.userinfo p .sex {
+    margin-left: 2em;
+}
+.img .userinfo .erweima {
+    display: block;
+    position: absolute;
+    width: 0.66rem;
+    height: 0.66rem;
+    top: 0.2rem;
+    right: 0.5rem;
+}
+.img .userinfo .scancode {
+    position: absolute;
+    width: 0.88rem;
+    height: 0.14rem;
+    display: block;
+    top: 0.9rem;
+    right: 0.4rem;
+}
+.nh_rules {
+    width: 100%;
+    position: absolute;
+    padding-bottom:100px;
+    top: 0;
+    left: 0;
+    display: none;
+    z-index: 20;
+}
+.iknow_btn {
+    width: 3.78rem;
+    height: 1.06rem;
+    background-image: url(../images/liaojie_button.png);
+    background-position: center 0;
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    margin: 1rem auto 1rem;
+}

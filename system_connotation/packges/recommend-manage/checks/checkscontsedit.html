@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--360浏览器优先以webkit内核解析-->
+    <title></title>
+    <link href="../../../css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="../../../css/font-awesome.css?v=4.4.0" rel="stylesheet">
+    <link href="../../../css/animate.css" rel="stylesheet">
+    <link href="../../../css/style.css?v=4.1.0" rel="stylesheet">
+    <link href="../../../plugin/datepicker/jquery.datetimepicker.css" rel="stylesheet">
+    <link href="../../../plugin/font/iconfont.css" rel="stylesheet">
+    <link href="../../../css/common.css" rel="stylesheet">
+    <link href="../../../css/checkcontsedit.css" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+<div id="topKzCon">
+
+    <button type="button" id="subcheckbtn" class="submit btn btn-default" onclick="subd()">提交</button>
+    <!--   <a href="#" class="requck btn btnRight">重置</a>-->
+    <div class="btnRight" id="recommendPageBox">页数：
+        <select name="" id="recommendPageSelect">
+
+            <option value="0">第一页</option>
+        </select>
+        第几条：
+        <select name="" id="recommendItemSelect">
+            <option value="0">第一条</option>
+            <option value="1">第二条</option>
+            <option value="2">第三条</option>
+            <option value="3">第四条</option>
+            <option value="4">第五条</option>
+            <option value="5">第六条</option>
+        </select>
+    </div>
+
+</div>
+<div class="conBox">
+    <div id="mainCont">
+        <div class="mainContitleBox">
+            文字描述 <textarea id="mainConTitle" maxlength="300" placeholder="我是标题"></textarea>
+            <i class="contitleTip">4个字</i>
+        </div>
+        <!--视频和图片页面的容器-->
+        <div id="mainContain">
+
+        </div>
+    </div>
+    <div id="detailCon">
+        <table class="detailContitleBox">
+            <tbody>
+            <tr>
+                <td id="movietypetd" colspan="2">
+                    类型：
+                    <span id="movieStyle" data-val="1"></span>
+
+                </td>
+            </tr>
+            <tr>
+                <td id="conlabeltd" colspan="2">
+                    <div class="left title">
+                        标签分类：
+                    </div>
+                    <div class="left searchMenu">
+                        <input type="search" value="" data-val="" placeholder="请选择标签" id="checkTagSearch1" class="searchTag"/>
+                        <ul class="searchSecondMenu" id="checkTagul1">
+
+                        </ul>
+                    </div>
+                    <div class="left searchMenu">
+                        <input type="search" value="" data-val="" placeholder="请选择标签" id="checkTagSearch2" class="searchTag"/>
+                        <ul class="searchSecondMenu" id="checkTagul2">
+
+                        </ul>
+                    </div>
+                    <div class="left searchMenu">
+                        <input type="search" value="" data-val="" placeholder="请选择标签" id="checkTagSearch3" class="searchTag"/>
+                        <ul class="searchSecondMenu" id="checkTagul3">
+
+                        </ul>
+                    </div>
+                </td>
+
+            </tr>
+
+            <tr>
+                <td>
+                    <div>
+                        已顶：<span id="oldGoodNum"></span>
+                    </div>
+                    顶： <input type="number" id="goodNum" value="0" min="0"/>
+
+                </td>
+                <td class="">
+                    <div>
+                        已踩：<span id="oldUnsupportNum"></span>
+                    </div>
+                    踩：<input type="number" id="unsupportNum" value="0" min="0"/>
+
+                </td>
+            </tr>
+            <tr class="movieTrBox">
+                <td>
+                    视频播放时长：<span id="movieTime" data-val=""></span>
+                </td>
+                <td class="moviePlayNumBox">
+                    <div>
+                        已播放：<span id="oldMoviePlayNum"></span>
+                    </div>
+                    视频播放次数：<input type="number" id="moviePlayNum" value="0" min="0"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    发布人：
+                    <span id="checkpublisher"></span>
+                </td>
+            </tr>
+
+            <!-- <tr>
+                 <td colspan="2" style="height:133px;">
+                     专栏选择：<select name="" id="checkColumChoose" style="width:200px;">
+                     <option value="1">我是专栏一</option>
+                 </select>
+                 </td>
+             </tr>-->
+            <tr>
+                <td colspan="2">
+                    最后审核人：
+                    <span id="finalAuditor"></span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <div id="commentlistBox">
+            <ul>
+                <li></li>
+            </ul>
+        </div>
+        <div id="movieCoverChangeBox">
+            <button id="editoBtn" class="">图片编辑</button>
+            <div id="movieImgBox" class="">
+                <div class="movieshowimg">
+                    <img src="" alt=""/>
+                </div>
+                <p class="tips">*视频与缩略图的宽高比有误，请检查！！</p>
+                <div class="movieinputBox">
+
+                    <div style="width:100%;position: relative;height:27px;">
+                        <input type="file" id="movieimgfile" value="" accept=".png,.jpg,.gif,.jpeg"/>
+                        <span class="moviebtn">替换封面</span>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!--底部评论管理-->
+<div id="talkAboutBox">
+    <div class="tittleBox">
+        <span style="width:43%;">评论管理</span>
+        <span style="width:25%;border-right:1px solid #bbb;border-left:1px solid #bbb;">评论数 ：<b class="talkNum"></b></span>
+        <span style="width:25%;">热评数 :<b class="hotTalkNum"></b></span>
+    </div>
+    <div class="commentSectionBox" id="commentSectionBox">
+        <div class="commentSection" v-for="(item,i) in items" v-bind:data-commentid="item.commentid" v-bind:data-commentreply="item.commentreply" v-bind:data-replycomment="item.replycomment" v-bind:data-replyuser="item.replyuser" v-bind:data-replyfirst="item.replyfirst">
+            <p class="userTitle">
+                <span class="imgBox"><img v-bind:src="item.userheadphoto" alt=""/></span>
+                <span class="userName" v-bind:data-id="item.userid">{{item.username}}：</span>
+            </p>
+            <div class="conmentsConts" v-bind:data-replyuser="item.replyuser">
+                <div class="selefCon" v-bind:data-contentid="item.contentid">{{item.commenttext}}
+                    <!--图片/视频-->
+                    <div class="imgMovieShowComBox" v-if="item.commenturltype==3 || item.commenturltype==4">
+                        <span v-for="(itemimg,t) in item.commenturl" v-on:click="showimg(item.commenturl,t,1)">
+                            <img v-bind:src="itemimg.info" alt="">
+                        </span>
+                    </div>
+                    <div class="imgMovieShowComBox movieshowBox" v-else>
+                          <span v-for="(itemimg,t) in item.commenturl" v-on:click="showimg(item.commenturl,t,2)">
+                               <video controls="controls" v-bind:src="itemimg.info">您的浏览器不支持</video>
+                        </span>
+                    </div>
+                </div>
+                <!--回复-->
+                <div class="recalltalkcon" v-for="(itemcon,d) in item.childList"  v-bind:data-contentid="item.contentid"  v-bind:data-commentid="itemcon.commentid" v-bind:data-commentreply="itemcon.commentreply" v-bind:data-replycomment="itemcon.replycomment" v-bind:data-replyuser="itemcon.replyuser" v-bind:data-replyfirst="itemcon.replyfirst">
+                    <span class="recalluser" :data-id="itemcon.userid"  v-bind:data-replyuser="item.replyuser">{{itemcon.username}}  回复  {{itemcon.ruusername}}：</span>
+                    {{itemcon.commenttext}}
+                    <!--图片/视频-->
+                    <div class="imgMovieShowComBox"  v-if="itemcon.commenturltype==3 ||itemcon.commenturltype==4">
+                        <span v-for="(itemimg2,t2) in itemcon.commenturl" v-on:click="showimg(itemcon.commenturl,t2,1)">
+                            <img v-bind:src="itemimg2.info" alt="">
+                        </span>
+                    </div>
+                    <div class="imgMovieShowComBox movieshowBox" v-else >
+                        <span v-for="(itemimg2,t2) in itemcon.commenturl" v-on:click="showimg(itemcon.commenturl,t2,2)">
+                          <video controls="controls" v-bind:src="itemimg2.info">您的浏览器不支持</video>
+                        </span>
+                    </div>
+                    <div class="callDoBox">
+                        <span class="reply" v-on:click="backcalltalk(itemcon,i,d)">回复</span>
+                        <span v-if="itemcon.addnew==1" class="reply deltecom" v-on:click="comdelete2(itemcon,i,d)">删除</span>
+                        <span class="praiseBox"  v-on:click="callgoods(itemcon,i,d)"><i class="glyphicon glyphicon-thumbs-up"></i><b class="praiseNum">{{itemcon.commentgood}}</b></span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="doBox">
+                <span class="reply" v-on:click="backtalk(item,i)">回复</span>
+                <span v-if="item.addnew==1" class="reply deletecom" v-on:click="comdelete(item,i)">删除</span>
+                <span class="praiseBox" v-on:click="goods(item,i)"><i class="glyphicon glyphicon-thumbs-up"></i><b class="praiseNum">{{item.commentgood}}</b></span>
+            </div>
+        </div>
+
+    </div>
+
+
+
+    <div class="commontsSrBox" id="commontsSrBox" data-type="0" data-list="" data-list2="" style="background:#f0f3f4;border-top:1px solid #bbb;padding:3px;padding-bottom:20px;">
+        <select name="" id="myNameSelect">
+            <!-- <option value="12313"><span class="myname">我是马甲用户</span></option>
+             <option value="123134"><span class="myname">我是马甲用户2</span></option>
+             <option value="123135"><span class="myname">我是马甲用户3</span></option>-->
+        </select>
+        <textarea rows="1" cols="20" id="myComments" maxlength="200">
+
+            </textarea>
+        <span class="" style="display: inline-block;height:25px;line-height: 25px;">
+                点赞数 <input type="number" id="mySetNum" value="0"/>
+
+
+            <!--<button type="button" class="btn btn-sm btn-primary" id="myConmentsSub" onclick="subd()">提交</button>-->
+            </span>
+        <div class="imgmovieShowBox">
+            <div id="imgmovieShowConts">
+
+            </div>
+            <input type="file" id="commentInputFile" name="" accept="image/png,image/gif,image/jpg,image/jpeg"  value="">
+            <input type="file" id="commentmovieFile" name="" accept="audio/mp4,video/mp4,application/ogg, audio/ogg"  style="display: none;" value="">
+            <button type="button" class="btn btn-default inputfileBtn" id="choosePictureBtn" >选择图片</button>
+            <button type="button" class="btn btn-default inputfileBtn" id="chooseMovieBtn">选择视频</button>
+            <button type="button" class="btn btn-sm btn-primary" id="creatCommentBtn" onclick="">一键生成评论</button>
+            <button type="button" class="btn btn-sm btn-primary" id="myConmentsEnter" onclick="enterd()">发 送</button>
+        </div>
+    </div>
+</div>
+
+<!--评论图片视频点击放大-->
+<div id="faxAllBox">
+    <div class="toptip"><span><b class="pre">1</b>/ <b class="all">1</b></span><b class="iconfont close" onclick="closeimg()">X</b></div>
+    <span class="runLeftBtn runBtn" onclick="turnleftfun()">《</span>
+    <span class="runRightBtn runBtn" onclick="turnrightfun()">》</span>
+    <ul>
+
+    </ul>
+</div>
+
+<!--内容链接-->
+<div id="contentUrlBox">
+    <ul>
+
+    </ul>
+</div>
+
+<!--一键生成评论-->
+<div id="creatCommentBox">
+    <div class="lineBox">
+        <span class="lineTitle">选择话题：</span>
+        <select name="" id="comentTags"></select>
+    </div>
+    <div class="lineBox">
+        <span class="lineTitle">评论数：</span>
+        <input style="width:100px;" id="creatComentNum" type="number" value="1" min="1">
+    </div>
+    <div style="text-align: center;margin-top:25px;">
+        <button type="button" class="btn btn-default" onclick="creatComentSure()">确定</button>
+        <button type="button" class="btn btn-default" onclick="closelayerall()">取消</button>
+    </div>
+</div>
+
+
+<script src="../../../js/jquery.min.js?v=2.1.4"></script>
+<script src="../../../plugin/datepicker/jquery.datetimepicker.full.min.js"></script>
+<script src="../../../plugin/layer/layer.js"></script>
+<script src="../../../js/vue.js"></script>
+<script type="text/javascript" src="../../../js/index.js"></script>
+<script src="../../../plugin/cos-js-sdl-v5/cos-js-sdk-v5.min.js"></script>
+<script src="../../../plugin/cos-js-sdl-v5/cos.js"></script>
+<script src="../../../js/inputmultiple.js"></script>
+<script src="../../../js/checkcontsedit.js"></script>
+<script type="text/javascript">
+
+
+    $(function(){
+        let dataval="",searchid=0;
+        getlabellist(dataval,searchid);//标签
+        getpush();//马甲
+        getrubbigsetpige();//推荐队列最大页码
+    });
+
+    function getconidtodetail(nedata){
+//        ////console.log("nedata::");
+//        ////console.log(nedata);
+        var contentlist=[nedata.contentid];
+        var datapost={"contentlist":contentlist};
+//         ////console.log("datapost::");
+//         ////console.log(datapost);
+        datapost=JSON.stringify(datapost);
+        // tabledata.tagshow=contentshow;
+        $.ajax({
+            url : path+'/content/watchContentDetail.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+//                ////console.log("获取失败：");
+//                //console.log(data);
+            },
+            success:function(diskJson){
+                console.log("查看内容详情接口：");
+                console.log(diskJson);
+                if(diskJson.code =="1000"){
+                    getchecktype(diskJson.data.contentlist[0]);
+
+                }else{
+                    layer.msg("数据有误请重试!");
+                }
+
+
+            }
+        });
+    }
+    /*获取审核类型加载视频/图片页面*/
+    function getchecktype(contsdatas){
+        console.log("contsdatas::");
+        console.log(contsdatas);
+        //根据iframe的id获取对象
+        layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:1000}) ;
+        //console.log("contsdatas::");
+        //console.log(contsdatas);
+        ////console.log(ifinfo);
+        var murl="moveicheck.html";
+        if(contsdatas.contenttype == "3"){
+            murl="picturecheck.html";
+
+            $("#movieStyle").attr("data-val",3).html("图片");
+            $(".movieTrBox").css({"display":"none"});
+            $("#movieCoverChangeBox").css({"display":"none"});
+        }else if(contsdatas.contenttype == "4"){
+            murl="picturecheck.html";
+            if(contsdatas.contenturllist ==""){
+                $("#movieStyle").attr("data-val",4).html("纯文字");
+            }else{
+                $("#movieStyle").attr("data-val",3).html("图片");
+            }
+            $("#movieCoverChangeBox").css({"display":"none"});
+            $(".movieTrBox").css({"display":"none"});
+        }else{
+            murl="moveicheck.html";
+            $(".movieTrBox").css({"display":"contents"});
+            $("#movieCoverChangeBox").css({"display":"block"});
+
+        }
+        ////console.log(ifinfo[1]);
+        // //console.log(murl);
+        contentDatasurllist=contsdatas.contenturllist;//内容链接（视频，图片地址）
+        $("#mainContain").load(murl,function(){
+            geturl(contsdatas.contenturllist);
+        });
+
+        /*视频/图片右侧信息*/
+        if(contsdatas.contenttitle && contsdatas.contenttitle !=""){
+            let contile=$.trim(contsdatas.contenttitle);
+            // let contile2=filteremoji(contile);
+            if(contile!="" ){
+                $("#mainConTitle").attr("readonly","readonly");
+                $("#mainCont .contitleTip").html(contsdatas.contenttitle.length+"/字");
+                $("#mainConTitle").val(contile);
+            }else{
+                $("#mainConTitle").removeAttr("readonly");
+                $("#mainCont .contitleTip").html("0/字");
+                $("#mainConTitle").val("");
+            }
+
+        }else{
+            $("#mainConTitle").removeAttr("readonly");
+            $("#mainCont .contitleTip").html("0/字");
+            $("#mainConTitle").val("");
+        }
+
+        /*标签处理*/
+        $("#detailCon .searchMenu .searchTag").val("").attr("data-val","").removeAttr("disabled");
+        if(contsdatas.contenttag && contsdatas.contenttag !=""){
+            let conlstag=contsdatas.contenttag.split(";");//临时加的
+            // console.log("conlstag::");
+            // console.log(conlstag);
+            let tagshow=[];
+            $.each(conlstag,function(i,n){
+                // console.log(n);
+                let sname=$("#checkTagul1 li[data-val="+n +"]").html();
+                tagshow.push(sname);
+                $("#checkTagSearch"+(i+1)).val(sname ).attr("data-val",n ).attr("disabled","disabled");
+            });
+        }
+
+        $("#mainCont").attr("data-id",contsdatas.contentid);
+        let createuser=userdatas.data.userid;
+        let createuserName=userdatas.data.username;
+        $("#finalAuditor").attr("data-id",createuser).html(createuserName);
+        $("#checkpublisher").html(contsdatas.contentuid);
+        $("#oldMoviePlayNum").html(contsdatas.playcount);
+        $("#oldUnsupportNum").html(contsdatas.contentbad);
+        $("#oldGoodNum").html(contsdatas.contentgood);
+
+        //底部的评论
+        if(contsdatas.cmtlist && contsdatas.cmtlist!=""  && contsdatas.cmtlist!=null){
+            let commentlists=contsdatas.cmtlist;
+            if(commentlists.length >0){
+                $.each(commentlists,function(i,n){
+                    if(n.commenturl && n.commenturl!=""){
+                        if(n.commenturl =="[]"){
+                            n.commenturl=[];
+                        }else{
+                            n.commenturl=JSON.parse(n.commenturl);
+                            if(n.commenturl.length >0){
+                                n.commenturltype= n.commenturl[0].type;
+                            }
+                        }
+                    }else{
+                        n.commenturl=[];
+                    }
+
+                    if(n.childList.length >0){
+                        $.each(n.childList,function(c,t){
+                            if(t.commenturl && t.commenturl!=""){
+                                if(t.commenturl =="[]"){
+                                    t.commenturl=[];
+                                }else{
+                                    t.commenturl=JSON.parse(t.commenturl);
+                                    if(t.commenturl.length >0){
+                                        t.commenturltype= t.commenturl[0].type;
+                                    }
+
+                                }
+                            }else{
+                                t.commenturl=[];
+                            }
+                        })
+
+                    }
+
+                })
+
+            }
+            usertalk.items=commentlists;
+        }
+
+    }
+
+    /*提交图片/视频流*/
+    function subd(){
+        layer.msg('提交中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000}) ;
+        let checkuid=userdatas.data.userid;
+        let commenttext=usertalk.postcommentlist;//评论
+        let contentbad=$("#unsupportNum").val();
+        let contentgoods=$("#goodNum").val();
+        let contentid=  $("#mainCont").attr("data-id");
+        let contenttag=[];
+        let tag1=$("#checkTagSearch1").attr("data-val");
+        let tag2=$("#checkTagSearch2").attr("data-val");
+        let tag3=$("#checkTagSearch3").attr("data-val");
+        if(tag1 =="" && tag2=="" && tag3 ==""){
+            layer.closeAll();
+            layer.msg("请至少选择一项标签！！");
+            return false;
+        }else{
+            if(tag1 !="" && tag1 !=null){contenttag.push(tag1)}
+            if(tag2 !="" && tag2 !=null){contenttag.push(tag2)}
+            if(tag3 !="" && tag3 !=null){contenttag.push(tag3)}
+            contenttag=unique10(contenttag)
+        }
+        let contenttitle=$("#mainConTitle").val();
+        let contenttype=$("#movieStyle").attr("data-val");
+        let contentuid=$("#checkpublisher").html();//发布人马甲
+        let contenturllist=contentDatasurllist;//内容链接
+        let indexno=$("#recommendItemSelect").val();//第几条
+        let pagenum=$("#recommendPageSelect").val();//去哪一页
+        let playcount=0,showtime="",contenttext="";
+        if(contenttype ==3 || contenttype ==4){
+            playcount=0;
+
+        }else{
+            playcount=$("#moviePlayNum").val();
+
+        }
+        var tjdatas={
+            "commenttext":commenttext,
+            "contentbad":contentbad,
+            "contentgoods":contentgoods,
+            "contentid":contentid,
+            "contenttag":contenttag,
+            "contenttitle":contenttitle,
+            "playcount": playcount,
+        };
+        //console.log("tijiao 2postdata:");
+        //console.log(tjdatas);
+        tjdatas=JSON.stringify(tjdatas);
+        $.ajax({
+            url : path+'/usercheck/editcontentfortwice.do',
+            cache:true,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:false,
+            data: tjdatas,
+            error: function(data){
+                layer.msg("审核提交失败，请重试！！",{
+                    offset:['50%'],
+                    time: 1500 //2秒关闭（如果不配置，默认是3秒）
+                })
+                //console.log("提交图片/视频流失败：");
+                //console.log(data);
+            },
+            success:function(diskJson){
+                layer.closeAll();
+                console.log("提交审核：");
+                 console.log(diskJson);
+                if(diskJson.code =="1000"){
+                    //layer.msg('提交成功...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:1500}) ;
+                    $("#subcheckbtn").attr("disabled","disabled");
+                    let postlist={"pagenum":pagenum,"indexno":indexno,"contentid":contentid,"checkuid":checkuid,"contenttitle":contenttitle};
+                    editcontpage2(postlist);
+                }else{
+                    layer.msg("审核提交失败，请重试！！",{
+                        offset:['50%'],
+                        time: 1500 //2秒关闭（如果不配置，默认是3秒）
+                    });
+                }
+
+            }
+        });
+    }
+
+    /*NH编辑备选页码2*/
+    function editcontpage2(postlist){
+        var datapost={"pagenum":postlist.pagenum,"contentid":postlist.contentid,"checkuid":postlist.checkuid,"indexno":postlist.indexno,"contenttitle":postlist.contenttitle};
+//         console.log("datapost::");
+//         console.log(datapost);
+        datapost=JSON.stringify(datapost);
+        // tabledata.tagshow=contentshow;
+        $.ajax({
+            url : path+'/content/contentToBakQueen.do',
+            cache:false,//false就不会从浏览器缓存中加载请求信息了
+            type:"POST",
+            contentType: "application/json",
+            dataType:"JSON",
+            async:true,
+            data: datapost,
+            error: function(data){
+                layer.msg("服务器未响应,请稍后再试!");
+//                console.log("获取失败：");
+//                console.log(data);
+            },
+            success:function(diskJson){
+                console.log("NH编辑备选页码：");
+                console.log(diskJson);
+                if(diskJson.code =="1000"){
+                    layer.msg("编辑成功！!");
+
+                }else{
+                    layer.msg("编辑失败!");
+                }
+
+
+            }
+        });
+    }
+
+
+
+    /*判断字数*/
+    $("#mainConTitle").keyup(function(){
+        var len=$(this).val().length;
+        $("#mainCont .contitleTip").html(len+"个字");
+    });
+
+    function backuncheck(){
+        let ifinfo = window.location.search;
+        ifinfo=ifinfo.substring(4);
+        ifinfo=ifinfo.split(",");
+        setTimeout(function(){
+//        console.log(ifinfo);
+//        console.log(ifinfo[2]);
+            window.location.href="content-check.html?pageon="+ifinfo[2];
+        },250)
+    }
+
+
+
+    $("#editoBtn").click(function(){
+        $("#imgEditBox").addClass("show");
+    });
+
+
+    /*缩略图编辑打开放大*/
+    $("#movieImgBox .movieshowimg").click(function(){
+        let imgsrc=$("#movieImgBox .movieshowimg img").attr("src");
+        $("#imgEditBox .imgshowBox img").attr("src",imgsrc);
+        $("#imgEditBox").addClass("show");
+    });
+    /*视频封面替换*/
+    $("#movieimgfile").change(function(){
+        var files = this.files[0];
+        var fileSize = 0;
+        var fileMaxSize = 1024*3;//1M
+        var filePath = $("#movieimgfile").val();
+        if(filePath){
+            fileSize =files.size;
+            var size = fileSize / 1024;
+            if (size > fileMaxSize) {
+                layer.msg("图片太大啦！");
+                file.value = "";
+                return false;
+            }else if (size <= 0) {
+                alert("图片呢？？");
+                file.value = "";
+                return false;
+            }
+        }
+        if (window.FileReader) {
+            var reader = new FileReader();
+            reader.index = 0;
+            reader.file = this.files[0];
+            reader.readAsDataURL(this.files[0]);  //转成base64
+            reader.fileName = this.files[0].name;
+            //监听文件读取结束后事件
+            reader.onloadend = function (e) {
+                fileslist[0]=files;
+                iffilechange=2;
+                var imgMsg = {
+                    name : this.fileName,//获取文件名
+                    file:this.file,//文件流
+                    base64 : this.result   //reader.readAsDataURL方法执行完后，base64数据储存在reader.result里
+                };
+                let img = new Image();              //手动创建一个Image对象
+                img.src = e.target.result;//创建Image的对象的url
+                img.onload = function () {
+                    //console.log('height:'+this.height+'----width:'+this.width);
+                    $("#movieImgBox .movieshowimg img").attr("data-width",this.width);
+                    $("#movieImgBox .movieshowimg img").attr("data-height",this.height);
+                };
+                $("#movieImgBox .movieshowimg img").attr("src",e.target.result);    //e.target.result就是最后的路径地址
+                /*提交到腾讯云上*/
+                // console.log("imgMsg::");
+                // console.log(imgMsg);
+                runAsync(imgMsg).then(function(data){
+                    var onetdk=data.Url.substring(0, data.Url.indexOf('?'));
+                    return onetdk;
+                }).then(function(onetdk) {
+                    // console.log("onetdk::");
+                    // console.log(onetdk);
+                    var moviecover=JSON.parse(contentDatasurllist);
+                    moviecover[0]=onetdk;
+                    contentDatasurllist=moviecover;
+
+                });
+
+            };
+        }
+    })
+
+
+</script>
+</body>
+</html>

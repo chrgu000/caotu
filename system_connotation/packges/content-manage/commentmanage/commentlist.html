@@ -1,0 +1,262 @@
+
+
+
+    <style>
+        #createLabel{margin-top:10px;margin-left:30px;}
+        #tablelistbox .btn{color:#5a656d;}
+        #tablelistbox .btn:hover{color:#fff;background:#0088cc;}
+        #tablelistbox  .lookmeitem{color:#0a6aa1;cursor: pointer;}
+        .popShadeBox{width:100%;margin:0 auto;height:100%;border:1px solid #ddd;background:#fff;padding:30px;display: none;}
+        .popShadeBox .popBox{width:100%;overflow-y: auto;padding:6px;border:1px solid #ddd;}
+        .popShadeBox .popBox label{cursor: pointer;margin:15px;}
+        .popShadeBox .popBox input{vertical-align: sub;margin-right:3px;cursor: pointer;}
+        .popShadeBox .suredbtn{float:right;margin-right:3px;background:#52b5dc;color:#fff;margin-bottom:10px;}
+        #tablelistTbody td img{width:auto;height:auto;max-height: 80px;max-width: 80px;}
+        #lookedMajia span{display: inline-block;padding:4px;margin:4px;}
+        #tablelistTbody tr.hasnews{background:#802424;color:#fff;}
+
+        #addcommentBox{width:100%;padding:30px;background:#fff;display: none;height:100%;}
+        #myCommentsText{vertical-align: middle;width:80%;padding:15px;}
+        #commentUrlShowBox{width:80%;padding:15px;border:1px solid #a9a9a9;margin:12px 0;margin-left: 69px;overflow: hidden;}
+
+
+
+    </style>
+
+
+
+    <div id="contentPageBox">
+       <!-- <button type="button" class="btn btn-sm btn-primary" id="createLabel">批量新建评论</button>-->
+        <div class="wrapper wrapper-content  animated fadeInRight">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox-content">
+                        <div class="jqGrid_wrapper" id="tablelist">
+                            <!--   <table id="table_list_2"></table>-->
+                            <table  class="table table-striped" id="tablelistbox">
+                                <thead>
+                                <tr>
+                                    <th>序号</th>
+                                    <th>话题名</th>
+                                    <th>评论数</th>
+                                    <th>操作</th>
+                                </tr>
+                                </thead>
+                                <tbody id="tablelistTbody">
+                                    <tr v-for="(item,index) in items" v-bind:data-id="item.tagid">
+                                        <td class="center" >{{index+1}}</td>
+                                        <td class="center">{{item.tagname}}</td>
+                                        <td class="center">{{item.commentlibcount}}</td>
+                                        <td class="center"><button type="button" @click="add(item)" class="btn">新增</button></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                            <div id="pagerlist">
+                                <div id="pagerbtnlist">
+                                    <span class="glyphicon glyphicon-backward gbtn" id="prepagebtn" onclick="prepage()"></span>
+                                <span class="addpagebox">
+                                    <span id="jumppage" onclick="jumppage()">跳转到</span>
+                                    <input type="number" id="addpageinput" value="1" max="" min="1"/>
+                                    共 <span id="allpage">1</span>页
+                                </span>
+                                    <span class="glyphicon glyphicon-forward gbtn" id="nextpagebtn" onclick="nextpage()"></span>
+                                </div>
+                                <div id="allcontbox">
+                                    <p id="allconts"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="addcommentBox" data-id="">
+        <div>
+            评论内容： <textarea rows="3" cols="80" id="myCommentsText" maxlength="500" placeholder="请输入评论内容，最多500字"></textarea>
+        </div>
+        <div id="commentUrlShowBox">
+
+        </div>
+        <div class="buttonBox" style="margin-left:80px;">
+            <input type="file" id="commentimgFile" name="" accept="image/png,image/gif,image/jpg,image/jpeg"  value="" style="display: none;">
+            <input type="file" id="commentmovieFile" name="" accept="audio/mp4,video/mp4,application/ogg, audio/ogg" style="display: none;" value="">
+            <input type="file" id="commenttextFile" name="" accept=".doc,.docx,.pdf,.txt" style="display: none;" value="">
+            <button type="button" class="btn btn-default inputfileBtn" id="choosePictureBtn" >选择图片</button>
+            <button type="button" class="btn btn-default inputfileBtn" id="chooseMovieBtn">选择视频</button>
+            <button type="button" style="display: none" class="btn btn-default inputfileBtn" id="choosetextBtn">选择文字</button>
+        </div>
+        <div class="buttonBox" style="margin-left:120px;margin-top:20px;">
+            <button onclick="subComment()" type="button" class="btn btn-file" id="postCommentBtn">提 交 评 论</button>
+        </div>
+    </div>
+
+    <!--分头套-->
+
+    <!-- 全局js -->
+    <!-- Page-Level Scripts -->
+    <script src="../../../plugin/cos-js-sdl-v5/cos-js-sdk-v5.min.js"></script>
+    <script src="../../../plugin/cos-js-sdl-v5/cos.js"></script>
+    <script src="../../../js/inputmultiplecomment.js"></script>
+    <script>
+        var majiadata = new Vue({
+            el: '#tablelistTbody',
+            data: {
+                hasnews:"hasnews",
+                items:"",
+            },
+            // 在 `methods` 对象中定义方法
+            methods: {
+                add:function(event){
+                    //console.log(event);
+                    layer.open({
+                        type: 1,
+                        title: '新增评论',
+                        shadeClose: true,
+                        maxmin: true, //开启最大化最小化按钮
+                        shade: 0.6,
+                        area: ['85%', '85%'],
+                        content: $("#addcommentBox"), //iframe的url
+                        success: function (layero, index) {
+                            // //console.log(events);
+                            console.log(event);
+                            $("#addcommentBox").attr("data-id",event.tagid);
+
+                        },
+                        end:function () {
+                            let page=$("#addpageinput").val();
+                            getcheck(page);//评论首页
+                        }
+                    });
+                }
+
+            }
+        });
+
+        $(function(){
+            getcheck(1);//评论首页
+        });
+
+        //查询所有评论信息
+        function getcheck(pageno){
+          // var userid=userdatas.data.userid;
+            layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000}) ;
+            var postdata={"pageno":pageno,"pagesize":10};
+            postdata=JSON.stringify(postdata);
+            $.ajax({
+                url : path2+'/commentlib/cmttaglist.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:true,
+                data: postdata,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    ////console.log("查询所有评论信息：");
+                    ////console.log(data);
+                },
+                success:function(diskJson){
+                    layer.closeAll();
+                   console.log("查询所有评论信息：");
+                   console.log(diskJson);
+
+                    /*翻页信息*/
+                    pageinfo3(pageno,diskJson.data.count,10);//翻页控件信息
+                    majiadata.items=diskJson.data.rows;
+
+                }
+            });
+        }
+
+        var imgmovurl=[];
+        /*提交评论*/
+        function subComment(){
+            if(dataArr.length >0){
+                imgmovurl=send();
+            }
+            layer.confirm('确定提交该评论吗？', {
+                btn: ['确定','取消'] //按钮
+            }, function(index){
+                //console.log(recondlist.chooselistnum);
+                subComment2();
+                layer.close(index);
+            }, function(index){
+                layer.close(index);
+            });
+
+        }
+
+        function subComment2(){
+            let createuser=userdatas.data.userid;
+            let commentlibtagid=$("#addcommentBox").attr("data-id");
+            let commentlibtext=$("#myCommentsText").val();
+            if(commentlibtext=="" && imgmovurl.length<=0){
+                layer.msg("请输入内容！！");
+                return false;
+            }
+            let postdata=[{"createuser":createuser,"commentlibtagid":commentlibtagid,"commentlibtext":commentlibtext,"commentliburl":imgmovurl}];
+           // console.log("postdata::");
+           // console.log(postdata);
+            postdata=JSON.stringify(postdata);
+            $.ajax({
+                url : path2+'/commentlib/insetcmtlib.do',
+                cache:false,//false就不会从浏览器缓存中加载请求信息了
+                type:"POST",
+                contentType: "application/json",
+                dataType:"JSON",
+                async:false,
+                data: postdata,
+                error: function(data){
+                    layer.msg("服务器未响应,请稍后再试!");
+                    ////console.log("查询所有评论信息：");
+                    ////console.log(data);
+                },
+                success:function(diskJson){
+                    console.log("提交评论：");
+                    console.log(diskJson);
+                    imgmovurl=[];
+                    if(diskJson.code == 1000){
+                        $("#myCommentsText").val("");
+                        layer.msg("提交成功！！");
+
+                        oInput.value = "";   // 先将oInput值清空，否则选择图片与上次相同时change事件不会触发
+                        //清空已选图片
+                        moviefilecover="";//视频封面
+                        picfilecover=[];//图片封面
+                        $('#commentUrlShowBox').empty();
+                        dataArr = [];
+                        commentimgisize = [];
+                        index = 0;
+                        $("#chooseMovieBtn").removeAttr("disabled").css("color","#333");
+                        $("#choosePictureBtn").removeAttr("disabled").css("color","#333");
+                        $("#choosetextBtn").removeAttr("disabled").css("color","#333");
+
+                    }else{
+                        layer.msg("提交失败！！")
+                    }
+
+                }
+            });
+        }
+
+
+
+
+        /*批量新增*/
+        $("#createLabel").click(function(){
+            $("#contentPageBox").load("newcommentlist.html",function(){
+
+            });
+        })
+
+
+
+
+
+    </script>
+
+    
+    

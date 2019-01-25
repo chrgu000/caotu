@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta itemprop="name" content="你的内含公民卡正在派送中..." />
+    <!-- 分享显示的缩略图-->
+    <meta itemprop="image" content="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/activeallimgs/gmksharelogo.png" />
+    <!-- 分享显示的简介-->
+    <meta name="description" itemprop="description" content="领取专属公民卡，做个有身份的段友" />
+    <!-- <script>
+        goBack();
+
+        function goBack() {
+            if ((navigator.userAgent.indexOf('MSIE') >= 0) && (navigator.userAgent.indexOf('Opera') < 0)) { // IE
+                if (history.length > 0) {
+                    console.log('正常进入');
+
+                    // window.history.go(-1);
+                } else {
+                    console.log('跳首页');
+
+                    window.location.href = "gmkindex.html";
+                }
+            } else { //非IE浏览器
+                if (navigator.userAgent.indexOf('Firefox') >= 0 ||
+                    navigator.userAgent.indexOf('Opera') >= 0 ||
+                    navigator.userAgent.indexOf('Safari') >= 0 ||
+                    navigator.userAgent.indexOf('Chrome') >= 0 ||
+                    navigator.userAgent.indexOf('WebKit') >= 0) {
+
+                    if (window.history.length > 1) {
+                        console.log('正常进入');
+
+                    } else {
+                        console.log('跳首页');
+
+                        window.location.href = "gmkindex.html";
+                    }
+                } else { //未知的浏览器
+                    if (window.history.length > 1) {
+                        console.log('正常进入');
+
+                    } else {
+                        console.log('跳首页');
+
+                        window.location.href = "gmkindex.html";
+                    }
+                }
+            }
+        }
+    </script> -->
+    <title>你的内含公民卡正在派送中...</title>
+    <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <script type="application/javascript" src="https://ctkj-1256675270.file.myqcloud.com/jquery.min.js"></script>
+    <script src="js/sha1.js"></script>
+    <script src="js/rem.js"></script>
+    <script src="js/html2canvas.js"></script>
+    <script src="js/wxShare.js"></script>
+    
+    <script src="js/cos-js-sdl-v5/cos-js-sdk-v5.min.js"></script>
+    <script src="js/cos-js-sdl-v5/cos.js"></script>
+    <style>
+        * {
+            margin: 0;
+            left: 0;
+            -webkit-touch-callout: none;
+            /*系统默认菜单被禁用*/
+            -webkit-user-select: none;
+            /*webkit浏览器*/
+            -khtml-user-select: none;
+            /*早期浏览器*/
+            -moz-user-select: none;
+            /*火狐*/
+            -ms-user-select: none;
+            /*IE10*/
+            user-select: none;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        .mycard {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            background-color: #F7F7F7;
+            display: block;
+            z-index: 10;
+        }
+
+        .card_bg {
+            width: 6.7rem;
+            height: 7.6rem;
+            background-color: #fff;
+            margin: 1rem auto 0;
+            padding-top: 0.4rem;
+        }
+
+        .card_jietu {
+            width: 6.3rem;
+            height: 4.18rem;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        #showimg {
+            width: 6.3rem;
+            height: 4.18rem;
+            margin: 0 auto;
+            position: relative;
+            display: none;
+        }
+
+        .card_jietu img {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .userinfo {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 5;
+        }
+
+        .card_jietu .userinfo .userphone {
+            width: 0.82rem;
+            height: 0.82rem;
+            margin-top: 0.4rem;
+            margin-left: 0.62rem;
+            display: block;
+            border-radius: 0.1rem;
+        }
+
+        .userinfo p {
+            font-size: 0.18rem;
+            text-align: left;
+            margin-left: 0.62rem;
+            color: #FFED7D;
+            font-family: 'KAITI';
+            line-height: 0.4rem;
+            text-shadow: 1px 1px 1px rgba(0, 0, 0, .5);
+        }
+
+        .userinfo p span {
+            color: #fff;
+            margin-left: 1em;
+        }
+
+        .userinfo .name {
+            font-size: 0.32rem;
+            font-weight: 700;
+            color: #fff;
+            font-family: "Microsoft YaHei";
+            margin-top: 0.1rem;
+        }
+
+        .userinfo p .sex {
+            margin-left: 2em;
+        }
+
+        .card_jietu .userinfo .erweima {
+            display: block;
+            position: absolute;
+            width: 0.66rem;
+            height: 0.66rem;
+            top: 0.2rem;
+            left: 5.2rem;
+        }
+
+        .card_jietu .userinfo .scancode {
+            position: absolute;
+            width: 0.88rem;
+            height: 0.14rem;
+            display: block;
+            top: 0.9rem;
+            left: 5.1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <div id="show" style="position: fixed;left: 0.1rem;top: 0.1rem;z-index: 9999;font-size: 0.32rem;word-wrap:break-word;width: 6rem;">22</div>-->
+
+    <div class="mycard">
+        <div class="card_bg">
+            <img src="" alt="" id="showimg">
+            <div class="card_jietu">
+                <img id="img" src="" alt="">
+                <div class="userinfo">
+                    <img src="" alt="" class="userphone">
+                    <p class="name">111</p>
+                    <p>性别<span class="sex">1</span></p>
+                    <p>段友号<span class="dyh">111</span></p>
+                    <p>有效期<span class="indate">111</span></p>
+                    <img src="images/erweima.png" alt="" class="erweima">
+                    <img src="images/scancode.png" alt="" class="scancode">
+                </div>
+            </div>
+            <div style="font-size:0.48rem;font-weight:500;color:#171F24;text-align: center;margin: 0.58rem auto 0"
+                class="gmk"></div>
+            <div style="font-size: 0.28rem;color: #9D9D9D;text-align: center;margin: 0.4rem auto 0;">长按上图保存 分享到朋友圈</div>
+        </div>
+    </div>
+
+
+    <script src="js/appgetcard.js"></script>
+    <script src="js/shareapp.js"></script>
+
+    <script>
+        magnitude("GMKPAGE4", "NO");
+        //长按事件
+        var longClick = 0;
+        $("#showimg").on({
+            touchstart: function (e) {
+                // 长按事件触发
+                timeOutEvent = setTimeout(function () {
+                    timeOutEvent = 0;
+                    let appdata = localStorage.userinfolist;
+                    appdata = JSON.parse(appdata);
+                    let title = '分享title';
+                    let desc = '分享desc';
+                    // alert(appdata.apptype);
+                    // alert(appdata.userid);
+                    if (appdata.apptype != "web") {
+                        let share = {
+                            "webType": "1", //类型
+                            "title": title, //分析的title名
+                            "url": postappimgurl, //分享的链接
+                            "content": desc, //描述
+                            "icon": ""
+                        };
+                       /* $("#show").html(share);*/
+                        if(share.url==""){
+                            share=sharewxjson;
+                        }
+                        share = JSON.stringify(share);
+                        // alert(appdata.apptype);
+                        // e.preventDefault();
+                        if (appdata.apptype == "Android") {
+
+                            window.android.shareweb(share);
+                        } else if (appdata.apptype == "IOS") {
+
+                            window.webkit.messageHandlers.shareweb.postMessage(share); //调用ios方法
+                        }
+                    }
+                }, 400);
+                //长按400毫秒
+            },
+            touchmove: function () {
+                clearTimeout(timeOutEvent);
+                timeOutEvent = 0;
+                // alert("移动了");
+            },
+            touchend: function () {
+                clearTimeout(timeOutEvent);
+                if (timeOutEvent != 0) {
+                    // 点击事件
+                    // alert('你点击了');
+                }
+                return false;
+            }
+        })
+        // var CardData = JSON.parse(localStorage.getItem('CardData'));
+
+        // var cardname = CardData.CardInfo.cardname;
+        // wxfxxinfo.title = '我在内含段友APP领取了' + cardname;
+        // sharewxjson.title = '我在内含段友APP领取了' + cardname;
+        // wxfxxinfo.desc = '领取专属公民卡，做个有身份的段友';
+        // sharewxjson.content = '领取专属公民卡，做个有身份的段友';
+        // wxjsonstring = JSON.stringify(sharewxjson);
+        // $('meta[itemprop="name"]').attr('content', '我在内含段友APP领取了' + cardname);
+        // $('meta[property="og:title"]').attr('content', wxfxxinfo.title);
+        // $('.gmk').text(CardData.CardInfo.cardname);
+
+    </script>
+</body>
+
+</html>

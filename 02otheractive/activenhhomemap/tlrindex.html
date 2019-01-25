@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- 分享显示的标题-->
+    <meta itemprop="name" content="滴~滴滴，点亮段友回家的旅途" />
+    <!-- 分享显示的缩略图-->
+    <meta itemprop="image" content="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/activeallimgs/activemap/sharelogo.png" />
+    <!-- 分享显示的简介-->
+    <meta name="description" itemprop="description" content="内含的不只是段子" />
+
+    <title>滴~滴滴，点亮段友回家的旅途</title>
+    <!-- 必须引   入的文件-->
+    <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <script type="application/javascript" src="https://ctkj-1256675270.file.myqcloud.com/jquery.min.js"></script>
+
+    <script src="js/sha1.js"></script>
+    <script src="js/wxShare.js"></script>
+    <script src="js/rem.js"></script>
+    <script src="js/appget.js"></script>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            overflow: hidden;
+        }
+        html,body{
+            width: 100%;
+            height: 100%;
+        }
+        #video{
+            width: 1px;
+            height: 100%;
+        }
+        .jump {
+            width: 1.1rem;
+            height: 0.56rem;
+            position: absolute;
+            z-index: 10;
+            top: 0.6rem;
+            right: 0.2rem;
+            background-image: url(images/skip_button.png);
+            background-position: center 0;
+            background-repeat: no-repeat;
+            background-size: 100% auto;
+            color: #fff;
+            cursor: pointer;
+        }
+        .rad {
+            width: 0.68rem;
+            height: 0.66rem;
+            background-image: url(images/radio.png);
+            background-position: center 0;
+            background-repeat: no-repeat;
+            background-size: 100% auto;
+            position: absolute;
+            top: 0.6rem;
+            left: 0.2rem;
+            cursor: pointer;
+        }
+        .mask {
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-image: url(images/mohu_bg.png);
+            background-position: center 0;
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            z-index: 50;
+        }
+        .load {
+            width: 2.24rem;
+            height: 2rem;
+            position: absolute;
+            top: 4.78rem;
+            left: 2.58rem;
+            background-image: url(images/loading_button.png);
+            background-position: center 0;
+            background-repeat: no-repeat;
+            background-size: 100% auto;
+            display: none;
+            cursor: pointer;
+        }
+        .finger {
+            width: 1.22rem;
+            height: 1.04rem;
+            position: absolute;
+            top: 5.4rem;
+            left: 4.26rem;
+            background-image: url(images/finger.png);
+            background-position: center 0;
+            background-repeat: no-repeat;
+            background-size: 100% auto;
+            display: none;
+        }
+        #loading4_hype_container{
+            z-index: 90;
+            position: fixed;
+            top: 0;
+            left: 0;
+        }
+    </style>
+
+</head>
+
+<body>
+    <!-- <div id="show" style="position: fixed;top:10px;left:10px;font-size:18px;z-index:9999999999"></div> -->
+    <div class="mask">
+        <div class="load"></div>
+        <div class="finger"></div>
+    </div>
+    <div id="videoBox" style="background:#333;">
+        <video id="video" x5-video-player-type="h5" x5-video-player-fullscreen="true" x5-playsinline="true"
+            webkit-playsinline="true" playsinline="true" x-webkit-airplay="allow" style="object-fit:fill">
+            <source src="static/start.mp4" type="video/mp4">
+            您的浏览器不支持。
+        </video>
+    </div>
+    <div class="jump"></div>
+    <div class="rad"></div>
+    <div id="loading4_hype_container" style="margin:auto;width:100%;height:100%;overflow:hidden;">
+        <script type="text/javascript" charset="utf-8" src="loading4.hyperesources/loading4_hype_generated_script.js?6000"></script>
+    </div>
+    <div style="display:none" aria-hidden=true>
+        <div>0%</div>
+        <div>12%</div>
+        <div>38%</div>
+        <div>51%</div>
+        <div>71%</div>
+        <div>100%</div>
+    </div>
+
+    <script>
+        //埋点
+        let tjdatas = {
+            "pagestr": "TLRPAGE1",
+            "needcount": "NO"
+        };
+        tjdatas = JSON.stringify(tjdatas);
+        $.ajax({
+            url: path2 + '/activepage/countactive.do',
+            cache: false, //false就不会从浏览器缓存中加载请求信息了
+            type: "POST",
+            contentType: "application/json",
+            dataType: "JSON",
+            async: false,
+            data: tjdatas,
+            error: function (data) {
+                /*  layer.msg("服务器未响应,请稍后再试!");*/
+                //console.log("获取失败：");
+                //console.log(data);
+            },
+            success: function (diskJson) {
+                console.log(diskJson)
+                if (diskJson.code == "1000") {
+                    
+                } else {
+                    /*  layer.msg("网络异常，请重试！！")*/
+                }
+
+            }
+        });
+        //隐藏进度条
+        setTimeout(() => {
+            $('#loading4_hype_container').css('display', 'none');
+            $('.load').css('display', 'block');
+            $('.finger').css('display', 'block');
+        }, 4500);
+
+        //点击播放
+        $(".load").click(function () {
+            $(".mask").animate({
+                opacity: 0
+            }, 1000);
+            $('#video').css('width', '100%');
+            $('#video')[0].play();
+            setTimeout(function () {
+                $(".mask").css("display", "none");
+            });
+        });
+
+        $('.jump').on('click', function () {
+            let jumpdata = {
+                "pagestr": "JUMPTLR",
+                "needcount": "NO"
+            };
+            jumpdata = JSON.stringify(jumpdata);
+
+            $.ajax({
+                url: path2 + '/activepage/countactive.do',
+                cache: false, //false就不会从浏览器缓存中加载请求信息了
+                type: "POST",
+                contentType: "application/json",
+                dataType: "JSON",
+                async: false,
+                data: jumpdata,
+                error: function (data) {
+                    /*  layer.msg("服务器未响应,请稍后再试!");*/
+                    //console.log("获取失败：");
+                    //console.log(data);
+                },
+                success: function (diskJson) {
+                    if (diskJson.code == "1000") {
+
+                    } else {
+                        /*  layer.msg("网络异常，请重试！！")*/
+                    }
+
+                }
+            });
+            $('#video')[0].pause();
+            setTimeout(() => {
+                window.location.href = 'goHome.html';
+            }, 500);
+        });
+
+        $('#video')[0].addEventListener('ended', function () {
+            window.location.href = 'goHome.html';
+        }, false);
+        $('.rad').on('click', function () {
+            let radData = {
+                "pagestr": "MUTETLR",
+                "needcount": "NO"
+            };
+            radData = JSON.stringify(radData);
+            $.ajax({
+                url: path2 + '/activepage/countactive.do',
+                cache: false, //false就不会从浏览器缓存中加载请求信息了
+                type: "POST",
+                contentType: "application/json",
+                dataType: "JSON",
+                async: false,
+                data: radData,
+                error: function (data) {
+                    /*  layer.msg("服务器未响应,请稍后再试!");*/
+                    //console.log("获取失败：");
+                    //console.log(data);
+                },
+                success: function (diskJson) {
+                    if (diskJson.code == "1000") {
+
+                    } else {
+                        /*  layer.msg("网络异常，请重试！！")*/
+                    }
+
+                }
+            });
+            if (document.getElementById("video").muted == false) {
+                // console.log('111')
+                document.getElementById("video").muted = true;
+            } else {
+                // console.log('222')
+                document.getElementById("video").muted = false;
+            }
+        })
+
+        //监听页面是否激活
+        // var hiddenProperty = 'hidden' in document ? 'hidden' :
+        //     'webkitHidden' in document ? 'webkitHidden' :
+        //     'mozHidden' in document ? 'mozHidden' :
+        //     null;
+        // var visibilityChangeEvent = hiddenProperty.replace(/hidden/i, 'visibilitychange');
+        // var onVisibilityChange = function () {
+        //     var video = document.getElementById('video');
+        //     if (!document[hiddenProperty]) {
+        //         // console.log('页面激活');
+        //         video.play(); // 播放 
+        //     } else {
+        //         // console.log('页面隐藏')
+        //         video.pause()
+        //     }
+        // }
+        // document.addEventListener(visibilityChangeEvent, onVisibilityChange);
+
+        wxpz(wxfxxinfo);
+        var ua = navigator.userAgent;
+        if (ua.match(/Android/i) != null){
+			getShare(wxjsonstring);
+		}
+    </script>
+</body>
+
+</html>

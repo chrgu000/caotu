@@ -1,0 +1,138 @@
+#topKzCon{padding:10px 20px;;}
+#topKzCon .btn{color:#0055aa;}
+#topKzCon .btn:hover{    background-image: none;  outline: 0;  -webkit-box-shadow: inset 0 3px 5px rgba(0,0,0,.125); }
+.btnRight{float:right;}
+.conBox{width:100%;height:550px;border:1px solid #bbb;}
+#mainCont{width:60%;height:100%;float:left;border-right:1px solid #bbb;}
+#detailCon{width:40%;height:100%;float:left;}
+#mainCont .mainContitleBox{width:100%;height:74px;line-height: 45px;padding:0 6px;border-bottom:1px solid rgba(187,187,187,1);}
+#mainConTitle{width:84%;height:70px;margin:0 2px;margin-top:2px;padding-left:6px;line-height: 16px;vertical-align: middle;}
+#mainContain{width:100%;height:calc(100% - 75px);background:#fff;overflow-y: auto;padding:0;}
+#detailCon .detailContitleBox{width:100%;}
+#detailCon .detailContitleBox td{height:44px;border:1px solid #ccc;text-align: left;padding:5px 0;padding-left:10px;position: relative;}
+#detailCon .detailContitleBox td input,
+#detailCon .detailContitleBox td select{height:30px;width:76px;padding-left:3px;border:1px solid #bbb;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;}
+#detailCon .detailContitleBox td .left{float:left;margin:0 2px;position: relative;}
+#talkAboutBox .tittleBox{width:100%;height:40px;line-height: 40px;border:1px solid #bbb;}
+#talkAboutBox .tittleBox span{display:inline-block;height:100%;text-align: center;}
+#talkAboutBox  .commentSectionBox{width:100%;padding:12px;height:260px;overflow-y: auto;}
+#talkAboutBox  .commentSectionBox .commentSection{width:100%;overflow: hidden;height:auto;}
+#talkAboutBox .commentSection .userTitle .imgBox{width:25px;height:25px;border:1px solid #aaa;overflow: hidden;display: inline-block;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;vertical-align: middle;}
+#talkAboutBox{background:#f0f3f4;}
+#talkAboutBox .userTitle .imgBox img{width:100%;height:100%;}
+#talkAboutBox .commentSection{border-bottom:1px dashed #bbb;}
+#talkAboutBox .commentSection .userTitle{width:150px;float:left;}
+#talkAboutBox .commentSection .conmentsConts{width:calc(100% - 300px);padding:0 15px;float:left;}
+#talkAboutBox .commentSection .doBox{float:left;}
+#talkAboutBox .commentSection .doBox .reply{color:#0064b6;padding-right:12px;}
+#talkAboutBox .commentSection .praiseBox i{font-size:18px;margin-right:3px;}
+#talkAboutBox .commontsSrBox{width:100%;min-height:235px;padding:12px;border:1px solid #bbb;position: relative;}
+#myNameSelect{width:145px;height:30px;vertical-align: text-top;}
+#myComments{width:calc(100% - 400px);vertical-align: top;margin-right:9px;height:75px;}
+#mySetNum{width:75px;height:20px;padding-left:6px;}
+#myConmentsEnter,#creatCommentBtn{position: absolute;right:62px;top:45px;width:172px;}
+#myConmentsEnter{top:80px;}
+#myConmentsSub{position: absolute;left:95px;top:30px;}
+.selefCon:hover{background:#179d82;color:#fff;}
+.recalltalkcon{padding-left:12px;position: relative; margin: 10px 0;}
+.recalltalkcon:hover{background:#179d82;color:#fff;}
+.recalltalkcon .callDoBox{position: absolute;right:-70px;bottom:3px;font-size:11px;}
+.recalltalkcon .callDoBox .reply{padding-right:6px;}
+#talkAboutBox .deletecom{color:#8b0000;}
+#talkAboutBox .deletecom:hover{color:#8b0111;}
+.recalltalkcon:hover .callDoBox span{color:#bbb;!important;}
+#talkAboutBox .reply:hover,
+#talkAboutBox .praiseBox:hover{color:#f91515;cursor: pointer;}
+#talkAboutBox .commentSection .doBox .reply:hover{color:#f91515;}
+#commentlistBox{width:100%;height:125px;overflow-y: auto;}
+#detailCon .searchMenu .searchTag{width:76px;height:30px;}
+#detailCon .searchMenu .searchSecondMenu{position: absolute;width:100%;left:0;top:28px;background:#eee;color:#bbb;list-style: none;padding:0;z-index: 98;border:1px solid #bbb;border-top:none;display: none;max-height: 420px;overflow-y: auto;}
+#detailCon .searchMenu .searchSecondMenu.show{display: block;}
+#detailCon .searchSecondMenu li{width:100%;text-align: left;padding-left:3px;cursor: pointer;line-height: 23px;}
+#detailCon .searchSecondMenu li:hover{background:#fff;color:#333;border-top:1px solid #bbb;}
+#editoBtn{margin:10px; display: none;}
+#editoBtn.show{display: block;}
+#movieImgBox{position: relative}
+#movieImgBox.show{display: block;}
+#movieImgBox .movieinputBox{position: absolute;left:82px;bottom:1px;width:75px;height:32px;overflow: hidden;}
+#movieImgBox .moviebtn{display: inline-block;width:100%;height:27px;line-height: 27px;text-align: center;background:#568fb9;cursor: pointer;color: #fff;
+    -webkit-border-radius: 3px;z-index:50;
+    -moz-border-radius: 3px;
+    border-radius: 3px;}
+#movieImgBox .movieshowimg{border: 1px solid #9d9e9e;overflow: hidden;width: 80px;height: 80px;line-height: 80px;text-align: center;  background: rgba(255,255,255,.4);  cursor: pointer;}
+#movieImgBox .movieshowimg img{width: auto;height: auto;max-width: 80px;max-height: 80px;}
+#movieimgfile{ position: absolute;top:0;left:0;z-index:60;cursor: pointer;width:100%;height:100%;opacity: 0;}
+#movieImgBox .movieinputBox:hover .moviebtn{background:#204663;}
+#movieImgBox .tips{color:#ce0000;font-size:8px;position: absolute;bottom:25px;left:82px;display: none;}
+#movieImgBox .tips.show{display: block;}
+#recommendPageBox{height:32px;line-height: 32px;}
+#recommendPageBox select{margin-right:5px;}
+#commontsSrBox .imgmovieShowBox{min-height: 130px;width:100%;position: relative;}
+#imgmovieShowConts{width: calc(100% - 400px);margin:5px 9px 0 149px;overflow:hidden;border:1px solid #ddd;padding:4px;}
+#commentInputFile{width:200px;height:30px;position: absolute;top:6px;right: 35px;display: none;}
+.imgmovieShowBox .inputfileBtn{position: absolute;top:6px;right: 60px;}
+#choosePictureBtn{right:154px;}
+.imgMovieShowComBox{width:100%;}
+.imgMovieShowComBox span{display: inline-block;width:85px;height:85px;border:1px solid #ddd;margin:3px;padding:2px; text-align: center;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;}
+.movieshowBox span{width:45%;height:160px;}
+
+.imgMovieShowComBox span img,
+.imgMovieShowComBox span video{width:auto;height:auto;max-width:100%;max-height: 100%;vertical-align: top;}
+/*多图显示*/
+.delete {
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    text-align: center;
+    line-height: 100px;
+    z-index: 10;
+    font-size: 30px;
+    background-color: rgba(255,255,255,0.8);
+    color: #777;
+    opacity: 0;
+    transition-duration :0.7s;
+    -webkit-transition-duration: 0.7s;
+}
+.delete2{
+    font-size:18px; position: absolute;right:8px;top:1px;z-index:12;color:#fff; transition-duration :0.7s; opacity: 0;
+    -webkit-transition-duration: 0.7s;cursor: pointer;font-weight:700;
+}
+.delete:hover{
+    cursor: pointer;
+    opacity: .9;
+}
+.inputFileShow2:hover .delete2{cursor: pointer;opacity: .9;}
+.result {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    box-sizing: border-box;
+}
+.result img, .result video{width:auto;height:auto;max-width:100%;max-height: 100%;}
+
+.inputFileShow{float: left;width: 110px;height: 110px;overflow: hidden;border: 1px solid #CCCCCC;border-radius: 10px;padding: 5px;margin: 5px;}
+.inputFileShow2{width: 330px;height: 200px;border: 1px solid #CCCCCC;border-radius: 10px;padding: 5px;position: relative;background:#333;}
+
+.layui-layer-btn{padding:25px 5px !important;}
+.layui-layer-dialog .layui-layer-content{color:#fff;}
+#fixedTips{position: fixed;width:100%;height:100%;background:rgba(0,0,0,.5);z-index: 98;color:#fff;left:0;top:0;display: none;}
+#fixedTips .tips{color:#fff;font-size: 27px;text-align: center;line-height: 350px;}
+/*内容链接*/
+#contentUrlBox{position: fixed;width:100%;height:100%;padding:15px;background:#fff;top:0;bottom:0;left:0;right:0;margin:0 auto;display: none;overflow: auto;}
+#contentUrlBox li{width:100%;line-height: 30px;color:#333;font-size:13px;}
+
+/*一键生成评论的框*/
+#creatCommentBox{width:100%;padding:15px;background:#fff;height:100%;display: none;}
+#creatCommentBox .lineBox{width:100%;margin:15px 0;}
+#creatCommentBox .lineTitle{width:120px;display: inline-block;text-align: right;}
+#creatCommentBox select,
+#creatCommentBox input{width:180px;margin-left:6px;}
