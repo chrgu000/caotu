@@ -1,16 +1,16 @@
 
 
 
-const path="https://dev.api.toutushare.com/NHDZSEVER";//测试
-const path2="https://dev.api.toutushare.com/NHDZSEVER";//测试
+// const path="https://dev.api.toutushare.com/NHDZSEVER";//测试
+// const path2="https://dev.api.toutushare.com/NHDZSEVER";//测试
 // const path="http://192.168.1.114:8860/NHDZSEVER";//测试
 // const path2="http://192.168.1.114:8860/NHDZSEVER";//测试
 // const path="http://192.168.1.111:8091/NHDZSEVER";//老冯
 // const path2="http://192.168.1.111:8091/NHDZSEVER";//老冯
 
  /*线上改*/
-// const path="https://api.itoutu.com:8899/NHDZSEVER";
-// const path2="https://api.itoutu.com:8899/NHDZSEVER";
+const path="https://api.itoutu.com:8899/NHDZSEVER";
+const path2="https://api.itoutu.com:8899/NHDZSEVER";
 
 
 
