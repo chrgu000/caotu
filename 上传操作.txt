@@ -1,0 +1,97 @@
+后台管理系统：
+测试服务器:https://dev.api.toutushare.com/NHDZSEVER
+线上服务器:http://192.168.1.114:8878/NHDZBUSINESS
+
+线上服务：
+测试服务器:https://dev.api.toutushare.com/NHDZSEVER
+线上服务器:https://api.itoutu.com:8899/NHDZSEVER
+
+
+云服务器账号密码：
+https://console.cloud.tencent.com/cos5/bucket
+账号：939606658@qq.com
+密码：caotu.001
+
+微信公众号：
+官方号：spark@shijuezhi.cn
+
+密码：885920lkb
+AppId:wx7209465a9ddef7e2
+AppSecret:bf1cc917341031d46c99d2080bad12eb
+
+微信服务号
+账号：m13588063094@163.com
+密码：caotu001
+AppId:wx5527fcd602603a18
+AppSecret:fc172499840a72aa044b209b89a8432f
+
+2.QQ（应用宝）
+ 
+ ● 账号：1787915404
+  
+● 密码：caotu001
+
+3.微博
+  
+● 账号：13073629319
+  
+● 密码：caotu001
+
+4.友盟
+itoutuhr@163.com
+caotu001
+
+XSHELL:
+        线上：主机：115.159.70.73     端口：22   协议：SSH
+        后台：主机：192.168.1.114     端口：22   协议：SSH	
+
+
+发布头图后台管理系统：：：：：
+**tomcat-business-dev线下的
+**tomcat-business-pro线上的
+***线下的
+1-1：cd /home/app/tomcat-business-dev/webapps/CTKJBUSINESS
+***线上的
+1-2：cd /home/app/tomcat-business-pro/webapps/CTKJBUSINESS
+2：rm -rf system*
+3:  rz
+4:  unzip system.zip
+
+发布官网
+cd /home/app/tomcat-home/webapps
+rm -rf home.zip
+rm -rf ROOT
+rz
+unzip home.zip
+mv home ROOT
+
+H5页面（发布分享页/帮助与反馈） 线上环境
+头图：（https://v3.toutushare.com/help/help.html）
+内含段子：（https://active.diqyj.cn/share_connotation/sharecomment.html）
+备用域名：（https://active.oalul.cn/）
+
+cd /home/app/tomcat-share/webapps
+rm -rf share.zip  或者help.zip
+rm -rf share       或者help
+rz
+unzip share.zip
+
+
+/*********内含段子的********/
+内含段子后台接口：
+线下：http://192.168.1.114:8868/NHDZBUSINESS
+线上：http://192.168.1.114:8878/NHDZBUSINESS
+
+发布内含段子后台管理系统：：：：：
+***线下的：：
+1-1：cd /home/app/nhdz/tomcat-nhdzbusiness-dev/webapps/NHDZBUSINESS
+***线上的
+1-2：cd /home/app/nhdz/tomcat-nhdzbusiness-pro/webapps/NHDZBUSINESS
+
+发布内含段子官网
+cd /home/app/tomcat-nhdz-share/webapps
+rm -rf home****.zip
+rm -rf ROOT 
+rz
+unzip home*****.zip
+mv home**** ROOT

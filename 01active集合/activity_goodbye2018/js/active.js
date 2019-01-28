@@ -1,13 +1,15 @@
 
 
 window.onload=function() {
+
     setTimeout(function(){
         autoPlayMusic();
         splaybgmusic();
-        magnitude(1);
+        magnitude("MYDOGYEARWEB1");
         _czc.push(['_trackEvent', '进入活动页1']);
         $("#loading_hype_containerBox").css({"display":"none"});
         showfirstpage();
+        endpageinfobefor();//预先处理部分结果页
     },2500);
 };
 
@@ -63,7 +65,7 @@ $("#music").click(function () {
         $("#music .musicimg").attr("src","img/musicclose.png");
         $("#bgm").get(0).pause();
         musicplay=false;
-        magnitude2("SILIENCE");
+        magnitude("SILIENCE");
     }else{
         $("#music .musicimg").attr("src","img/musicopen.png");
         $("#bgm").get(0).play();
@@ -91,7 +93,7 @@ function autoPlayMusic() {
     document.addEventListener('DOMContentLoaded', musicInWeixinHandler);
 }
 function musicPlay(isPlay) {
-    var media = document.querySelector('#bg-music');
+    var media = document.querySelector('#bgm');
     if (isPlay && media.paused) {
         media.play();
     }
@@ -127,9 +129,9 @@ $("#fistPageBox").on("touchmove", function(e) {
             $("#fistPageBox").slideUp("slow");
             $("#secondPageBox").slideDown("slow");
             pageindex=2;
-            magnitude(2);
-            _czc.push(['_trackEvent', '进入活动页2']);
 
+            magnitude("MYDOGYEARWEB2");
+            _czc.push(['_trackEvent', '进入活动页2']);
 
         }
 
@@ -168,10 +170,12 @@ function deviceMotionHandler(eventData) {
                 // $("#secondPageBox").slideDown("slow");
                 setTimeout(function(){
                     $("#waggleBox").removeClass("waggleing");
-                    if(resultInfoData.userid==""){
-                        $("#secondFixedBox").fadeIn(1000);
-                    }else{
+
+                    if(resultInfoData.username && resultInfoData.username!="" && resultInfoData.username!=null && resultInfoData.username!=undefined){
                         popendpage();
+
+                    }else{
+                        $("#secondFixedBox").fadeIn(1000);
                     }
                 },600)
             }
@@ -186,67 +190,91 @@ function deviceMotionHandler(eventData) {
     $("#userNamesureBtn").click(function(){
        let username=$("#userNameInput").val();
        if(username.length>10){
-
+            //layer.msg("昵称不能超过10个字！");
+           showMessage("昵称不能超过10个字！", $("#userNameInput"));
+            return false;
        }
+        if(username==""){
+            //layer.msg("昵称不能超过10个字！");
+            showMessage("请输入名字哦～！", $("#userNameInput"));
+            return false;
+        }
         resultInfoData.username=username;
         if(username && username !=""){
             popendpage();
         }
     });
 
+    $("#userNameInput").click(function(){
+        $("#userNameInput").focus();
+    });
+
+
+
+/*弹出结果页的操作*/
+function popendpage(){
+    magnitude("MYDOGYEARWEB3");
+    _czc.push(['_trackEvent', '进入活动页3']);
+    $("#secondPageBox").slideUp("800");
+    $("#thirdPageBox").slideDown("800");
+    endpageinfo();
+    pageindex=3;
+
+}
+
     /*预先处理结果页*/
+function endpageinfobefor(){
+    if(resultInfoData.userheadphoto && resultInfoData.userheadphoto!=""){
+        $("#userHead").attr("src",resultInfoData.userheadphoto);
+    }else{
+        $("#endShareBox .userHeadBox").remove();
+    }
+    let index=randomnum(0,99);
+    let signchoose=signword[index];
+    resultInfoData.sign=signchoose.sign;
+    $("#signWord").html(signchoose.word);
+    let signlist=signchoose.sign.split("");
+    $("#signWordBox").empty();
+    $.each(signlist,function(i,n){
+        $("#signWordBox").append(' <div class="signCon"><img class="signConBg" src="img/signConBg.png" alt=""><span class="sign">'+n+'</span></div>')
+    });
+    let length=signlist.length;
+    let w=parseInt(100/length)-1+"%";
+    if(length == 2){
+        w="45%";
+        $("#signWordBox .signCon").css({"margin-left":"20px;"});
+    }
+    $("#signWordBox .signCon").css({"width":w});
+    $("#signWordBox .sign").addClass("sign"+length);
+
+}
+
+/*结果页2*/
     function endpageinfo() {
-        if(resultInfoData.userheadphoto && resultInfoData.userheadphoto!=""){
-            $("#userHead").attr("src",resultInfoData.userheadphoto);
-        }else{
-            $("#endShareBox .userHeadBox").remove();
-        }
-
         $("#userName").html(resultInfoData.username);
-        let index=randomnum(0,99);
-        let signchoose=signword[index];
-        $("#signWord").html(signchoose.word);
-        let signlist=signchoose.sign.split("");
-        $("#signWordBox").empty();
-        $.each(signlist,function(i,n){
-            $("#signWordBox").append(' <div class="signCon"><img class="signConBg" src="img/signConBg.png" alt=""><span class="sign">'+n+'</span></div>')
-        });
-        let length=signlist.length;
-        let w=parseInt(100/length)-1+"%";
-        $("#signWordBox .signCon").css({"width":w});
-        $("#signWordBox .sign").addClass("sign"+length);
-
-        sharewxjson = {
-            "webType": "0", //类型
-            "title": resultInfoData.username+"的狗年个性词是"+resultInfoData.sign, //分析的title名
-            "url": "https://active.oalul.cn/activity_goodbye2018/goodbye2018.html", //分享的链接
-            "content": "你看，那个人好像一条狗啊", //描述
-            "icon": "https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/activity_goodbye2018/goodbysharelogo.png"
-        };
-        wxfxxinfo.title=resultInfoData.username+"的狗年个性词是"+resultInfoData.sign;
-        wxfxxinfo.desc="你看，那个人好像一条狗啊";
+        let shareTitle=resultInfoData.username+"的狗年个性词是"+resultInfoData.sign;
+        let sharedesc="你看，那个人好像一条狗啊";
+        wxfxxinfo.title=shareTitle;
+        wxfxxinfo.desc=sharedesc;
+        sharewxjson.title=shareTitle;
+        sharewxjson.content=sharedesc;
         wxpz(wxfxxinfo);
+        $('meta[property="og:title"]').attr('content',shareTitle);
+        $('meta[itemprop="name"]').attr('content',shareTitle);
+        $('meta[name="description"]').attr('content',sharedesc);
+        $(document).attr("title",shareTitle);
+        setTimeout(function(){
+            getcanvasimg();
+        },800);
         if (resultInfoData.apptype=="Android"){
             let wxjsonstring = JSON.stringify(sharewxjson);
             window.android.setShareContent(wxjsonstring);
         }
 
-        setTimeout(function(){
-            getcanvasimg();
-        },1200);
 
     }
 
-    /*弹出结果页的操作*/
-    function popendpage(){
-        $("#secondPageBox").slideUp("800");
-        $("#thirdPageBox").slideDown("800");
-        pageindex=3;
-        magnitude(3);
-        _czc.push(['_trackEvent', '进入活动页3']);
 
-        endpageinfo();
-    }
 
 
     function getcanvasimg() {
@@ -260,15 +288,16 @@ function deviceMotionHandler(eventData) {
         canvas.width = width * scale; //定义canvas 宽度 * 缩放
         canvas.height = height * scale; //定义canvas高度 *缩放
         canvas.getContext("2d").scale(scale, scale); //获取context,设置scale
+        canvas.getContext("2d").translate(0,0);
         var opts = {
             scale: scale, // 添加的scale 参数
             canvas: canvas, //自定义 canvas
             // logging: true, //日志开关，便于查看html2canvas的内部执行流程
             width: width, //dom 原始宽度
             height: height,
-            useCORS: true // 【重要】开启跨域配置
+            useCORS: true, // 【重要】开启跨域配置
+            allowTaint: false
         };
-
         html2canvas(shareContent, opts).then(function (canvas) {
             var context = canvas.getContext('2d');
             // 【重要】关闭抗锯齿
@@ -277,7 +306,7 @@ function deviceMotionHandler(eventData) {
             context.msImageSmoothingEnabled = false;
             context.imageSmoothingEnabled = false;
             // 【重要】默认转化的格式为png,也可设置为其他格式
-            let dataUrl = canvas.toDataURL("image/jpg");
+            let dataUrl = canvas.toDataURL("image/png");
            $("#shareImg").attr("src",dataUrl).css("display","block");
             posttenxun(dataUrl);
 
@@ -295,7 +324,7 @@ function deviceMotionHandler(eventData) {
 
     /*重来一次*/
     $("#palyAgain").click(function(){
-        magnitude2("PLAYAGAIN");
+        magnitude("PLAYAGAIN");
         location.reload();
     });
 
@@ -316,7 +345,7 @@ function deviceMotionHandler(eventData) {
     $("#reportBox .report1").click(function(){
         $("#reportBox .report1").css({"display":"none"});
         $("#reportBox .report2").css({"display":"block"});
-        magnitude2("REPORT");
+        magnitude("REPORT");
     });
     $("#reportBox .report2").click(function(){
         $("#reportBox").css({"display":"none"});
@@ -337,16 +366,19 @@ function deviceMotionHandler(eventData) {
                         "content": wxfxxinfo.desc, //描述
                         "icon": wxfxxinfo.imgUrl
                     };
+                    //let sharestring2 = JSON.stringify(share);
+                   // $("#show").html(sharestring2);
                     if(share.url==""){
                         share=sharewxjson;
                     }
-                    share = JSON.stringify(share);
+                    let sharestring = JSON.stringify(share);
+                  // $("#show2").html(sharestring);
                     if (resultInfoData.apptype == "Android") {
                         // alert("Android::");
-                        window.android.shareweb(share);
+                        window.android.shareweb(sharestring);
                     } else if (resultInfoData.apptype == "IOS") {
                         // alert("ios::");
-                        window.webkit.messageHandlers.shareweb.postMessage(share); //调用ios方法
+                        window.webkit.messageHandlers.shareweb.postMessage(sharestring); //调用ios方法
                     }
                 }
             }, 400);

@@ -38,7 +38,7 @@ function setShareContent() {
     return wxjsonstring;
 } 
 //调用安卓方法
-// window.android.setShareContent(wxjsonstring);
+window.android.setShareContent(wxjsonstring);
 
 function randomString(e) {
     e = e || 32;

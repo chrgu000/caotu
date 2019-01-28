@@ -17,19 +17,21 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
-              <caret line="17" selection-start-line="17" selection-end-line="17" />
+            <state relative-caret-position="135">
+              <caret line="7" column="30" lean-forward="true" selection-start-line="7" selection-start-column="30" selection-end-line="7" selection-end-column="30" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="checkedphotoswite.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="checkedphotoswite.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/checkedphotoswite.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="8844">
-              <caret line="521" column="15" selection-start-line="521" selection-start-column="15" selection-end-line="521" selection-end-column="15" />
+            <state relative-caret-position="209">
+              <caret line="519" lean-forward="true" selection-start-line="519" selection-end-line="519" />
               <folding>
                 <element signature="e#4487#11223#0" />
+                <element signature="n#!!block;n#getcheckdata#0" />
+                <element signature="n#!!block;n#editcheckeddata#0" />
               </folding>
             </state>
           </provider>
@@ -38,20 +40,17 @@
       <file leaf-file-name="isstatus.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/isstatus.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="682">
-              <caret line="48" column="44" lean-forward="true" selection-start-line="48" selection-start-column="44" selection-end-line="48" selection-end-column="44" />
-              <folding>
-                <element signature="e#622#1194#0" />
-              </folding>
+            <state relative-caret-position="156">
+              <caret line="22" column="33" lean-forward="true" selection-start-line="22" selection-start-column="33" selection-end-line="22" selection-end-column="33" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="checkedconts.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="checkedconts.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/checkedconts.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="286">
-              <caret line="13" column="49" lean-forward="true" selection-start-line="13" selection-start-column="49" selection-end-line="13" selection-end-column="49" />
+            <state relative-caret-position="154">
+              <caret line="7" column="33" selection-start-line="7" selection-start-column="33" selection-end-line="7" selection-end-column="33" />
             </state>
           </provider>
         </entry>
@@ -150,10 +149,10 @@
         <option value="$PROJECT_DIR$/css/common.css" />
         <option value="$PROJECT_DIR$/dftest.html" />
         <option value="$PROJECT_DIR$/checkedrule.html" />
-        <option value="$PROJECT_DIR$/js/isstatus.js" />
         <option value="$PROJECT_DIR$/js/index.js" />
-        <option value="$PROJECT_DIR$/js/checkedphotoswite.js" />
         <option value="$PROJECT_DIR$/checkedconts.html" />
+        <option value="$PROJECT_DIR$/js/isstatus.js" />
+        <option value="$PROJECT_DIR$/js/checkedphotoswite.js" />
       </list>
     </option>
   </component>
@@ -166,7 +165,7 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
+  <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-12" />
     <option name="width" value="1938" />
     <option name="height" value="1029" />
@@ -266,14 +265,16 @@
       <workItem from="1548039092276" duration="239000" />
       <workItem from="1548039573452" duration="1399000" />
       <workItem from="1548064472470" duration="81000" />
+      <workItem from="1548640103493" duration="723000" />
+      <workItem from="1548640892147" duration="1553000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="335840000" />
+    <option name="totallyTimeSpent" value="338116000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
+    <frame x="-7" y="-7" width="1295" height="695" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1858618" />
@@ -469,37 +470,36 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/index.js">
+    <entry file="file://$PROJECT_DIR$/checkedconts.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="17" selection-start-line="17" selection-end-line="17" />
+        <state relative-caret-position="154">
+          <caret line="7" column="33" selection-start-line="7" selection-start-column="33" selection-end-line="7" selection-end-column="33" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/checkedphotoswite.js">
+    <entry file="file://$PROJECT_DIR$/js/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8844">
-          <caret line="521" column="15" selection-start-line="521" selection-start-column="15" selection-end-line="521" selection-end-column="15" />
-          <folding>
-            <element signature="e#4487#11223#0" />
-          </folding>
+        <state relative-caret-position="135">
+          <caret line="7" column="30" lean-forward="true" selection-start-line="7" selection-start-column="30" selection-end-line="7" selection-end-column="30" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/isstatus.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="682">
-          <caret line="48" column="44" lean-forward="true" selection-start-line="48" selection-start-column="44" selection-end-line="48" selection-end-column="44" />
-          <folding>
-            <element signature="e#622#1194#0" />
-          </folding>
+        <state relative-caret-position="156">
+          <caret line="22" column="33" lean-forward="true" selection-start-line="22" selection-start-column="33" selection-end-line="22" selection-end-column="33" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/checkedconts.html">
+    <entry file="file://$PROJECT_DIR$/js/checkedphotoswite.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="13" column="49" lean-forward="true" selection-start-line="13" selection-start-column="49" selection-end-line="13" selection-end-column="49" />
+        <state relative-caret-position="209">
+          <caret line="519" lean-forward="true" selection-start-line="519" selection-end-line="519" />
+          <folding>
+            <element signature="e#4487#11223#0" />
+            <element signature="n#!!block;n#getcheckdata#0" />
+            <element signature="n#!!block;n#editcheckeddata#0" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -17,8 +17,8 @@
       <file leaf-file-name="goodbye2018.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/goodbye2018.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
-              <caret line="101" column="10" lean-forward="true" selection-start-line="101" selection-start-column="10" selection-end-line="101" selection-end-column="10" />
+            <state relative-caret-position="289">
+              <caret line="51" column="4" lean-forward="true" selection-start-line="51" selection-start-column="4" selection-end-line="51" selection-end-column="4" />
               <folding>
                 <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
@@ -29,36 +29,55 @@
       <file leaf-file-name="common.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/css/common.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
-              <caret line="139" column="29" selection-start-line="139" selection-start-column="29" selection-end-line="139" selection-end-column="29" />
+            <state relative-caret-position="3652">
+              <caret line="166" column="23" selection-start-line="166" selection-start-column="23" selection-end-line="166" selection-end-column="23" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="active.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="active.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/active.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="226">
-              <caret line="189" column="8" lean-forward="true" selection-start-line="189" selection-start-column="8" selection-end-line="189" selection-end-column="8" />
+            <state relative-caret-position="512">
+              <caret line="310" column="32" lean-forward="true" selection-start-line="310" selection-start-column="32" selection-end-line="310" selection-end-column="32" />
               <folding>
-                <element signature="n#!!block;n#showfirstpage#0" />
                 <element signature="n#!!block;n#autoPlayMusic#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5478">
-              <caret line="360" column="35" lean-forward="true" selection-start-line="360" selection-start-column="35" selection-end-line="360" selection-end-column="35" />
+            <state relative-caret-position="198">
+              <caret line="9" column="32" lean-forward="true" selection-start-line="9" selection-start-column="32" selection-end-line="9" selection-end-column="32" />
               <folding>
+                <element signature="n#!!block;n#phoneType#0" />
                 <element signature="n#!!block;n#base64decode#0" />
                 <element signature="n#!!block;n#utf16to8#0" />
                 <element signature="n#!!block;n#utf8to16#0" />
                 <element signature="n#!!block;n#GetRequest#0" />
+                <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="shareapp.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/shareapp.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="22">
+              <caret line="19" column="33" selection-start-line="19" selection-start-column="33" selection-end-line="19" selection-end-column="33" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="cos.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/cos-js-sdl-v5/cos.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="308">
+              <caret line="71" column="44" selection-start-line="71" selection-start-column="44" selection-end-line="71" selection-end-column="44" />
             </state>
           </provider>
         </entry>
@@ -67,25 +86,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>clickibg</find>
-      <find>getshare</find>
-      <find>video</find>
-      <find>toDataURL</find>
-      <find>appId</find>
-      <find>document</find>
-      <find>cansecond</find>
-      <find>25</find>
-      <find>getBase64Image</find>
-      <find>secondPageBox</find>
-      <find>signCon</find>
-      <find>resultInfoData</find>
-      <find>getuserinfofromapp</find>
-      <find>popendpage</find>
-      <find>magnitude</find>
-      <find>ajax</find>
-      <find>musicopen</find>
-      <find>endpageinfo</find>
-      <find>getUserInfoFromApp</find>
       <find>sharewxjson</find>
       <find>wxfxxinfo</find>
       <find>music</find>
@@ -96,6 +96,26 @@
       <find>splaybgmusic</find>
       <find>userNameInput</find>
       <find>firstpage_plant4</find>
+      <find>resultInfoData</find>
+      <find>alert</find>
+      <find>layer</find>
+      <find>background</find>
+      <find>magnitude</find>
+      <find>popendpage</find>
+      <find>moz-user-select</find>
+      <find>sign</find>
+      <find>#shareImg</find>
+      <find>user-select</find>
+      <find>input</find>
+      <find>signCon</find>
+      <find>magnitude2</find>
+      <find>posttenxun</find>
+      <find>getUserInfoFromApp</find>
+      <find>endpageinfobefor</find>
+      <find>getuserinfofromapp</find>
+      <find>endpageinfo</find>
+      <find>getcanvasimg</find>
+      <find>show</find>
     </findStrings>
     <replaceStrings>
       <replace>pageindex</replace>
@@ -106,13 +126,13 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/js/signword.js" />
+        <option value="$PROJECT_DIR$/js/wxShare.js" />
+        <option value="$PROJECT_DIR$/css/common.css" />
+        <option value="$PROJECT_DIR$/goodbye2018.html" />
+        <option value="$PROJECT_DIR$/js/active.js" />
         <option value="$PROJECT_DIR$/js/shareapp.js" />
         <option value="$PROJECT_DIR$/js/cos-js-sdl-v5/cos.js" />
         <option value="$PROJECT_DIR$/js/index.js" />
-        <option value="$PROJECT_DIR$/js/wxShare.js" />
-        <option value="$PROJECT_DIR$/goodbye2018.html" />
-        <option value="$PROJECT_DIR$/css/common.css" />
-        <option value="$PROJECT_DIR$/js/active.js" />
       </list>
     </option>
   </component>
@@ -135,7 +155,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -159,10 +178,16 @@
               <item name="js" type="462c0819:PsiDirectoryNode" />
               <item name="cos-js-sdl-v5" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="activity_goodbye2018" type="b2602c69:ProjectViewProjectNode" />
+              <item name="activity_goodbye2018" type="462c0819:PsiDirectoryNode" />
+              <item name="plugin" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -234,19 +259,25 @@
       <workItem from="1548331372504" duration="1273000" />
       <workItem from="1548380902697" duration="1651000" />
       <workItem from="1548404037422" duration="3828000" />
+      <workItem from="1548418304303" duration="157000" />
+      <workItem from="1548568849773" duration="22943000" />
+      <workItem from="1548638252481" duration="19993000" />
+      <workItem from="1548663860050" duration="1215000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="123354000" />
+    <option name="totallyTimeSpent" value="167662000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1295" height="695" extended-state="7" />
+    <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17235902" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17156473" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.3291592" />
+      <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -259,7 +290,6 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -267,6 +297,11 @@
   </component>
   <component name="VcsContentAnnotationSettings">
     <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/js/active.js">
@@ -281,10 +316,12 @@
         <state relative-caret-position="154">
           <caret line="7" column="29" lean-forward="true" selection-start-line="7" selection-start-column="29" selection-end-line="7" selection-end-column="29" />
           <folding>
+            <element signature="n#!!block;n#phoneType#0" />
             <element signature="n#!!block;n#base64decode#0" />
             <element signature="n#!!block;n#utf16to8#0" />
             <element signature="n#!!block;n#utf8to16#0" />
             <element signature="n#!!block;n#GetRequest#0" />
+            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -293,11 +330,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="770">
           <caret line="35" column="42" lean-forward="true" selection-start-line="35" selection-start-column="42" selection-end-line="35" selection-end-column="42" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="n#!!block;n#getweixininfo#0" />
-            <element signature="n#!!block;n#getBase64Image#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -321,10 +353,12 @@
         <state relative-caret-position="110">
           <caret line="5" column="37" selection-start-line="5" selection-start-column="37" selection-end-line="5" selection-end-column="37" />
           <folding>
+            <element signature="n#!!block;n#phoneType#0" />
             <element signature="n#!!block;n#base64decode#0" />
             <element signature="n#!!block;n#utf16to8#0" />
             <element signature="n#!!block;n#utf8to16#0" />
             <element signature="n#!!block;n#GetRequest#0" />
+            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -333,11 +367,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="5104">
           <caret line="234" column="29" lean-forward="true" selection-start-line="234" selection-start-column="29" selection-end-line="234" selection-end-column="29" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="n#!!block;n#getweixininfo#0" />
-            <element signature="n#!!block;n#getBase64Image#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -361,10 +390,12 @@
         <state relative-caret-position="3960">
           <caret line="224" lean-forward="true" selection-start-line="224" selection-end-line="224" />
           <folding>
+            <element signature="n#!!block;n#phoneType#0" />
             <element signature="n#!!block;n#base64decode#0" />
             <element signature="n#!!block;n#utf16to8#0" />
             <element signature="n#!!block;n#utf8to16#0" />
             <element signature="n#!!block;n#GetRequest#0" />
+            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -382,10 +413,12 @@
         <state relative-caret-position="4048">
           <caret line="228" lean-forward="true" selection-start-line="228" selection-end-line="228" />
           <folding>
+            <element signature="n#!!block;n#phoneType#0" />
             <element signature="n#!!block;n#base64decode#0" />
             <element signature="n#!!block;n#utf16to8#0" />
             <element signature="n#!!block;n#utf8to16#0" />
             <element signature="n#!!block;n#GetRequest#0" />
+            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -410,10 +443,12 @@
         <state relative-caret-position="4048">
           <caret line="228" lean-forward="true" selection-start-line="228" selection-end-line="228" />
           <folding>
+            <element signature="n#!!block;n#phoneType#0" />
             <element signature="n#!!block;n#base64decode#0" />
             <element signature="n#!!block;n#utf16to8#0" />
             <element signature="n#!!block;n#utf8to16#0" />
             <element signature="n#!!block;n#GetRequest#0" />
+            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -444,10 +479,12 @@
         <state relative-caret-position="4048">
           <caret line="228" lean-forward="true" selection-start-line="228" selection-end-line="228" />
           <folding>
+            <element signature="n#!!block;n#phoneType#0" />
             <element signature="n#!!block;n#base64decode#0" />
             <element signature="n#!!block;n#utf16to8#0" />
             <element signature="n#!!block;n#utf8to16#0" />
             <element signature="n#!!block;n#GetRequest#0" />
+            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -465,10 +502,12 @@
         <state relative-caret-position="4048">
           <caret line="228" lean-forward="true" selection-start-line="228" selection-end-line="228" />
           <folding>
+            <element signature="n#!!block;n#phoneType#0" />
             <element signature="n#!!block;n#base64decode#0" />
             <element signature="n#!!block;n#utf16to8#0" />
             <element signature="n#!!block;n#utf8to16#0" />
             <element signature="n#!!block;n#GetRequest#0" />
+            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -493,10 +532,12 @@
         <state relative-caret-position="4092">
           <caret line="230" column="31" selection-start-line="230" selection-start-column="31" selection-end-line="230" selection-end-column="31" />
           <folding>
+            <element signature="n#!!block;n#phoneType#0" />
             <element signature="n#!!block;n#base64decode#0" />
             <element signature="n#!!block;n#utf16to8#0" />
             <element signature="n#!!block;n#utf8to16#0" />
             <element signature="n#!!block;n#GetRequest#0" />
+            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -514,10 +555,12 @@
         <state relative-caret-position="198">
           <caret line="9" column="12" lean-forward="true" selection-start-line="9" selection-start-column="12" selection-end-line="9" selection-end-column="12" />
           <folding>
+            <element signature="n#!!block;n#phoneType#0" />
             <element signature="n#!!block;n#base64decode#0" />
             <element signature="n#!!block;n#utf16to8#0" />
             <element signature="n#!!block;n#utf8to16#0" />
             <element signature="n#!!block;n#GetRequest#0" />
+            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -535,10 +578,12 @@
         <state relative-caret-position="220">
           <caret line="10" column="24" lean-forward="true" selection-start-line="10" selection-start-column="24" selection-end-line="10" selection-end-column="24" />
           <folding>
+            <element signature="n#!!block;n#phoneType#0" />
             <element signature="n#!!block;n#base64decode#0" />
             <element signature="n#!!block;n#utf16to8#0" />
             <element signature="n#!!block;n#utf8to16#0" />
             <element signature="n#!!block;n#GetRequest#0" />
+            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -573,77 +618,73 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$USER_HOME$/Desktop/loading/loading/guodu2/guodu2.html" />
     <entry file="file://$PROJECT_DIR$/js/signword.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="44">
-          <caret line="2" column="14" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/cos-js-sdl-v5/cos.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="69" column="60" lean-forward="true" selection-start-line="69" selection-start-column="60" selection-end-line="69" selection-end-column="60" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/Desktop/loading/loading/guodu2/guodu2.html" />
-    <entry file="file://$PROJECT_DIR$/js/shareapp.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="88">
-          <caret line="4" column="21" selection-start-line="4" selection-start-column="8" selection-end-line="4" selection-end-column="21" />
+        <state relative-caret-position="154">
+          <caret line="7" column="20" selection-start-line="7" selection-start-column="16" selection-end-line="7" selection-end-column="20" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/wxShare.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="23" column="37" selection-start-line="23" selection-start-column="37" selection-end-line="23" selection-end-column="37" />
+        <state relative-caret-position="132">
+          <caret line="8" column="43" selection-start-line="8" selection-start-column="43" selection-end-line="8" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/css/common.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3652">
+          <caret line="166" column="23" selection-start-line="166" selection-start-column="23" selection-end-line="166" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/active.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="512">
+          <caret line="310" column="32" lean-forward="true" selection-start-line="310" selection-start-column="32" selection-end-line="310" selection-end-column="32" />
           <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="n#!!block;n#getweixininfo#0" />
-            <element signature="n#!!block;n#getBase64Image#0" />
+            <element signature="n#!!block;n#autoPlayMusic#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/index.js">
+    <entry file="file://$PROJECT_DIR$/js/cos-js-sdl-v5/cos.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5478">
-          <caret line="360" column="35" lean-forward="true" selection-start-line="360" selection-start-column="35" selection-end-line="360" selection-end-column="35" />
-          <folding>
-            <element signature="n#!!block;n#base64decode#0" />
-            <element signature="n#!!block;n#utf16to8#0" />
-            <element signature="n#!!block;n#utf8to16#0" />
-            <element signature="n#!!block;n#GetRequest#0" />
-          </folding>
+        <state relative-caret-position="308">
+          <caret line="71" column="44" selection-start-line="71" selection-start-column="44" selection-end-line="71" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/shareapp.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="22">
+          <caret line="19" column="33" selection-start-line="19" selection-start-column="33" selection-end-line="19" selection-end-column="33" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/goodbye2018.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="101" column="10" lean-forward="true" selection-start-line="101" selection-start-column="10" selection-end-line="101" selection-end-column="10" />
+        <state relative-caret-position="289">
+          <caret line="51" column="4" lean-forward="true" selection-start-line="51" selection-start-column="4" selection-end-line="51" selection-end-column="4" />
           <folding>
             <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/css/common.css">
+    <entry file="file://$PROJECT_DIR$/js/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="139" column="29" selection-start-line="139" selection-start-column="29" selection-end-line="139" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/active.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="226">
-          <caret line="189" column="8" lean-forward="true" selection-start-line="189" selection-start-column="8" selection-end-line="189" selection-end-column="8" />
+        <state relative-caret-position="198">
+          <caret line="9" column="32" lean-forward="true" selection-start-line="9" selection-start-column="32" selection-end-line="9" selection-end-column="32" />
           <folding>
-            <element signature="n#!!block;n#showfirstpage#0" />
-            <element signature="n#!!block;n#autoPlayMusic#0" />
+            <element signature="n#!!block;n#phoneType#0" />
+            <element signature="n#!!block;n#base64decode#0" />
+            <element signature="n#!!block;n#utf16to8#0" />
+            <element signature="n#!!block;n#utf8to16#0" />
+            <element signature="n#!!block;n#GetRequest#0" />
+            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>

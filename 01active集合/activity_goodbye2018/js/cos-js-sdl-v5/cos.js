@@ -53,15 +53,17 @@ function runAsync(file){
             // console.log("cos提交：：");
             // console.log(err || data);
             if(err){
+                layer.msg("图片上传失败，请重试！！");
                 reject(err);//失败时候
-                layer.msg("图片上传失败，请重试！！")
+              //  $("#show").html("图片上传失败，请重试");
+
             }else{
                 cos.getObjectUrl({
                     Bucket: tenxunconfig.Bucket, // Bucket 格式：test-1250000000
                     Region: tenxunconfig.Region,
                     Key: filename,
                     Sign: true,
-                    Origin:"http://101.69.230.98"
+                    Origin:"http://101.69.230.98",
                 }, function (err, data) {
                     // console.log("cos获取：：");
                     // console.log(err || data);

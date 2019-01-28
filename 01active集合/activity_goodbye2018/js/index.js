@@ -3,11 +3,11 @@
  */
 
 
-// const path="https://api.itoutu.com:8899/NHDZSEVER";
-const path="https://dev.api.toutushare.com/NHDZSEVER";//测试
+const path="https://api.itoutu.com:8899/NHDZSEVER";
+// const path="https://dev.api.toutushare.com/NHDZSEVER";//测试
 
 
-
+// $("#show").html("index0011");
 var resultInfoData={
     "key":"",
     "userid":"",
@@ -99,7 +99,18 @@ function phoneType2() {
 
 }
 
+function get_android_version() {
+    var ua = navigator.userAgent.toLowerCase();
+    var version = null;
+    if (ua.indexOf("android") > 0) {
+        var reg = /android [\d._]+/gi;
+        var v_info = ua.match(reg);
+        version = (v_info + "").replace(/[^0-9|_.]/ig, "").replace(/_/ig, "."); //得到版本号4.2.2
+        version = parseInt(version.split('.')[0]);// 得到版本号第一位
+    }
 
+    return version;
+}
 
 //Js实现Base64编码、解码
 //下面是64个基本的编码
@@ -237,14 +248,20 @@ function randomnum(minNum,maxNum){
         var ua = navigator.userAgent;
         if(ua.match(/Android/i) != null){
             try {
-                let getdata=window.android.callappforkey();
+                let androbanben=get_android_version();
+                let getdata="";
+                if(androbanben<6){
+                    getdata=android.callappforkey();
+                }else{
+                    getdata=window.android.callappforkey();
+                }
                 let getdata2=JSON.parse(getdata);
                 resultInfoData.key=getdata2.key;
                 resultInfoData.userid=getdata2.userid;
                 resultInfoData.apppage=getdata2.apppage;
                 resultInfoData.apptype=getdata2.apptype;
                 // $("#show").html(getdata2.userid+","+getdata2.key);
-                getUserInfoFromApp(getdata2.userid);
+                getUserInfoData(getdata2.userid);
 
             } catch (e) {
 
@@ -260,7 +277,9 @@ function callappforkey(parm){
         resultInfoData.userid=getdata2.userid;
         resultInfoData.apppage=getdata2.apppage;
         resultInfoData.apptype=getdata2.apptype;
-        getUserInfoFromApp(getdata2.userid);
+        getUserInfoData(getdata2.userid);
+        //取消ios/Android移动端长按弹出默认选项栏
+        $("body").css({"-webkit-touch-callout":"none","-webkit-user-select":"none","-khtml-user-select":"none","-moz-user-select":"none","-ms-user-select":"none","user-select":"none","-o-user-select":"none"})
     }else{
 
     }
@@ -268,7 +287,7 @@ function callappforkey(parm){
 
 
     /*获取用户信息*/
-    function getUserInfoFromApp(useridaes){
+    function getUserInfoData(useridaes){
         var tjdatas={"activenum":"MYDOGYEARWEB","codeb":useridaes,"isremark":"NO"};
         //console.log(tjdatas);
         tjdatas=JSON.stringify(tjdatas);
@@ -288,14 +307,16 @@ function callappforkey(parm){
             success:function(diskJson){
                 console.log("获取用户个人信息:");
                 console.log(diskJson);
-                $("#show2").html(diskJson.code);
+                // $("#show2").html(diskJson.code);
                 if(diskJson.code =="1000"){
                     if(diskJson.data && diskJson.data !=""){
-                        $("#show").html(diskJson.data.username);
+                        // $("#show").html(diskJson.data.username);
                         resultInfoData.username=diskJson.data.username;
-                        resultInfoData.userheadphoto=diskJson.data.userheadphoto;
                         resultInfoData.usersex=diskJson.data.usersex;
                         resultInfoData.uno=diskJson.data.uno;
+                        getBase64ImageHead(diskJson.data.userheadphoto);
+
+
                     }
                 }else{
 
@@ -308,7 +329,7 @@ function callappforkey(parm){
 /*统计数量*/
 function magnitude(pagestr){
 
-    var tjdatas={"pagestr":"MYDOGYEARWEB"+pagestr,"needcount":"NO"};
+    var tjdatas={"pagestr":pagestr,"needcount":"NO"};
     //console.log(tjdatas);
     tjdatas=JSON.stringify(tjdatas);
     $.ajax({
@@ -340,34 +361,32 @@ function magnitude(pagestr){
     });
 }
 
-/*统计数量2*/
-function magnitude2(pagestr){
-    var tjdatas={"ctype":"ctype","pagestr":pagestr};
-    //console.log(tjdatas);
-    tjdatas=JSON.stringify(tjdatas);
-    $.ajax({
-        url : path+'/activepage/countactivebyapp.do',
-        cache:false,//false就不会从浏览器缓存中加载请求信息了
-        type:"POST",
-        contentType: "application/json",
-        dataType:"JSON",
-        async:false,
-        data: tjdatas,
-        error: function(data){
-            /*  layer.msg("服务器未响应,请稍后再试!");*/
-            //console.log("获取失败：");
-            //console.log(data);
-        },
-        success:function(diskJson){
-            console.log("统计22:");
-            console.log(diskJson);
-            if(diskJson.code =="1000"){
 
-            }else{
 
-                /*  layer.msg("网络异常，请重试！！")*/
-            }
 
-        }
-    });
+function getBase64ImageHead(imgurl) {
+    var ish = imgurl.split(":")[0];
+    var ish2 = imgurl.split(":")[1];
+    if (ish == "http") {
+        imgurl = "https:" + ish2;
+    }
+    let img = new Image();
+    img.crossOrigin = "anonymous";
+    let timestamp = new Date().getTime();
+    // img.setAttribute('crossOrigin', 'anonymous'); + "?" + timestamp
+    img.src = imgurl + "?" + timestamp;
+    img.onload = function () {
+        var canvas = document.createElement("canvas");
+        canvas.width = 400; //这个设置不能丢，否者会成为canvas默认的300*150的大小
+        canvas.height = 400; //这个设置不能丢，否者会成为canvas默认的300*150的大小
+        var ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, 400, 400);
+        var dataURL = canvas.toDataURL("image/png");
+        resultInfoData.userheadphoto=dataURL;
+    }
+}
+
+/*layer提示框*/
+function showMessage(msg, domObj) {
+    layer.tips("<span style='font-size:2.1rem;padding:4px;'>"+msg+"</span>", domObj,{tips:[3],area: ['auto', 'auto']});//弹出框加回调函数
 }

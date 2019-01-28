@@ -1,14 +1,12 @@
 
     /*提交图片到腾讯云*/
-
-
     var postappimgurl="";
 
     function posttenxun(dataURL) {
         var file1=convertBase64UrlToBlob(dataURL,"png");
         var x= Math.random(32).toString(36).substr(3,32);
         var date= Date.now().toString(36);
-        let fileName = String(x)+String(date)+".jpeg";
+        let fileName = String(x)+String(date)+".png";
         var imgMsg = {
             name : fileName,//获取文件名
             file:file1,//文件流
@@ -21,11 +19,8 @@
             console.log(onetdk);
             postappimgurl=onetdk;
             $("#shareImg").attr("src",onetdk);
-
         });
     }
-
-
 
     /*canvas保存图片上传*/
     function convertBase64UrlToBlob(urlData,type){

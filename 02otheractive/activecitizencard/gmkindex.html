@@ -188,7 +188,7 @@
             <div class="jubao">举报</div>
             <img class="bgimg" src="images/index_bg.png" alt="">
             <div class="iwant"><a href="" id="wantGet"></a></div>
-            <p>已有12783位段友领取公民卡</p>
+            <p>已有<span id="userNumberText"></span>位段友领取公民卡</p>
             <p>下载内含段友APP，搜索“段子哥”关注并领取”</p>
         </div>
         <div class="ladder">
@@ -244,7 +244,7 @@
         window.onload=function() {
             $("#music").append('<audio src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/activeallimgs/activegmk/bgmusic.mp3" id="bg-music" autoplay  loop="loop"></audio>');
             autoPlayMusic();
-            permanent("GMKPAGE1", "NO");//统计
+            permanent("GMKPAGE1ALL", "YES");//统计
             if (userinfolist.apptype == 'web') {
                 //不在app内
                 $("#wantGet").attr("href","isshare.html");
@@ -369,10 +369,12 @@
                     //console.log(data);
                 },
                 success: function (diskJson) {
-                    //console.log("统计:");
-                    //console.log(diskJson);
+                    console.log("统计:");
+                    console.log(diskJson);
                     if (diskJson.code == "1000") {
-
+                        if(diskJson.data && diskJson.data!=""){
+                            $("#userNumberText").html(diskJson.data);
+                        }
                     } else {
 
                         /*  layer.msg("网络异常，请重试！！")*/

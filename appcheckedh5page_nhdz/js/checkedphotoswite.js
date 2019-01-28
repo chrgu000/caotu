@@ -516,6 +516,8 @@ function postcheckdata(ispass){
             postcheckdata("NO");
             getcheckdata();
             iscanclick=1;
+        }else{
+
         }
         setTimeout(function(){
             iscanclick=0;
