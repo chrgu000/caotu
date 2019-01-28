@@ -208,6 +208,18 @@ function deviceMotionHandler(eventData) {
     $("#userNameInput").click(function(){
         $("#userNameInput").focus();
     });
+    $('#userNameInput').bind('focus',function(){
+        //或者$('#viewport').height($(window).height()+'px');
+        window.scrollTo(0,0);
+    }).bind('blur',function(){
+        window.scrollTo(0,0);
+        // $('#secondFixedBox').css({'top':'0',"position":"fixed"});
+        // $('#shareImg').css({'top':'0'});
+
+        //或者$('#viewport').height('auto');
+    });
+
+
 
 
 
@@ -219,6 +231,7 @@ function popendpage(){
     $("#thirdPageBox").slideDown("800");
     endpageinfo();
     pageindex=3;
+    $("#secondFixedBox").remove();
 
 }
 
@@ -241,13 +254,18 @@ function endpageinfobefor(){
     let length=signlist.length;
     let w=parseInt(100/length)-1+"%";
     if(length == 2){
-        w="45%";
-        $("#signWordBox .signCon").css({"margin-left":"20px;"});
+        w="40%";
+        $("#signWordBox .signCon").css({"margin-left":"1%"});
+        $("#signWordBox .signCon:first-child").css({"margin-left":"8%"});
     }
     $("#signWordBox .signCon").css({"width":w});
     $("#signWordBox .sign").addClass("sign"+length);
 
 }
+
+$("body").click(function () {
+    endpageinfobefor();
+})
 
 /*结果页2*/
     function endpageinfo() {
@@ -263,9 +281,13 @@ function endpageinfobefor(){
         $('meta[itemprop="name"]').attr('content',shareTitle);
         $('meta[name="description"]').attr('content',sharedesc);
         $(document).attr("title",shareTitle);
+        layer.load(1, {
+            shade: [0.1,'#333'] //0.1透明度的白色背景
+        });
         setTimeout(function(){
+            layer.closeAll();
             getcanvasimg();
-        },800);
+        },1200);
         if (resultInfoData.apptype=="Android"){
             let wxjsonstring = JSON.stringify(sharewxjson);
             window.android.setShareContent(wxjsonstring);

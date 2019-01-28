@@ -6,7 +6,6 @@
 const path="https://api.itoutu.com:8899/NHDZSEVER";
 // const path="https://dev.api.toutushare.com/NHDZSEVER";//测试
 
-
 // $("#show").html("index0011");
 var resultInfoData={
     "key":"",

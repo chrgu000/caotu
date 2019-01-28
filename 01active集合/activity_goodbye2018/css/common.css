@@ -69,6 +69,24 @@ a:hover{
 }
 *:focus{outline:none;}
 *{box-sizing: border-box;}
+/*移动端禁止长按图片保存*/
+*{
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+}
+#secondPageBox img,#thirdPageBox img{
+    pointer-events:none;
+}
+#thirdPageBox #shareImg{
+    -webkit-touch-callout: default;
+    pointer-events:auto;
+}
+
 [v-cloak]{display: none;}
 .btn{display: inline-block;padding:6px 9px;background:#FF698F;color:#fff;text-align: center;cursor: pointer;
     -webkit-border-radius: 3px;
@@ -138,16 +156,17 @@ a:hover{
 .waggleing{  animation: waggle 100ms linear infinite 0s alternate;
     -webkit-animation: waggle 100ms linear infinite 0s alternate; /* Safari 与 Chrome */}
 #secondFixedBox{width:100%;height:100%;background:#382C3F;position: fixed;left:0;top:0;display: none;padding-top:30%;}
-#secondFixedBox .thirdShowCon{width:100%;text-align: center;position: relative;}
+#secondFixedBox .thirdShowCon{width:85%;height:1000px;text-align: center;margin:0 auto;position: relative;background:url("../img/secondpage2name.png") no-repeat;background-size: contain;}
 #secondFixedBox .thirdShowCon .secondpage2name{width:80%;height:auto;}
-#userNameInput{position: absolute;top:30%;left:22%;width:56%;height:190px;padding-left:40px;font-size:2.4rem;background:none;
+#userNameInput{/*position: absolute;top:30%;left:22%;*/width:76%;height:190px;padding-left:40px;font-size:2.4rem;background:none;margin-top:36%;
     -webkit-border-radius: 76px;
     -moz-border-radius: 76px;
     border-radius: 76px;}
-#userNamesureBtn{width:210px;height:210px;position: absolute;left:38%;bottom:7%;background:none;border:none;}
+.userNamesureBtnBox{width:100%;margin-top:110px;text-align: center;}
+#userNamesureBtn{width:210px;height:210px;/*position: absolute;left:38%;bottom:7%;*/background:none;border:none;}
 #userNamesureBtn img{width:100%;height:auto;}
 
-#thirdPageBox{width:100%;height:100%;background:#382C3F;position: relative;text-align: center;padding:30px 0;display: none;}
+#thirdPageBox{width:100%;height:100%;background:#382C3F;position: relative;text-align: center;padding:30px 0;display: none;cursor: pointer;}
 #endShareConBox{background:#382C3F;width:100%;height:95%;position: relative;padding:70px 60px;}
 #endShareBox{width:100%;padding:40px 35px;position: relative;z-index:9;height: 100%;}
 #endShareBox .endShareBg{width:100%;z-index:-1;height:100%;position: absolute;left:0;top:0;}
@@ -158,7 +177,7 @@ a:hover{
     border-radius: 50%;}
 #endShareBox .userHeadBox img{width:100%;height:auto;vertical-align: middle;}
 #userName{font-size:3.2rem;font-weight:700;line-height: 80px;}
-#signWordBox{width:100%;overflow: hidden;padding:22px;}
+#signWordBox{width:100%;overflow: hidden;padding:9px 22px;}
 #signWordBox .signCon{width:33%;float:left;position: relative;font-size:8rem;font-family: "MiNiJian";}
 #signWordBox .signConBg{width:100%;height:auto;}
 #signWordBox .sign{position:absolute;left:24%;top:14%;}
@@ -166,7 +185,7 @@ a:hover{
 #signWordBox .sign.sign3{font-size:8rem;left:23%;top:20%;}
 #signWordBox .sign.sign4{font-size:7rem;left:20%;top:15%;}
 #signWordBox .sign.sign5{font-size:5rem;left:23%;top:13%;}
-#signWord{width:100%;padding:0 25px;font-size:2.4rem;color:#61433B;text-align: left;margin-bottom:420px;line-height: 4rem;}
+#signWord{width:100%;padding:0 25px;font-size:2.4rem;color:#61433B;text-align: left;margin-bottom:420px;line-height: 3.8rem;}
 #thirdPageBox .thirdLogo{width:235px;height:auto;position: absolute;left:25px;bottom:70px;}
 #thirdPageBox .ewmBox{width:300px;position: absolute;right:0;bottom:30px;color:#333;font-size:1.8rem;text-align: center;}
 #thirdPageBox .ewmBox img{width:210px;height:210px;}
