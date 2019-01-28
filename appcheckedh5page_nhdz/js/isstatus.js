@@ -55,7 +55,7 @@ function callappforkey(parm){
 
         localStorage.userinfolist=JSON.stringify(userinfolist) ;//存缓存;
       //  window.webkit.messageHandlers.jumpPageIos.postMessage("https://active.diqyj.cn/appcheckedh5page_nhdz2/dfguardian.html");//调用ios方法
-        window.location.href ="https://active.diqyj.cn/appcheckedh5page_nhdz2/dfguardian.html";
+        window.location.href ="https://active.diqyj.cn/appcheckedh5page_nhdz/dfguardian.html";
     }
 
 }
@@ -78,7 +78,7 @@ function isstatus(getdata2){
         error: function(data){
             // alert("error");
             localStorage.userinfolist=JSON.stringify(userinfolist) ;//存缓存;
-            window.location.href ="https://active.diqyj.cn/appcheckedh5page_nhdz2/dfguardian.html";
+            window.location.href ="https://active.diqyj.cn/appcheckedh5page_nhdz/dfguardian.html";
             // window.webkit.messageHandlers.jumpPageIos.postMessage("https://active.diqyj.cn/appcheckedh5page_nhdz2/dfguardian.html");//调用ios方法
         },
         success:function(diskJson){
@@ -92,16 +92,16 @@ function isstatus(getdata2){
                 localStorage.userinfolist =JSON.stringify(userinfolist) ;//存缓存
                 localStorage.istest ="0" ;//存缓存
                 if(diskJson.data.ishave ==1){
-                    window.location.href ="https://active.diqyj.cn/appcheckedh5page_nhdz2/checkedindex.html";
+                    window.location.href ="https://active.diqyj.cn/appcheckedh5page_nhdz/checkedindex.html";
                     return false;
                 }else{
-                    window.location.href ="https://active.diqyj.cn/appcheckedh5page_nhdz2/dfguardian.html";
+                    window.location.href ="https://active.diqyj.cn/appcheckedh5page_nhdz/dfguardian.html";
                     return false;
                 }
 
             }else{
                 localStorage.userinfolist=JSON.stringify(userinfolist) ;//存缓存;
-                window.location.href ="https://active.diqyj.cn/appcheckedh5page_nhdz2/dfguardian.html";
+                window.location.href ="https://active.diqyj.cn/appcheckedh5page_nhdz/dfguardian.html";
                 return false;
             }
 
