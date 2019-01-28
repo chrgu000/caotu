@@ -35,11 +35,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="active.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="active.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/active.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="512">
-              <caret line="310" column="32" lean-forward="true" selection-start-line="310" selection-start-column="32" selection-end-line="310" selection-end-column="32" />
+            <state relative-caret-position="204">
+              <caret line="296" column="27" lean-forward="true" selection-start-line="296" selection-start-column="27" selection-end-line="296" selection-end-column="27" />
               <folding>
                 <element signature="n#!!block;n#autoPlayMusic#0" />
               </folding>
@@ -47,11 +47,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="9" column="32" lean-forward="true" selection-start-line="9" selection-start-column="32" selection-end-line="9" selection-end-column="32" />
+            <state relative-caret-position="220">
+              <caret line="10" column="20" lean-forward="true" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
               <folding>
                 <element signature="n#!!block;n#phoneType#0" />
                 <element signature="n#!!block;n#base64decode#0" />
@@ -129,10 +129,10 @@
         <option value="$PROJECT_DIR$/js/wxShare.js" />
         <option value="$PROJECT_DIR$/css/common.css" />
         <option value="$PROJECT_DIR$/goodbye2018.html" />
-        <option value="$PROJECT_DIR$/js/active.js" />
         <option value="$PROJECT_DIR$/js/shareapp.js" />
         <option value="$PROJECT_DIR$/js/cos-js-sdl-v5/cos.js" />
         <option value="$PROJECT_DIR$/js/index.js" />
+        <option value="$PROJECT_DIR$/js/active.js" />
       </list>
     </option>
   </component>
@@ -145,7 +145,7 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-12" />
     <option name="width" value="1938" />
     <option name="height" value="1029" />
@@ -262,12 +262,12 @@
       <workItem from="1548418304303" duration="157000" />
       <workItem from="1548568849773" duration="22943000" />
       <workItem from="1548638252481" duration="19993000" />
-      <workItem from="1548663860050" duration="1215000" />
+      <workItem from="1548663860050" duration="1807000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="167662000" />
+    <option name="totallyTimeSpent" value="168254000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
@@ -640,16 +640,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/active.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="512">
-          <caret line="310" column="32" lean-forward="true" selection-start-line="310" selection-start-column="32" selection-end-line="310" selection-end-column="32" />
-          <folding>
-            <element signature="n#!!block;n#autoPlayMusic#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/cos-js-sdl-v5/cos.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="308">
@@ -676,8 +666,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="9" column="32" lean-forward="true" selection-start-line="9" selection-start-column="32" selection-end-line="9" selection-end-column="32" />
+        <state relative-caret-position="220">
+          <caret line="10" column="20" lean-forward="true" selection-start-line="10" selection-start-column="20" selection-end-line="10" selection-end-column="20" />
           <folding>
             <element signature="n#!!block;n#phoneType#0" />
             <element signature="n#!!block;n#base64decode#0" />
@@ -685,6 +675,16 @@
             <element signature="n#!!block;n#utf8to16#0" />
             <element signature="n#!!block;n#GetRequest#0" />
             <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/active.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="204">
+          <caret line="296" column="27" lean-forward="true" selection-start-line="296" selection-start-column="27" selection-end-line="296" selection-end-column="27" />
+          <folding>
+            <element signature="n#!!block;n#autoPlayMusic#0" />
           </folding>
         </state>
       </provider>

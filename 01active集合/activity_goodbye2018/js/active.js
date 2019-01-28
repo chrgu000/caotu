@@ -288,7 +288,7 @@ function endpageinfobefor(){
         canvas.width = width * scale; //定义canvas 宽度 * 缩放
         canvas.height = height * scale; //定义canvas高度 *缩放
         canvas.getContext("2d").scale(scale, scale); //获取context,设置scale
-        canvas.getContext("2d").translate(0,0);
+        canvas.getContext("2d").translate(0,-30);
         var opts = {
             scale: scale, // 添加的scale 参数
             canvas: canvas, //自定义 canvas
