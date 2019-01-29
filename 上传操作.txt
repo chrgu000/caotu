@@ -10,7 +10,7 @@
 云服务器账号密码：
 https://console.cloud.tencent.com/cos5/bucket
 账号：939606658@qq.com
-密码：caotu.001
+密码：beginagain.9
 
 微信公众号：
 官方号：spark@shijuezhi.cn
