@@ -493,6 +493,7 @@ function postcheckdata(ispass){
     })
 }
 
+
     var iscanclick=0;
     /*跳过*/
     $("#nextcheckedBtn").click(function(){
@@ -502,10 +503,13 @@ function postcheckdata(ispass){
             postcheckdata("UN");
             getcheckdata();
             iscanclick=1;
+        }else{
+            layer.msg("仔细看哦，不要让违规内容溜了！！");
+           // showMessage("仔细看哦，不要让违规内容溜了！！", $(".btnlistBox"));
         }
         setTimeout(function(){
             iscanclick=0;
-        },2000)
+        },1000)
 
     });
     /*不通过按钮*/
@@ -517,11 +521,12 @@ function postcheckdata(ispass){
             getcheckdata();
             iscanclick=1;
         }else{
-
+            layer.msg("仔细看哦，不要让违规内容溜了！！");
+            //showMessage("仔细看哦，不要让违规内容溜了！！", $(".btnlistBox"));
         }
         setTimeout(function(){
             iscanclick=0;
-        },2000)
+        },1000)
 
     });
     /*通过按钮*/
@@ -532,10 +537,13 @@ function postcheckdata(ispass){
             postcheckdata("YES");
             getcheckdata();
             iscanclick=1;
+        }else{
+            layer.msg("仔细看哦，不要让违规内容溜了！！");
+           // showMessage("仔细看哦，不要让违规内容溜了！！", $(".btnlistBox"));
         }
         setTimeout(function(){
             iscanclick=0;
-        },2000)
+        },1000)
 
     });
 
@@ -552,6 +560,22 @@ function postcheckdata(ispass){
                 content: $("#titleShowAllBox") //iframe的url
             });
         });
+
+    /*通过并结束按钮*/
+    $("#checkfinishbtn").click(function(){
+        postcheckdata("YES");
+        let ua = navigator.userAgent;
+        if(ua.match(/iPhone|iPod|iPad/i) != null){
+           // layer.msg("ios");
+            window.webkit.messageHandlers.closeapp.postMessage({});//调用ios方法
+        }else if(ua.match(/Android/i) != null){
+            window.android.closeapp();
+        } else{
+            window.android.closeapp();
+            // alert("不在app");
+            //$("#show").html("不在app");
+        }
+    });
 
        /* $("#titleShowAllBox").delegate(".lessTitle","click",function(){
            /!* let title= photoSwipe.checkeddata.content.contenttitle;

@@ -14,25 +14,29 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/js/index.js">
+      <file leaf-file-name="dfguardian.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/dfguardian.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="7" column="30" lean-forward="true" selection-start-line="7" selection-start-column="30" selection-end-line="7" selection-end-column="30" />
+            <state relative-caret-position="202">
+              <caret line="162" column="5" lean-forward="true" selection-start-line="162" selection-start-column="5" selection-end-line="162" selection-end-column="5" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="checkedphotoswite.js" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/js/checkedphotoswite.js">
+      <file leaf-file-name="dfguardian2.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/dfguardian2.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="209">
-              <caret line="519" lean-forward="true" selection-start-line="519" selection-end-line="519" />
-              <folding>
-                <element signature="e#4487#11223#0" />
-                <element signature="n#!!block;n#getcheckdata#0" />
-                <element signature="n#!!block;n#editcheckeddata#0" />
-              </folding>
+            <state relative-caret-position="223">
+              <caret line="77" column="50" selection-start-line="77" selection-start-column="50" selection-end-line="77" selection-end-column="50" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="dfgur2.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/dfgur2.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="37" column="41" selection-start-line="37" selection-start-column="35" selection-end-line="37" selection-end-column="41" />
             </state>
           </provider>
         </entry>
@@ -40,26 +44,8 @@
       <file leaf-file-name="isstatus.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/isstatus.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="156">
-              <caret line="22" column="33" lean-forward="true" selection-start-line="22" selection-start-column="33" selection-end-line="22" selection-end-column="33" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="checkedconts.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/checkedconts.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="154">
-              <caret line="7" column="33" selection-start-line="7" selection-start-column="33" selection-end-line="7" selection-end-column="33" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="common.css" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/css/common.css">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2266">
-              <caret line="103" lean-forward="true" selection-start-line="103" selection-end-line="103" />
+            <state relative-caret-position="379">
+              <caret line="47" column="22" selection-start-line="47" selection-start-column="9" selection-end-line="47" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -76,11 +62,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>istest</find>
-      <find>localStorage.istest</find>
-      <find>#photo_box .contsBox .videoBox</find>
-      <find>btnlistBox</find>
-      <find>cannext</find>
       <find>isapp</find>
       <find>window.location.href</find>
       <find>window</find>
@@ -104,8 +85,13 @@
       <find>2222</find>
       <find>alert</find>
       <find>path</find>
-      <find>window.location</find>
       <find>ajax</find>
+      <find>tippassBtn</find>
+      <find>postcheckdata</find>
+      <find>.btnlistBox</find>
+      <find>window.location</find>
+      <find>userhead</find>
+      <find>callappforkey</find>
     </findStrings>
     <replaceStrings>
       <replace>内含段子</replace>
@@ -140,7 +126,6 @@
         <option value="$PROJECT_DIR$/js/testlist.js" />
         <option value="$PROJECT_DIR$/js/checked.js" />
         <option value="$PROJECT_DIR$/isshare.html" />
-        <option value="$PROJECT_DIR$/dfguardian2.html" />
         <option value="$PROJECT_DIR$/dfguardian.html" />
         <option value="$USER_HOME$/Desktop/wxShare.js" />
         <option value="$PROJECT_DIR$/js/dfgur2.js" />
@@ -149,8 +134,9 @@
         <option value="$PROJECT_DIR$/css/common.css" />
         <option value="$PROJECT_DIR$/dftest.html" />
         <option value="$PROJECT_DIR$/checkedrule.html" />
-        <option value="$PROJECT_DIR$/js/index.js" />
+        <option value="$PROJECT_DIR$/dfguardian2.html" />
         <option value="$PROJECT_DIR$/checkedconts.html" />
+        <option value="$PROJECT_DIR$/js/index.js" />
         <option value="$PROJECT_DIR$/js/isstatus.js" />
         <option value="$PROJECT_DIR$/js/checkedphotoswite.js" />
       </list>
@@ -165,7 +151,7 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-12" />
     <option name="width" value="1938" />
     <option name="height" value="1029" />
@@ -175,6 +161,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -196,7 +183,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -267,14 +253,16 @@
       <workItem from="1548064472470" duration="81000" />
       <workItem from="1548640103493" duration="723000" />
       <workItem from="1548640892147" duration="1553000" />
+      <workItem from="1548727723081" duration="12564000" />
+      <workItem from="1548748498014" duration="265000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="338116000" />
+    <option name="totallyTimeSpent" value="350945000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1295" height="695" extended-state="7" />
+    <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.1858618" />
@@ -323,7 +311,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="2" />
+      <option name="time" value="3" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -386,13 +374,6 @@
     <entry file="file://$PROJECT_DIR$/dzfriend.html" />
     <entry file="file://$PROJECT_DIR$/userprotocol.html" />
     <entry file="file://$USER_HOME$/Desktop/wxShare.js" />
-    <entry file="file://$PROJECT_DIR$/dfguardian.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-858">
-          <caret line="33" column="54" lean-forward="true" selection-start-line="33" selection-start-column="54" selection-end-line="33" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/js/testlist.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="160">
@@ -435,20 +416,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dfguardian2.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1606">
-          <caret line="73" column="96" lean-forward="true" selection-start-line="73" selection-start-column="96" selection-end-line="73" selection-end-column="96" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/dfgur2.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3146">
-          <caret line="143" column="5" lean-forward="true" selection-start-line="143" selection-start-column="5" selection-end-line="143" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/isshare.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="396">
@@ -456,50 +423,71 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/isstatus.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="242">
-          <caret line="11" column="42" lean-forward="true" selection-start-line="11" selection-start-column="42" selection-end-line="11" selection-end-column="42" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/css/common.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2266">
-          <caret line="103" lean-forward="true" selection-start-line="103" selection-end-line="103" />
+        <state relative-caret-position="1936">
+          <caret line="88" column="31" lean-forward="true" selection-start-line="88" selection-start-column="31" selection-end-line="88" selection-end-column="31" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/checkedconts.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="154">
-          <caret line="7" column="33" selection-start-line="7" selection-start-column="33" selection-end-line="7" selection-end-column="33" />
+        <state relative-caret-position="2970">
+          <caret line="135" column="25" lean-forward="true" selection-start-line="135" selection-start-column="25" selection-end-line="135" selection-end-column="25" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="7" column="30" lean-forward="true" selection-start-line="7" selection-start-column="30" selection-end-line="7" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/isstatus.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="22" column="33" lean-forward="true" selection-start-line="22" selection-start-column="33" selection-end-line="22" selection-end-column="33" />
+        <state relative-caret-position="220">
+          <caret line="10" column="8" selection-start-line="10" selection-start-column="8" selection-end-line="10" selection-end-column="8" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/checkedphotoswite.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="209">
-          <caret line="519" lean-forward="true" selection-start-line="519" selection-end-line="519" />
+        <state relative-caret-position="2618">
+          <caret line="119" column="40" selection-start-line="119" selection-start-column="40" selection-end-line="119" selection-end-column="40" />
           <folding>
             <element signature="e#4487#11223#0" />
             <element signature="n#!!block;n#getcheckdata#0" />
             <element signature="n#!!block;n#editcheckeddata#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/isstatus.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="220">
+          <caret line="10" column="37" lean-forward="true" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/isstatus.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="379">
+          <caret line="47" column="22" selection-start-line="47" selection-start-column="9" selection-end-line="47" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dfguardian2.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="223">
+          <caret line="77" column="50" selection-start-line="77" selection-start-column="50" selection-end-line="77" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/dfgur2.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="37" column="41" selection-start-line="37" selection-start-column="35" selection-end-line="37" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dfguardian.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="162" column="5" lean-forward="true" selection-start-line="162" selection-start-column="5" selection-end-line="162" selection-end-column="5" />
         </state>
       </provider>
     </entry>

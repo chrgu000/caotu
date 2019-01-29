@@ -14,11 +14,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="goodbye2018.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="goodbye2018.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/goodbye2018.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="246">
-              <caret line="176" column="9" lean-forward="true" selection-start-line="176" selection-start-column="9" selection-end-line="176" selection-end-column="9" />
+            <state relative-caret-position="3366">
+              <caret line="158" column="30" selection-start-line="158" selection-start-column="30" selection-end-line="158" selection-end-column="30" />
               <folding>
                 <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="e#2236#2507#0" />
@@ -30,17 +30,17 @@
       <file leaf-file-name="common.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/css/common.css">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="370">
-              <caret line="77" column="26" lean-forward="true" selection-start-line="77" selection-start-column="26" selection-end-line="77" selection-end-column="26" />
+            <state relative-caret-position="1694">
+              <caret line="77" column="26" selection-start-line="77" selection-start-column="26" selection-end-line="77" selection-end-column="26" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="active.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="active.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/active.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="128">
-              <caret line="225" column="11" lean-forward="true" selection-start-line="225" selection-start-column="11" selection-end-line="225" selection-end-column="11" />
+            <state relative-caret-position="72">
+              <caret line="398" column="46" lean-forward="true" selection-start-line="398" selection-start-column="46" selection-end-line="398" selection-end-column="46" />
               <folding>
                 <element signature="n#!!block;n#autoPlayMusic#0" />
               </folding>
@@ -51,15 +51,14 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="176">
-              <caret line="8" column="32" lean-forward="true" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="32" />
+            <state relative-caret-position="5104">
+              <caret line="387" selection-start-line="387" selection-end-line="390" selection-end-column="1" />
               <folding>
                 <element signature="n#!!block;n#phoneType#0" />
                 <element signature="n#!!block;n#base64decode#0" />
                 <element signature="n#!!block;n#utf16to8#0" />
                 <element signature="n#!!block;n#utf8to16#0" />
                 <element signature="n#!!block;n#GetRequest#0" />
-                <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -68,7 +67,7 @@
       <file leaf-file-name="shareapp.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/shareapp.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="22">
+            <state relative-caret-position="418">
               <caret line="19" column="33" selection-start-line="19" selection-start-column="33" selection-end-line="19" selection-end-column="33" />
             </state>
           </provider>
@@ -77,7 +76,7 @@
       <file leaf-file-name="cos.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/cos-js-sdl-v5/cos.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
+            <state relative-caret-position="1562">
               <caret line="71" column="44" selection-start-line="71" selection-start-column="44" selection-end-line="71" selection-end-column="44" />
             </state>
           </provider>
@@ -87,8 +86,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>musicimg</find>
-      <find>bgm</find>
       <find>firstpage_plant</find>
       <find>firstpage_plant2</find>
       <find>splaybgmusic</find>
@@ -114,9 +111,11 @@
       <find>thirdShowCon</find>
       <find>userNameInput</find>
       <find>show</find>
-      <find>userNamesureBtn</find>
       <find>getcanvasimg</find>
       <find>thirdPageBox</find>
+      <find>userNamesureBtn</find>
+      <find>showMessage</find>
+      <find>window.webkit</find>
     </findStrings>
     <replaceStrings>
       <replace>pageindex</replace>
@@ -131,9 +130,9 @@
         <option value="$PROJECT_DIR$/js/shareapp.js" />
         <option value="$PROJECT_DIR$/js/cos-js-sdl-v5/cos.js" />
         <option value="$PROJECT_DIR$/js/index.js" />
-        <option value="$PROJECT_DIR$/js/active.js" />
-        <option value="$PROJECT_DIR$/css/common.css" />
         <option value="$PROJECT_DIR$/goodbye2018.html" />
+        <option value="$PROJECT_DIR$/css/common.css" />
+        <option value="$PROJECT_DIR$/js/active.js" />
       </list>
     </option>
   </component>
@@ -146,7 +145,7 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-12" />
     <option name="width" value="1938" />
     <option name="height" value="1029" />
@@ -156,6 +155,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -188,12 +188,11 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../02otheractive/activenhhomemap" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
@@ -263,15 +262,19 @@
       <workItem from="1548418304303" duration="157000" />
       <workItem from="1548568849773" duration="22943000" />
       <workItem from="1548638252481" duration="19993000" />
-      <workItem from="1548663860050" duration="13779000" />
+      <workItem from="1548663860050" duration="15965000" />
+      <workItem from="1548727458344" duration="262000" />
+      <workItem from="1548727893770" duration="43000" />
+      <workItem from="1548728000364" duration="643000" />
+      <workItem from="1548744805939" duration="366000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="180226000" />
+    <option name="totallyTimeSpent" value="183726000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1295" height="695" extended-state="7" />
+    <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.17156473" />
@@ -279,12 +282,12 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.3291592" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -322,7 +325,6 @@
             <element signature="n#!!block;n#utf16to8#0" />
             <element signature="n#!!block;n#utf8to16#0" />
             <element signature="n#!!block;n#GetRequest#0" />
-            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -359,7 +361,6 @@
             <element signature="n#!!block;n#utf16to8#0" />
             <element signature="n#!!block;n#utf8to16#0" />
             <element signature="n#!!block;n#GetRequest#0" />
-            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -396,7 +397,6 @@
             <element signature="n#!!block;n#utf16to8#0" />
             <element signature="n#!!block;n#utf8to16#0" />
             <element signature="n#!!block;n#GetRequest#0" />
-            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -419,7 +419,6 @@
             <element signature="n#!!block;n#utf16to8#0" />
             <element signature="n#!!block;n#utf8to16#0" />
             <element signature="n#!!block;n#GetRequest#0" />
-            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -449,7 +448,6 @@
             <element signature="n#!!block;n#utf16to8#0" />
             <element signature="n#!!block;n#utf8to16#0" />
             <element signature="n#!!block;n#GetRequest#0" />
-            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -485,7 +483,6 @@
             <element signature="n#!!block;n#utf16to8#0" />
             <element signature="n#!!block;n#utf8to16#0" />
             <element signature="n#!!block;n#GetRequest#0" />
-            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -508,7 +505,6 @@
             <element signature="n#!!block;n#utf16to8#0" />
             <element signature="n#!!block;n#utf8to16#0" />
             <element signature="n#!!block;n#GetRequest#0" />
-            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -538,7 +534,6 @@
             <element signature="n#!!block;n#utf16to8#0" />
             <element signature="n#!!block;n#utf8to16#0" />
             <element signature="n#!!block;n#GetRequest#0" />
-            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -561,7 +556,6 @@
             <element signature="n#!!block;n#utf16to8#0" />
             <element signature="n#!!block;n#utf8to16#0" />
             <element signature="n#!!block;n#GetRequest#0" />
-            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -584,7 +578,6 @@
             <element signature="n#!!block;n#utf16to8#0" />
             <element signature="n#!!block;n#utf8to16#0" />
             <element signature="n#!!block;n#GetRequest#0" />
-            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -636,57 +629,56 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/js/cos-js-sdl-v5/cos.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="308">
+        <state relative-caret-position="1562">
           <caret line="71" column="44" selection-start-line="71" selection-start-column="44" selection-end-line="71" selection-end-column="44" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/shareapp.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="22">
+        <state relative-caret-position="418">
           <caret line="19" column="33" selection-start-line="19" selection-start-column="33" selection-end-line="19" selection-end-column="33" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/index.js">
+    <entry file="file://$PROJECT_DIR$/goodbye2018.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="176">
-          <caret line="8" column="32" lean-forward="true" selection-start-line="8" selection-start-column="32" selection-end-line="8" selection-end-column="32" />
+        <state relative-caret-position="3366">
+          <caret line="158" column="30" selection-start-line="158" selection-start-column="30" selection-end-line="158" selection-end-column="30" />
           <folding>
-            <element signature="n#!!block;n#phoneType#0" />
-            <element signature="n#!!block;n#base64decode#0" />
-            <element signature="n#!!block;n#utf16to8#0" />
-            <element signature="n#!!block;n#utf8to16#0" />
-            <element signature="n#!!block;n#GetRequest#0" />
-            <element signature="n#style#0;n#span#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/active.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="225" column="11" lean-forward="true" selection-start-line="225" selection-start-column="11" selection-end-line="225" selection-end-column="11" />
-          <folding>
-            <element signature="n#!!block;n#autoPlayMusic#0" />
+            <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="e#2236#2507#0" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/css/common.css">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="370">
-          <caret line="77" column="26" lean-forward="true" selection-start-line="77" selection-start-column="26" selection-end-line="77" selection-end-column="26" />
+        <state relative-caret-position="1694">
+          <caret line="77" column="26" selection-start-line="77" selection-start-column="26" selection-end-line="77" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/goodbye2018.html">
+    <entry file="file://$PROJECT_DIR$/js/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="246">
-          <caret line="176" column="9" lean-forward="true" selection-start-line="176" selection-start-column="9" selection-end-line="176" selection-end-column="9" />
+        <state relative-caret-position="5104">
+          <caret line="387" selection-start-line="387" selection-end-line="390" selection-end-column="1" />
           <folding>
-            <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="e#2236#2507#0" />
+            <element signature="n#!!block;n#phoneType#0" />
+            <element signature="n#!!block;n#base64decode#0" />
+            <element signature="n#!!block;n#utf16to8#0" />
+            <element signature="n#!!block;n#utf8to16#0" />
+            <element signature="n#!!block;n#GetRequest#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/active.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="72">
+          <caret line="398" column="46" lean-forward="true" selection-start-line="398" selection-start-column="46" selection-end-line="398" selection-end-column="46" />
+          <folding>
+            <element signature="n#!!block;n#autoPlayMusic#0" />
           </folding>
         </state>
       </provider>

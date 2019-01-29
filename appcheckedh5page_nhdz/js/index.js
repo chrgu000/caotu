@@ -67,3 +67,8 @@ $(document).ready(function() {
     window.history.forward(1);
 
 });
+
+/*layer提示框*/
+function showMessage(msg, domObj) {
+    layer.tips("<span>"+msg+"</span>", domObj,{tips:[3],area: ['auto', 'auto']});//弹出框加回调函数
+}

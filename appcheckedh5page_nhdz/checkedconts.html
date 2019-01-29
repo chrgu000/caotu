@@ -27,7 +27,7 @@
 
         #photo_box,#noContShowBox{
             position: fixed;
-            top: 80px;
+            top: 65px;
             left: 0;
             width: 100vw;
             height: 65vh;
@@ -71,13 +71,15 @@
         #photo_box .ispassimg.pass{left:initial;right:20px;}
         #photo_box .ispassimg.unpass{left:20px;}
 
-        .btnlistBox{width:100%;margin-top:70vh;text-align: center;}
+        .btnlistBox{width:100%;margin-top:65vh;text-align: center;padding-bottom:20px;}
         #nextcheckedBtn{width:25%;}
         #tipnotpassBtn,#tippassBtn{width:30%;height:30px;margin-top:17px;}
         #tipnotpassBtn img,#tippassBtn img{width:100%;height:auto;}
         #tipnotpassBtn{float:left;}
         #tippassBtn{float:right;}
         #nextcheckedBtn img{width:100%;height:auto;}
+        #checkfinishbtn{width:62%;}
+        #checkfinishbtn img{width:100%;height:auto;}
 
         #userLevelUpTipBox{width:100%;height:100%;position: fixed;left:0;top:0;z-index:50;background:rgba(0,0,0,.5);display: none;text-align: center;}
         #userLevelUpTipBox.active{display: block;}
@@ -128,6 +130,11 @@
             <button type="button" id="tippassBtn" class="buttonimg">
                 <img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/appcheckedh5page_nhdz/tippass.png" alt="">
             </button>
+         <!--   <div>
+                <button type="button" id="checkfinishbtn" class="buttonimg">
+                    <img src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/appcheckedh5page_nhdz/checkfinishbtn.png" alt="">
+                </button>
+            </div>-->
         </div>
     </div>
 
@@ -153,6 +160,7 @@
         <p class="title"></p>
     </div>
     <div id="userfill2" style="position: fixed;top:10px;left:2px;color:#fff;font-size:15px;"></div>
+
 
     <script src="js/jquery-3.1.1.min.js"></script>
     <script src="js/jquery.mousewheel.min.js"></script>

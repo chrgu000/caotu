@@ -375,13 +375,25 @@
                 },
                 success:function(diskJson){
                     layer.closeAll();
-                    //console.log("用户名搜索的列表：");
-                    //console.log(diskJson);
+                    console.log("用户名搜索的列表：");
+                    console.log(diskJson);
                     /*翻页信息*/
                     if(diskJson.code=="1000"){
+                        if(diskJson.data && diskJson.data!=""){
+                            let uid=diskJson.data.userid;
+                            let jyed=0;
+                            $.each(tabledata2.items,function(i,n){
+                                if(n.userid==uid){
+                                    jyed=1
+                                }
+                            });
+                            diskJson.data.jyed=jyed;
+                            let userlist=[diskJson.data];
+                            tabledata.items=userlist;
+                        }else{
+                            tabledata.items=[];
+                        }
 
-                        let userlist=[diskJson.data];
-                        tabledata.items=userlist;
                     }else{
                         layer.msg(diskJson.data+"!");
                     }

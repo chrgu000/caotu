@@ -73,11 +73,10 @@ a:hover{
 *{
     -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
     -webkit-touch-callout: none;
-    -webkit-user-select: none;
+    /*-webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    user-select: none;
-
+    user-select: none;*/
 }
 #secondPageBox img,#thirdPageBox img{
     pointer-events:none;

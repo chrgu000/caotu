@@ -14,38 +14,29 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.html" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4906">
-              <caret line="223" selection-start-line="223" selection-end-line="223" />
+            <state relative-caret-position="2222">
+              <caret line="209" column="24" lean-forward="true" selection-start-line="209" selection-start-column="24" selection-end-line="209" selection-end-column="24" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="searchconid.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/packges/content-manage/searchmanage/searchconid.html">
+      <file leaf-file-name="silentmanage.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/packges/user-manage/silentmanage.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2068">
-              <caret line="94" column="28" selection-start-line="94" selection-start-column="28" selection-end-line="94" selection-end-column="28" />
+            <state relative-caret-position="248">
+              <caret line="389" column="52" lean-forward="true" selection-start-line="389" selection-start-column="52" selection-end-line="389" selection-end-column="52" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="searchconnum.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/packges/content-manage/searchmanage/searchconnum.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="308">
-              <caret line="14" column="36" selection-start-line="14" selection-start-column="36" selection-end-line="14" selection-end-column="36" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="index.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="110">
-              <caret line="5" column="42" lean-forward="true" selection-start-line="5" selection-start-column="42" selection-end-line="5" selection-end-column="42" />
+            <state relative-caret-position="176">
+              <caret line="8" column="6" lean-forward="true" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -63,9 +54,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>getload</find>
-      <find>notecount</find>
-      <find>imgmovurl</find>
       <find>moviePlayNumBox</find>
       <find>movieTrBox</find>
       <find>oldMoviePlayNum</find>
@@ -93,6 +81,9 @@
       <find>imgMsg</find>
       <find>myCommentsText</find>
       <find>send1</find>
+      <find>searchUserInfo2</find>
+      <find>searcallsilent</find>
+      <find>searchUserInfo</find>
     </findStrings>
     <replaceStrings>
       <replace>话题</replace>
@@ -150,7 +141,6 @@
         <option value="$PROJECT_DIR$/packges/user-manage/majiauser.html" />
         <option value="$PROJECT_DIR$/js/inputmultiplecomment.js" />
         <option value="$PROJECT_DIR$/packges/user-manage/commentmanage/commenttablelist.html" />
-        <option value="$PROJECT_DIR$/packges/user-manage/silentmanage.html" />
         <option value="$PROJECT_DIR$/packges/content-manage/dfdefender/defdetaillist.html" />
         <option value="$PROJECT_DIR$/packges/user-manage/userheadgear/userheader.html" />
         <option value="$PROJECT_DIR$/js/checkcontsedit.js" />
@@ -171,6 +161,7 @@
         <option value="$PROJECT_DIR$/js/inputmultiplecommentbatch.js" />
         <option value="$PROJECT_DIR$/packges/user-manage/dfdefender/defdetaillist.html" />
         <option value="$PROJECT_DIR$/login.html" />
+        <option value="$PROJECT_DIR$/packges/user-manage/silentmanage.html" />
         <option value="$PROJECT_DIR$/js/index.js" />
       </list>
     </option>
@@ -185,10 +176,9 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-11" />
-    <option name="y" value="-11" />
-    <option name="width" value="1943" />
-    <option name="height" value="1043" />
+    <option name="x" value="-12" />
+    <option name="width" value="1938" />
+    <option name="height" value="1029" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -211,14 +201,7 @@
               <item name="system_connotation" type="b2602c69:ProjectViewProjectNode" />
               <item name="system_connotation" type="462c0819:PsiDirectoryNode" />
               <item name="packges" type="462c0819:PsiDirectoryNode" />
-              <item name="content-manage" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="system_connotation" type="b2602c69:ProjectViewProjectNode" />
-              <item name="system_connotation" type="462c0819:PsiDirectoryNode" />
-              <item name="packges" type="462c0819:PsiDirectoryNode" />
-              <item name="content-manage" type="462c0819:PsiDirectoryNode" />
-              <item name="searchmanage" type="462c0819:PsiDirectoryNode" />
+              <item name="user-manage" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -230,7 +213,7 @@
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../appcheckedh5page_nhdz" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -335,26 +318,26 @@
       <workItem from="1548120222672" duration="2027000" />
       <workItem from="1548339587822" duration="490000" />
       <workItem from="1548638265067" duration="299000" />
+      <workItem from="1548742982753" duration="4637000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="966652000" />
+    <option name="totallyTimeSpent" value="971289000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18347895" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.3291592" />
-      <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Run" order="2" />
+      <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="7" />
-      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.2497979" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -367,19 +350,19 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.2497979" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2359015" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Version Control" order="10" show_stripe_button="false" />
       <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.3506261" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" weight="0.3291592" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.3506261" />
+      <window_info anchor="bottom" id="Version Control" order="10" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Message" order="0" />
       <window_info id="Favorites" order="2" side_tool="true" />
     </layout-to-restore>
   </component>
@@ -562,13 +545,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/packges/user-manage/silentmanage.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="84">
-          <caret line="308" column="34" lean-forward="true" selection-start-line="308" selection-start-column="34" selection-end-line="308" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/packges/recommend-manage/alternativeQueue/checkedlist.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="88">
@@ -730,13 +706,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4906">
-          <caret line="223" selection-start-line="223" selection-end-line="223" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/packges/content-manage/searchmanage/searchconid.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2068">
@@ -751,10 +720,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/packges/user-manage/silentmanage.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="248">
+          <caret line="389" column="52" lean-forward="true" selection-start-line="389" selection-start-column="52" selection-end-line="389" selection-end-column="52" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/js/index.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="110">
-          <caret line="5" column="42" lean-forward="true" selection-start-line="5" selection-start-column="42" selection-end-line="5" selection-end-column="42" />
+        <state relative-caret-position="176">
+          <caret line="8" column="6" lean-forward="true" selection-start-line="8" selection-start-column="6" selection-end-line="8" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2222">
+          <caret line="209" column="24" lean-forward="true" selection-start-line="209" selection-start-column="24" selection-end-line="209" selection-end-column="24" />
         </state>
       </provider>
     </entry>
