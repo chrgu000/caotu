@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0,minimum=1.0,user-scalable=no">
+    <!--强制页面横屏或竖屏显示 content：landscape|portrait-->
+    <meta name="screen-orientation" content="portrait">
+    <meta content=”telephone=no” name=”format-detection” />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="来！摇出你的狗年个性词">
+    <meta name="viewport" content="maximum-scale=1.0, user-scalable=0">
+    <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+    <meta http-equiv="Cache-Control" content="no-cache">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+    <META HTTP-EQUIV="Expires" CONTENT="0">
+    <!-- 分享显示的标题-->
+    <meta itemprop="name" content="来！摇出你的狗年个性词" />
+    <!-- 分享显示的缩略图-->
+    <meta itemprop="image" content="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/activity_goodbye2018/goodbysharelogo.png" />
+    <!-- 分享显示的简介-->
+    <meta name="description" itemprop="description" content="你的狗年过的好吗？I'm fine" />
+
+    <title>来！摇出你的狗年个性词</title>
+    <link href="https://ctkj-1256675270.file.myqcloud.com/active/logo2.png" rel="shortcut icon">
+    <link rel="stylesheet" href="css/common.css"/>
+
+    <!-- 必须引入的文件-->
+    <script type="text/javascript" src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+    <script type="application/javascript" src="js/jquery.min.js"></script>
+
+    <!--日期插件-->
+    <link rel="stylesheet" type="text/css" href="plugin/LCalendar/css/LCalendar.css" />
+    <script type="application/javascript" src="plugin/layer/layer.js"></script>
+    <script type="application/javascript" src="js/canvas2image.js"></script>
+    <script type="application/javascript" src="js/cos-js-sdl-v5/cos-js-sdk-v5.min.js"></script>
+    <script type="application/javascript" src="js/cos-js-sdl-v5/cos.js"></script>
+    <script src="js/shareapp.js"></script>
+    <script type="application/javascript" src="js/signword.js"></script>
+    <script type="application/javascript" src="js/index.js"></script>
+    <script src="js/sha1.js"></script>
+    <!-- 微信分享时调用对应的接口js文件-->
+    <script src="js/wxShare.js"></script>
+
+
+
+
+</head>
+
+<body style="background: #382C3F;">
+
+<!--<div id="show" style="position: fixed;left:0;top:100px;font-size:2.2rem;color:red;z-index:999;word-wrap:break-word">
+2424
+</div>
+<div id="show2" style="position: fixed;left:0;top:300px;font-size:2.2rem;color:darkred;z-index:999;word-wrap:break-word">
+  2424
+</div>-->
+
+    <!-- copy these lines to your document: -->
+
+    <div id="thirdPageBox">
+        <div id="endShareConBox">
+            <img id="shareImg" src="" alt="">
+            <div id="endShareBox">
+                <img class="endShareBg" src="img/endShareBg.png" alt="">
+                <div class="endShareHeadBox">
+                    <span class="userHeadBox"><img id="userHead" src="" alt=""></span>
+                    <p id="userName">111</p>
+                    <p>我的狗年个性词</p>
+                </div>
+                <div id="signWordBox">
+                    <div class="signCon"><img class="signConBg" src="img/signConBg.png" alt=""><span class="sign">一</span></div>
+                    <div class="signCon"><img class="signConBg" src="img/signConBg.png" alt=""><span class="sign">一</span></div>
+                    <div class="signCon"><img class="signConBg" src="img/signConBg.png" alt=""><span class="sign">一</span></div>
+                </div>
+                <div id="signWord">
+                </div>
+                <img class="thirdLogo" src="img/logo.png" alt="">
+                <div class="ewmBox">
+                    <img src="img/goodbye2018ewm.png" alt="">
+                    <p>扫码查看我的狗年</p>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="tips">
+            长按上图保存 分享到朋友圈
+        </div>
+        <div class="btnList">
+            <button type="button" id="palyAgain"><img src="img/playagain.png" alt=""></button>
+            <button type="button" id="shareBtn"><img src="img/shareBtn.png" alt=""></button>
+        </div>
+    </div>
+
+    <div id="shareTipsBox">
+        <img class="sharefixedtips" src="img/sharefixedtips.png" alt="">
+    </div>
+
+
+
+
+    <!--音乐按钮-->
+    <div id="music">
+        <img class="musicimg" src="img/musicopen.png"/>
+        <audio src="audio/goodbyrbgmusic.mp3" id="bgm" autoplay  loop="loop"></audio><!--autoplay="autoplay"-->
+    </div>
+
+<!--友盟-->
+    <div style="display: none;">
+        <script type="text/javascript" src="https://s96.cnzz.com/z_stat.php?id=1276029312&web_id=1276029312"></script>
+    </div>
+
+    <script src="js/html2canvas.js"></script>
+    <script type="application/javascript" src="https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/vue.js"></script>
+    <script type="text/javascript" src="js/active.js"></script>
+    <script>
+
+        // 各种浏览器兼容
+        document.addEventListener("visibilitychange", handleVisibilityChange, false);
+
+        function handleVisibilityChange() {
+            if (document.hidden) {
+                $("#music .musicimg").attr("src","img/musicclose.png");
+                $("#bgm").get(0).pause();
+                musicplay=false;
+            } else  {
+                $("#music .musicimg").attr("src","img/musicopen.png");
+                $("#bgm").get(0).play();
+                musicplay=true;
+            }
+        }
+    </script>
+
+
+
+</body>
+</html>

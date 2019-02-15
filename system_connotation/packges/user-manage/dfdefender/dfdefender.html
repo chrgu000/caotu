@@ -47,7 +47,9 @@
 
     <script type="text/javascript">
         $(function(){
-            $("#contentPageBox").load("informlist.html");
+            $("#contentPageBox").load("informlist.html",function(){
+                getlabel(1);
+            });
         });
 
 

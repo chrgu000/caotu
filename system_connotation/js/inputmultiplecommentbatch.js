@@ -10,6 +10,7 @@ var typefile=1;//评论类型
 var result;//存放图片或者视频的标签
 var dataArr = []; // 储存所选图片的结果(文件名和base64数据)
 var fd;  //FormData方式发送请求
+var commentlibtext="";//评论内容
 // var oSelect = document.getElementById("select");
 
 var moviefilecover="";//视频封面
@@ -31,14 +32,17 @@ function readFile(){
     fd = new FormData();
     var iLen = this.files.length;
     var index = 0;
+    $("#upfileJd .length").html(commentlistvue.items.length+iLen);//进度显示总数
     for(var i=0;i<iLen;i++){
         if (!input['value'].match(/.jpg|.gif|.png|.jpeg|.bmp/i)){　　//判断上传文件格式
             return alert("上传的图片格式不正确，请重新选择");
         }
         picfilecover.push({"typefile":3,"cover":""});
         var reader = new FileReader();
+        // console.log("this.files::");
+        // console.log(this.files);
         reader.index = i;
-        reader.file = this.files[0];
+        reader.file = this.files[i];
         fd.append(i,this.files[i]);
         reader.readAsDataURL(this.files[i]);  //转成base64
         reader.fileName = this.files[i].name;
@@ -53,6 +57,7 @@ function readFile(){
                 base64 : this.result   //reader.readAsDataURL方法执行完后，base64数据储存在reader.result里
             };
             dataArr.push(imgMsg);
+
 
             /*获取宽高*/
             var imageinfo = new Image();
@@ -97,7 +102,8 @@ function readFile(){
 
             div.onclick = function(){
                 var ind=$(this).index();
-                dataArr.splice(ind,1);// 删除dataArr对应的数据
+                deletemovie(ind);
+              /*  dataArr.splice(ind,1);// 删除dataArr对应的数据
                 picfilecover.splice(ind,1);// 删除dataArr对应的数据
                 commentimgisize.splice(ind,1);// 删除commentimgisize对应的数据
                 postdatas.splice(ind,1);// 删除commentimgisize对应的数据
@@ -106,9 +112,8 @@ function readFile(){
                     $("#choosetextBtn").removeAttr("disabled").css("color","#333");
                 }
                 this.remove();                  // 在页面中删除该图片元素
-
+                $("#commentUrlShowBox2 .inputFileShow:nth-child("+(ind+1)+")").remove();*/
             };
-
 
             index++;
 
@@ -155,6 +160,16 @@ function gifCoverimg(gift) {
 /*添加图片*/
 oAdd.onclick=function(){
     oInput.value = "";   // 先将oInput值清空，否则选择图片与上次相同时change事件不会触发
+    commentlistvue.commenttype="t2";
+
+    //清空已选图片
+    imgmovurl=[];
+    moviefilecover="";//视频封面
+    picfilecover=[];//图片封面
+    dataArr = [];
+    commentimgisize = [];
+
+
     if(dataArr.length >=9){
         layer.msg("你已上传9张图片！！");
     }else{
@@ -213,15 +228,17 @@ function readFile2(){
     fd2 = new FormData();
     var iLen = this.files.length;
     var index = 0;
+    $("#upfileJd .length").html(commentlistvue.items.length+iLen);//进度显示总数
     for(var i=0;i<iLen;i++){
         if (!input2['value'].match(/.mp4|.mpeg|.mpg|.mpp|.ogg/i)){　　//判断上传文件格式
             return alert("上传的视频格式不正确，请重新选择");
         }
+
        // console.log(this.files[0]);
         var reader2 = new FileReader();
         reader2.index = i;
-        reader2.file = this.files[0];//把当前的 files[0] 传进去
-        reader2.file2 = getFileURL(this.files[0]);//把当前的 files[0] 传进去
+        reader2.file = this.files[i];//把当前的 files[0] 传进去
+        reader2.file2 = getFileURL(this.files[i]);//把当前的 files[0] 传进去
         reader2.fileName = this.files[i].name;
         fd2.append(i,this.files[i]);
         reader2.readAsDataURL(this.files[i]);  //转成base64
@@ -235,28 +252,31 @@ function readFile2(){
                 file:this.file,//文件流
             };
             dataArr.push(moveMsg);
-            var resultdiv = '<div class="delete2">X</div><div class="result"><video id="videofiles" controls="controls" autoplay src="'+this.file2+'">您的浏览器不支持</video></div>';
+            let videofilesid="videofiles"+index;
+            var resultdiv = '<div class="delete2">X</div><div class="result"><video id="'+videofilesid+'" controls="controls" src="'+this.file2+'">您的浏览器不支持</video></div>';
             var div = document.createElement('div');
             div.innerHTML = resultdiv;
             div['className'] = 'inputFileShow2';
             div['index'] = index;
-            $("#commentUrlShowBox").empty();                  // 在页面中删除该图片元素
+           // $("#commentUrlShowBox").empty();                  // 在页面中删除该图片元素
             $("#commentUrlShowBox").append(div);  　　//插入dom树
-            $("#commentUrlShowBox .result video")[0].addEventListener('play',function () {
+         /*   $("#commentUrlShowBox .result video")[0].addEventListener('play',function () {
                 let videoH =  $("#commentUrlShowBox .result video")[0].offsetHeight;
                 let videoW =  $("#commentUrlShowBox .result video")[0].offsetWidth;
                 commentimgisize.push(videoW+","+videoH);
                // console.log(commentimgisize);
-                videofile=document.getElementById("videofiles");
-               captureImage(videofile);
-
-            });
+            });*/
+            videofile=document.getElementById(videofilesid);
+            captureImage(videofile);
             if(dataArr.length>0){
                 $("#choosePictureBtn").attr('disabled','disabled').css("color","#eee");
                 $("#choosetextBtn").attr('disabled','disabled').css("color","#eee");
             }
 
+            send1(index);
+            index++;
         }
+
     }
 }
 
@@ -266,6 +286,13 @@ function captureImage(videofile) {
     var canvas = document.createElement("canvas");
     canvas.width = videofile.videoWidth * 0.8;
     canvas.height = videofile.videoHeight * 0.8;
+    commentimgisize.push(canvas.width+","+canvas.height);
+    let movirtype=1;
+    if(canvas.width >= canvas.height){
+        movirtype=1;
+    }else{
+        movirtype=2;
+    }
     if(videofile.videoWidth >=videofile.videoHeight+30 ){
         typefile=1;
     }else{
@@ -289,7 +316,7 @@ function captureImage(videofile) {
     runAsync(fbloblist).then(function(data){
         let onetdk=data.Url.substring(0, data.Url.indexOf('?'));
         moviefilecover=onetdk;
-
+        picfilecover.push({"typefile":movirtype,"cover":onetdk});
     }).then(function(onetdk) {
 
     });
@@ -300,12 +327,47 @@ function captureImage(videofile) {
 
 /*删除视频*/
 $("#commentUrlShowBox").delegate(".delete2","click",function(){
-    dataArr=[];
-    commentimgisize=[];
-    $("#choosePictureBtn").removeAttr("disabled").css("color","#333");
-    $("#choosetextBtn").removeAttr("disabled").css("color","#333");
-    $("#commentUrlShowBox").empty();                  // 在页面中删除该图片元素
+    var ind=$(this).parents(".inputFileShow2").index();
+    deletemovie(ind);
 });
+
+/*删除文字*/
+$("#commentUrlShowBox").delegate(".inputFileShow3 .delete","click",function(){
+    var ind=$(this).parents(".inputFileShow3").index();
+    deletemovie(ind);
+});
+function deletemovie(ind){
+    dataArr.splice(ind,1);// 删除dataArr对应的数据
+    picfilecover.splice(ind,1);// 删除dataArr对应的数据
+    commentimgisize.splice(ind,1);// 删除commentimgisize对应的数据
+    postdatas.splice(ind,1);// 删除commentimgisize对应的数据
+    commentlistvue.items.splice(ind,1);// 删除commentimgisize对应的数据
+    $("#upfileJd .jd").html(commentlistvue.items.length);//进度显示
+    $("#upfileJd .length").html(commentlistvue.items.length);//进度显示
+    if(commentlistvue.commenttype=="t2"){
+        if(dataArr.length<=0){
+            $("#chooseMovieBtn").removeAttr("disabled").css("color","#333");
+            $("#choosetextBtn").removeAttr("disabled").css("color","#333");
+        }
+        $("#commentUrlShowBox .inputFileShow:nth-child("+(ind+1)+")").remove();                // 在页面中删除该图片元素
+    }else if(commentlistvue.commenttype=="m1"){
+        if(dataArr.length<=0){
+            $("#choosePictureBtn").removeAttr("disabled").css("color","#333");
+            $("#choosetextBtn").removeAttr("disabled").css("color","#333");
+        }
+        $("#commentUrlShowBox .inputFileShow2:nth-child("+(ind+1)+")").remove();                // 在页面中删除该图片元素
+    }else if(commentlistvue.commenttype=="w3"){
+        if(commentlistvue.items.length<=0){
+            $("#choosePictureBtn").removeAttr("disabled").css("color","#333");
+            $("#chooseMovieBtn").removeAttr("disabled").css("color","#333");
+        }
+        $("#commentUrlShowBox .inputFileShow3:nth-child("+(ind+1)+")").remove();                // 在页面中删除该图片元素
+    }
+
+
+
+   // $("#commentUrlShowBox2 .inputFileShow2:nth-child("+(ind+1)+")").remove();
+}
 /*获取视频路径*/
 function getFileURL(file) {
 
@@ -333,8 +395,15 @@ function getFileURL(file) {
 oAdd2.onclick=function(){
     oInput2.value = "";   // 先将oInput值清空，否则选择图片与上次相同时change事件不会触发
     oInput2.click();
-    commentimgisize=[];
-    dataArr=[];
+    commentlistvue.commenttype="m1";
+
+    //清空已选图片
+    imgmovurl=[];
+    moviefilecover="";//视频封面
+    picfilecover=[];//图片封面
+    dataArr = [];
+    commentimgisize = [];
+
 
 };
 
@@ -343,21 +412,13 @@ oAdd2.onclick=function(){
 
 /*发送*/
 function send1(index){
-    console.log(dataArr[index]);
     runAsync(dataArr[index]).then(function(data){
             let onetdk=data.Url.substring(0, data.Url.indexOf('?'));
-
-            console.log("onetdk::");
-            console.log(onetdk);
+            //console.log("onetdk::");
+            //console.log(onetdk);
             let commentliburl=[];
             let commentlibtext="";
              commentliburl.push({"type":picfilecover[index].typefile,"cover":picfilecover[index].cover,"info":onetdk,"size":commentimgisize[index]});
-              /*  let result2 = '<div class="delete">delete</div><div class="result"><img src="'+onetdk+'" alt=""/></div>';
-                let div2 = document.createElement('div');
-                div2.innerHTML = result2;
-                div2['className'] = 'inputFileShow';
-                div2['index'] = index;
-                $("#commentUrlShowBox2").append(div2);  　　//插入dom树*/
 
             let createuser=userdatas.data.userid;
             let commentlibtagid=$("#tagSelectAll").val();
@@ -366,57 +427,86 @@ function send1(index){
                 "commentlibtext":commentlibtext,
                 "commentliburl":commentliburl}
             );
+            $("#upfileJd .jd").html(commentlistvue.items.length);//进度显示
+            // console.log("commentlistvue.items::");
+            // console.log(commentlistvue.items);
 
         })
 
 }
 
-/*function send(){
-    let postdatas=[];
-    let picfilelist=picfilecover;
-    let size=commentimgisize;
-    console.log("dataArr::");
-    console.log(dataArr);
-    $.each(dataArr,function(i,n){
-        console.log("n::");
-        console.log(n);
-        runAsync(n).then(function(data){
-            let onetdk=data.Url.substring(0, data.Url.indexOf('?'));
 
-            console.log("onetdk::");
-            console.log(onetdk);
-            let commentliburl=[];
-            let commentlibtext="";
-            if(typefile == 3 || typefile ==4){
-                commentliburl.push({"type":picfilelist[i].typefile,"cover":picfilelist[i].cover,"info":onetdk,"size":size[i]});
-                let result = '<div class="delete">delete</div><div class="result"><img src="'+onetdk+'" alt=""/></div>';
-                let div = document.createElement('div');
-                div.innerHTML = result;
-                div['className'] = 'inputFileShow';
-                div['index'] = i;
-                $("#commentUrlShowBox2").append(div);  　　//插入dom树
-            }else if(typefile==5){
+/*----------上传文字text-------------*/
+var input3 = document.getElementById("commenttextFile");
+var fd3;  //FormData方式发送请求
+var oAdd3 = document.getElementById("choosetextBtn");
+var oInput3 = document.getElementById("commenttextFile");
 
-            }else{
-                commentliburl.push({"type":typefile,"cover":moviefilecover,"info":onetdk,"size":size[0]});
-                let resultdiv = '<div class="delete2">X</div><div class="result"><video id="videofiles" controls="controls" autoplay src="'+onetdk+'">您的浏览器不支持</video></div>';
-                let div = document.createElement('div');
-                div.innerHTML = resultdiv;
-                div['className'] = 'inputFileShow2';
-                div['index'] = index;
-                $("#commentUrlShowBox2").append(div);  　　//插入dom树
+if(typeof FileReader==='undefined'){
+    layer.msg("抱歉，你的浏览器不支持 FileReader");
+    input3.setAttribute('disabled','disabled');
+}else{
+    input3.addEventListener('change',readFile3,false);
+}　　　　　//handler
+
+function readFile3(){
+    typefile=4;
+    moviefilecover="";
+    fd3 = new FormData();
+    var iLen = this.files.length;
+    var index = 0;
+    for(var i=0;i<iLen;i++){
+        if (!input3['value'].match(/.txt/i)){　　//判断上传文件格式
+            return alert("上传的文件格式不正确，请重新选择");
+        }
+        picfilecover.push({"typefile":4,"cover":""});
+        var reader = new FileReader();
+        reader.index = i;
+        reader.file = this.files[i];
+        fd3.append(i,this.files[i]);
+        reader.fileName = this.files[i].name;
+        //console.log("reader.file:");
+        //console.log(reader.file);
+        reader.readAsText(this.files[i],'gbk');
+        reader.onload = function(e){
+           let geutextfile=this.result;
+           let textfilelist=geutextfile.split("nr;;");
+            //console.log("textfilelist::");
+            //console.log(textfilelist);
+            if(textfilelist.length >0){
+                $("#upfileJd .length").html(commentlistvue.items.length+textfilelist.length);//进度显示总数
+                $.each(textfilelist,function(i,n){
+                    let textdiv = '<div class="delete">X</div><div class="result"><p>.'+n+'</p></div>';
+                    var div = document.createElement('div');
+                    div.innerHTML = textdiv;
+                    div['className'] = 'inputFileShow3';
+                    div['index'] = index;
+                    $("#commentUrlShowBox").append(div);  　　//插入dom树
+
+                    let createuser=userdatas.data.userid;
+                    let commentlibtagid=$("#tagSelectAll").val();
+                    let commentliburl=[];
+                    commentlistvue.items.push({"createuser":createuser,
+                        "commentlibtagid":commentlibtagid,
+                        "commentlibtext":n,
+                        "commentliburl":commentliburl}
+                    );
+                    $("#upfileJd .jd").html(commentlistvue.items.length);//进度显示
+                });
+                $("#chooseMovieBtn").attr('disabled','disabled').css("color","#eee");
+                $("#choosePictureBtn").attr('disabled','disabled').css("color","#eee");
             }
-            let createuser=userdatas.data.userid;
-            let commentlibtagid=$("#tagSelectAll").val();
-            postdatas.push({"createuser":createuser,
-                "commentlibtagid":commentlibtagid,
-                "commentlibtext":commentlibtext,
-                "commentliburl":commentliburl}
-            );
+            index++;
 
-        })
-    });
-    subCommentbatch2(postdatas);
+        }
 
-}*/
+    }
+}
 
+/*添加文字*/
+oAdd3.onclick=function(){
+    oInput3.value = "";   // 先将oInput值清空，否则选择图片与上次相同时change事件不会触发
+    oInput3.click();
+    commentlistvue.commenttype="w3";
+
+};

@@ -2,15 +2,15 @@
 
  // const path="http://192.168.1.111:8080/NHDZBUSINESS";//老冯
  // const path2="http://192.168.1.111:8080/NHDZBUSINESS";//老冯
-// const path="http://192.168.1.114:8868/NHDZBUSINESS";//测试服务器
-// const path2="http://192.168.1.114:8868/NHDZBUSINESS";//测试服务器
+const path="http://192.168.1.114:8868/NHDZBUSINESS";//测试服务器
+const path2="http://192.168.1.114:8868/NHDZBUSINESS";//测试服务器
 
 
 /*线上*/
 // const path="http://192.168.1.114:8878/NHDZBUSINESS";
 // const path2="http://192.168.1.114:8878/NHDZBUSINESS";
-const path="http://101.69.230.98:8878/NHDZBUSINESS";
-const path2="http://101.69.230.98:8878/NHDZBUSINESS";
+// const path="http://101.69.230.98:8878/NHDZBUSINESS";
+// const path2="http://101.69.230.98:8878/NHDZBUSINESS";
 
 
 var userdatas=getload();
@@ -359,6 +359,25 @@ function unique10(arr){
     //Set数据结构，它类似于数组，其成员的值都是唯一的
     return Array.from(new Set(arr)); // 利用Array.from将Set结构转换成数组
 }
+
+/*排序*/
+ function sequence(a,b){
+       return a - b;
+ }
+/*冒泡排序*/
+ function bubbleSort(arr){
+     for(var i=0;i<arr.length-1;i++){
+         for(var j=0;j<arr.length-i-1;j++){
+             if(arr[j]>arr[j+1]){
+                 var temp=arr[j];
+                 arr[j]=arr[j+1];
+                 arr[j+1]=temp;
+             }
+         }
+     }
+     return arr;
+ }
+
 
 /*随机数*/
 function randomnum(minNum,maxNum){

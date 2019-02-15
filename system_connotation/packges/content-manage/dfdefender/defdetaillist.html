@@ -61,7 +61,7 @@
                                 <td class="">{{item.contenttype == 1 ? "横视频": item.contenttype == 2 ? "竖视频" : item.contenttype == 3 ? "图文" :"段子"}}</td>
                                 <td class="">{{item.contenttitle}}</td>
                                 <td class="center">
-                                    {{item.createtime}}
+                                    {{item.createtime|time}}
                                 </td>
                                 <td class="center">
                                     <button type="button" class="btn btn-default" v-on:click="detail(item)">详情</button>

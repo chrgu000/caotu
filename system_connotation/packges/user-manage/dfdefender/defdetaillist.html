@@ -30,13 +30,15 @@
         #alertmod_table_list_2 {
             top: 900px !important;
         }
+        #backPageBtn{position: absolute;top:10px;right:40px;}
     </style>
 
 </head>
 
 <body class="gray-bg">
-    <div style="padding-left:28px;padding-top:10px;">
+    <div style="padding-left:28px;padding-top:10px;margin-top:20px;position: relative;">
         <h3 id="defdetail" data-userid="">审核详情列表</h3>
+        <button id="backPageBtn" data-page="" type="button" class="btn-warning">返回》</button>
     </div>
     <div class="wrapper wrapper-content  animated fadeInRight">
         <div class="row">
@@ -263,6 +265,14 @@
                 }
             });
         }
+
+        /*返回*/
+        $("#backPageBtn").click(function(){
+            let pagenum= $("#backPageBtn").attr("data-page");
+            $("#contentPageBox").load("informlist.html",function(){
+                getlabel(pagenum);
+            });
+        })
     </script>
 
     

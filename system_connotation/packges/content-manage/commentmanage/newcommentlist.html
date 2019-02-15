@@ -27,9 +27,16 @@
         #addcommentBox{width:100%;padding:30px;height:100%;margin-top:50px;}
         #myCommentsText{vertical-align: middle;width:80%;padding:15px;}
         #commentUrlShowBox{}
-        .showBoxJH{width:100%;overflow: hidden;margin:5px 0;}
+        .showBoxJH{width:100%;margin:5px 0;position: relative;overflow: hidden;}
         .showUrlBox{width:49%;max-height: 450px;overflow-y: auto;float:left;border:1px solid #a9a9a9;padding:10px;}
-
+        .inputFileShow2{width:100%;margin:5px 0;}
+        .inputFileShow3{width:100%;line-height: 20px;color:#333;font-size:14px;text-align: left;position: relative;margin:4px 0;border-bottom:1px dashed #1AB394;}
+        .inputFileShow3 .delete{width:20px;height:20px;position: absolute;top:-10px;left:-10px;line-height: 20px;font-size:18px;background:#333;color:#fff;cursor: pointer;}
+        .inputFileShow3:hover .delete{opacity: 1;}
+        .inputFileShow3 .result{line-height: 20px;text-align: left;}
+        .inputFileShow3:hover{background:#8D8D8D;}
+        #commentUrlShowBox2{position: relative;}
+        #upfileJd{position: absolute;top:5px;left:51%;color:#333;font-size:15px;}
     </style>
 
 
@@ -37,28 +44,37 @@
    <div class="labelBox">
        <button type="button" id="backHtml" class="btn btn-warning">返回》</button>
        <div id="addcommentBox" data-id="">
-           <div>
+           <div style="position: relative;">
                选择标签：
                <select name="" id="tagSelectAll">
 
                </select>
+               <div id="upfileJd"><span class="jd">0</span>/ <span class="length">0</span></div>
            </div>
            <div class="showBoxJH">
                <div id="commentUrlShowBox" class="showUrlBox" style="margin-right:10px;">
 
                </div>
                <div id="commentUrlShowBox2" class="showUrlBox">
-                   <div class="inputFileShow" v-for="(item,index) in items">
-                       <div v-if="item.commentliburl[0].type==3 || item.commentliburl[0].type==4" class="delete">delete</div><div class="result"><img v-bind:src="item.commentliburl[0].info" alt=""/></div>
+
+                   <div class="inputFileShow" v-if="commenttype== 't2'" v-for="(item,index) in items">
+                       <div class="delete">delete</div><div class="result"><img v-bind:src="item.commentliburl[0].info" alt=""/></div>
+                   </div>
+                   <div class="inputFileShow2" v-if="commenttype== 'm1'" v-for="(item,index) in items">
+                       <div class="delete2" v-on:click="deletemove(index)">X</div><div class="result"><video v-bind:id="'videofiles'+index" controls="controls" v-bind:src="item.commentliburl[0].info">您的浏览器不支持</video></div>
+                   </div>
+                   <div class="inputFileShow3" v-if="commenttype== 'w3'" v-for="(item,index) in items">
+                       <div class="delete" v-on:click="deletemove(index)">X</div><div class="result"><p>{{index+1}}.{{item.commentlibtext}}</p></div>
                    </div>
 
                </div>
+
            </div>
 
-           <div class="buttonBox" style="margin-left:80px;">
+           <div class="buttonBox" style="margin-left:80px;clear: both;margin-top:9px;">
                <input type="file" id="commentimgFile" name="" multiple="multiple" accept="image/png,image/gif,image/jpg,image/jpeg"  value="" style="display: none;">
                <input type="file" id="commentmovieFile" name="" multiple="multiple" accept="audio/mp4,video/mp4,application/ogg, audio/ogg" style="display: none;" value="">
-               <input type="file" id="commenttextFile" name="" multiple="multiple" accept=".doc,.docx,.pdf,.txt" style="display: none;" value="">
+               <input type="file" id="commenttextFile" name="" accept=".txt" style="display: none;" value="">
                <button type="button" class="btn btn-default inputfileBtn" id="choosePictureBtn" >选择图片</button>
                <button type="button" class="btn btn-default inputfileBtn" id="chooseMovieBtn">选择视频</button>
                <button type="button" class="btn btn-default inputfileBtn" id="choosetextBtn">选择文字</button>
@@ -83,12 +99,13 @@
         var commentlistvue = new Vue({
             el: '#commentUrlShowBox2',
             data: {
+                commenttype:"",
                 items:[]
             },
             // 在 `methods` 对象中定义方法
             methods: {
-                detail:function(event){
-
+                deletemove:function(event){
+                    deletemovie(event);
                 }
             }
         });
@@ -143,10 +160,11 @@
                 btn: ['确定','取消'] //按钮
             }, function(index){
                 //console.log(recondlist.chooselistnum);
-                $("#postCommentBtn").attr("disabled","disabled");
-                if(dataArr.length >0){
-                  send();
-
+               // $("#postCommentBtn").attr("disabled","disabled");
+                if(commentlistvue.items.length >0){
+                    subCommentbatch2()
+                }else{
+                    layer.msg("评论呢！！");
                 }
 
                 layer.close(index);
@@ -156,9 +174,14 @@
 
         }
 
-        /*提交评论*/
-        function subCommentbatch2(postdata){
 
+
+        /*提交评论*/
+
+        function subCommentbatch2(){
+            let postdata=commentlistvue.items;
+            // console.log("postdata::");
+            // console.log(postdata);
             postdata=JSON.stringify(postdata);
             $.ajax({
                 url : path2+'/commentlib/insetcmtlib.do',
@@ -177,8 +200,8 @@
                     console.log("提交评论：");
                     console.log(diskJson);
                     if(diskJson.code == 1000){
-
-
+                        layer.msg("提交成功！！");
+                        clearall();
 
                     }else{
                         layer.msg("提交失败！！")
@@ -191,24 +214,25 @@
         /*清空*/
         function clearall(){
             oInput.value = "";   // 先将oInput值清空，否则选择图片与上次相同时change事件不会触发
+            oInput2.value = "";   // 先将oInput值清空，否则选择图片与上次相同时change事件不会触发
+            oInput3.value = "";   // 先将oInput值清空，否则选择图片与上次相同时change事件不会触发
             //清空已选图片
             imgmovurl=[];
             moviefilecover="";//视频封面
             picfilecover=[];//图片封面
             $('#commentUrlShowBox').empty();
-            $('#commentUrlShowBox2').empty();
+            commentlistvue.items=[];
             dataArr = [];
             commentimgisize = [];
             index = 0;
             $("#chooseMovieBtn").removeAttr("disabled").css("color","#333");
             $("#choosePictureBtn").removeAttr("disabled").css("color","#333");
             $("#choosetextBtn").removeAttr("disabled").css("color","#333");
+            $("#upfileJd .jd").html("0");//进度显示
+            $("#upfileJd .length").html("0");//进度显示
 
         }
-        /*重置*/
-        $("#replay").click(function(){
 
-        });
 
         /*返回*/
         $("#backHtml").click(function(){

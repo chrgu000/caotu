@@ -108,8 +108,10 @@
             // 在 `methods` 对象中定义方法
             methods: {
                 detaillist:function(event){//详情
+                    let pagenum=$("#addpageinput").val();
                     $("#contentPageBox").load("defdetaillist.html",function(){
                         $("#defdetail").attr("data-userid",event.userid);
+                        $("#backPageBtn").attr("data-page",pagenum);
                     });
                 },
                 cancel:function(event){//取消认证
@@ -126,9 +128,7 @@
             }
         });
 
-        $(function(){
-            getlabel(1);
-        });
+
 
         /*段友守护者列表*/
         function getlabel(pageno){
@@ -158,13 +158,30 @@
                             diskJson.data.CheckReportList[i].honoridlist=c;
                         });
                         pageinfo3(pageno,diskJson.data.TotalCount,10);//翻页控件信息
-                        labeldata.items=diskJson.data.CheckReportList;
+                        let checklist=diskJson.data.CheckReportList;
+                        let checkitmlist=bubbleSortinfo(checklist);
+                        console.log(checkitmlist);
+                        labeldata.items=checkitmlist;
                     }
 
 
 
                 }
             });
+        }
+
+        /*冒泡排序*/
+        function bubbleSortinfo(arr){
+            for(var i=0;i<arr.length-1;i++){
+                for(var j=0;j<arr.length-i-1;j++){
+                    if(arr[j].honoridlist[2]>arr[j+1].honoridlist[2]){
+                        var temp=arr[j];
+                        arr[j]=arr[j+1];
+                        arr[j+1]=temp;
+                    }
+                }
+            }
+            return arr;
         }
 
         /*取消认证资格*/

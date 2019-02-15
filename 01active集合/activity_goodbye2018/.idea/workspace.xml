@@ -17,8 +17,8 @@
       <file leaf-file-name="goodbye2018.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/goodbye2018.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3366">
-              <caret line="158" column="30" selection-start-line="158" selection-start-column="30" selection-end-line="158" selection-end-column="30" />
+            <state relative-caret-position="3542">
+              <caret line="166" column="42" selection-start-line="166" selection-start-column="42" selection-end-line="166" selection-end-column="42" />
               <folding>
                 <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="e#2236#2507#0" />
@@ -39,8 +39,8 @@
       <file leaf-file-name="active.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/active.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="72">
-              <caret line="398" column="46" lean-forward="true" selection-start-line="398" selection-start-column="46" selection-end-line="398" selection-end-column="46" />
+            <state relative-caret-position="235">
+              <caret line="251" column="23" selection-start-line="251" selection-start-column="12" selection-end-line="251" selection-end-column="23" />
               <folding>
                 <element signature="n#!!block;n#autoPlayMusic#0" />
               </folding>
@@ -67,8 +67,8 @@
       <file leaf-file-name="shareapp.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/shareapp.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="19" column="33" selection-start-line="19" selection-start-column="33" selection-end-line="19" selection-end-column="33" />
+            <state relative-caret-position="-239">
+              <caret line="8" column="27" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="27" />
             </state>
           </provider>
         </entry>
@@ -146,16 +146,15 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="-12" />
-    <option name="width" value="1938" />
-    <option name="height" value="1029" />
+    <option name="x" value="-11" />
+    <option name="width" value="1940" />
+    <option name="height" value="1031" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -163,36 +162,16 @@
               <item name="activity_goodbye2018" type="b2602c69:ProjectViewProjectNode" />
               <item name="activity_goodbye2018" type="462c0819:PsiDirectoryNode" />
             </path>
-            <path>
-              <item name="activity_goodbye2018" type="b2602c69:ProjectViewProjectNode" />
-              <item name="activity_goodbye2018" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="activity_goodbye2018" type="b2602c69:ProjectViewProjectNode" />
-              <item name="activity_goodbye2018" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="activity_goodbye2018" type="b2602c69:ProjectViewProjectNode" />
-              <item name="activity_goodbye2018" type="462c0819:PsiDirectoryNode" />
-              <item name="js" type="462c0819:PsiDirectoryNode" />
-              <item name="cos-js-sdl-v5" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="activity_goodbye2018" type="b2602c69:ProjectViewProjectNode" />
-              <item name="activity_goodbye2018" type="462c0819:PsiDirectoryNode" />
-              <item name="plugin" type="462c0819:PsiDirectoryNode" />
-            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../02otheractive/activenhhomemap" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
   </component>
@@ -267,11 +246,13 @@
       <workItem from="1548727893770" duration="43000" />
       <workItem from="1548728000364" duration="643000" />
       <workItem from="1548744805939" duration="366000" />
+      <workItem from="1550125803671" duration="507000" />
+      <workItem from="1550126710742" duration="388000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="183726000" />
+    <option name="totallyTimeSpent" value="184621000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
@@ -281,7 +262,6 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.3291592" />
-      <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -294,6 +274,7 @@
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -634,24 +615,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/shareapp.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="19" column="33" selection-start-line="19" selection-start-column="33" selection-end-line="19" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/goodbye2018.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3366">
-          <caret line="158" column="30" selection-start-line="158" selection-start-column="30" selection-end-line="158" selection-end-column="30" />
-          <folding>
-            <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <element signature="e#2236#2507#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/css/common.css">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1694">
@@ -673,10 +636,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/goodbye2018.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3542">
+          <caret line="166" column="42" selection-start-line="166" selection-start-column="42" selection-end-line="166" selection-end-column="42" />
+          <folding>
+            <element signature="n#style#0;n#body#0;n#html#0;n#!!top" expanded="true" />
+            <element signature="e#2236#2507#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/shareapp.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-239">
+          <caret line="8" column="27" selection-start-line="8" selection-start-column="27" selection-end-line="8" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/js/active.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="72">
-          <caret line="398" column="46" lean-forward="true" selection-start-line="398" selection-start-column="46" selection-end-line="398" selection-end-column="46" />
+        <state relative-caret-position="235">
+          <caret line="251" column="23" selection-start-line="251" selection-start-column="12" selection-end-line="251" selection-end-column="23" />
           <folding>
             <element signature="n#!!block;n#autoPlayMusic#0" />
           </folding>
