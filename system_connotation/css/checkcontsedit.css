@@ -28,7 +28,7 @@
 #talkAboutBox .userTitle .imgBox img{width:100%;height:100%;}
 #talkAboutBox .commentSection{border-bottom:1px dashed #bbb;}
 #talkAboutBox .commentSection .userTitle{width:150px;float:left;}
-#talkAboutBox .commentSection .conmentsConts{width:calc(100% - 300px);padding:0 15px;float:left;}
+#talkAboutBox .commentSection .conmentsConts{width:calc(100% - 340px);padding:0 15px;float:left;}
 #talkAboutBox .commentSection .doBox{float:left;}
 #talkAboutBox .commentSection .doBox .reply{color:#0064b6;padding-right:12px;}
 #talkAboutBox .commentSection .praiseBox i{font-size:18px;margin-right:3px;}

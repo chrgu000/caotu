@@ -389,6 +389,10 @@
             layer.msg("请输入队列名称！！");
             return false;
         }
+        if(queenname.length >=32){
+            layer.msg("队列名太长看看清除亲！！");
+            return false;
+        }
         let loc=$("#goToWhere").val();
         let iscando=1;
         var datapost={"loc":loc,"replace":[]};

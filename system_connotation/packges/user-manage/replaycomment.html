@@ -473,10 +473,8 @@
                 usertalk.items[index].recall.push({ "commentid":commentid,"userid":userid,"replyuser":replyuser,"replyusername":replyusername,"commentreply":0,"userimg":userHead,"userName":userName,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":replycomment,"replyfirst":replyfirst,"createtime":createtime,"commenturl":commenturl,"commenturltype":commenturltype});
             }*/
          ////console.log(usertalk.items);
-            let replyfirst=itemdatas.commentid;
-            if(itemdatas.commentreply==0){
-                replyfirst=itemdatas.replyfirst;
-            }
+            let replyfirst=itemdatas.replyfirst;
+
             // console.log("replyfirst::");
             // console.log(replyfirst);
             let replyid=itemdatas.commentid;

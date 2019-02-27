@@ -10,15 +10,62 @@ var usertalk = new Vue({
     el: '#commentSectionBox',
     data: {
         items: [],
-        postcommentlist:[]
+        postcommentlist:[],
+        oldcommenttext:[]
+    },
+    computed: {
+
     },
     // 在 `methods` 对象中定义方法
     methods: {
         goods: function (event,i) {
-            this.items[i].commentgood++;
+            if(event.user.usertype == 0 && event.addnew && event.addnew ==1){
+                console.log(event);
+                this.items[i].commentgood++;
+                changecomgoods(event.commentid,1)
+            }
         },
         callgoods:function (event,i,d) {
-            this.items[i].childList[d].commentgood++;
+
+            if(event.user.usertype == 0 && event.addnew && event.addnew ==1){
+                console.log(event);
+                this.items[i].childList[d].commentgood++;
+                changecomgoods(event.commentid,1)
+            }
+        },
+        oldComAddGood:function (event,i){
+            // console.log(event);
+            if(event.user.usertype == 1 ){
+                event.commentgood=Number(event.selfaddatr.addcommentval)+Number(event.commentgood);
+            }else if(event.addnew && event.addnew ==1){
+                event.commentgood=Number(event.selfaddatr.addcommentval)+Number(event.commentgood);
+            }
+            event.selfaddatr.addcommentval=0;
+            let addgood=event.commentgood-event.selfaddatr.firstcommentgood;
+            if(event.user.usertype == 1){
+                this.oldcommenttext[i]={"commentid":event.commentid,"userid":event.userid,"commentgood":addgood}
+                console.log(this.oldcommenttext)
+            }else if(event.addnew && event.addnew ==1){
+                changecomgoods(event.commentid,addgood)
+            }
+
+        },
+        reloldComAddGood:function (event,i,d){
+            // console.log(event);
+            if(event.user.usertype == 1 ){
+                event.commentgood=Number(event.selfaddatr.addcommentval)+Number(event.commentgood);
+            }else if(event.addnew && event.addnew ==1){
+                event.commentgood=Number(event.selfaddatr.addcommentval)+Number(event.commentgood);
+            }
+            event.selfaddatr.addcommentval=0;
+            let addgood=event.commentgood-event.selfaddatr.firstcommentgood;
+            if(event.user.usertype == 1){
+                this.oldcommenttext[i+d]={"commentid":event.commentid,"userid":event.userid,"commentgood":addgood};
+                console.log(this.oldcommenttext)
+            }else if(event.addnew && event.addnew ==1){
+                changecomgoods(event.commentid,addgood)
+            }
+
         },
         backtalk:function(event,i){
             var callid=this.items[i].userid;
@@ -103,6 +150,28 @@ var usertalk = new Vue({
     }
 });
 
+//已发送评论改变赞数
+function changecomgoods(cmd,addnum) {
+    $.each(usertalk.postcommentlist,function(i,n){
+        if(n.commentid == cmd){
+            usertalk.postcommentlist[i].commentgood+=addnum;
+        }
+    })
+}
+
+/*去除oldcommenttext中的null元素*/
+function replacenull() {
+    let getlist=[];
+    if(usertalk.oldcommenttext.length >0){
+        $.each(usertalk.oldcommenttext,function(i,n){
+            if(n != "" && n != undefined){
+                getlist.push(n);
+            }
+        })
+        return getlist;
+    }
+
+}
 
 /*NH通过内容id获取评论*/
 function getcommentlistdatas(contentid){
@@ -353,16 +422,16 @@ function enterd(){
                   "commenturltype":commenturltype
               });*/
         if(lvty ==0){
-            let comtext={ "addnew":1,"commentid":commentid,"userid":userid,"replyuser":"","ruusername":"","commentreply":1,"userheadphoto":userHead,"username":username,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":"","replyfirst":commentid,"createtime":createtime,childList:[],"commenturl":commenturl,"commenturltype":commenturltype};
-            let comtext2={ "addnew":1,"commentid":commentid,"userid":userid,"replyuser":"","ruusername":"","commentreply":1,"userheadphoto":userHead,"username":username,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":"","replyfirst":commentid,"createtime":createtime,"commenturl":commenturl,"commenturltype":commenturltype};
+            let comtext={ "addnew":1,"commentid":commentid,"userid":userid,"replyuser":"","ruusername":"","commentreply":1,"userheadphoto":userHead,"username":username,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":"","replyfirst":commentid,"createtime":createtime,childList:[],"commenturl":commenturl,"commenturltype":commenturltype,"user":{"usertype":0},"selfaddatr":{"firstcommentgood":goods,"addcommentval":0}};
+            let comtext2={ "addnew":1,"commentid":commentid,"userid":userid,"replyuser":"","ruusername":"","commentreply":1,"userheadphoto":userHead,"username":username,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":"","replyfirst":commentid,"createtime":createtime,"commenturl":commenturl,"commenturltype":commenturltype,"user":{"usertype":0},"selfaddatr":{"firstcommentgood":goods,"addcommentval":0}};
             usertalk.items.push(comtext);
             usertalk.postcommentlist.push(comtext2);
         }else if(lvty ==1){
             var replyuser=usertalk.items[index].userid;
             var ruusername=usertalk.items[index].username;
             var replycomment =usertalk.items[index].commentid;
-            let comtext={ "addnew":1,"commentid":commentid,"userid":userid,"replyuser":replyuser,"ruusername":ruusername,"commentreply":0,"userheadphoto":userHead,"username":username,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":replycomment,"replyfirst":replycomment,"createtime":createtime,"commenturl":commenturl,"commenturltype":commenturltype}
-            let comtext2={ "addnew":1,"commentid":commentid,"userid":userid,"replyuser":replyuser,"ruusername":ruusername,"commentreply":0,"userheadphoto":userHead,"username":username,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":replycomment,"replyfirst":replycomment,"createtime":createtime,"commenturl":commenturl,"commenturltype":commenturltype}
+            let comtext={ "addnew":1,"commentid":commentid,"userid":userid,"replyuser":replyuser,"ruusername":ruusername,"commentreply":0,"userheadphoto":userHead,"username":username,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":replycomment,"replyfirst":replycomment,"createtime":createtime,"commenturl":commenturl,"commenturltype":commenturltype,"user":{"usertype":0},"selfaddatr":{"firstcommentgood":goods,"addcommentval":0}}
+            let comtext2={ "addnew":1,"commentid":commentid,"userid":userid,"replyuser":replyuser,"ruusername":ruusername,"commentreply":0,"userheadphoto":userHead,"username":username,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":replycomment,"replyfirst":replycomment,"createtime":createtime,"commenturl":commenturl,"commenturltype":commenturltype,"user":{"usertype":0},"selfaddatr":{"firstcommentgood":goods,"addcommentval":0}}
             usertalk.items[index].childList.push(comtext2);
             usertalk.postcommentlist.push(comtext);
         }else if(lvty ==2){
@@ -370,14 +439,14 @@ function enterd(){
             var ruusername=usertalk.items[index].childList[index2].username;
             var replycomment =usertalk.items[index].childList[index2].commentid;
             var replyfirst =usertalk.items[index].commentid;
-            let comtext={ "addnew":1,"commentid":commentid,"userid":userid,"replyuser":replyuser,"ruusername":ruusername,"commentreply":0,"userheadphoto":userHead,"username":username,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":replycomment,"replyfirst":replyfirst,"createtime":createtime,"commenturl":commenturl,"commenturltype":commenturltype};
-            let comtext2={ "addnew":1,"commentid":commentid,"userid":userid,"replyuser":replyuser,"ruusername":ruusername,"commentreply":0,"userheadphoto":userHead,"username":username,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":replycomment,"replyfirst":replyfirst,"createtime":createtime,"commenturl":commenturl,"commenturltype":commenturltype};
+            let comtext={ "addnew":1,"commentid":commentid,"userid":userid,"replyuser":replyuser,"ruusername":ruusername,"commentreply":0,"userheadphoto":userHead,"username":username,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":replycomment,"replyfirst":replyfirst,"createtime":createtime,"commenturl":commenturl,"commenturltype":commenturltype,"user":{"usertype":0},"selfaddatr":{"firstcommentgood":goods,"addcommentval":0}};
+            let comtext2={ "addnew":1,"commentid":commentid,"userid":userid,"replyuser":replyuser,"ruusername":ruusername,"commentreply":0,"userheadphoto":userHead,"username":username,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":replycomment,"replyfirst":replyfirst,"createtime":createtime,"commenturl":commenturl,"commenturltype":commenturltype,"user":{"usertype":0},"selfaddatr":{"firstcommentgood":goods,"addcommentval":0}};
             usertalk.items[index].childList.push(comtext);
             usertalk.postcommentlist.push(comtext2);
         }
         $("#commontsSrBox").attr("data-type",0);
         $("#myComments").val("");
-        $("#mySetNum").val(1);
+        $("#mySetNum").val(0);
         talknum++;
         $("#talkAboutBox .talkNum").html(talknum);
         $("#myComments").attr("placeholder","");
@@ -594,8 +663,8 @@ function creatComentSure(){
                         }else{
                             commenturltype=5;
                         }
-                        let comtext={ "addnew":1,"commentid":commentid,"userid":userid,"replyuser":"","ruusername":"","commentreply":1,"userheadphoto":userHead,"username":username,"contentid":contentid,"commenttext":n.commenttext, "commentgood":goods,"replycomment":"","replyfirst":commentid,"createtime":createtime,childList:[],"commenturl":fetcomurl,"commenturltype":commenturltype};
-                        let comtext2={ "addnew":1,"commentid":commentid,"userid":userid,"replyuser":"","ruusername":"","commentreply":1,"userheadphoto":userHead,"username":username,"contentid":contentid,"commenttext":n.commenttext, "commentgood":goods,"replycomment":"","replyfirst":commentid,"createtime":createtime,"commenturl":fetcomurl,"commenturltype":commenturltype};
+                        let comtext={ "addnew":1,"commentid":commentid,"userid":userid,"replyuser":"","ruusername":"","commentreply":1,"userheadphoto":userHead,"username":username,"contentid":contentid,"commenttext":n.commenttext, "commentgood":goods,"replycomment":"","replyfirst":commentid,"createtime":createtime,childList:[],"commenturl":fetcomurl,"commenturltype":commenturltype,"user":{"usertype":0},"selfaddatr":{"firstcommentgood":goods,"addcommentval":0}};
+                        let comtext2={ "addnew":1,"commentid":commentid,"userid":userid,"replyuser":"","ruusername":"","commentreply":1,"userheadphoto":userHead,"username":username,"contentid":contentid,"commenttext":n.commenttext, "commentgood":goods,"replycomment":"","replyfirst":commentid,"createtime":createtime,"commenturl":fetcomurl,"commenturltype":commenturltype,"user":{"usertype":0},"selfaddatr":{"firstcommentgood":goods,"addcommentval":0}};
                         usertalk.items.push(comtext);
                         usertalk.postcommentlist.push(comtext2);
                        // console.log(usertalk.postcommentlist);

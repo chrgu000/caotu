@@ -387,7 +387,7 @@
         //根据iframe的id获取对象
         //////console.log(ifinfo);
         if(contsdatas.Content.contentid ==null || contsdatas.Content.contentid ==undefined || contsdatas.Content.contentid ==""){
-            layer.msg("该内容已被删除，请审核下一条！！",{time:100});
+            layer.msg("该内容已被审核，请审核下一条！！",{time:100});
             return false;
         }
 
@@ -700,24 +700,20 @@
                     //
                     // $("#subcheckbtn").attr("disabled","disabled");
                 }else{
-                    talknum=0;
-                    $("#talkAboutBox .talkNum").html(talknum);
-                    usertalk.items=[];
-                    $("#subcheckbtn").removeAttr("disabled");
-
                     layer.confirm('提交失败，该条内容可能已被删除(跳过直接审核下个内容，"取消"联系后台人员)', {
                         btn: ['下一条',"取消"] //按钮
                     }, function(index){
                         /*初始化*/
-
                         //    window.location.href="../content-manage/ugc-checksconts.html"
                         layer.close(index);
-
                     },function(index){
                         layer.close(index);
                     });
                 }
-
+                talknum=0;
+                $("#talkAboutBox .talkNum").html(talknum);
+                usertalk.items=[];
+                $("#subcheckbtn").removeAttr("disabled");
             }
         });
     }

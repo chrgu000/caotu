@@ -189,7 +189,7 @@
     /*获取url判断类型*/
     function iscontendtype(){
      //  var loctionsrc='?commentid=003e4f85bb234f77b75191ea52aee6dd&userheadphoto=https://ctkj-1256675270.cos.ap-shanghai.myqcloud.com/nhdzhead.png&username=朱豪华&usernumber=e92c07dce1374cceb4e2af1023d1d8e2';//假设得到的location.search; //获取url中"?"符后的字串
-     // var loctionsrc='?commentid%3Dj2hodo1vxajop3cy43%26userheadphoto%3D%26username%3D%26usernumber%3D';//假设得到的location.search; //获取url中"?"符后的字串
+      //var loctionsrc='?commentid%3D45b4ccd4c7a4472191fda7d6e2fb62e8%26userheadphoto%3Dhttps%3A%2F%2Fctkj-1256675270.cos.ap-shanghai.myqcloud.com%2F2a4aa9d5-ddcb-4bb5-a090-0b31041980b4.jpg%26username%3D追梦%26的猪%26usernumber%3D01256=';//假设得到的location.search; //获取url中"?"符后的字串
        var loctionsrc= window.location.search;
       //  console.log(loctionsrc);
         wxfxxinfo.link="https://active.diqyj.cn/share_connotation/sharecomment.html"+loctionsrc;
@@ -260,6 +260,8 @@
     }
 
     function condataqf(condatas){
+        console.log("condatas::");
+        console.log(condatas);
         if(condatas.commenttext && condatas.commenttext !=""){
             commendinfo.commendTitle=condatas.commenttext;
             wxfxxinfo.title=condatas.commenttext;
@@ -297,8 +299,8 @@
         }*/
         if(condatas.commenturl && condatas.commenturl !=""){
             let commentty=JSON.parse(condatas.commenturl);
-            // console.log("commentty::");
-            // console.log(commentty);
+            console.log("commentty::");
+            console.log(commentty);
 
             if(commentty.length >0){
                 if(commentty[0].type == "1" || commentty[0].type == "2"){
@@ -324,6 +326,8 @@
             }else{
                 $("#mainContntShowbox").css("height","25px");
             }
+        }else{
+            $("#mainContntShowbox").css("height","25px");
         }
 
 
