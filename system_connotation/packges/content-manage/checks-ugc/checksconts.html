@@ -46,6 +46,7 @@
         #talkAboutBox .commentSection{border-bottom:1px dashed #bbb;}
         #talkAboutBox .commentSection .userTitle{width:150px;float:left;}
         #talkAboutBox .commentSection .conmentsConts{width:calc(100% - 300px);padding:0 15px;float:left;}
+        #talkAboutBox .commentSection .conmentsConts>div{padding:9px;}
         #talkAboutBox .commentSection .doBox{float:left;}
         #talkAboutBox .commentSection .doBox .reply{color:#0064b6;padding-right:12px;}
         #talkAboutBox .commentSection .praiseBox i{font-size:18px;margin-right:3px;}
@@ -144,6 +145,17 @@
         #contentUrlBox{position: fixed;width:100%;height:100%;padding:15px;background:#fff;top:0;bottom:0;left:0;right:0;margin:0 auto;display: none;overflow: auto;}
         #contentUrlBox li{width:100%;line-height: 30px;color:#333;font-size:13px;}
 
+        /*一键生成评论*/
+        #creatCommentBtn{position: absolute;right:62px;top:45px;width:172px;}
+        /*一键生成评论的框*/
+        #creatCommentBox{width:100%;padding:15px;background:#fff;height:100%;display: none;}
+        #creatCommentBox .lineBox{width:100%;margin:15px 0;}
+        #creatCommentBox .lineTitle{width:120px;display: inline-block;text-align: right;}
+        #creatCommentBox select,
+        #creatCommentBox input{width:180px;margin-left:6px;}
+        #myConmentsEnter {
+            top: 80px;
+        }
     </style>
 </head>
 
@@ -314,8 +326,8 @@
     <div class="commentSectionBox" id="commentSectionBox">
         <div class="commentSection" v-for="(item,i) in items" v-bind:data-commentid="item.commentid" v-bind:data-commentreply="item.commentreply" v-bind:data-replycomment="item.replycomment" v-bind:data-replyuser="item.replyuser" v-bind:data-replyfirst="item.replyfirst">
             <p class="userTitle">
-                <span class="imgBox"><img v-bind:src="item.userimg" alt=""/></span>
-                <span class="userName" v-bind:data-id="item.userid">{{item.userName}}：</span>
+                <span class="imgBox"><img v-bind:src="item.userheadphoto" alt=""/></span>
+                <span class="userName" v-bind:class="{trueUser : item.user.usertype==1}" v-bind:data-id="item.userid">{{item.username}}：</span>
             </p>
             <div class="conmentsConts" v-bind:data-replyuser="item.replyuser">
                 <div class="selefCon" v-bind:data-contentid="item.contentid">{{item.commenttext}}
@@ -332,8 +344,8 @@
                     </div>
                 </div>
                 <!--回复-->
-                <div class="recalltalkcon" v-for="(itemcon,d) in item.recall"  v-bind:data-contentid="item.contentid"  v-bind:data-commentid="itemcon.commentid" v-bind:data-commentreply="itemcon.commentreply" v-bind:data-replycomment="itemcon.replycomment" v-bind:data-replyuser="itemcon.replyuser" v-bind:data-replyfirst="itemcon.replyfirst">
-                    <span class="recalluser" :data-id="itemcon.userid"  v-bind:data-replyuser="item.replyuser">{{itemcon.userName}}  回复  {{itemcon.replyusername}}：</span>
+                <div class="recalltalkcon" v-for="(itemcon,d) in item.childList"  v-bind:data-contentid="item.contentid"  v-bind:data-commentid="itemcon.commentid" v-bind:data-commentreply="itemcon.commentreply" v-bind:data-replycomment="itemcon.replycomment" v-bind:data-replyuser="itemcon.replyuser" v-bind:data-replyfirst="itemcon.replyfirst">
+                    <span class="recalluser" :data-id="itemcon.userid" v-bind:data-replyuser="item.replyuser"><b v-bind:class="{trueUser : itemcon.user.usertype==1}" >{{itemcon.username}}</b>  回复  {{itemcon.ruusername}}：</span>
                     {{itemcon.commenttext}}
                     <!--图片/视频-->
                     <div class="imgMovieShowComBox"  v-if="itemcon.commenturltype==3 ||itemcon.commenturltype==4">
@@ -348,20 +360,26 @@
                     </div>
                     <div class="callDoBox">
                         <span class="reply" v-on:click="backcalltalk(itemcon,i,d)">回复</span>
-                        <span class="praiseBox"  v-on:click="callgoods(itemcon,i,d)"><i class="glyphicon glyphicon-thumbs-up"></i><b class="praiseNum">{{itemcon.commentgood}}</b></span>
+                        <span v-if="itemcon.addnew==1" class="reply deltecom" v-on:click="comdelete2(itemcon,i,d)">删除</span>
+                        <span class="praiseBox"  v-on:click="callgoods(itemcon,i,d)">
+                            <i class="glyphicon glyphicon-thumbs-up"></i>
+                            <b class="praiseNum">{{itemcon.commentgood}}</b>
+                        </span>
                     </div>
                 </div>
 
             </div>
             <div class="doBox">
                 <span class="reply" v-on:click="backtalk(item,i)">回复</span>
-                <span class="praiseBox" v-on:click="goods(item,i)"><i class="glyphicon glyphicon-thumbs-up"></i><b class="praiseNum">{{item.commentgood}}</b></span>
+                <span v-if="item.addnew==1" class="reply deletecom" v-on:click="comdelete(item,i)">删除</span>
+                <span class="praiseBox" v-on:click="goods(item,i)">
+                    <i class="glyphicon glyphicon-thumbs-up"></i>
+                    <b class="praiseNum">{{item.commentgood}}</b>
+                </span>
             </div>
         </div>
 
     </div>
-
-
 
     <div class="commontsSrBox" id="commontsSrBox" data-type="0" data-list="" data-list2="" style="background:#f0f3f4;border-top:1px solid #bbb;padding:3px;padding-bottom:20px;">
         <select name="" id="myNameSelect">
@@ -386,6 +404,7 @@
                 <input type="file" id="commentmovieFile" name="" accept="audio/mp4,video/mp4,application/ogg, audio/ogg"  style="display: none;" value="">
                 <button type="button" class="btn btn-default inputfileBtn" id="choosePictureBtn" >选择图片</button>
                 <button type="button" class="btn btn-default inputfileBtn" id="chooseMovieBtn">选择视频</button>
+                <button type="button" class="btn btn-sm btn-primary" id="creatCommentBtn" onclick="">一键生成评论</button>
                 <button type="button" class="btn btn-sm btn-primary" id="myConmentsEnter" onclick="enterd()">发 送</button>
             </div>
     </div>
@@ -410,6 +429,22 @@
         </ul>
     </div>
 
+<!--一键生成评论-->
+<div id="creatCommentBox">
+    <div class="lineBox">
+        <span class="lineTitle">选择话题：</span>
+        <select name="" id="comentTags"></select>
+    </div>
+    <div class="lineBox">
+        <span class="lineTitle">评论数：</span>
+        <input style="width:100px;" id="creatComentNum" type="number" value="1" min="1">
+    </div>
+    <div style="text-align: center;margin-top:25px;">
+        <button type="button" class="btn btn-default" onclick="creatComentSure()">确定</button>
+        <button type="button" class="btn btn-default" onclick="closelayerall()">取消</button>
+    </div>
+</div>
+
 <script src="../../../js/jquery.min.js?v=2.1.4"></script>
 <script src="../../../plugin/datepicker/jquery.datetimepicker.full.min.js"></script>
 <script src="../../../plugin/layer/layer.js"></script>
@@ -418,6 +453,7 @@
 <script src="../../../plugin/cos-js-sdl-v5/cos-js-sdk-v5.min.js"></script>
 <script src="../../../plugin/cos-js-sdl-v5/cos.js"></script>
 <script src="../../../js/inputmultiple.js"></script>
+<script src="../../../js/ugcDefencAddComment.js"></script>
 <script type="text/javascript">
 
     var isreload=1;
@@ -427,6 +463,7 @@
         getpush();//马甲
         getcheckdata();//审核数据
         getrubbigsetpige(3);//推荐队列最大页码
+        $("#myComments").empty();
     });
 
 
@@ -440,27 +477,36 @@
     var usertalk = new Vue({
         el: '#commentSectionBox',
         data: {
-            items: []
+            items: [],
+            postcommentlist:[],
         },
         // 在 `methods` 对象中定义方法
         methods: {
             goods: function (event,i) {
-                this.items[i].commentgood++;
+                if(event.user.usertype == 0 && event.addnew && event.addnew ==1){
+                    console.log(event);
+                    this.items[i].commentgood++;
+                }
             },
             callgoods:function (event,i,d) {
-                this.items[i].recall[d].commentgood++;
+                if(event.user.usertype == 0 && event.addnew && event.addnew ==1){
+                    console.log(event);
+                    this.items[i].childList[d].commentgood++;
+                }
             },
             backtalk:function(event,i){
+               console.log(event)
                 var callid=this.items[i].userid;
-                var callname=this.items[i].userName;
+                var callname=this.items[i].username;
                 $("#commontsSrBox").attr("data-type",1);
                 $("#commontsSrBox").attr("data-list",i);
                 $("#commontsSrBox").attr("data-list2","");
                 $("#myComments").attr("placeholder","回复"+callname+"：")
             },
             backcalltalk:function(event,i,d){
-                var callid=this.items[i].recall[d].userid;
-                var callname=this.items[i].recall[d].userName;
+               console.log(event)
+                var callid=this.items[i].childList[d].userid;
+                var callname=this.items[i].childList[d].username;
                 $("#commontsSrBox").attr("data-type",2);
                 $("#commontsSrBox").attr("data-list",i);
                 $("#commontsSrBox").attr("data-list2",d);
@@ -491,6 +537,52 @@
 
                 })
 
+
+            },
+            comdelete:function(event,i){//删除评论
+                console.log(event);
+                layer.confirm('确定删除该评论吗？', {
+                    btn: ['确定','取消'] //按钮
+                }, function(index){
+                    //console.log(recondlist.chooselistnum);
+                    let comid= event.commentid;
+                    usertalk.items.splice(i,1);
+                    // console.log(usertalk.postcommentlist);
+                    let lastpostcommentlist=[];
+                    $.each(usertalk.postcommentlist,function(c,n){
+                        if(n.replyfirst!=comid){
+                            lastpostcommentlist.push(usertalk.postcommentlist[c]);
+                        }
+                    });
+                    usertalk.postcommentlist=lastpostcommentlist;
+                    if(event.childList && event.childList.length>0){
+                        talknum=talknum-event.childList.length;
+                    }
+                    talknum--;
+                    $("#talkAboutBox .talkNum").html(talknum);
+                    // console.log("usertalk.postcommentlist：：");
+                    // console.log(usertalk.postcommentlist);
+                    layer.close(index);
+                }, function(index){
+                    layer.close(index);
+                });
+
+
+            },
+            comdelete2:function(event,i,d){//删除评论
+                console.log(event);
+                let comid= event.commentid;
+                $.each(usertalk.postcommentlist,function(c,n){
+                    if(n.commentid==comid){
+                        usertalk.postcommentlist.splice(c,1);
+                        return false;
+                    }
+                });
+                console.log("usertalk.postcommentlist：：");
+                console.log(usertalk.postcommentlist);
+                this.items[i].childList.splice(d,1);
+                talknum--;
+                $("#talkAboutBox .talkNum").html(talknum);
 
             }
         }
@@ -550,10 +642,8 @@
         layer.msg('努力中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:1000}) ;
         //////console.log(ifinfo);
         var murl="moveicheck.html";
-
         if(contsdatas.contenttype == "3"){
             murl="picturecheck.html";
-
             $("#movieStyle").attr("data-val",3).html("图片");
             $(".movieTrBox").css({"display":"none"});
             $("#movieCoverChangeBox").css({"display":"none"});
@@ -619,13 +709,56 @@
                 $("#checkTagSearch"+(i+1)).val(sname ).attr("data-val",n ).attr("disabled","disabled");
             });
         }
-        //获取的评论
+        //获取的评论(右侧显示的评论例子)
         getcommentlistdatas(contsdatas.contentid);
+        //底部的评论
+        if(contsdatas.cmtlist && contsdatas.cmtlist!=""  && contsdatas.cmtlist!=null){
+            let commentlists=contsdatas.cmtlist;
+            if(commentlists.length >0){
+                $.each(commentlists,function(i,n){
+                    if(n.commenturl && n.commenturl!=""){
+                        if(n.commenturl =="[]"){
+                            n.commenturl=[];
+                        }else{
+                            n.commenturl=JSON.parse(n.commenturl);
+                            if(n.commenturl.length >0){
+                                n.commenturltype= n.commenturl[0].type;
+                            }
+                        }
+                    }else{
+                        n.commenturl=[];
+                    }
+                    //增加自定义属性firstcommentgood：初始点赞量；addcommentval：增加的的点赞量
+                    n.selfaddatr={"firstcommentgood":n.commentgood,"addcommentval":0};
+                    if(n.childList.length >0){
+                        $.each(n.childList,function(c,t){
+                            if(t.commenturl && t.commenturl!=""){
+                                if(t.commenturl =="[]"){
+                                    t.commenturl=[];
+                                }else{
+                                    t.commenturl=JSON.parse(t.commenturl);
+                                    if(t.commenturl.length >0){
+                                        t.commenturltype= t.commenturl[0].type;
+                                    }
 
+                                }
+                            }else{
+                                t.commenturl=[];
+                            }
+                            t.selfaddatr={"firstcommentgood":t.commentgood,"addcommentval":0};
+                        })
+
+                    }
+
+                })
+
+            }
+            usertalk.items=commentlists;
+        }
 
     }
 
-    /*NH通过内容id获取评论*/
+    /*NH通过内容id获取评论例子*/
     function getcommentlistdatas(contentid){
         var datapost={"contentid":contentid};
         datapost=JSON.stringify(datapost);
@@ -679,7 +812,9 @@
 
                 if(searchid ==0){
                     $(".searchSecondMenu").empty();
+                    $("#comentTags").empty();
                     $.each(diskJson.data.rows,function(i,n){
+                        $("#comentTags").append('<option value="'+ n.tagid+'">'+ n.tagname+'</option>')
                         if(n.tagid&&n.tagid !=null && n.tagname && n.tagname!=null){
                             $(".searchSecondMenu").append(' <li data-val="'+ n.tagid+'">'+ n.tagname+'</li>');
                         }
@@ -841,8 +976,9 @@
                 commenturltype=typefile;
                 //send();
             }
+
             var userid=$("#myNameSelect").val();
-            var userName=$("#myNameSelect option:checked").text();
+            var username=$("#myNameSelect option:checked").text();
             var userHead=$("#myNameSelect option:checked").attr("data-head");
             var lvty= $("#commontsSrBox").attr("data-type");
             var index= $("#commontsSrBox").attr("data-list");
@@ -853,18 +989,30 @@
             var createtime=getmytime();
 
             if(lvty ==0){
-                usertalk.items.push( { "commentid":commentid,"userid":userid,"replyuser":"","replyusername":"","commentreply":1,"userimg":userHead,"userName":userName,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":"","replyfirst":commentid,"createtime":createtime,recall:[],"commenturl":commenturl,"commenturltype":commenturltype});
+                let comtext={ "addnew":1,"commentid":commentid,"userid":userid,"replyuser":"","ruusername":"","commentreply":1,"userheadphoto":userHead,"username":username,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":"","replyfirst":commentid,"createtime":createtime,childList:[],"commenturl":commenturl,"commenturltype":commenturltype,"user":{"usertype":0},"selfaddatr":{"firstcommentgood":goods,"addcommentval":0}};
+                let comtext2={ "addnew":1,"commentid":commentid,"userid":userid,"replyuser":"","ruusername":"","commentreply":1,"userheadphoto":userHead,"username":username,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":"","replyfirst":commentid,"createtime":createtime,"commenturl":commenturl,"commenturltype":commenturltype,"user":{"usertype":0},"selfaddatr":{"firstcommentgood":goods,"addcommentval":0}};
+                usertalk.items.push(comtext);
+                usertalk.postcommentlist.push(comtext2);
+                //usertalk.items.push( { "commentid":commentid,"userid":userid,"replyuser":"","replyusername":"","commentreply":1,"userimg":userHead,"userName":userName,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":"","replyfirst":commentid,"createtime":createtime,recall:[],"commenturl":commenturl,"commenturltype":commenturltype});
             }else if(lvty ==1){
                 var replyuser=usertalk.items[index].userid;
-                var replyusername=usertalk.items[index].userName;
+                var ruusername=usertalk.items[index].username;
                 var replycomment =usertalk.items[index].commentid;
-                usertalk.items[index].recall.push({ "commentid":commentid,"userid":userid,"replyuser":replyuser,"replyusername":replyusername,"commentreply":0,"userimg":userHead,"userName":userName,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":replycomment,"replyfirst":replycomment,"createtime":createtime,"commenturl":commenturl,"commenturltype":commenturltype});
+                let comtext={ "addnew":1,"commentid":commentid,"userid":userid,"replyuser":replyuser,"ruusername":ruusername,"commentreply":0,"userheadphoto":userHead,"username":username,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":replycomment,"replyfirst":replycomment,"createtime":createtime,"commenturl":commenturl,"commenturltype":commenturltype,"user":{"usertype":0},"selfaddatr":{"firstcommentgood":goods,"addcommentval":0}}
+                let comtext2={ "addnew":1,"commentid":commentid,"userid":userid,"replyuser":replyuser,"ruusername":ruusername,"commentreply":0,"userheadphoto":userHead,"username":username,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":replycomment,"replyfirst":replycomment,"createtime":createtime,"commenturl":commenturl,"commenturltype":commenturltype,"user":{"usertype":0},"selfaddatr":{"firstcommentgood":goods,"addcommentval":0}}
+                usertalk.items[index].childList.push(comtext2);
+                usertalk.postcommentlist.push(comtext);
+                //usertalk.items[index].recall.push({ "commentid":commentid,"userid":userid,"replyuser":replyuser,"replyusername":replyusername,"commentreply":0,"userimg":userHead,"userName":userName,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":replycomment,"replyfirst":replycomment,"createtime":createtime,"commenturl":commenturl,"commenturltype":commenturltype});
             }else if(lvty ==2){
-                var replyuser=usertalk.items[index].recall[index2].userid;
-                var replyusername=usertalk.items[index].recall[index2].userName;
-                var replycomment =usertalk.items[index].recall[index2].commentid;
+                var replyuser=usertalk.items[index].childList[index2].userid;
+                var ruusername=usertalk.items[index].childList[index2].username;
+                var replycomment =usertalk.items[index].childList[index2].commentid;
                 var replyfirst =usertalk.items[index].commentid;
-                usertalk.items[index].recall.push({ "commentid":commentid,"userid":userid,"replyuser":replyuser,"replyusername":replyusername,"commentreply":0,"userimg":userHead,"userName":userName,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":replycomment,"replyfirst":replyfirst,"createtime":createtime,"commenturl":commenturl,"commenturltype":commenturltype});
+                let comtext={ "addnew":1,"commentid":commentid,"userid":userid,"replyuser":replyuser,"ruusername":ruusername,"commentreply":0,"userheadphoto":userHead,"username":username,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":replycomment,"replyfirst":replyfirst,"createtime":createtime,"commenturl":commenturl,"commenturltype":commenturltype,"user":{"usertype":0},"selfaddatr":{"firstcommentgood":goods,"addcommentval":0}};
+                let comtext2={ "addnew":1,"commentid":commentid,"userid":userid,"replyuser":replyuser,"ruusername":ruusername,"commentreply":0,"userheadphoto":userHead,"username":username,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":replycomment,"replyfirst":replyfirst,"createtime":createtime,"commenturl":commenturl,"commenturltype":commenturltype,"user":{"usertype":0},"selfaddatr":{"firstcommentgood":goods,"addcommentval":0}};
+                usertalk.items[index].childList.push(comtext);
+                usertalk.postcommentlist.push(comtext2);
+                //usertalk.items[index].recall.push({ "commentid":commentid,"userid":userid,"replyuser":replyuser,"replyusername":replyusername,"commentreply":0,"userimg":userHead,"userName":userName,"contentid":contentid,"commenttext":text, "commentgood":goods,"replycomment":replycomment,"replyfirst":replyfirst,"createtime":createtime,"commenturl":commenturl,"commenturltype":commenturltype});
             }
             $("#commontsSrBox").attr("data-type",0);
             $("#myComments").val("");
@@ -873,7 +1021,10 @@
             $("#talkAboutBox .talkNum").html(talknum);
             $("#myComments").attr("placeholder","");
             layer.msg("发送成功。。。。");
-            //console.log(usertalk.items);
+            // console.log("usertalk.items::");
+            // console.log(usertalk.items);
+            // console.log("usertalk.postcommentlist：：");
+            // console.log(usertalk.postcommentlist);
 
         }
 
@@ -900,7 +1051,7 @@
     function subd2(isend){
         layer.msg('提交中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: true,offset: '50px', time:20000}) ;
         let checkuid=userdatas.data.userid;
-        let commenttext=usertalk.items;//评论
+        let commenttext=usertalk.postcommentlist;//评论
         let contentbad=$("#unsupportNum").val();
         let contentgoods=$("#goodNum").val();
         let contentid= $("#mainCont").attr("data-id");

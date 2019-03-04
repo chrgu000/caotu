@@ -138,7 +138,7 @@
             <tr>
                 <td colspan="2">
                     发布人：
-                    <span id="checkpublisher" data-val="">
+                    <span id="checkpublisher2" data-val="">
 
                      </span>
                 </td>
@@ -200,7 +200,7 @@
         <div class="commentSection" v-for="(item,i) in items" v-bind:data-commentid="item.commentid" v-bind:data-commentreply="item.commentreply" v-bind:data-replycomment="item.replycomment" v-bind:data-replyuser="item.replyuser" v-bind:data-replyfirst="item.replyfirst">
             <p class="userTitle">
                 <span class="imgBox"><img v-bind:src="item.userheadphoto" alt=""/></span>
-                <span class="userName" v-bind:data-id="item.userid">{{item.username}}：</span>
+                <span class="userName" v-bind:class="{trueUser : item.user.usertype==1}" v-bind:data-id="item.userid">{{item.username}}：</span>
             </p>
             <div class="conmentsConts" v-bind:data-replyuser="item.replyuser">
                 <div class="selefCon" v-bind:data-contentid="item.contentid">{{item.commenttext}}
@@ -218,7 +218,7 @@
                 </div>
                 <!--回复-->
                 <div class="recalltalkcon" v-for="(itemcon,d) in item.childList"  v-bind:data-contentid="item.contentid"  v-bind:data-commentid="itemcon.commentid" v-bind:data-commentreply="itemcon.commentreply" v-bind:data-replycomment="itemcon.replycomment" v-bind:data-replyuser="itemcon.replyuser" v-bind:data-replyfirst="itemcon.replyfirst">
-                    <span class="recalluser" :data-id="itemcon.userid"  v-bind:data-replyuser="item.replyuser">{{itemcon.username}}  回复  {{itemcon.ruusername}}：</span>
+                    <span class="recalluser" :data-id="itemcon.userid" v-bind:data-replyuser="item.replyuser"><b v-bind:class="{trueUser : itemcon.user.usertype==1}" >{{itemcon.username}}</b>  回复  {{itemcon.ruusername}}：</span>
                     {{itemcon.commenttext}}
                     <!--图片/视频-->
                     <div class="imgMovieShowComBox"  v-if="itemcon.commenturltype==3 ||itemcon.commenturltype==4">
@@ -234,7 +234,10 @@
                     <div class="callDoBox">
                         <span class="reply" v-on:click="backcalltalk(itemcon,i,d)">回复</span>
                         <span v-if="itemcon.addnew==1" class="reply deltecom" v-on:click="comdelete2(itemcon,i,d)">删除</span>
-                        <span class="praiseBox"  v-on:click="callgoods(itemcon,i,d)"><i class="glyphicon glyphicon-thumbs-up"></i><b class="praiseNum">{{itemcon.commentgood}}</b></span>
+                        <span class="praiseBox"  v-on:click="callgoods(itemcon,i,d)">
+                            <i class="glyphicon glyphicon-thumbs-up"></i>
+                            <b class="praiseNum">{{itemcon.commentgood}}</b>
+                        </span>
                     </div>
                 </div>
 
@@ -242,7 +245,10 @@
             <div class="doBox">
                 <span class="reply" v-on:click="backtalk(item,i)">回复</span>
                 <span v-if="item.addnew==1" class="reply deletecom" v-on:click="comdelete(item,i)">删除</span>
-                <span class="praiseBox" v-on:click="goods(item,i)"><i class="glyphicon glyphicon-thumbs-up"></i><b class="praiseNum">{{item.commentgood}}</b></span>
+                <span class="praiseBox" v-on:click="goods(item,i)">
+                    <i class="glyphicon glyphicon-thumbs-up"></i>
+                    <b class="praiseNum">{{item.commentgood}}</b>
+                </span>
             </div>
         </div>
 
@@ -332,6 +338,7 @@
         getpush();//马甲
         getcheckdata();//审核数据
         getrubbigsetpige(3);//推荐队列最大页码
+        $("#myComments").empty();
     });
 
 
@@ -367,7 +374,7 @@
                         $("#myConmentsSub").attr("disabled",true);
                         $("#ugcsubbtn").attr("disabled",true);
                         $("#mainConTitle").html("");
-                        $("#checkpublisher").html("");
+                        $("#checkpublisher2").html("");
                         $("#mainContain").empty();
                         $('#leftNavsRebox', window.parent.document).removeClass("show");
                        // window.location.href="../index_v1.html"
@@ -385,142 +392,140 @@
     /*获取审核类型加载视频/图片页面*/
     function getchecktype(contsdatas){
         //根据iframe的id获取对象
-        //////console.log(ifinfo);
-        if(contsdatas.Content.contentid ==null || contsdatas.Content.contentid ==undefined || contsdatas.Content.contentid ==""){
-            layer.msg("该内容已被审核，请审核下一条！！",{time:100});
-            return false;
-        }
+      console.log(contsdatas);
+        if(contsdatas.Content.contentid && contsdatas.Content.contentid !="" && contsdatas.Content.contentid !=null){
+            var murl="moveicheck.html";
+            if(contsdatas.Content.contenttype == "3"){
+                murl="picturecheck.html";
+                $("#movieStyle").attr("data-val",3).html("图片");
+                $(".movieTrBox").css({"display":"none"});
+                $("#movieCoverChangeBox").css({"display":"none"});
+            }else if(contsdatas.Content.contenttype == "4"){
+                murl="picturecheck.html";
+                $("#movieStyle").attr("data-val",4).html("纯文字");
+                $("#movieCoverChangeBox").css({"display":"none"});
+                $(".movieTrBox").css({"display":"none"});
+            }else{
+                murl="moveicheck.html";
+                $(".movieTrBox").css({"display":"contents"});
+                $("#movieCoverChangeBox").css({"display":"block"});
 
-        var murl="moveicheck.html";
-        if(contsdatas.Content.contenttype == "3"){
-            murl="picturecheck.html";
-            $("#movieStyle").attr("data-val",3).html("图片");
-            $(".movieTrBox").css({"display":"none"});
-            $("#movieCoverChangeBox").css({"display":"none"});
-        }else if(contsdatas.Content.contenttype == "4"){
-            murl="picturecheck.html";
-            $("#movieStyle").attr("data-val",4).html("纯文字");
-            $("#movieCoverChangeBox").css({"display":"none"});
-            $(".movieTrBox").css({"display":"none"});
-        }else{
-            murl="moveicheck.html";
-            $(".movieTrBox").css({"display":"contents"});
-            $("#movieCoverChangeBox").css({"display":"block"});
+            }
+            //console.log(ifinfo[1]);
+            //console.log(murl);
+            contentDatasurllist=contsdatas.Content.contenturllist;//内容链接（视频，图片地址）
+            $("#mainContain").load(murl,function(){
+                geturl(contsdatas.Content.contenturllist);
+            });
+            contentUrldel(contentDatasurllist);
+            /*视频/图片右侧信息*/
+            $("#unchecknum").html(contsdatas.Content.pushcount);
+            // console.log("contsdatas.Content::");
+            // console.log(contsdatas.Content);
+            // console.log(contsdatas.Content.contenttitle);
+            if(contsdatas.Content.contenttitle && contsdatas.Content.contenttitle !=""){
+                let contile=$.trim(contsdatas.Content.contenttitle);
+                // let contile2=filteremoji(contile);
+                if(contile!="" ){
+                    $("#mainConTitle").attr("readonly","readonly");
+                    $("#mainCont .contitleTip").html(contsdatas.Content.contenttitle.length+"/字");
+                    $("#mainConTitle").val(contile);
+                }else{
+                    $("#mainConTitle").removeAttr("readonly");
+                    $("#mainCont .contitleTip").html("0/字");
+                    $("#mainConTitle").val("");
+                }
 
-        }
-        //console.log(ifinfo[1]);
-        //console.log(murl);
-        contentDatasurllist=contsdatas.Content.contenturllist;//内容链接（视频，图片地址）
-        $("#mainContain").load(murl,function(){
-            geturl(contsdatas.Content.contenturllist);
-        });
-
-
-
-        contentUrldel(contentDatasurllist);
-        /*视频/图片右侧信息*/
-        $("#unchecknum").html(contsdatas.Content.pushcount);
-        // console.log("contsdatas.Content::");
-        // console.log(contsdatas.Content);
-        // console.log(contsdatas.Content.contenttitle);
-        if(contsdatas.Content.contenttitle && contsdatas.Content.contenttitle !=""){
-            let contile=$.trim(contsdatas.Content.contenttitle);
-           // let contile2=filteremoji(contile);
-            if(contile!="" ){
-                $("#mainConTitle").attr("readonly","readonly");
-                $("#mainCont .contitleTip").html(contsdatas.Content.contenttitle.length+"/字");
-                $("#mainConTitle").val(contile);
             }else{
                 $("#mainConTitle").removeAttr("readonly");
                 $("#mainCont .contitleTip").html("0/字");
                 $("#mainConTitle").val("");
             }
 
-        }else{
-            $("#mainConTitle").removeAttr("readonly");
-            $("#mainCont .contitleTip").html("0/字");
-            $("#mainConTitle").val("");
-        }
-
-        // console.log(contsdatas.Content.contentid);
-        $("#mainCont").attr("data-id",contsdatas.Content.contentid);
-        let createuser=userdatas.data.userid;
-        let createuserName=userdatas.data.username;
-        $("#finalAuditor").attr("data-id",createuser).html(createuserName);
-        $("#checkpublisher").html(contsdatas.Content.contentuid);
-        $("#oldMoviePlayNum").html(contsdatas.Content.playcount);
-        $("#oldUnsupportNum").html(contsdatas.Content.contentbad);
-        $("#oldGoodNum").html(contsdatas.Content.contentgood);
-        /*标签处理*/
-        $("#detailCon .searchMenu .searchTag").val("").attr("data-val","").removeAttr("disabled");
-        if(contsdatas.Content.contenttag && contsdatas.Content.contenttag !=""){
-            let conlstag=contsdatas.Content.contenttag.split(";");//临时加的
-            // console.log("conlstag::");
-            // console.log(conlstag);
-            let tagshow=[];
-            $.each(conlstag,function(i,n){
-                // console.log(n);
-                let sname=$("#checkTagul1 li[data-val="+n +"]").html();
-                tagshow.push(sname);
-                $("#checkTagSearch"+(i+1)).val(sname ).attr("data-val",n ).attr("disabled","disabled");
-            });
-        }
-
-        //段友审核结果
-        $("#commentlistBox ul").empty();
-        if(contsdatas.ResList && contsdatas.ResList.length >0){
-            $.each(contsdatas.ResList,function(i,n){
-                let ispass="";
-                switch(n.checkres){
-                    case "1":ispass="通过";break;
-                    case "2":ispass="超时";break;
-                    case "0":ispass="不通过";break;
-                }
-                $("#commentlistBox ul").append("<li data-userid="+n.userid+">"+n.username+":"+ispass+"</li>")
-            })
-        }
-        //底部的评论
-        if(contsdatas.cmtlist && contsdatas.cmtlist!=""  && contsdatas.cmtlist!=null){
-            let commentlists=contsdatas.cmtlist;
-            if(commentlists.length >0){
-                $.each(commentlists,function(i,n){
-                    if(n.commenturl && n.commenturl!=""){
-                        if(n.commenturl =="[]"){
-                            n.commenturl=[];
-                        }else{
-                            n.commenturl=JSON.parse(n.commenturl);
-                            if(n.commenturl.length >0){
-                                n.commenturltype= n.commenturl[0].type;
-                            }
-                        }
-                    }else{
-                        n.commenturl=[];
-                    }
-
-                    if(n.childList.length >0){
-                        $.each(n.childList,function(c,t){
-                            if(t.commenturl && t.commenturl!=""){
-                                if(t.commenturl =="[]"){
-                                    t.commenturl=[];
-                                }else{
-                                    t.commenturl=JSON.parse(t.commenturl);
-                                    if(t.commenturl.length >0){
-                                        t.commenturltype= t.commenturl[0].type;
-                                    }
-
-                                }
-                            }else{
-                                t.commenturl=[];
-                            }
-                        })
-
-                    }
-
-                })
-
+            // console.log(contsdatas.Content.contentid);
+            $("#mainCont").attr("data-id",contsdatas.Content.contentid);
+            let createuser=userdatas.data.userid;
+            let createuserName=userdatas.data.username;
+            $("#finalAuditor").attr("data-id",createuser).html(createuserName);
+            $("#checkpublisher2").html(contsdatas.Content.contentuid);
+            $("#oldMoviePlayNum").html(contsdatas.Content.playcount);
+            $("#oldUnsupportNum").html(contsdatas.Content.contentbad);
+            $("#oldGoodNum").html(contsdatas.Content.contentgood);
+            /*标签处理*/
+            $("#detailCon .searchMenu .searchTag").val("").attr("data-val","").removeAttr("disabled");
+            if(contsdatas.Content.contenttag && contsdatas.Content.contenttag !=""){
+                let conlstag=contsdatas.Content.contenttag.split(";");//临时加的
+                // console.log("conlstag::");
+                // console.log(conlstag);
+                let tagshow=[];
+                $.each(conlstag,function(i,n){
+                    // console.log(n);
+                    let sname=$("#checkTagul1 li[data-val="+n +"]").html();
+                    tagshow.push(sname);
+                    $("#checkTagSearch"+(i+1)).val(sname ).attr("data-val",n ).attr("disabled","disabled");
+                });
             }
-            usertalk.items=commentlists;
+
+            //段友审核结果
+            $("#commentlistBox ul").empty();
+            if(contsdatas.ResList && contsdatas.ResList.length >0){
+                $.each(contsdatas.ResList,function(i,n){
+                    let ispass="";
+                    switch(n.checkres){
+                        case "1":ispass="通过";break;
+                        case "2":ispass="超时";break;
+                        case "0":ispass="不通过";break;
+                    }
+                    $("#commentlistBox ul").append("<li data-userid="+n.userid+">"+n.username+":"+ispass+"</li>")
+                })
+            }
+            //底部的评论
+            if(contsdatas.Content.cmtlist && contsdatas.Content.cmtlist!=""  && contsdatas.Content.cmtlist!=null){
+                let commentlists=contsdatas.Content.cmtlist;
+                if(commentlists.length >0){
+                    $.each(commentlists,function(i,n){
+                        if(n.commenturl && n.commenturl!=""){
+                            if(n.commenturl =="[]"){
+                                n.commenturl=[];
+                            }else{
+                                n.commenturl=JSON.parse(n.commenturl);
+                                if(n.commenturl.length >0){
+                                    n.commenturltype= n.commenturl[0].type;
+                                }
+                            }
+                        }else{
+                            n.commenturl=[];
+                        }
+
+                        if(n.childList.length >0){
+                            $.each(n.childList,function(c,t){
+                                if(t.commenturl && t.commenturl!=""){
+                                    if(t.commenturl =="[]"){
+                                        t.commenturl=[];
+                                    }else{
+                                        t.commenturl=JSON.parse(t.commenturl);
+                                        if(t.commenturl.length >0){
+                                            t.commenturltype= t.commenturl[0].type;
+                                        }
+
+                                    }
+                                }else{
+                                    t.commenturl=[];
+                                }
+                            })
+
+                        }
+
+                    })
+
+                }
+                usertalk.items=commentlists;
+            }
+
+        }else{
+            layer.msg("暂无数据！！",{time:10000});
         }
+
 
 
     }

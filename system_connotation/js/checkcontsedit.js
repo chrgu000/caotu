@@ -1,5 +1,5 @@
 
-/*----------------二次编辑提交内容------------*/
+/*----------------二次编辑提交内容统一方法------------*/
 
 var contentDatasurllist="";//内容链接（视频，图片地址）
 var fileslist=[];//图片流
@@ -35,35 +35,37 @@ var usertalk = new Vue({
         },
         oldComAddGood:function (event,i){
             // console.log(event);
-            if(event.user.usertype == 1 ){
+          /*  if(event.user.usertype == 1 ){
                 event.commentgood=Number(event.selfaddatr.addcommentval)+Number(event.commentgood);
             }else if(event.addnew && event.addnew ==1){
                 event.commentgood=Number(event.selfaddatr.addcommentval)+Number(event.commentgood);
-            }
+            }*/
+            event.commentgood=Number(event.selfaddatr.addcommentval)+Number(event.commentgood);
             event.selfaddatr.addcommentval=0;
             let addgood=event.commentgood-event.selfaddatr.firstcommentgood;
-            if(event.user.usertype == 1){
-                this.oldcommenttext[i]={"commentid":event.commentid,"userid":event.userid,"commentgood":addgood}
-                console.log(this.oldcommenttext)
-            }else if(event.addnew && event.addnew ==1){
+            if(event.addnew && event.addnew ==1){
                 changecomgoods(event.commentid,addgood)
+            }else{
+                this.oldcommenttext[event.commentid]={"commentid":event.commentid,"userid":event.userid,"commentgood":addgood}
+                console.log(this.oldcommenttext)
             }
 
         },
         reloldComAddGood:function (event,i,d){
             // console.log(event);
-            if(event.user.usertype == 1 ){
+           /* if(event.user.usertype == 1 ){
                 event.commentgood=Number(event.selfaddatr.addcommentval)+Number(event.commentgood);
             }else if(event.addnew && event.addnew ==1){
                 event.commentgood=Number(event.selfaddatr.addcommentval)+Number(event.commentgood);
-            }
+            }*/
+            event.commentgood=Number(event.selfaddatr.addcommentval)+Number(event.commentgood);
             event.selfaddatr.addcommentval=0;
             let addgood=event.commentgood-event.selfaddatr.firstcommentgood;
-            if(event.user.usertype == 1){
-                this.oldcommenttext[i+d]={"commentid":event.commentid,"userid":event.userid,"commentgood":addgood};
-                console.log(this.oldcommenttext)
-            }else if(event.addnew && event.addnew ==1){
+            if(event.addnew && event.addnew ==1){
                 changecomgoods(event.commentid,addgood)
+            }else{
+                this.oldcommenttext[event.commentid]={"commentid":event.commentid,"userid":event.userid,"commentgood":addgood};
+                console.log(this.oldcommenttext)
             }
 
         },
@@ -124,6 +126,11 @@ var usertalk = new Vue({
                     }
                 });
                 usertalk.postcommentlist=lastpostcommentlist;
+                if(event.childList && event.childList.length>0){
+                    talknum=talknum-event.childList.length;
+                }
+                talknum--;
+                $("#talkAboutBox .talkNum").html(talknum);
                 // console.log("usertalk.postcommentlist：：");
                 // console.log(usertalk.postcommentlist);
                 layer.close(index);
@@ -145,6 +152,8 @@ var usertalk = new Vue({
             console.log("usertalk.postcommentlist：：");
             console.log(usertalk.postcommentlist);
             this.items[i].childList.splice(d,1);
+            talknum--;
+            $("#talkAboutBox .talkNum").html(talknum);
 
         }
     }
@@ -162,14 +171,12 @@ function changecomgoods(cmd,addnum) {
 /*去除oldcommenttext中的null元素*/
 function replacenull() {
     let getlist=[];
-    if(usertalk.oldcommenttext.length >0){
-        $.each(usertalk.oldcommenttext,function(i,n){
-            if(n != "" && n != undefined){
-                getlist.push(n);
-            }
-        })
-        return getlist;
+    for(key in usertalk.oldcommenttext){
+      //  console.log(key); //key 获取的是键名
+        getlist.push(usertalk.oldcommenttext[key])
     }
+    return getlist;
+
 
 }
 
@@ -280,6 +287,7 @@ $("#detailCon .searchMenu .searchTag").keydown(function(event) {
         getlabellist(dataval,searchid);
     }
 });
+
 /*马甲用户列表获取*/
 function getpush(){
     var createuser=userdatas.data.userid;
@@ -461,11 +469,6 @@ function enterd(){
 
 
 
-
-
-
-
-
 /*判断字数*/
 $("#mainConTitle").keyup(function(){
     var len=$(this).val().length;
@@ -623,7 +626,7 @@ $("#creatCommentBtn").click(function(){
 
 function creatComentSure(){
     let commentlibtagid=$("#comentTags").val();
-    let commentnum=$("#creatComentNum").val();
+    let commentnum=Number($("#creatComentNum").val());
     let tjdatas={"commentlibtagid":commentlibtagid,"commentnum":commentnum};
     tjdatas=JSON.stringify(tjdatas);
     $.ajax({
@@ -646,7 +649,7 @@ function creatComentSure(){
                 if(diskJson.data.rows.length >0){
                     let comdata=diskJson.data.rows;
 
-                    let goods=1;
+                    let goods=0;
                     let contentid=$("#mainCont").attr("data-id");//内容ID
                     let createtime=getmytime();
                     let commenturltype="";
@@ -666,9 +669,11 @@ function creatComentSure(){
                         let comtext={ "addnew":1,"commentid":commentid,"userid":userid,"replyuser":"","ruusername":"","commentreply":1,"userheadphoto":userHead,"username":username,"contentid":contentid,"commenttext":n.commenttext, "commentgood":goods,"replycomment":"","replyfirst":commentid,"createtime":createtime,childList:[],"commenturl":fetcomurl,"commenturltype":commenturltype,"user":{"usertype":0},"selfaddatr":{"firstcommentgood":goods,"addcommentval":0}};
                         let comtext2={ "addnew":1,"commentid":commentid,"userid":userid,"replyuser":"","ruusername":"","commentreply":1,"userheadphoto":userHead,"username":username,"contentid":contentid,"commenttext":n.commenttext, "commentgood":goods,"replycomment":"","replyfirst":commentid,"createtime":createtime,"commenturl":fetcomurl,"commenturltype":commenturltype,"user":{"usertype":0},"selfaddatr":{"firstcommentgood":goods,"addcommentval":0}};
                         usertalk.items.push(comtext);
-                        usertalk.postcommentlist.push(comtext2);
+                         usertalk.postcommentlist.push(comtext2);
                        // console.log(usertalk.postcommentlist);
                     });
+                    talknum=talknum+commentnum;
+                    $("#talkAboutBox .talkNum").html(talknum);
                     layer.msg("已生成"+comdata.length+"条评论！！");
                 }else{
                     layer.msg("该标签下尚无预备评论！！")

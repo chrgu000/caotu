@@ -9,7 +9,7 @@
         #userInfoDat{position: relative;}
         #userInfoDat .lower{color:#006621;font-size:18px;}
         #userInfoDat .height{color:#FF2B00;font-size:18px;}
-        #ugcShowDataBox{position: absolute;bottom:-25px;left:0;border:1px solid #ddd;}
+        #ugcShowDataBox{position: absolute;bottom:-73px;left:0;border:1px solid #ddd;line-height: 21px;}
         #ugcShowDataBox i{color:#0a6aa1;font-size:9px;padding-right:12px;}
         .dataConBox .title{display: inline-block;width:25%;text-align: right;}
         .dataConBox .changeNum{display: inline-block;width:30%;text-align: center;}
@@ -111,7 +111,15 @@
             </div>
 
             <div id="ugcShowDataBox">
-                <p style="margin:2px 30px;">UGC累计内容量：<b>{{allugc}}</b> <i>(备注：截止至当日凌晨2:00)</i>当日UGC内容量：<b>{{todayugc}}</b> <i>(备注：当日凌晨2:00到现在)</i></p>
+                <p style="margin:2px 30px;">
+                    UGC累计内容量：<b>{{allugc}}</b> <i>(备注：截止至当日凌晨2:00)</i>
+                    当日UGC内容量：<b>{{todayugc}}</b> ；&nbsp;&nbsp;&nbsp;
+                    当日PGC内容量：<b>{{pgcNum}}</b> <i>(备注：当日凌晨2:00到现在)</i> <br>
+                    当日段友已审核内容量：<b>{{completeNum}}</b> ；&nbsp;&nbsp;&nbsp;
+                    1人审核过的内容量：<b>{{oneCheckNum}}</b> ；&nbsp;&nbsp;&nbsp;
+                    2人审核过的内容量：<b>{{twoCheckNum}}</b><br>
+                    当日段友守护者待审核内容量：<b>{{surpush}}</b> <i>(备注：当日凌晨2:00到现在)</i> <br>
+                </p>
 
             </div>
         </div>
@@ -206,7 +214,12 @@
                 alluser: {"dayadd":"","weekchange":"","weekbl":"","monthchange":"","monthbl":""},
                 maxuser: {"dayadd":"","weekchange":"","weekbl":"","monthchange":"","monthbl":""},
                 allugc:"",
-                todayugc:"",
+                todayugc:"",//总推荐
+                completeNum:"",//段友已审核内容量
+                oneCheckNum:"",//1人审核内容量
+                pgcNum:"",//pgc上传量
+                surpush:"",//未审核
+                twoCheckNum:"",//2人审核内容量
             }
         });
 
@@ -462,11 +475,16 @@
                     //console.log(data);
                 },
                 success:function(diskJson){
-                   // console.log("当日UGC内容量：");
-                   // console.log(diskJson);
+                   console.log("当日UGC内容量：");
+                   console.log(diskJson);
                     if(diskJson.code=="1000"){
                         if(diskJson.data.allpush && diskJson.data.allpush!=""){
                             userinfotdatas.todayugc=diskJson.data.allpush;
+                            userinfotdatas.completeNum=diskJson.data.completeNum;
+                            userinfotdatas.oneCheckNum=diskJson.data.oneCheckNum;
+                            userinfotdatas.pgcNum=diskJson.data.pgcNum;
+                            userinfotdatas.surpush=diskJson.data.surpush;
+                            userinfotdatas.twoCheckNum=diskJson.data.twoCheckNum;
                         }else{
                             userinfotdatas.todayugc=0;
                         }

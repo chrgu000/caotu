@@ -43,7 +43,13 @@
 
                     </ul>
                 </div>
-
+                <span class="left" style="padding-left:9px;">内容类型：</span>
+                <select name="" id="contentTypeSelect" class="left" style="width:80px">
+                    <option value="">所有</option>
+                    <option value="1">视频</option>
+                    <option value="3">图片</option>
+                    <option value="4">段子</option>
+                </select>
             </div>
             <div style="margin-top:3px;">
                 开始时间：<input style="margin-left:4px;" type="text" placeholder="开始时间" value="" id="startTime"/>
@@ -287,7 +293,8 @@
         endTime=endTime+"00";
         endTime=parseInt(endTime);
         let contenttag=$("#checkTagSearch").attr("data-val");
-        var datapost={"pageno":pageno,"pagesize":10,"contenttitle":contenttitle,"endtime":endTime,"starttime":startTime,"contenttag":contenttag};
+        let contenttype=$("#contentTypeSelect").val();
+        var datapost={"pageno":pageno,"pagesize":10,"contenttitle":contenttitle,"endtime":endTime,"starttime":startTime,"contenttag":contenttag,"contenttype":contenttype};
 //         console.log("datapost::");
 //         console.log(datapost);
         datapost=JSON.stringify(datapost);

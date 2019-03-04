@@ -42,6 +42,7 @@
 .selefCon:hover{background:#179d82;color:#fff;}
 .recalltalkcon{padding-left:12px;position: relative; margin: 10px 0;}
 .recalltalkcon:hover{background:#179d82;color:#fff;}
+.recalltalkcon:hover .oldComAddGood{color:#333;}
 .recalltalkcon .callDoBox{position: absolute;right:-70px;bottom:3px;font-size:11px;}
 .recalltalkcon .callDoBox .reply{padding-right:6px;}
 #talkAboutBox .deletecom{color:#8b0000;}

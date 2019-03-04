@@ -38,6 +38,13 @@
 
                     </ul>
                 </div>
+                <span class="left" style="padding-left:9px;">内容类型：</span>
+                <select name="" id="contentTypeSelect" class="left" style="width:80px">
+                    <option value="">所有</option>
+                    <option value="1">视频</option>
+                    <option value="3">图片</option>
+                    <option value="4">段子</option>
+                </select>
 
             </div>
             <div style="margin-top:3px;">
@@ -147,6 +154,7 @@
                             <td class="center">{{item.createtime | time}}</td>
                             <td class="center">
                                 <button type="button" class="btn deletebtn" v-on:click="detail(item)">详情</button>
+                                <button type="button" class="btn deletebtn" v-on:click="redact(item)">编辑</button>
                             </td>
                         </tr>
 
@@ -244,6 +252,34 @@
             },
             sure:function (event) {
 
+            },
+            redact:function (event) {
+                console.log("event");
+                console.log(event);
+                //备选队列
+                /* layer.open({
+                     type: 1,
+                     title: '备选队列页码选择',
+                     maxmin: false, //开启最大化最小化按钮
+                     area: ['500px', "220px"],
+                     content: $("#editPopBox"),
+                     success: function (layero, index) {
+                         $("#editPopBox").attr("data-id",event.contentid);
+                     }
+                 });*/
+                //二次编辑
+                layer.open({
+                    type: 2,
+                    title: '内含段子内容编辑',
+                    maxmin: false, //开启最大化最小化按钮
+                    area: ['95%', "95%"],
+                    content: "../checks/checkscontsedit.html",
+                    success: function (layero, index) {
+                        let body = layer.getChildFrame('body', index);
+                        let iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();
+                        iframeWin.getconidtodetail(event);
+                    }
+                });
             }
         }
     });
@@ -353,7 +389,8 @@
         endTime=endTime+"00";
         endTime=parseInt(endTime);
         let contenttag=$("#checkTagSearch").attr("data-val");
-        var datapost={"pageno":pageno,"pagesize":10,"contenttitle":contenttitle,"endtime":endTime,"starttime":startTime,"contenttag":contenttag};
+        let contenttype=$("#contentTypeSelect").val();
+        var datapost={"pageno":pageno,"pagesize":10,"contenttitle":contenttitle,"endtime":endTime,"starttime":startTime,"contenttag":contenttag,"contenttype":contenttype};
 //         console.log("datapost::");
 //         console.log(datapost);
         datapost=JSON.stringify(datapost);
