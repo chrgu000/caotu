@@ -366,6 +366,7 @@
     })
     /*创建运营账号*/
     function creatlabel(){
+        $("#submit").attr("disabled","disabled");
         var pushtitle=$("#newsTitle").val();//推送标题
         var pushcontent=$("#contentText").val();//推送内容
         var createuser=userdatas.data.userid;//创建人id
@@ -462,12 +463,12 @@
                     // console.log(diskJson);
                 if(diskJson.code =="1000"){
                     layer.msg("创建成功！！");
-                    replay();
+                    $(".repead").val("");
+                    $("#userInfosBox").attr("data-userid","");
+
                 }else{
                     layer.msg(diskJson.message);
                 }
-
-
             }
         });
     }
@@ -478,6 +479,7 @@
     function replay(){
         $(".repead").val("");
         $("#userInfosBox").attr("data-userid","");
+        $("#submit").removeAttr("disabled");
     }
 </script>
 

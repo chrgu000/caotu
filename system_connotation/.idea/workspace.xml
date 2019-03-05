@@ -17,8 +17,8 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="201">
-              <caret line="94" column="18" lean-forward="true" selection-start-line="94" selection-start-column="18" selection-end-line="94" selection-end-column="18" />
+            <state relative-caret-position="176">
+              <caret line="101" column="20" lean-forward="true" selection-start-line="101" selection-start-column="20" selection-end-line="101" selection-end-column="20" />
             </state>
           </provider>
         </entry>
@@ -26,8 +26,8 @@
       <file leaf-file-name="index.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/index.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="10" column="33" lean-forward="true" selection-start-line="10" selection-start-column="33" selection-end-line="10" selection-end-column="33" />
+            <state relative-caret-position="132">
+              <caret line="6" column="6" lean-forward="true" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -35,44 +35,38 @@
       <file leaf-file-name="checksconts.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/packges/content-manage/checks-dfdefencons/checksconts.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="275">
-              <caret line="519" lean-forward="true" selection-start-line="519" selection-end-line="519" />
+            <state relative-caret-position="269">
+              <caret line="614" column="37" lean-forward="true" selection-start-line="614" selection-start-column="37" selection-end-line="614" selection-end-column="37" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="checkcontsedit.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/js/checkcontsedit.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="377">
+              <caret line="446" column="65" lean-forward="true" selection-start-line="446" selection-start-column="65" selection-end-line="446" selection-end-column="65" />
               <folding>
-                <element signature="e#22761#23108#0" />
-                <element signature="e#29672#29795#0" />
+                <element signature="e#15122#15817#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="checkedlistinnh.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/packges/recommend-manage/alternativeQueue/checkedlistinnh.html">
+      <file leaf-file-name="checksconts.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/packges/content-manage/checks-ugc/checksconts.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="130">
-              <caret line="295" column="54" lean-forward="true" selection-start-line="295" selection-start-column="8" selection-end-line="295" selection-end-column="54" />
-              <folding>
-                <element signature="n#style#0;n#span#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#select#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#div#2;n#!!top" />
-                <element signature="e#8070#9176#0" />
-                <element signature="e#9223#10732#0" />
-              </folding>
+            <state relative-caret-position="75">
+              <caret line="1002" column="56" selection-start-line="1002" selection-start-column="56" selection-end-line="1002" selection-end-column="56" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="checkedlist.html" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/packges/recommend-manage/cookyQueue/checkedlist.html">
+      <file leaf-file-name="pushnew.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/packges/content-manage/pushmanage/pushnew.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="274">
-              <caret line="387" column="42" lean-forward="true" selection-start-line="387" selection-start-column="42" selection-end-line="387" selection-end-column="42" />
-              <folding>
-                <element signature="n#style#0;n#span#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#select#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="e#10425#12136#0" />
-                <element signature="e#12183#12731#0" />
-                <element signature="e#13683#14789#0" />
-              </folding>
+            <state relative-caret-position="231">
+              <caret line="463" column="38" selection-start-line="463" selection-start-column="38" selection-end-line="463" selection-end-column="38" />
             </state>
           </provider>
         </entry>
@@ -90,8 +84,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>getcommentlistdatas</find>
-      <find>deletecon</find>
       <find>deletecont</find>
       <find>detail</find>
       <find>reportdetail</find>
@@ -120,6 +112,8 @@
       <find>searchsens</find>
       <find>contsdatas</find>
       <find>checkpublisher</find>
+      <find>submit</find>
+      <find>creatlabel</find>
     </findStrings>
     <replaceStrings>
       <replace>话题</replace>
@@ -148,7 +142,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/packges/content-manage/dfdefender/recopicture.html" />
         <option value="$PROJECT_DIR$/packges/system-manage/reportinform.html" />
         <option value="$PROJECT_DIR$/packges/content-manage/searchmanage/searchmanageindex.html" />
         <option value="$PROJECT_DIR$/packges/recommend-manage/alternativeQueue/recommendarry.html" />
@@ -188,17 +181,18 @@
         <option value="$PROJECT_DIR$/packges/content-manage/dfdefender/checksconts.html" />
         <option value="$PROJECT_DIR$/css/checkcontsedit.css" />
         <option value="$PROJECT_DIR$/../readme.md" />
-        <option value="$PROJECT_DIR$/js/index.js" />
         <option value="$PROJECT_DIR$/js/ugcDefencAddComment.js" />
         <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/css/common.css" />
-        <option value="$PROJECT_DIR$/js/checkcontsedit.js" />
         <option value="$PROJECT_DIR$/packges/data-analysis/user-analiysis.html" />
         <option value="$PROJECT_DIR$/packges/data-analysis/user-riseanalysis.html" />
-        <option value="$PROJECT_DIR$/packges/content-manage/checks-ugc/checksconts.html" />
         <option value="$PROJECT_DIR$/packges/recommend-manage/alternativeQueue/checkedlistinnh.html" />
         <option value="$PROJECT_DIR$/packges/content-manage/checks-dfdefencons/checksconts.html" />
         <option value="$PROJECT_DIR$/packges/recommend-manage/cookyQueue/checkedlist.html" />
+        <option value="$PROJECT_DIR$/packges/content-manage/pushmanage/pushnew.html" />
+        <option value="$PROJECT_DIR$/js/index.js" />
+        <option value="$PROJECT_DIR$/js/checkcontsedit.js" />
+        <option value="$PROJECT_DIR$/packges/content-manage/checks-ugc/checksconts.html" />
       </list>
     </option>
   </component>
@@ -211,7 +205,7 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="x" value="-12" />
     <option name="width" value="1938" />
     <option name="height" value="1029" />
@@ -231,12 +225,39 @@
             <path>
               <item name="system_connotation" type="b2602c69:ProjectViewProjectNode" />
               <item name="system_connotation" type="462c0819:PsiDirectoryNode" />
-              <item name="css" type="462c0819:PsiDirectoryNode" />
+              <item name="js" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="system_connotation" type="b2602c69:ProjectViewProjectNode" />
               <item name="system_connotation" type="462c0819:PsiDirectoryNode" />
               <item name="packges" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="system_connotation" type="b2602c69:ProjectViewProjectNode" />
+              <item name="system_connotation" type="462c0819:PsiDirectoryNode" />
+              <item name="packges" type="462c0819:PsiDirectoryNode" />
+              <item name="content-manage" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="system_connotation" type="b2602c69:ProjectViewProjectNode" />
+              <item name="system_connotation" type="462c0819:PsiDirectoryNode" />
+              <item name="packges" type="462c0819:PsiDirectoryNode" />
+              <item name="content-manage" type="462c0819:PsiDirectoryNode" />
+              <item name="checks-dfdefencons" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="system_connotation" type="b2602c69:ProjectViewProjectNode" />
+              <item name="system_connotation" type="462c0819:PsiDirectoryNode" />
+              <item name="packges" type="462c0819:PsiDirectoryNode" />
+              <item name="content-manage" type="462c0819:PsiDirectoryNode" />
+              <item name="checks-ugc" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="system_connotation" type="b2602c69:ProjectViewProjectNode" />
+              <item name="system_connotation" type="462c0819:PsiDirectoryNode" />
+              <item name="packges" type="462c0819:PsiDirectoryNode" />
+              <item name="content-manage" type="462c0819:PsiDirectoryNode" />
+              <item name="pushmanage" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="system_connotation" type="b2602c69:ProjectViewProjectNode" />
@@ -268,7 +289,7 @@
   <component name="PropertiesComponent">
     <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../appcheckedh5page_nhdz2" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
@@ -389,17 +410,19 @@
       <workItem from="1551144111407" duration="66709000" />
       <workItem from="1551428776839" duration="807000" />
       <workItem from="1551678975152" duration="9738000" />
+      <workItem from="1551753074432" duration="735000" />
+      <workItem from="1551754688103" duration="3774000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1122130000" />
+    <option name="totallyTimeSpent" value="1126639000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16600476" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.16521049" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" weight="0.3291592" />
@@ -456,13 +479,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/packges/content-manage/commentmanage/commentindex.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="286">
-          <caret line="27" lean-forward="true" selection-start-line="27" selection-end-line="27" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/packges/recommend-manage/recomendQueue/recomend.html">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="374">
@@ -754,43 +770,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="138">
           <caret line="115" column="12" lean-forward="true" selection-start-line="115" selection-start-column="12" selection-end-line="115" selection-end-column="12" />
-          <folding>
-            <element signature="n#style#0;n#p#0;n#div#4;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="e#6705#6711#0" expanded="true" />
-            <element signature="e#6711#6717#0" expanded="true" />
-            <element signature="e#6717#6723#0" expanded="true" />
-            <element signature="e#6854#6860#0" expanded="true" />
-            <element signature="e#6860#6866#0" expanded="true" />
-            <element signature="e#6866#6872#0" expanded="true" />
-            <element signature="e#6926#6932#0" expanded="true" />
-            <element signature="e#6932#6938#0" expanded="true" />
-            <element signature="e#6938#6944#0" expanded="true" />
-            <element signature="e#17826#19304#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="201">
-          <caret line="94" column="18" lean-forward="true" selection-start-line="94" selection-start-column="18" selection-end-line="94" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/packges/content-manage/checks-ugc/checksconts.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="1046" column="11" lean-forward="true" selection-start-line="1046" selection-start-column="11" selection-end-line="1046" selection-end-column="11" />
-          <folding>
-            <element signature="e#28665#30306#0" />
-            <element signature="e#30370#35417#0" />
-            <element signature="e#35485#36546#0" />
-            <element signature="e#36605#38408#0" />
-            <element signature="e#39649#41032#0" />
-            <element signature="e#41086#41721#0" />
-            <element signature="e#41755#43013#0" />
-            <element signature="e#43066#49486#0" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -801,59 +780,62 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/js/index.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="220">
-          <caret line="10" column="33" lean-forward="true" selection-start-line="10" selection-start-column="33" selection-end-line="10" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/checkcontsedit.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="317" column="43" selection-start-line="317" selection-start-column="29" selection-end-line="317" selection-end-column="43" />
-          <folding>
-            <element signature="e#1062#1368#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/packges/content-manage/checks-dfdefencons/checksconts.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="275">
-          <caret line="519" lean-forward="true" selection-start-line="519" selection-end-line="519" />
-          <folding>
-            <element signature="e#22761#23108#0" />
-            <element signature="e#29672#29795#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/packges/recommend-manage/alternativeQueue/checkedlistinnh.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="130">
+        <state relative-caret-position="6050">
           <caret line="295" column="54" lean-forward="true" selection-start-line="295" selection-start-column="8" selection-end-line="295" selection-end-column="54" />
-          <folding>
-            <element signature="n#style#0;n#span#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#select#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#div#2;n#!!top" />
-            <element signature="e#8070#9176#0" />
-            <element signature="e#9223#10732#0" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/packges/recommend-manage/cookyQueue/checkedlist.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="274">
-          <caret line="387" column="42" lean-forward="true" selection-start-line="387" selection-start-column="42" selection-end-line="387" selection-end-column="42" />
+        <state relative-caret-position="120">
+          <caret line="380" column="47" lean-forward="true" selection-start-line="380" selection-start-column="47" selection-end-line="380" selection-end-column="47" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packges/content-manage/pushmanage/pushnew.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="463" column="38" selection-start-line="463" selection-start-column="38" selection-end-line="463" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="176">
+          <caret line="101" column="20" lean-forward="true" selection-start-line="101" selection-start-column="20" selection-end-line="101" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/index.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="132">
+          <caret line="6" column="6" lean-forward="true" selection-start-line="6" selection-start-column="6" selection-end-line="6" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packges/content-manage/checks-dfdefencons/checksconts.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="269">
+          <caret line="614" column="37" lean-forward="true" selection-start-line="614" selection-start-column="37" selection-end-line="614" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/checkcontsedit.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="377">
+          <caret line="446" column="65" lean-forward="true" selection-start-line="446" selection-start-column="65" selection-end-line="446" selection-end-column="65" />
           <folding>
-            <element signature="n#style#0;n#span#1;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#select#0;n#div#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="e#10425#12136#0" />
-            <element signature="e#12183#12731#0" />
-            <element signature="e#13683#14789#0" />
+            <element signature="e#15122#15817#0" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/packges/content-manage/checks-ugc/checksconts.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="1002" column="56" selection-start-line="1002" selection-start-column="56" selection-end-line="1002" selection-end-column="56" />
         </state>
       </provider>
     </entry>

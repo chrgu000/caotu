@@ -1,14 +1,14 @@
 
  // const path="http://192.168.1.111:8080/NHDZBUSINESS";//老冯
  // const path2="http://192.168.1.111:8080/NHDZBUSINESS";//老冯
-const path="http://192.168.1.114:8868/NHDZBUSINESS";//测试服务器
-const path2="http://192.168.1.114:8868/NHDZBUSINESS";//测试服务器
+// const path="http://192.168.1.114:8868/NHDZBUSINESS";//测试服务器
+// const path2="http://192.168.1.114:8868/NHDZBUSINESS";//测试服务器
 
 /*线上*/
 // const path="http://192.168.1.114:8878/NHDZBUSINESS";
 // const path2="http://192.168.1.114:8878/NHDZBUSINESS";
-// const path="http://101.69.230.98:8878/NHDZBUSINESS";
-// const path2="http://101.69.230.98:8878/NHDZBUSINESS";
+const path="http://101.69.230.98:8878/NHDZBUSINESS";//服务器
+const path2="http://101.69.230.98:8878/NHDZBUSINESS";
 
 var userdatas=getload();
 /*console.log("用户信息userdatas：");
