@@ -486,12 +486,14 @@
                 if(event.user.usertype == 0 && event.addnew && event.addnew ==1){
                     console.log(event);
                     this.items[i].commentgood++;
+                    changecomgoods(event.commentid,1)
                 }
             },
             callgoods:function (event,i,d) {
                 if(event.user.usertype == 0 && event.addnew && event.addnew ==1){
                     console.log(event);
                     this.items[i].childList[d].commentgood++;
+                    changecomgoods(event.commentid,1)
                 }
             },
             backtalk:function(event,i){
@@ -588,6 +590,14 @@
         }
     });
 
+    //已发送评论改变赞数
+    function changecomgoods(cmd,addnum) {
+        $.each(usertalk.postcommentlist,function(i,n){
+            if(n.commentid == cmd){
+                usertalk.postcommentlist[i].commentgood+=addnum;
+            }
+        })
+    }
 
     /*获取审核数据*/
     function getcheckdata(){
