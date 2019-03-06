@@ -25,9 +25,6 @@
 .tablelistbox th{text-align: center;}
 #tablelistbox td.center,
 .tablelistbox td.center{text-align: center;}
-#tablelistbox{table-layout:fixed;  }
-#tablelistbox th,
-#tablelistbox td{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;word-break:keep-all;padding: 10px 7px;}
 #tablelistbox ,
 .tablelistbox {font-size:12px;}
 #tablelistbox .btn,
